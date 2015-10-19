@@ -1,0 +1,29 @@
+formatVersion: 1
+formatType: am-configuration
+---
+# basic AM functionality - the builtin apps are in 'apps'.
+
+applications:
+  builtinAppsManifestDir: "apps"
+
+# QML apps will be able to import from modules...
+
+runtimes:
+  qml:
+    importPaths: [ "modules" ]
+
+# ... as well as the SystemUI
+
+ui:
+  fullscreen: yes
+  mainQml: "Main1920x1080.qml"
+  importPaths: [ "modules" ]
+  additionalConfiguration:
+    appStoreServerUrl: 'http://beachhead.pelagicore.de:8080'
+
+# development setup: no security
+
+flags:
+  noSecurity: yes
+  noUiWatchdog: yes
+

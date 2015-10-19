@@ -1,0 +1,14 @@
+formatVersion: 1
+formatType: am-application
+---
+id:      'com.pelagicore.browser'
+icon:    'icon.png'
+code:    'Browser.qml'
+runtime: 'qml'
+name:
+  en: 'Browser'
+  de: 'Schmoekerer'
+
+categories: [ 'app' ]
+
+built-in: yes

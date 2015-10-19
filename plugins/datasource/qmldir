@@ -1,0 +1,3 @@
+module com.pelagicore.datasource
+plugin qmldatasources
+
