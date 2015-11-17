@@ -29,48 +29,54 @@ import QtQuick 2.1
 import QtQuick.Layouts 1.0
 import utils 1.0
 Item {
-    id: root
     width: 1280
     height: 800
     visible: Style.gridMode
 
-
-    property int padding: Style.padding
-    property int columns:24
-    property int rows:24
-    property int hmargin: (root.width-columns*cellWidth)/2
-    property int vmargin: (root.height-rows*cellHeight)/2
-    property int cellWidth: Style.cellWidth
-    property int cellHeight: Style.cellHeight
-    opacity: 0.5
-
-    //    property int rows:
-
-    GridView {
+    Loader {
         anchors.fill: parent
-        anchors.leftMargin: root.hmargin
-        anchors.rightMargin: root.hmargin
-        anchors.topMargin: root.vmargin
-        anchors.bottomMargin: root.vmargin
-        cellWidth: root.cellWidth
-        cellHeight: root.cellHeight
-        model: root.columns*root.rows
-        interactive: false
+        active: Style.gridMode
+        sourceComponent: Component {
+            Item {
+                id: root
+                property int padding: Style.padding
+                property int columns:24
+                property int rows:24
+                property int hmargin: (root.width-columns*cellWidth)/2
+                property int vmargin: (root.height-rows*cellHeight)/2
+                property int cellWidth: Style.cellWidth
+                property int cellHeight: Style.cellHeight
+                opacity: 0.5
 
-        delegate: DisplayGridCell {
-            width: root.cellWidth
-            height: root.cellHeight
-            padding: root.padding
+                //    property int rows:
+
+                GridView {
+                    anchors.fill: parent
+                    anchors.leftMargin: root.hmargin
+                    anchors.rightMargin: root.hmargin
+                    anchors.topMargin: root.vmargin
+                    anchors.bottomMargin: root.vmargin
+                    cellWidth: root.cellWidth
+                    cellHeight: root.cellHeight
+                    model: root.columns*root.rows
+                    interactive: false
+
+                    delegate: DisplayGridCell {
+                        width: root.cellWidth
+                        height: root.cellHeight
+                        padding: root.padding
+                    }
+                }
+
+                Text {
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                    anchors.bottom: parent.bottom
+                    color: '#fff'
+                    text: "hmargin: " + root.hmargin + ' vmargin: ' + root.vmargin
+                }
+            }
         }
     }
-
-    Text {
-        anchors.left: parent.left
-        anchors.right: parent.right
-        anchors.bottom: parent.bottom
-        color: '#fff'
-        text: "hmargin: " + root.hmargin + ' vmargin: ' + root.vmargin
-    }
-
 }
 
