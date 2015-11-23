@@ -30,26 +30,37 @@
 
 pragma Singleton
 import QtQuick 2.0
+import QtIVIVehicleFunctions 1.0
 
 QtObject {
     id: root
+
+    property ClimateControl climateControl: ClimateControl {
+          autoDiscovery: true
+    }
 
     property QtObject leftSeat: QtObject {
         property real minValue: 16
         property real maxValue: 28
         property real stepValue: 0.5
-        property real value: 21.5
+        property real value: climateControl.zoneAt.FrontLeft.targetTemperature
 
-        property bool heat: false
+        property bool heat: climateControl.zoneAt.FrontLeft.seatHeater
+
+        onValueChanged: climateControl.zoneAt.FrontLeft.targetTemperature = value
+        onHeatChanged: climateControl.zoneAt.FrontLeft.seatHeater = heat
     }
 
     property QtObject rightSeat: QtObject {
         property real minValue: 16
         property real maxValue: 28
         property real stepValue: 0.5
-        property real value: 21.5
+        property real value: climateControl.zoneAt.FrontRight.targetTemperature
 
-        property bool heat: false
+        property bool heat: climateControl.zoneAt.FrontRight.seatHeater
+
+        onValueChanged: climateControl.zoneAt.FrontRight.targetTemperature = value
+        onHeatChanged: climateControl.zoneAt.FrontRight.seatHeater = heat
     }
 
     property QtObject frontHeat: QtObject {
@@ -64,12 +75,16 @@ QtObject {
 
     property QtObject airCondition: QtObject {
         property string symbol: "ac"
-        property bool enabled: false
+        property bool enabled: climateControl.airConditioning
+
+        onEnabledChanged: climateControl.airConditioning = enabled
     }
 
     property QtObject airQuality: QtObject {
         property string symbol: "air_quality"
-        property bool enabled: false
+        property bool enabled: climateControl.airRecirculation
+
+        onEnabledChanged: climateControl.airRecirculation = enabled
     }
 
     property QtObject eco: QtObject {
@@ -79,12 +94,15 @@ QtObject {
 
     property QtObject steeringWheelHeat: QtObject {
         property string symbol: "stearing_wheel"
-        property bool enabled: false
+        property bool enabled: climateControl.steeringWheelHeater
+
+        onEnabledChanged: climateControl.steeringWheelHeater = enabled
     }
 
     property var climateOptions: [frontHeat, rearHeat, airCondition, airQuality, eco, steeringWheelHeat]
 
-    property int ventilation: 2
+    property int ventilation: climateControl.fanSpeedLevel
     property int ventilationLevels: 7 // 6 + off (0)
-    onVentilationChanged: console.log("Ventilation changed: " + ventilation)
+
+    onVentilationChanged: climateControl.fanSpeedLevel = ventilation
 }
