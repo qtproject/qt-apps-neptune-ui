@@ -27,25 +27,3 @@
 ** SPDX-License-Identifier: GPL-3.0
 **
 ****************************************************************************/
-
-import QtQuick 2.1
-import controls 1.0
-import utils 1.0
-
-UIPage {
-    id: root
-    hspan: 24
-    vspan: 24
-
-    title: 'My Car'
-    symbolName: "information"
-
-    TabView {
-        id: tabView
-        anchors.fill: parent
-        tabs: [
-            { title : "OVERVIEW", url : Qt.resolvedUrl("MyCarOverview.qml"), properties : {} },
-            { title : "OWNERS MANUAL", url : Qt.resolvedUrl("OwnersManual.qml"), properties : {} },
-        ]
-    }
-}
