@@ -173,6 +173,7 @@ StackView {
             WindowManager.setSurfaceWindowProperty(item, "visibility", true)
 
             root.push(item)
+            item.forceActiveFocus()
         }
         else {
             print("Not showing well known application : " + appID);
@@ -257,6 +258,7 @@ StackView {
                         WindowManager.setSurfaceWindowProperty(item, "windowType", "fullScreen")
                         root.windowItem = item
                         root.push(item)
+                        item.forceActiveFocus()
                         break
                     }
                 }
