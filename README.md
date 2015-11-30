@@ -30,7 +30,9 @@ build datasource qml plugin
 
 or
 
-    $ appman --main.qml MainXXXX.qml --verbose --recreate-database apps
+    $ appman --recreate-database -c $AM_CONFIG_FILE -c am-config.yaml --verbose
+
+where AM_CONFIG_FILE is path to the config.yaml file provided by the Application Manager
 
 
 # Common Terms Used In The Project
