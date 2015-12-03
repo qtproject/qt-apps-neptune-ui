@@ -33,6 +33,7 @@
 
 SqlQueryDataSource::SqlQueryDataSource(QObject *parent)
     : QObject(parent)
+    , m_storageLocation(QDir::homePath())
     , m_model(new SqlQueryModel(this))
     , m_status(SqlQueryDataSource::Null)
 {
@@ -103,7 +104,7 @@ void SqlQueryDataSource::updateModel()
             m_database = QSqlDatabase::database(m_databaseName);
         } else {
             m_database = QSqlDatabase::addDatabase("QSQLITE", m_databaseName);
-            QString databasePath = QDir(QStandardPaths::writableLocation(QStandardPaths::HomeLocation)).filePath(m_databaseName + ".db");
+            QString databasePath = QDir(m_storageLocation).filePath(m_databaseName + ".db");
             m_database.setDatabaseName(databasePath);
             qDebug() << "database path: " << databasePath;
         }
@@ -143,6 +144,11 @@ void SqlQueryDataSource::setStatus(SqlQueryDataSource::Status arg)
 
 QString SqlQueryDataSource::storageLocation() const
 {
-    return QDir::homePath();
+    return m_storageLocation;
+}
+
+void SqlQueryDataSource::setStorageLocation(QString path)
+{
+    m_storageLocation = QDir(path).absolutePath();
 }
 

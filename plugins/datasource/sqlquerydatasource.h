@@ -44,7 +44,7 @@ class SqlQueryDataSource : public QObject
     Q_PROPERTY(QObject* model READ model NOTIFY modelChanged)
     Q_PROPERTY(int count READ count NOTIFY countChanged)
     Q_PROPERTY(Status status READ status NOTIFY statusChanged)
-    Q_PROPERTY(QString storageLocation READ storageLocation CONSTANT)
+    Q_PROPERTY(QString storageLocation READ storageLocation WRITE setStorageLocation NOTIFY storageLocationChanged)
     Q_ENUMS(Status)
 
 public:
@@ -65,6 +65,7 @@ public:
     Status status() const;
 
    QString storageLocation() const;
+   void setStorageLocation(QString path);
 private:
     void updateModel();
     void setStatus(Status arg);
@@ -78,10 +79,12 @@ signals:
     void statusChanged(Status arg);
 
     void modelChanged(QObject* model);
+    void storageLocationChanged();
 
 private:
     QString m_queryString;
     QString m_databaseName;
+    QString m_storageLocation;
     SqlQueryModel *m_model;
     QSqlQuery m_query;
     QSqlDatabase m_database;
