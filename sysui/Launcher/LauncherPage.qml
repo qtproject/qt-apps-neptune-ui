@@ -35,8 +35,8 @@ import controls 1.0
 import utils 1.0
 import service.apps 1.0
 
-import com.pelagicore.ApplicationManager 0.1
-import com.pelagicore.ApplicationInstaller 0.1
+import io.qt.ApplicationManager 1.0
+import io.qt.ApplicationInstaller 1.0
 
 UIPage {
     id: root

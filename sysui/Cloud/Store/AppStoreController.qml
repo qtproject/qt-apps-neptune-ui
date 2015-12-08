@@ -36,7 +36,7 @@ import utils 1.0
 import service.apps 1.0
 
 import "JSONBackend.js" as JSONBackend
-import com.pelagicore.ApplicationInstaller 0.1
+import io.qt.ApplicationInstaller 1.0
 
 Item {
     id: root

@@ -32,7 +32,7 @@ import QtQuick 2.0
 import QtQuick.Controls 1.0
 import controls 1.0
 import utils 1.0
-import com.pelagicore.ApplicationManager 0.1
+import io.qt.ApplicationManager 1.0
 import service.navigation 1.0
 import service.apps 1.0
 

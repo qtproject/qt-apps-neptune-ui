@@ -30,7 +30,7 @@
 
 import QtQuick 2.0
 import "JSONBackend.js" as JSONBackend
-import com.pelagicore.ApplicationManager 0.1
+import io.qt.ApplicationManager 1.0
 
 Item {
 

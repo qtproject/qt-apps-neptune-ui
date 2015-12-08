@@ -30,11 +30,11 @@
 
 import QtQuick 2.1
 
-import com.pelagicore.ApplicationManager 0.1
+import io.qt.ApplicationManager 1.0
 import controls 1.0
 import utils 1.0
 
-PelagicoreWindow {
+ApplicationManagerWindow {
     id: pelagicoreWindow
     width: Style.cellWidth * 24
     height: Style.cellHeight * 24
@@ -77,7 +77,7 @@ PelagicoreWindow {
         anchors.fill: parent
     }
 
-    PelagicoreWindow {
+    ApplicationManagerWindow {
         id: widget
         width: Style.cellWidth * 12
         height: Style.cellHeight * 19
@@ -97,7 +97,7 @@ PelagicoreWindow {
         }
     }
 
-    PelagicoreWindow {
+    ApplicationManagerWindow {
         id: cluster
         width: parent ? parent.width : 0
         height: parent ? parent.height : 0
