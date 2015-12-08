@@ -38,8 +38,7 @@ UIElement {
     property alias delegate: repeater.delegate
 
     Grid {
-        anchors.fill: parent
-
+        anchors.centerIn: parent
         columns: 3
 
         Repeater {
