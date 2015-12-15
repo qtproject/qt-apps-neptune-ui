@@ -42,7 +42,7 @@ AppUIScreen {
             id: browser
             anchors.fill: parent
             anchors.leftMargin: Style.cellHeight * 4
-            url: "http://pelagicore.com"
+            url: "http://www.qt.io/qt-automotive-suite"
         }
 
         onBackScreen: root.back()
