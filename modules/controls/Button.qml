@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2015 Pelagicore AG
+** Copyright (C) 2016 Pelagicore AG
 ** Contact: http://www.qt.io/ or http://www.pelagicore.com/
 **
 ** This file is part of the Neptune IVI UI.
@@ -76,7 +76,7 @@ UIElement {
 
             hspan: root.hspan; vspan: 1
             visible: text
-
+            opacity: root.enabled ? 1.0 : 0.6
             horizontalAlignment: Text.AlignHCenter
             font.pixelSize: Style.fontSizeM
             scale: mouseArea.pressed?0.85:1.0

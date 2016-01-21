@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2015 Pelagicore AG
+** Copyright (C) 2016 Pelagicore AG
 ** Contact: http://www.qt.io/ or http://www.pelagicore.com/
 **
 ** This file is part of the Neptune IVI UI.
@@ -33,37 +33,63 @@ import QtQuick 2.1
 import com.pelagicore.datasource 1.0
 import service.music 1.0
 
-SqlQueryDataSource {
+QtObject {
     id: root
 
-    database: "media"
-    query: 'select * from music'
-    property int currentIndex: 0
-    property var currentEntry: get(currentIndex);
-    property url currentSource: storageLocation + '/media/music/' + currentEntry.source
-    property url currentCover: storageLocation + '/media/music/' + currentEntry.cover
-
-    function queryAllAlbums() {
-        return 'select distinct album, cover, artist from music'
+    property SqlQueryDataSource musicLibrary: SqlQueryDataSource {
+        database: "media"
+        query: 'select * from music'
     }
 
-    function queryAlbum(artist, album) {
-        return 'select * from music'
+    property SqlQueryDataSource nowPlaying: SqlQueryDataSource {
+        database: "media"
+        query: 'select * from music'
+    }
+
+    property int currentIndex: 0
+    property int count: nowPlaying.count
+    onCountChanged: {
+        currentIndex = -1
+        currentIndex = 0
+    }
+    property var currentEntry: nowPlaying.get(currentIndex);
+    property url currentSource: nowPlaying.storageLocation + '/media/music/' + currentEntry.source
+    property url currentCover: nowPlaying.storageLocation + '/media/music/' + currentEntry.cover
+
+    function queryAllAlbums() {
+        musicLibrary.query = 'select * from music group by album'
+    }
+
+    function querySongs() {
+        musicLibrary.query = 'select distinct * from music'
+    }
+
+    function queryArtists() {
+        musicLibrary.query = 'select * from music group by artist'
+    }
+
+    function querySpecArtist(artist) {
+        nowPlaying.query = "select distinct * from music where artist='" + artist + "'"
+    }
+
+    function querySpecAlbum(album) {
+        nowPlaying.query = "select distinct * from music where album='" + album + "'"
+    }
+
+    function selectSpecSong () {
+        nowPlaying.query = 'select distinct * from music'
     }
 
     function selectRandomTracks() {
-        currentIndex = -1
-        root.query = 'select * from music order by random()'
-        currentIndex = 0
+        nowPlaying.query = 'select distinct * from music order by random()'
     }
 
-
     function coverPath(cover) {
-        return Qt.resolvedUrl(storageLocation + '/media/music/' + cover)
+        return Qt.resolvedUrl(root.nowPlaying.storageLocation + '/media/music/' + cover)
     }
 
     function sourcePath(source) {
-        return Qt.resolvedUrl(storageLocation + '/media/music/' + source)
+        return Qt.resolvedUrl(root.nowPlaying.storageLocation + '/media/music/' + source)
     }
 
     function next() {
@@ -78,14 +104,17 @@ SqlQueryDataSource {
             currentIndex--
     }
 
-    Component.onCompleted: {
+    function initialize() {
         MusicService.musicProvider = root
         MusicService.currentIndex = Qt.binding(function() { return root.currentIndex})
         MusicService.currentTrack = Qt.binding(function() { return root.currentEntry})
-        MusicService.trackCount = Qt.binding(function() { return root.count})
+        MusicService.trackCount = Qt.binding(function() { return root.nowPlaying.count})
         MusicService.coverPath = Qt.binding(function() { return root.currentCover})
         MusicService.url = Qt.binding(function() { return root.currentSource})
-        print("MusicProvider completed")
+    }
+
+    Component.onCompleted: {
+        print("MusicProvider completed", root.count)
 
     }
 }

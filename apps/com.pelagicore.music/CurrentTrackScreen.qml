@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2015 Pelagicore AG
+** Copyright (C) 2016 Pelagicore AG
 ** Contact: http://www.qt.io/ or http://www.pelagicore.com/
 **
 ** This file is part of the Neptune IVI UI.
@@ -44,13 +44,16 @@ UIScreen {
     title: 'Music'
 
     property var track: MusicProvider.currentEntry
+    property bool libraryVisible: false
 
     signal showAlbums()
 
     ColumnLayout {
-        width: Style.hspan(14)
+        id: musicControl
+        width: Style.hspan(12)
         height: Style.vspan(20)
-        anchors.centerIn: parent
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.verticalCenter: parent.verticalCenter
         spacing: 0
         Spacer {}
         RowLayout {
@@ -76,7 +79,7 @@ UIScreen {
                 width: Style.cellWidth * 6
                 height: Style.cellHeight * 12
 
-                items: MusicProvider.model
+                items: MusicProvider.nowPlaying.model
 
                 currentViewIndex: MusicProvider.currentIndex
 
@@ -108,20 +111,40 @@ UIScreen {
                 }
             }
         }
-        Slider {
+
+        RowLayout {
             anchors.horizontalCenter: parent.horizontalCenter
-            hspan: 10
-            value: MusicService.position
-            minimum: 0.00
-            maximum: MusicService.duration
-            vspan: 1
-            function valueToString() {
-                return Math.floor(value/60000) + ':' + Math.floor((value/1000)%60)
+            spacing: 10
+
+            Label {
+                hspan: 1
+                text: MusicService.currentTime
+                font.pixelSize: Style.fontSizeS
             }
-            onActiveValueChanged: {
-                MusicService.seek(activeValue)
+
+            Slider {
+                id: slider
+                //anchors.horizontalCenter: parent.horizontalCenter
+                hspan: 9
+                value: MusicService.position
+                minimum: 0.00
+                maximum: MusicService.duration
+                vspan: 1
+                function valueToString() {
+                    return Math.floor(value/60000) + ':' + Math.floor((value/1000)%60)
+                }
+                onActiveValueChanged: {
+                    MusicService.seek(activeValue)
+                }
+            }
+
+            Label {
+                hspan: 1
+                text: MusicService.durationTime
+                font.pixelSize: Style.fontSizeS
             }
         }
+
         RowLayout {
             anchors.horizontalCenter: parent.horizontalCenter
             spacing: 0
@@ -175,10 +198,107 @@ UIScreen {
         }
     }
 
-    PlaylistContainer {
-            onClicked: pathView.currentViewIndex = index
+    Library {
+        id: library
+        x: parent.width
+        opacity: 0
+        visible: opacity > 0
+        onClose: {
+            root.libraryVisible = false
+        }
+    }
+
+    UIElement {
+        id: sourceOption
+        hspan: 4
+        vspan: 12
+        anchors.right: musicControl.left
+        anchors.rightMargin: 60
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.verticalCenterOffset: -60
+
+        Column {
+            spacing: 1
+            Button {
+                hspan: 4
+                vspan: 4
+                text: "BLUETOOTH"
+                label.font.pixelSize: Style.fontSizeL
+            }
+            Button {
+                hspan: 4
+                vspan: 4
+                text: "USB"
+                enabled: false
+                label.font.pixelSize: Style.fontSizeL
+            }
+            Button {
+                hspan: 4
+                vspan: 4
+                text: "SPOTIFY"
+                enabled: false
+                label.font.pixelSize: Style.fontSizeL
+            }
+        }
+    }
+
+    TextTool {
+        id: libraryButton
+        hspan: 3
+        vspan: 5
+        anchors.left: musicControl.right
+        anchors.leftMargin: 30
+        anchors.verticalCenter: parent.verticalCenter
+        size: 72
+
+        name: "music"
+        text: "LIBRARY"
+
+        onClicked: root.libraryVisible = true
     }
 
     Component.onCompleted: MusicProvider.selectRandomTracks()
+
+    states: State {
+        name: "libaryMode"; when: root.libraryVisible
+
+        PropertyChanges {
+            target: library
+            opacity: 1
+            x: root.width - library.width
+        }
+
+        PropertyChanges {
+            target: libraryButton
+            opacity: 0
+        }
+
+        PropertyChanges {
+            target: sourceOption
+            opacity: 0
+        }
+
+        AnchorChanges {
+            target: musicControl
+            anchors.horizontalCenter: undefined
+        }
+
+        PropertyChanges {
+            target: musicControl
+            x: 0
+        }
+    }
+
+    transitions: Transition {
+        from: ""; to: "libaryMode"; reversible: true
+
+        ParallelAnimation {
+            NumberAnimation { target: library; properties: "opacity"; duration: 400 }
+            NumberAnimation { target: library; properties: "x"; duration: 300 }
+            NumberAnimation { target: libraryButton; properties: "opacity"; duration: 300 }
+            NumberAnimation { target: sourceOption; properties: "opacity"; duration: 300 }
+            NumberAnimation { target: musicControl; properties: "x"; duration: 300 }
+        }
+    }
 
 }

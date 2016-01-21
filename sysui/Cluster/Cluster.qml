@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2015 Pelagicore AG
+** Copyright (C) 2016 Pelagicore AG
 ** Contact: http://www.qt.io/ or http://www.pelagicore.com/
 **
 ** This file is part of the Neptune IVI UI.
@@ -39,9 +39,9 @@ Item {
 
     property bool zoom: false
 
-    Image {
+    Rectangle {
         anchors.fill: parent
-        source: Style.gfx("cluster/background")
+        color: "#0c0c0c"
     }
 
     Middle {
@@ -60,14 +60,13 @@ Item {
 
     LeftDial {
         id: leftDial
-        x: root.zoom ? -230 : 0
-        zoom: root.zoom
+        //x: root.zoom ? -230 : 0
+        Tracer {}
     }
 
     RightDial {
         id: rightDial
-        x: root.zoom ? 1240 : (1920 - width)
-        zoom: root.zoom
+        x: (1920 - width)
     }
 
     Top {
@@ -76,11 +75,11 @@ Item {
         anchors.horizontalCenter: parent.horizontalCenter
     }
 
-    Notifications {
-        id: notifications
-        y: root.zoom ? root.height : root.height - notifications.height - 15
-        anchors.horizontalCenter: parent.horizontalCenter
-    }
+//    Notifications {
+//        id: notifications
+//        y: root.zoom ? root.height : root.height - notifications.height - 15
+//        anchors.horizontalCenter: parent.horizontalCenter
+//    }
 
     Image {
         anchors.fill: parent
@@ -98,7 +97,7 @@ Item {
 
     Keys.forwardTo: Style.debugMode ? [layouter] : null
 
-    property var layoutTarget: notifications
+    property var layoutTarget//: notifications
 
     Layouter {
         id: layouter

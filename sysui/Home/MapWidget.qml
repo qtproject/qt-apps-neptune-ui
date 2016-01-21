@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2015 Pelagicore AG
+** Copyright (C) 2016 Pelagicore AG
 ** Contact: http://www.qt.io/ or http://www.pelagicore.com/
 **
 ** This file is part of the Neptune IVI UI.
@@ -62,7 +62,7 @@ UIPanel {
         target: NavigationService
         onMapWidgetChanged: {
             loadingLabel.visible = false
-            NavigationService.mapWidget.width = loader.width
+            NavigationService.mapWidget.width = Qt.binding(function () { return loader.width})
             NavigationService.mapWidget.height = loader.height
             loader.children = NavigationService.mapWidget
         }

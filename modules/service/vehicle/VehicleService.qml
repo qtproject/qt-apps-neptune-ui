@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2015 Pelagicore AG
+** Copyright (C) 2016 Pelagicore AG
 ** Contact: http://www.qt.io/ or http://www.pelagicore.com/
 **
 ** This file is part of the Neptune IVI UI.
@@ -30,26 +30,68 @@
 
 pragma Singleton
 import QtQuick 2.0
+import utils 1.0
+import service.apps 1.0
 
-Item {
+QtObject {
     id: root
 
+    property bool dialAnimation: false
     property real speed: 0
-    property int displaySpeed: 0
 
-    Timer {
-        running: true
+
+    Behavior on speed {
+        SmoothedAnimation {
+            velocity: 6
+            duration : 5000
+        }
+    }
+
+    readonly property real rightDialValue: root.speed * 0.0061
+
+    property int displaySpeed: speed
+    property real fuel: 0.5 // fuel precentage min 0.0; max 1.0;
+    property string rightDialIcon: Style.gfx("cluster/my_position")
+    property string rightDialMainText: "0.6mi"
+    property string rightDialSubText: "Service in\n200mi"
+    property real rightIconScale: 1
+    property var gasStationEvent
+    property bool gasStationUpdateActive: false
+    property Timer fuelTimer: Timer {
+        interval: 5000
+        onTriggered: {
+            root.fuel = 0.2
+            root.rightDialIcon = Style.gfx("livedrive/fuel_orange")
+            root.rightIconScale = 1.4
+            root.rightDialMainText = "Low Fuel"
+            root.rightDialSubText = "Estimation: 5mi"
+            if (root.gasStationEvent) {
+                root.gasStationEvent.priority = 1
+                fuelEventTimer.start()
+            }
+        }
+    }
+
+    property Timer fuelEventTimer: Timer {
+        interval: 4000
+        onTriggered: {
+            root.rightDialIcon = Style.gfx("livedrive/fuel_orange")
+            root.rightIconScale = 1.4
+            root.rightDialMainText = root.gasStationEvent.distanceFromStart + "m"
+            root.rightDialSubText = "SHELL\n2$/Gl"
+            root.gasStationUpdateActive = true
+        }
+    }
+
+    property Timer timer: Timer {
+        running: root.dialAnimation
         repeat: true
-        interval: 100
-        onTriggered: { displaySpeed = speed }
+        interval: 4000
+        property bool higherValue: false
+        onTriggered: {
+            root.speed = higherValue ? (root.speed - 5) : (root.speed + 5)
+            higherValue = !higherValue
+        }
     }
 
-    SequentialAnimation on speed {
-        running: true
-        loops: Animation.Infinite
-        NumberAnimation { from: 30; to: 80; duration: 3000 }
-        NumberAnimation { from: 80; to: 30; duration: 2000 }
-    }
-
-    visible: false
 }

@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2015 Pelagicore AG
+** Copyright (C) 2016 Pelagicore AG
 ** Contact: http://www.qt.io/ or http://www.pelagicore.com/
 **
 ** This file is part of the Neptune IVI UI.
@@ -42,16 +42,20 @@ ApplicationManagerWindow {
     default property alias content: content.children
     property alias widget: widgetContainer.children
     property alias cluster: clusterContainer.children
+    property alias popup: popupContainer.children
 
     property bool _widgetSet: false
     property bool _clusterSet: false
+    property bool _popupSet: false
 
     property bool isWidget: false
 
     onWidgetChanged: _widgetSet = true
     onClusterChanged: _clusterSet = true
+    onPopupChanged: _popupSet = true
 
     signal clusterKeyPressed(int key)
+    signal raiseApp()
 
     function back() {
         pelagicoreWindow.setWindowProperty("visibility", false)
@@ -63,14 +67,33 @@ ApplicationManagerWindow {
     }
 
     function sendClusterWidget() {
-
         cluster.setWindowProperty("windowType", "clusterWidget")
-        if (Style.withCluster)
-            cluster.visible = true
+        cluster.visible = true
+    }
+
+    function sendPopupWidget() {
+        popup.setWindowProperty("windowType", "popup")
+        popup.visible = true
     }
 
     function startFullScreen() {
         pelagicoreWindow.setWindowProperty("goTo", "fullScreen")
+    }
+
+    function showPopup() {
+        pelagicoreWindow.setWindowProperty("liveDrivePopupVisible", true)
+    }
+
+    function hidePopup() {
+        pelagicoreWindow.setWindowProperty("liveDrivePopupVisible", false)
+    }
+
+    function sendLiveDriveEvent(event) {
+        cluster.setWindowProperty("liveDriveEvent", event)
+    }
+
+    function sendRouteUpdate(update) {
+        cluster.setWindowProperty("routeUpdate", update)
     }
 
     DisplayBackground {
@@ -118,7 +141,33 @@ ApplicationManagerWindow {
         }
 
         onWindowPropertyChanged: {
-            print(":::AppUIScreen::: window property changed", name, value, Qt.Key_Up)
+            //print(":::AppUIScreen::: window property changed", name, value, Qt.Key_Up)
+            pelagicoreWindow.clusterKeyPressed(value)
+        }
+    }
+
+    ApplicationManagerWindow {
+        id: popup
+        width: 285
+        height: parent ? parent.height : 0
+        visible: false
+        Item {
+            id: popupContainer
+            anchors.fill: parent
+        }
+
+        Component.onCompleted: {
+            if (pelagicoreWindow._popupSet) {
+                pelagicoreWindow.sendPopupWidget()
+            }
+            else {
+                popup.setWindowProperty("windowType", "popup")
+            }
+
+        }
+
+        onWindowPropertyChanged: {
+            //print(":::AppUIScreen::: window property changed", name, value, Qt.Key_Up)
             pelagicoreWindow.clusterKeyPressed(value)
         }
     }
@@ -129,12 +178,15 @@ ApplicationManagerWindow {
     }
 
     onWindowPropertyChanged: {
-        print(":::AppUIScreen::: Window property changed", name, value)
+        //print(":::AppUIScreen::: Window property changed", name, value)
         if (name === "windowType" && value === "widget") {
             pelagicoreWindow.isWidget = true
         }
         else if (name === "windowType" && value === "fullScreen") {
             pelagicoreWindow.isWidget = false
+        }
+        else if (name === "visibility" && value === true) {
+            root.raiseApp()
         }
     }
 }

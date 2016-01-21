@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2015 Pelagicore AG
+** Copyright (C) 2016 Pelagicore AG
 ** Contact: http://www.qt.io/ or http://www.pelagicore.com/
 **
 ** This file is part of the Neptune IVI UI.
@@ -107,7 +107,7 @@ Item {
                     delegate: CategoryListItem {
                         width: ListView.view.width
                         height: Style.vspan(5/3)
-                        text: model.name //.title
+                        text: model.name
                         onClicked: ListView.view.currentIndex = index
                     }
 

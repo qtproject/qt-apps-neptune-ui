@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2015 Pelagicore AG
+** Copyright (C) 2016 Pelagicore AG
 ** Contact: http://www.qt.io/ or http://www.pelagicore.com/
 **
 ** This file is part of the Neptune IVI UI.
@@ -48,26 +48,6 @@ Item {
     Item {
         id: container
         anchors.fill: parent
-    }
-
-    BorderImage {
-        id: rightBorder
-        width: sourceSize.width/5
-        height: parent.height
-        anchors.right: parent.right
-        border.top: 20
-        border.bottom: 20
-        source: Style.gfx("cluster/right_mask")
-    }
-
-    BorderImage {
-        id: leftBorder
-        width: sourceSize.width/5
-        height: parent.height
-        anchors.left: parent.left
-        border.top: 20
-        border.bottom: 20
-        source: Style.gfx("cluster/left_mask")
     }
 }
 

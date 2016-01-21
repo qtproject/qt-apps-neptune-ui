@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2015 Pelagicore AG
+** Copyright (C) 2016 Pelagicore AG
 ** Contact: http://www.qt.io/ or http://www.pelagicore.com/
 **
 ** This file is part of the Neptune IVI UI.
@@ -28,22 +28,39 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.0
-import io.qt.ApplicationManager 1.0
+import QtQuick 2.1
+import utils 1.0
+import controls 1.0
+import service.vehicle 1.0
 
 Item {
     id: root
-    width: 768
-    height: 860
-    property color color
+    implicitWidth: fuel.sourceSize.width
+    implicitHeight: fuel.sourceSize.height
 
-    signal windowPropertyChanged(string name, var value)
-    signal close()
-    //function showFullScreen() {}
-    function showMaximized() {}
-    function showNormal() {}
-    function setWindowProperty(status, value) {
-        WindowManager.surfaceWindowPropertyChanged(root, status, value)
-        windowPropertyChanged(status, value)
+    property real value: VehicleService.fuel <= 0.3 ? (VehicleService.fuel + 0.1) : VehicleService.fuel
+
+    Behavior on value {
+        NumberAnimation {
+            duration: 400
+        }
     }
+
+    Item {
+        width: root.value * parent.width
+        height: parent.height
+        clip: true
+        Image {
+            source: Style.gfx("cluster/fuel_level")
+        }
+        Tracer { }
+    }
+
+    Image {
+        id: fuel
+        source: Style.gfx("cluster/fuel")
+
+    }
+    Tracer { }
 }
+

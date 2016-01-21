@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2015 Pelagicore AG
+** Copyright (C) 2016 Pelagicore AG
 ** Contact: http://www.qt.io/ or http://www.pelagicore.com/
 **
 ** This file is part of the Neptune IVI UI.
@@ -31,6 +31,7 @@
 pragma Singleton
 import QtQuick 2.0
 import QtIVIVehicleFunctions 1.0
+import service.settings 1.0
 
 QtObject {
     id: root
@@ -40,10 +41,10 @@ QtObject {
     }
 
     property QtObject leftSeat: QtObject {
-        property real minValue: 16
-        property real maxValue: 28
-        property real stepValue: 0.5
-        property real value: climateControl.zoneAt.FrontLeft.targetTemperature
+        property real minValue: calculateUnitValue(16)
+        property real maxValue: calculateUnitValue(28)
+        property real stepValue: calculateUnitValue(0.5)
+        property real value: calculateUnitValue(climateControl.zoneAt.FrontLeft.targetTemperature)
 
         property bool heat: climateControl.zoneAt.FrontLeft.seatHeater
 
@@ -52,10 +53,10 @@ QtObject {
     }
 
     property QtObject rightSeat: QtObject {
-        property real minValue: 16
-        property real maxValue: 28
-        property real stepValue: 0.5
-        property real value: climateControl.zoneAt.FrontRight.targetTemperature
+        property real minValue: calculateUnitValue(16)
+        property real maxValue: calculateUnitValue(28)
+        property real stepValue: calculateUnitValue(0.5)
+        property real value: calculateUnitValue(climateControl.zoneAt.FrontRight.targetTemperature)
 
         property bool heat: climateControl.zoneAt.FrontRight.seatHeater
 
@@ -101,8 +102,15 @@ QtObject {
 
     property var climateOptions: [frontHeat, rearHeat, airCondition, airQuality, eco, steeringWheelHeat]
 
+    property int outsideTemp: calculateUnitValue(15)
+    property string outsideTempText: qsTr("%1" + tempSuffix).arg(outsideTemp)
     property int ventilation: climateControl.fanSpeedLevel
+    property string tempSuffix: SettingsService.metric ? "°C" : "°F"
     property int ventilationLevels: 7 // 6 + off (0)
-
     onVentilationChanged: climateControl.fanSpeedLevel = ventilation
+
+    function calculateUnitValue(value) {
+        // Defualt value is the celsius
+        return (SettingsService.unitSystem === "metric") ? value : (Math.round(value * 1.8 + 32))
+    }
 }

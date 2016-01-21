@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2015 Pelagicore AG
+** Copyright (C) 2016 Pelagicore AG
 ** Contact: http://www.qt.io/ or http://www.pelagicore.com/
 **
 ** This file is part of the Neptune IVI UI.
@@ -31,6 +31,7 @@
 import QtQuick 2.0
 import QtQuick.Layouts 1.0
 import utils 1.0
+import service.climate 1.0
 
 UIElement {
     id: root
@@ -56,7 +57,7 @@ UIElement {
 
             color: Style.colorWhite
 
-            text: qsTr("%1°c").arg(root.currentTemperature)
+            text: ClimateService.outsideTempText
 
             clip: Style.debugMode
             font.weight: Style.fontWeight

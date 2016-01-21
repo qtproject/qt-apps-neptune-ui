@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2015 Pelagicore AG
+** Copyright (C) 2016 Pelagicore AG
 ** Contact: http://www.qt.io/ or http://www.pelagicore.com/
 **
 ** This file is part of the Neptune IVI UI.
@@ -45,7 +45,8 @@ UIElement {
     property real minValue: 16
     property real maxValue: 28
     property real value: minValue
-    property int roundingMode: roundingModeHalf
+    property int roundingMode: roundingModeWhole
+    property real stepValue: 0.5
 
     transform: Rotation {
         angle: mirrorSlider ? 180 : 0
@@ -74,7 +75,7 @@ UIElement {
 
             MouseArea {
                 anchors.fill: parent
-                onClicked: root.value = root._clamp(root.value + 1 / root.roundingMode)
+                onClicked: root.value = root._clamp(root.value + 1/roundingMode)
             }
         }
 
@@ -123,7 +124,6 @@ UIElement {
                     border.color: Qt.darker(color, 1.5)
                     border.width: 1
                     color: Qt.rgba(view.calcRed(index), view.calcGreen(index), view.calcBlue(index))
-                    //radius: 1
                     scale: bottomPart ? 1.0 : 0.96
                     transformOrigin: Item.Left
                     Behavior on scale { NumberAnimation { easing.type: Easing.OutQuad } }

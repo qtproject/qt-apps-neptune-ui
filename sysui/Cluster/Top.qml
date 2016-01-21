@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2015 Pelagicore AG
+** Copyright (C) 2016 Pelagicore AG
 ** Contact: http://www.qt.io/ or http://www.pelagicore.com/
 **
 ** This file is part of the Neptune IVI UI.
@@ -31,6 +31,7 @@
 import QtQuick 2.1
 import utils 1.0
 import controls 1.0
+import service.climate 1.0
 import service.settings 1.0
 import service.statusbar 1.0
 
@@ -45,11 +46,11 @@ Item {
     Image {
         id: background
         source: Style.gfx("cluster/top_bar")
+        Tracer {}
     }
 
     Label {
         id: timeText
-
         anchors.verticalCenter: background.verticalCenter
         anchors.left: background.left
         anchors.verticalCenterOffset: 0
@@ -66,23 +67,20 @@ Item {
         anchors.horizontalCenter: background.horizontalCenter
 
         Row {
+            id: row
             property int radius: 7
             anchors.centerIn: parent
             anchors.verticalCenterOffset: -16
             spacing: 8
 
-            Rectangle {
-                height: parent.radius * 2
-                width: parent.radius * 2
-                radius: parent.radius
-                color: Style.colorWhite
-            }
-
-            Rectangle {
-                height: parent.radius * 2
-                width: parent.radius * 2
-                radius: parent.radius
-                color: "#4d4d4d"
+            Repeater {
+                model: StatusBarService.pageIndicatorSize
+                delegate: Rectangle {
+                    height: row.radius * 2
+                    width: row.radius * 2
+                    radius: row.radius
+                    color: StatusBarService.currentPage === index ? Style.colorWhite : "#4d4d4d"
+                }
             }
         }
 
@@ -99,7 +97,6 @@ Item {
 
     Label {
         id: temperatureText
-
         anchors.verticalCenter: background.verticalCenter
         anchors.left: background.right
         anchors.verticalCenterOffset: 0
@@ -107,7 +104,7 @@ Item {
 
         font.pixelSize: 37
 
-        text: "15\u00b0c"
+        text: ClimateService.outsideTempText
     }
 
     //Component.onCompleted: layoutTarget = navText

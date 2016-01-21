@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2015 Pelagicore AG
+** Copyright (C) 2016 Pelagicore AG
 ** Contact: http://www.qt.io/ or http://www.pelagicore.com/
 **
 ** This file is part of the Neptune IVI UI.
@@ -39,6 +39,9 @@ import "StatusBar"
 Item {
     id: root
 
+    width: 1280
+    height: 800
+
     // Background Elements
 
     // Content Elements
@@ -46,26 +49,12 @@ Item {
     Component {
         id: topMenu
         MenuScreen {
+            itemWidth: content.width
         }
     }
 
     Item {
-        id: content
-
-        anchors.top: parent.top
-        anchors.left: parent.left
-        anchors.right: parent.right
-        height: Style.vspan(24-3)
-
-        LaunchController {
-            id: launcher
-            width: Style.hspan(24)
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.top: statusBar.bottom
-            anchors.bottom: parent.bottom
-            initialItem: topMenu
-        }
-
+        anchors.fill: parent
 
         StatusBar {
             id: statusBar
@@ -79,50 +68,64 @@ Item {
                     root.state = "statusBarExpanded"
                 }
             }
+        }
 
-            Loader {
-                anchors.centerIn: parent
-                width: Style.hspan(8); height: Style.vspan(2)
-                sourceComponent: launcher.currentItem ? launcher.currentItem.statusItem : undefined
+        Item {
+            id: content
+
+            anchors.top: statusBar.bottom
+            anchors.left: parent.left
+            anchors.right: parent.right
+            height: root.height - statusBar.height - Style.vspan(climateBar.collapsedVspan)//Style.vspan(24-4)
+
+            LaunchController {
+                id: launcher
+                width: parent.width //Style.hspan(24)
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.top: parent.top
+                anchors.bottom: parent.bottom
+                initialItem: topMenu
+            }
+
+        }
+
+        FastBlur {
+            id: fastBlur
+            anchors.fill: content
+            source: content
+            radius: 0
+            visible: !content.visible
+            enabled: visible
+        }
+
+        About {
+            id: about
+            anchors.bottom: parent.top; anchors.bottomMargin: height
+            anchors.left: parent.left; anchors.right: parent.right
+            vspan: 20
+            onClicked: {
+                if (climateBar.expanded) {
+                    climateBar.expanded = false
+                } else {
+                    root.state = ""
+                }
             }
         }
-    }
 
-    FastBlur {
-        id: fastBlur
-        anchors.fill: content
-        source: content
-        radius: 0
-        visible: !content.visible
-        enabled: visible
-    }
+        // Foreground Elements
 
-    About {
-        id: about
-        anchors.bottom: parent.top; anchors.bottomMargin: height
-        anchors.left: parent.left; anchors.right: parent.right
-        vspan: 20
-        onClicked: {
-            if (climateBar.expanded) {
-                climateBar.expanded = false
-            } else {
-                root.state = ""
+        ClimateBar {
+            id: climateBar
+            vspan: 24-statusBar.vspan
+            y: expanded ? Style.vspan(statusBar.vspan) : root.height - Style.vspan(collapsedVspan)
+            anchors.left: parent.left
+            anchors.right: parent.right
+
+            Behavior on y {
+                NumberAnimation { duration: 450; easing.type: Easing.OutCubic}
             }
         }
-    }
 
-    // Foreground Elements
-
-    ClimateBar {
-        id: climateBar
-        vspan: 24-statusBar.vspan
-        y: expanded ? Style.vspan(statusBar.vspan) : root.height - Style.vspan(collapsedVspan)
-        anchors.left: parent.left
-        anchors.right: parent.right
-
-        Behavior on y {
-            NumberAnimation { duration: 450; easing.type: Easing.OutCubic}
-        }
     }
 
     Loader {
@@ -130,7 +133,6 @@ Item {
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: parent.bottom
-
         source: "Keyboard.qml"
     }
 

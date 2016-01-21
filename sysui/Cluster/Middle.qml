@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2015 Pelagicore AG
+** Copyright (C) 2016 Pelagicore AG
 ** Contact: http://www.qt.io/ or http://www.pelagicore.com/
 **
 ** This file is part of the Neptune IVI UI.
@@ -29,15 +29,15 @@
 ****************************************************************************/
 
 import QtQuick 2.1
-import QtQuick.Controls 1.2
+import QtGraphicalEffects 1.0
 import utils 1.0
 import service.statusbar 1.0
 import service.apps 1.0
 
 Item {
     id: root
-    width: 700
-    height: 710
+    width: 1300
+    height: 720
 
     focus: true
 
@@ -67,6 +67,8 @@ Item {
                 width: stack.width
                 height: stack.height
                 title: "NAVIGATOR"
+
+                Tracer {}
             }
             WidgetContainer {
                 id: musicContainer
@@ -82,24 +84,28 @@ Item {
             }
         }
 
-        Component.onCompleted: StatusBarService.clusterTitle = Qt.binding(function() { return currentItem.title})
+        Component.onCompleted: {
+            StatusBarService.pageIndicatorSize = stack.count
+            StatusBarService.currentPage = Qt.binding(function() { return stack.currentIndex})
+            StatusBarService.clusterTitle = Qt.binding(function() { return currentItem.title})
+        }
     }
 
     Connections {
         target: AppsService
         onClusterWidgetReady: {
-            if (category === "media") {
-                musicContainer.content = item
-                stack.currentIndex = 1
-            }
-            else if (category === "navigation") {
+//            if (category === "media") {
+//                musicContainer.content = item
+//                stack.currentIndex = 1
+//            }
+            if (category === "navigation") {
                 navContainer.content = item
                 stack.currentIndex = 0
             }
-            else {
-                otherContainer.content = item
-                stack.currentIndex = 2
-            }
+//            else {
+//                otherContainer.content = item
+//                stack.currentIndex = 2
+//            }
         }
     }
 
@@ -122,4 +128,34 @@ Item {
     }
 
     Keys.forwardTo: stack.currentItem
+
+//    Rectangle {
+//        anchors.fill: parent
+//    }
+
+    LinearGradient {
+        width: 300
+        height: parent.height
+
+        start: Qt.point(0, 0)
+        end: Qt.point(width, 0)
+        gradient: Gradient {
+            GradientStop { position: 0.3; color: "#0c0c0c" }
+            GradientStop { position: 1.0; color: "transparent" }
+        }
+    }
+
+    LinearGradient {
+        width: 300
+        height: parent.height
+        anchors.right: parent.right
+        start: Qt.point(0, 0)
+        end: Qt.point(width, 0)
+        gradient: Gradient {
+            GradientStop { position: 0.0; color: "transparent" }
+            GradientStop { position: 0.7; color: "#0c0c0c" }
+        }
+    }
+
+
 }

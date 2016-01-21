@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2015 Pelagicore AG
+** Copyright (C) 2016 Pelagicore AG
 ** Contact: http://www.qt.io/ or http://www.pelagicore.com/
 **
 ** This file is part of the Neptune IVI UI.
@@ -38,7 +38,7 @@ UIElement {
     property string timeFormat: "hh:mm"
     property var currentDate: new Date()
 
-    hspan: 4
+    hspan: 3
     vspan: 2
 
     RowLayout {
@@ -59,38 +59,6 @@ UIElement {
 
             text: Qt.formatTime(root.currentDate, root.timeFormat)
         }
-
-        Item {
-            anchors.top: clock.top
-            anchors.bottom: clock.bottom
-            anchors.topMargin: Style.vspan(1) === 33 ? 4 : 9
-            anchors.bottomMargin: Style.vspan(1) === 33 ? 3 : 5
-
-            width: Style.hspan(1)
-
-            Text {
-                anchors.top: parent.top
-
-                font.family: Style.fontFamily
-                font.pixelSize: Style.fontSizeS
-                font.capitalization: Font.AllUppercase
-
-                color: Style.colorWhite
-
-                text: Qt.formatDate(root.currentDate, 'ddd')
-            }
-
-            Text {
-                anchors.bottom: parent.bottom
-
-                font.family: Style.fontFamily
-                font.pixelSize: Style.fontSizeS
-                font.capitalization: Font.AllUppercase
-
-                color: Style.colorWhite
-
-                text: Qt.formatDate(root.currentDate, 'MMM d')
-            }
-        }
     }
+
 }

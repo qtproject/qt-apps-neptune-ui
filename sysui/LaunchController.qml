@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2015 Pelagicore AG
+** Copyright (C) 2016 Pelagicore AG
 ** Contact: http://www.qt.io/ or http://www.pelagicore.com/
 **
 ** This file is part of the Neptune IVI UI.
@@ -34,7 +34,9 @@ import controls 1.0
 import utils 1.0
 import io.qt.ApplicationManager 1.0
 import service.navigation 1.0
+import service.music 1.0
 import service.apps 1.0
+import service.vehicle 1.0
 
 StackView {
     id: root
@@ -129,6 +131,8 @@ StackView {
         print(":::LaunchController:::isWidget", isWidget)
         var isClusterWidget = (WindowManager.surfaceWindowProperty(item, "windowType") === "clusterWidget")
         print(":::LaunchController:::isClusterWidget", isClusterWidget)
+        var isPopup = (WindowManager.surfaceWindowProperty(item, "windowType") === "popup")
+        print(":::LaunchController:::isPopup", isPopup)
 
         var acceptSurface = true;
         var appID = WindowManager.get(index).applicationId;
@@ -148,6 +152,11 @@ StackView {
             }
             acceptSurface = false
         }
+        else if (isPopup) {
+            if (ApplicationManager.get(appID).categories[0] === "navigation")
+                AppsService.sendNavigationPopup(item)
+            acceptSurface = false
+        }
         else {
 
             for (var i = 0; i < root.blackListItems.length; ++i) {
@@ -160,7 +169,7 @@ StackView {
                     acceptSurface = false;
                     // For now we assume that only navigation has a widget
                     WindowManager.setSurfaceWindowProperty(item, "windowType", "widget")
-                    root.minimizedItems.pop(NavigationService.defaultNavApp)
+                    root.minimizedItems.pop(appID)
                     break
                 }
             }
@@ -173,7 +182,6 @@ StackView {
             WindowManager.setSurfaceWindowProperty(item, "visibility", true)
 
             root.push(item)
-            item.forceActiveFocus()
         }
         else {
             print("Not showing well known application : " + appID);
@@ -207,9 +215,9 @@ StackView {
     Connections {
         target: WindowManager
         onSurfaceWindowPropertyChanged: {
-            print(":::LaunchController::: WindowManager:surfaceWindowPropertyChanged", surfaceItem, name, value)
+            //print(":::LaunchController::: WindowManager:surfaceWindowPropertyChanged", surfaceItem, name, value)
             if (name === "visibility" && value === false) {
-                root.pop()
+                root.pop(null)
                 var id = root.getSurfaceIndex(root.windowItem)
                 if (ApplicationManager.dummy) {
                     if (WindowManager.get(id).categories === "navigation")
@@ -228,22 +236,40 @@ StackView {
                     NavigationService.mapWidget = surfaceItem
                 }
             }
+            else if (name === "liveDrivePopupVisible") {
+                AppsService.liveDrivePopup = value
+                if (value) {
+                     VehicleService.fuelTimer.start()
+                }
+            }
             else if (name === "windowType" && value === "clusterWidget") {
                 // Workaround for qmlscene
                 if (ApplicationManager.dummy) {
                     AppsService.clusterWidgetReady("other", surfaceItem)
                 }
             }
+            else if (name === "windowType" && value === "popup") {
+                // Workaround for qmlscene
+                if (ApplicationManager.dummy) {
+                    AppsService.sendNavigationPopup(surfaceItem)
+                }
+            }
             else if (name === "goTo" && value === "fullScreen") {
                 var appIndex = root.getSurfaceIndex(surfaceItem)
-                print("indexxxx", appIndex)
-                print(":::LaunchController::: App found. Going to full screen the app ", appIndex, WindowManager.get(appIndex).applicationId)
+                //print(":::LaunchController::: App found. Going to full screen the app ", appIndex, WindowManager.get(appIndex).applicationId)
                 ApplicationManager.startApplication(WindowManager.get(appIndex).applicationId)
+                WindowManager.setSurfaceWindowProperty(surfaceItem, "goTo", "")
+            }
+            else if (name === "liveDriveEvent") {
+                NavigationService.liveDriveEvent = value
+            }
+            else if (name === "routeUpdate") {
+                NavigationService.routeUpdate = value
             }
         }
 
         onRaiseApplicationWindow: {
-            print(":::LaunchController::: WindowManager:raiseApplicaitonWindow" + id + " " + WindowManager.count)
+            //print(":::LaunchController::: WindowManager:raiseApplicaitonWindow" + id + " " + WindowManager.count)
             for (var i = 0; i < WindowManager.count; i++) {
                 if (WindowManager.get(i).applicationId === id) {
                     var item = WindowManager.get(i).surfaceItem
@@ -251,14 +277,15 @@ StackView {
                     var isWidget = (WindowManager.surfaceWindowProperty(item, "windowType") === "widget")
                     var isMapWidget = (WindowManager.surfaceWindowProperty(item, "windowType") === "widgetMap")
                     var isClusterWidget = (WindowManager.surfaceWindowProperty(item, "windowType") === "clusterWidget")
+                    var isPopup = (WindowManager.surfaceWindowProperty(item, "windowType") === "popup")
                     print(":::LaunchController:::isClusterWidget", isClusterWidget)
                     print(":::LaunchController:::isWidget", isWidget, isMapWidget)
-                    if (!isMapWidget && !isClusterWidget) {
+                    print(":::LaunchController:::isPopup", isPopup)
+                    if (!isMapWidget && !isClusterWidget && !isPopup) {
                         WindowManager.setSurfaceWindowProperty(item, "visibility", true)
                         WindowManager.setSurfaceWindowProperty(item, "windowType", "fullScreen")
                         root.windowItem = item
                         root.push(item)
-                        item.forceActiveFocus()
                         break
                     }
                 }
@@ -273,6 +300,8 @@ StackView {
         if (NavigationService.defaultNavApp) {
             root.minimizedItems.push(NavigationService.defaultNavApp)
             ApplicationManager.startApplication(NavigationService.defaultNavApp)
+            root.minimizedItems.push(MusicService.defaultMusicApp)
+            ApplicationManager.startApplication(MusicService.defaultMusicApp)
         }
     }
 

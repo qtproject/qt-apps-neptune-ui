@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2015 Pelagicore AG
+** Copyright (C) 2016 Pelagicore AG
 ** Contact: http://www.qt.io/ or http://www.pelagicore.com/
 **
 ** This file is part of the Neptune IVI UI.
@@ -36,6 +36,8 @@ Item {
     id: root
 
     property string clusterTitle: ""
+    property int pageIndicatorSize: 3
+    property int currentPage: 0
 
     property var indicators: [
         { name: "battery", active: true },

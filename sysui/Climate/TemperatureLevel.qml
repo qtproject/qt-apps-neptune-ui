@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2015 Pelagicore AG
+** Copyright (C) 2016 Pelagicore AG
 ** Contact: http://www.qt.io/ or http://www.pelagicore.com/
 **
 ** This file is part of the Neptune IVI UI.
@@ -31,6 +31,7 @@
 import QtQuick 2.1
 import controls 1.0
 import utils 1.0
+import service.climate 1.0
 
 UIElement {
     id: root
@@ -67,6 +68,7 @@ UIElement {
             font.pixelSize: Style.fontSizeXXL
             font.family: Style.fontFamily
             font.weight: Style.fontWeight
+
         }
 
         Text {
@@ -92,7 +94,7 @@ UIElement {
             anchors.baseline: integerPart.baseline
             height: Style.vspan(1)
 
-            text: qsTr("°c")
+            text: ClimateService.tempSuffix
 
             color: Style.colorWhite
             font.pixelSize: Style.fontSizeXXL*0.97  //RG: the 0.97 is there to get around a font rendering bug on the iMX6
@@ -100,4 +102,5 @@ UIElement {
             font.weight: Style.fontWeight
         }
     }
+    Tracer {}
 }

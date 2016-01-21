@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2015 Pelagicore AG
+** Copyright (C) 2016 Pelagicore AG
 ** Contact: http://www.qt.io/ or http://www.pelagicore.com/
 **
 ** This file is part of the Neptune IVI UI.
@@ -81,7 +81,7 @@ UIElement {
         }
 
         DateAndTime {
-            Layout.preferredWidth: Style.hspan(timeFormat.length <= 5 ? 3 : 4)
+            Layout.preferredWidth: Style.hspan(2)
             Layout.fillHeight: true
             timeFormat: SettingsService.clockOption.format
             currentDate: StatusBarService.currentDate

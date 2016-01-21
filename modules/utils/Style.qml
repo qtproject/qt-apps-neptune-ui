@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2015 Pelagicore AG
+** Copyright (C) 2016 Pelagicore AG
 ** Contact: http://www.qt.io/ or http://www.pelagicore.com/
 **
 ** This file is part of the Neptune IVI UI.
@@ -47,6 +47,8 @@ QtObject {
     property int cellWidth: 56 // (1366-22)/24 = 56
     property int cellHeight: 32 // 768/24 = 32
     property string fontFamily: true ? 'Source Sans Pro' : fontRegular.name
+    // enable next line to test OpenSans font
+//    property string fontFamily: fontBackup.name
     property var fontWeight: Font.Light
     property int fontSizeXXS: 14
     property int fontSizeXS: 16
@@ -86,8 +88,13 @@ QtObject {
         source: font('SourceSansPro-Light')
     }
 
+    property FontLoader fontBackup: FontLoader {
+        source: font('OpenSans-Regular')
+    }
+
+
     function symbol(name, size, active) {
-        if (size == 0)
+        if (size === 0)
             size = defaultSymbolSize
         return symbolUrl + (active ? '/active/' : '/') + name + '@' + size + '.png'
     }

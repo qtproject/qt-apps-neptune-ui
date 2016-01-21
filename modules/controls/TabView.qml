@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2015 Pelagicore AG
+** Copyright (C) 2016 Pelagicore AG
 ** Contact: http://www.qt.io/ or http://www.pelagicore.com/
 **
 ** This file is part of the Neptune IVI UI.
@@ -39,11 +39,14 @@ UIElement {
 
     property int currentIndex: 0
     property alias tabs: repeater.model
+    property real tabWidth: 3
+    property bool horizontalAlignment: true
+    property int viewLeftMargin: 0
 
     Row {
         id: tabRow
 
-        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.horizontalCenter: root.horizontalAlignment ? parent.horizontalCenter : undefined
         spacing: 0
 
         Repeater {
@@ -51,9 +54,10 @@ UIElement {
 
 
             Tab {
+                id: tabTest
                 text: modelData.title
                 selected: root.currentIndex === index
-
+                hspan: root.tabWidth
                 onClicked: {
                     if (root.currentIndex === index)
                         return
@@ -71,6 +75,7 @@ UIElement {
 
         anchors.top: tabRow.bottom; anchors.bottom: parent.bottom
         anchors.left: parent.left; anchors.right: parent.right
+        anchors.leftMargin: root.viewLeftMargin
 
         clip: true
 

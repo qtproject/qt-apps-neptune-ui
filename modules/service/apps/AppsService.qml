@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2015 Pelagicore AG
+** Copyright (C) 2016 Pelagicore AG
 ** Contact: http://www.qt.io/ or http://www.pelagicore.com/
 **
 ** This file is part of the Neptune IVI UI.
@@ -34,5 +34,7 @@ import QtQuick 2.1
 QtObject {
     id: root
 
+    property bool popupVisible: false
     signal clusterWidgetReady(string category, Item item)
+    signal sendNavigationPopup(Item item)
 }

@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2015 Pelagicore AG
+** Copyright (C) 2016 Pelagicore AG
 ** Contact: http://www.qt.io/ or http://www.pelagicore.com/
 **
 ** This file is part of the Neptune IVI UI.
@@ -36,58 +36,61 @@ Item {
     property real value: 0
     property int upDuration: 2000
     property int downDuration: 1000
+    property string fillImage: "cluster/dial_fill_color_left"
+    property string circleRadius: "0.193"
+    property string dialCursor: "cluster/dial_cursor"
 
-    width: meter.width
-    height: meter.height
+    width: 480
+    height: width
 
     Image {
         id: meter
         property real min: -83.5
         property real max: 157
-
+        width: root.width
+        height: width - 1
         rotation: min + (max - min) * root.value
-
-        source: Style.gfx("cluster/dial_cursor")
-
-        ShaderEffect {
-            anchors.fill: parent
-            property var pattern: Image {
-                source: Style.gfx("cluster/dial_pattern")
-            }
-            property var fill: Image {
-                source: Style.gfx("cluster/dial_fill_color")
-            }
-            property real value: root.value
-
-            fragmentShader: "
-    #define M_PI 3.141592653589793
-    #define INNER 0.213
-
-    varying highp vec2 qt_TexCoord0;
-    uniform lowp float qt_Opacity;
-    uniform sampler2D pattern;
-    uniform sampler2D fill;
-    uniform lowp float value;
-
-    void main() {
-        lowp vec4 pattern = texture2D(pattern, qt_TexCoord0);
-        lowp vec4 fill = texture2D(fill, qt_TexCoord0);
-
-        lowp vec2 pos = vec2(qt_TexCoord0.x - 0.5, 0.501 - qt_TexCoord0.y);
-        lowp float d = length(pos);
-        lowp float angle = atan(pos.x, pos.y) / (2.0 * M_PI);
-        lowp float v = 0.66 * value - 0.33;
-
-        // Flare pattern
-        lowp vec4 color = mix(pattern, vec4(0.0), smoothstep(v, v + 0.1, angle));
-        // Gradient fill color
-        color += mix(fill, vec4(0.0), step(v, angle));
-        // Punch out the center hole
-        color = mix(vec4(0.0), color, smoothstep(INNER - 0.001, INNER + 0.001, d));
-        // Fade out below 0
-        gl_FragColor = mix(color, vec4(0.0), smoothstep(-0.35, -0.5, angle));
+        source: Style.gfx(root.dialCursor)
     }
-            "
+
+    ShaderEffect {
+        anchors.fill: meter
+        property var pattern: Image {
+            source: Style.gfx("cluster/dial_pattern")
         }
+        property var fill: Image {
+            source: Style.gfx(root.fillImage)
+        }
+        property real value: root.value
+
+        fragmentShader: "
+#define M_PI 3.141592653589793
+#define INNER " + root.circleRadius + "
+
+varying highp vec2 qt_TexCoord0;
+uniform lowp float qt_Opacity;
+uniform sampler2D pattern;
+uniform sampler2D fill;
+uniform lowp float value;
+
+void main() {
+    lowp vec4 pattern = texture2D(pattern, qt_TexCoord0);
+    lowp vec4 fill = texture2D(fill, qt_TexCoord0);
+
+    lowp vec2 pos = vec2(qt_TexCoord0.x - 0.5, 0.501 - qt_TexCoord0.y);
+    lowp float d = length(pos);
+    lowp float angle = atan(pos.x, pos.y) / (2.0 * M_PI);
+    lowp float v = 0.66 * value - 0.33;
+
+    // Flare pattern
+    lowp vec4 color = mix(pattern, vec4(0.0), smoothstep(v, v + 0.1, angle));
+    // Gradient fill color
+    color += mix(fill, vec4(0.0), step(v, angle));
+    // Punch out the center hole
+    color = mix(vec4(0.0), color, smoothstep(INNER - 0.001, INNER + 0.001, d));
+    // Fade out below 0
+    gl_FragColor = mix(color, vec4(0.0), smoothstep(-0.35, -0.5, angle));
+}
+        "
     }
 }

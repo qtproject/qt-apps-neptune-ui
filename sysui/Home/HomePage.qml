@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2015 Pelagicore AG
+** Copyright (C) 2016 Pelagicore AG
 ** Contact: http://www.qt.io/ or http://www.pelagicore.com/
 **
 ** This file is part of the Neptune IVI UI.
@@ -39,10 +39,10 @@ import io.qt.ApplicationManager 1.0
 UIPage {
     id: root
 
-    title: 'Home'
     anchors.top: parent.top
     anchors.bottom: parent.bottom
 
+    property bool leftMap: true
     signal showScreen(url url)
     signal closeScreen()
 
@@ -50,9 +50,9 @@ UIPage {
     MapWidget {
         id: mapWidget
         anchors.top: parent.top
-        anchors.left: parent.left
+        anchors.left: root.leftMap ? parent.left : parent.horizontalCenter
         width: root.width/2
-        vspan: 19
+        vspan: 20
     }
 
     // Right widget side
@@ -70,7 +70,7 @@ UIPage {
         id: hDiv
 
         anchors.verticalCenter: parent.verticalCenter
-        anchors.left: parent.horizontalCenter
+        anchors.left: root.leftMap ? parent.horizontalCenter : parent.left
         anchors.leftMargin: Style.hspan(1)
     }
 

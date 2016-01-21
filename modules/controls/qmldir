@@ -25,3 +25,5 @@ Divider 1.0 Divider.qml
 ListItem 1.0 ListItem.qml
 AppStackView 1.0 AppStackView.qml
 SwipeView 1.0 SwipeView.qml
+Popup 1.0 Popup.qml
+LetterPicker 1.0 LetterPicker.qml

@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2015 Pelagicore AG
+** Copyright (C) 2016 Pelagicore AG
 ** Contact: http://www.qt.io/ or http://www.pelagicore.com/
 **
 ** This file is part of the Neptune IVI UI.
@@ -49,15 +49,16 @@ UIElement {
         active = !active
     }
 
-    UIElement {
+    Rectangle {
         anchors.fill: parent
-        anchors.centerIn: parent
+        color: "black"
+        opacity: 0.5
+    }
 
-        Rectangle {
-            anchors.fill: parent
-            color: "black"
-            opacity: 0.5
-        }
+    UIElement {
+        hspan: parent.hspan
+        vspan: icon.vspan + label.vspan
+        anchors.centerIn: parent
 
         Symbol {
             id: icon

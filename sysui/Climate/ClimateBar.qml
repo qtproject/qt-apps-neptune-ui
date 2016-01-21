@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2015 Pelagicore AG
+** Copyright (C) 2016 Pelagicore AG
 ** Contact: http://www.qt.io/ or http://www.pelagicore.com/
 **
 ** This file is part of the Neptune IVI UI.
@@ -84,7 +84,7 @@ UIElement {
 
             Tool {
                 id: leftSeatHeat
-                hspan: 1
+                hspan: 2
                 vspan: root.collapsedVspan
                 name: "seat_left"
                 active: ClimateService.leftSeat.heat
@@ -103,7 +103,7 @@ UIElement {
 
             Tool {
                 id: rightSeatHeat
-                hspan: 1
+                hspan: 2
                 vspan: root.collapsedVspan
                 name: "seat_right"
                 active: ClimateService.rightSeat.heat
@@ -133,6 +133,7 @@ UIElement {
                 minValue: ClimateService.leftSeat.minValue
                 maxValue: ClimateService.leftSeat.maxValue
                 value: ClimateService.leftSeat.value
+                stepValue: ClimateService.leftSeat.stepValue
                 onValueChanged: ClimateService.leftSeat.value = value
             }
 
@@ -142,7 +143,7 @@ UIElement {
             }
 
             ColumnLayout {
-                spacing: 0
+                spacing: 20
                 Layout.alignment: Qt.AlignTop
                 Layout.fillWidth: true
 
@@ -196,6 +197,7 @@ UIElement {
                 minValue: ClimateService.rightSeat.minValue
                 maxValue: ClimateService.rightSeat.maxValue
                 value: ClimateService.rightSeat.value
+                stepValue: ClimateService.rightSeat.stepValue
                 onValueChanged: ClimateService.rightSeat.value = value
             }
 

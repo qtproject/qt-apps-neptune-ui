@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2015 Pelagicore AG
+** Copyright (C) 2016 Pelagicore AG
 ** Contact: http://www.qt.io/ or http://www.pelagicore.com/
 **
 ** This file is part of the Neptune IVI UI.
@@ -32,6 +32,7 @@ import QtQuick 2.1
 
 import controls 1.0
 import utils 1.0
+import service.settings 1.0
 
 UIElement {
     id: root
@@ -39,41 +40,57 @@ UIElement {
     signal clicked()
 
     Image {
-        x: Style.hspan(4)
-        y: Style.vspan(2)
-        source: Style.gfx2Dynamic("pelagicore_colored_white", Style.defaultGfxSize)
-
+        id: logo
         width: Style.hspan(7)
         height: Style.vspan(4)
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.top: parent.top
+        anchors.topMargin: Style.vspan(2)
+        source: Style.gfx2Dynamic("pelagicore_colored_white", Style.defaultGfxSize)
 
         fillMode: Image.PreserveAspectFit
-    }
 
-    Image {
-        source: Style.gfx2("headunit")
-        width: Style.hspan(8)
-
-        y: Style.vspan(9)
-        x: Style.hspan(4)
-
-        fillMode: Image.PreserveAspectFit
     }
 
     Label {
-
-        x: Style.hspan(8)
-        y: Style.vspan(8)
-
+        id: description
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.top: logo.bottom
         width: Style.hspan(12)
-        height: Style.vspan(10)
+        height: Style.vspan(4)
+        horizontalAlignment: Text.AlignHCenter
 
-        text: "Bring stunning UX to the road. \n\nPELUX® HeadUnit enables you to design and implement a center-stack user experience (UX) that brings your customers closer to your brand. You will deliver a rock-solid head unit with a UX that’s in-line with next generation mobile devices."
+        text: "We put Stunning User Experiences on the road"
         wrapMode: Text.Wrap
         font.pixelSize: Style.fontSizeL
+        font.bold: true
+
+    }
+
+    Image {
+        width: Style.hspan(20)
+        height: Style.vspan(16)
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: -Style.vspan(2)
+        anchors.horizontalCenter: parent.horizontalCenter
+        source: Style.gfx2("boxes_layers")
+        fillMode: Image.PreserveAspectFit
+
+        Tracer {}
     }
 
     MouseArea {
         anchors.fill: parent
         onClicked: root.clicked()
     }
+
+//    Button {
+//        id: closeButton
+//        anchors.top: parent.top
+//        anchors.horizontalCenter: parent.horizontalCenter
+//        text: "Restart UI"
+//        onClicked: Qt.quit()
+//    }
+
+    Tracer {}
 }

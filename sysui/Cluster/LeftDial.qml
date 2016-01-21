@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2015 Pelagicore AG
+** Copyright (C) 2016 Pelagicore AG
 ** Contact: http://www.qt.io/ or http://www.pelagicore.com/
 **
 ** This file is part of the Neptune IVI UI.
@@ -29,14 +29,15 @@
 ****************************************************************************/
 
 import QtQuick 2.1
+import QtGraphicalEffects 1.0
 import utils 1.0
 import service.vehicle 1.0
 
 Item {
     id: root
 
-    width: childrenRect.width
-    height: childrenRect.height
+    width: 570
+    height: 720
 
     scale: zoom ? 0.7 : 1
     property bool zoom: false
@@ -57,25 +58,15 @@ Item {
     transform: Rotation { origin.x: root.width/2; origin.y: root.height/2; axis { x: 0; y: 1; z: 0 } angle: root.angle }
 
     Image {
-        id: background
-        source: Style.gfx("cluster/left_dial_background")
-    }
-
-    Dial {
-        anchors.centerIn: overlay
-        anchors.verticalCenterOffset: 18
-
-        value: VehicleService.speed / 240
-    }
-
-    Image {
         id: overlay
-        anchors.top: background.top
-        anchors.left: background.left
-        anchors.topMargin: 116
-        anchors.leftMargin: 174
+        anchors.right: parent.right
+        anchors.top: parent.top
+        anchors.rightMargin: 0
+        anchors.topMargin: 120
 
-        source: Style.gfx("cluster/left_dial_overlay")
+        source: Style.gfx("cluster/left_dial")
+
+        Tracer {}
     }
 
     Text {
@@ -83,12 +74,58 @@ Item {
 
         anchors.verticalCenter: overlay.verticalCenter
         anchors.horizontalCenter: overlay.horizontalCenter
-        anchors.verticalCenterOffset: -6
-
+        anchors.verticalCenterOffset: -7
+        anchors.horizontalCenterOffset: 5
         font.family: Style.fontFamily
-        font.pixelSize: 110
+        font.pixelSize: 60
         font.letterSpacing: 4
         color: Style.colorWhite
         text: VehicleService.displaySpeed
+    }
+
+    Rectangle {
+        width: 60
+        height: 1
+        opacity: 0.4
+        anchors.top: speedText.bottom
+        anchors.topMargin: -8
+        anchors.horizontalCenter: overlay.horizontalCenter
+        anchors.horizontalCenterOffset: 2
+    }
+
+    Text {
+        id: mph
+        anchors.top: speedText.bottom
+        anchors.topMargin: -5
+        anchors.horizontalCenter: overlay.horizontalCenter
+        anchors.horizontalCenterOffset: 2
+        font.family: Style.fontFamily
+        font.pixelSize: 24
+        color: Style.colorWhite
+        text: "mph"
+    }
+
+
+//    Text {
+//        id: travelled
+//        anchors.verticalCenter: parent.verticalCenter
+//        anchors.verticalCenterOffset: 130
+//        anchors.horizontalCenter: overlay.horizontalCenter
+//        anchors.horizontalCenterOffset: 2
+//        font.family: Style.fontFamily
+//        font.pixelSize: 24
+//        color: Style.colorWhite
+//        text: "-1531mi-"
+//    }
+
+
+
+    Dial {
+        anchors.centerIn: overlay
+        anchors.verticalCenterOffset: 2
+        fillImage: "cluster/dial_fill_color_left"
+        value: VehicleService.speed / 240
+
+        Tracer {}
     }
 }
