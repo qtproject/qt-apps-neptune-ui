@@ -37,18 +37,18 @@ QtObject {
     id: root
 
     property ClimateControl climateControl: ClimateControl {
-          autoDiscovery: true
+        discoveryMode: ClimateControl.AutoDiscovery
     }
 
     property QtObject leftSeat: QtObject {
         property real minValue: calculateUnitValue(16)
         property real maxValue: calculateUnitValue(28)
         property real stepValue: calculateUnitValue(0.5)
-        property real value: calculateUnitValue(climateControl.zoneAt.FrontLeft.targetTemperature)
+        property real value: calculateUnitValue(climateControl.zoneAt.FrontLeft.targetTemperature.value)
 
         property bool heat: climateControl.zoneAt.FrontLeft.seatHeater
 
-        onValueChanged: climateControl.zoneAt.FrontLeft.targetTemperature = value
+        onValueChanged: climateControl.zoneAt.FrontLeft.targetTemperature.value = value
         onHeatChanged: climateControl.zoneAt.FrontLeft.seatHeater = heat
     }
 
@@ -56,11 +56,11 @@ QtObject {
         property real minValue: calculateUnitValue(16)
         property real maxValue: calculateUnitValue(28)
         property real stepValue: calculateUnitValue(0.5)
-        property real value: calculateUnitValue(climateControl.zoneAt.FrontRight.targetTemperature)
+        property real value: calculateUnitValue(climateControl.zoneAt.FrontRight.targetTemperature.value)
 
         property bool heat: climateControl.zoneAt.FrontRight.seatHeater
 
-        onValueChanged: climateControl.zoneAt.FrontRight.targetTemperature = value
+        onValueChanged: climateControl.zoneAt.FrontRight.targetTemperature.value = value
         onHeatChanged: climateControl.zoneAt.FrontRight.seatHeater = heat
     }
 
@@ -76,16 +76,16 @@ QtObject {
 
     property QtObject airCondition: QtObject {
         property string symbol: "ac"
-        property bool enabled: climateControl.airConditioning
+        property bool enabled: climateControl.airConditioning.value
 
-        onEnabledChanged: climateControl.airConditioning = enabled
+        onEnabledChanged: climateControl.airConditioning.value = enabled
     }
 
     property QtObject airQuality: QtObject {
         property string symbol: "air_quality"
-        property bool enabled: climateControl.airRecirculation
+        property bool enabled: climateControl.airRecirculation.value
 
-        onEnabledChanged: climateControl.airRecirculation = enabled
+        onEnabledChanged: climateControl.airRecirculation.value = enabled
     }
 
     property QtObject eco: QtObject {
@@ -95,19 +95,19 @@ QtObject {
 
     property QtObject steeringWheelHeat: QtObject {
         property string symbol: "stearing_wheel"
-        property bool enabled: climateControl.steeringWheelHeater
+        property bool enabled: climateControl.steeringWheelHeater.enabled
 
-        onEnabledChanged: climateControl.steeringWheelHeater = enabled
+        onEnabledChanged: climateControl.steeringWheelHeater.enabled = enabled
     }
 
     property var climateOptions: [frontHeat, rearHeat, airCondition, airQuality, eco, steeringWheelHeat]
 
     property int outsideTemp: calculateUnitValue(15)
     property string outsideTempText: qsTr("%1" + tempSuffix).arg(outsideTemp)
-    property int ventilation: climateControl.fanSpeedLevel
+    property int ventilation: climateControl.fanSpeedLevel.value
     property string tempSuffix: SettingsService.metric ? "°C" : "°F"
     property int ventilationLevels: 7 // 6 + off (0)
-    onVentilationChanged: climateControl.fanSpeedLevel = ventilation
+    onVentilationChanged: climateControl.fanSpeedLevel.value = ventilation
 
     function calculateUnitValue(value) {
         // Defualt value is the celsius
