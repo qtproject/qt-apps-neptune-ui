@@ -190,15 +190,13 @@ StackView {
     }
 
     function surfaceItemClosingHandler(index, item) {
-        if (item === windowContainer.windowItem) {           // start close animation
-            root.pop(item)
-        } else {
-            WindowManager.releaseSurfaceItem(index, item)   // immediately close anything which is not handled by this container
+        if (item === root.windowItem) {           // start close animation
+            root.pop()
         }
     }
 
     function surfaceItemLostHandler(index, item) {
-        // TODO
+        WindowManager.releaseSurfaceItem(index, item)   // immediately close anything which is not handled by this container
     }
 
     function getSurfaceIndex(item) {

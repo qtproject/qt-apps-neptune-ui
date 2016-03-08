@@ -43,8 +43,6 @@ UIPage {
     anchors.bottom: parent.bottom
 
     property bool leftMap: true
-    signal showScreen(url url)
-    signal closeScreen()
 
     // Left widget side
     MapWidget {

@@ -43,14 +43,6 @@ PageSwipeScreen {
 
     title: currentItem.title
 
-    function showScreen(url) {
-        Stack.view.push(url)
-    }
-
-    function closeScreen() {
-        Stack.view.pop()
-    }
-
     statusItem: PageIndicator {
         count: root.count
         currentIndex: root.currentIndex
@@ -75,8 +67,6 @@ PageSwipeScreen {
         HomePage {
             width: root.itemWidth
             height: root.height
-            onShowScreen: root.showScreen(url)
-            onCloseScreen: root.closeScreen()
         }
         LauncherPage {
             id: launcher
