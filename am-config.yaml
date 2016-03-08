@@ -16,7 +16,7 @@ runtimes:
 
 ui:
   fullscreen: yes
-  mainQml: "Main1920x1080.qml"
+  mainQml: "Main1280x800.qml"
   importPaths: [ "modules" ]
   additionalConfiguration:
     appStoreServerUrl: 'http://beachhead.pelagicore.de:8080'

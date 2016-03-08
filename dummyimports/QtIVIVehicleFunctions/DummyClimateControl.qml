@@ -31,8 +31,7 @@
 import QtQuick 2.0
 
 QtObject {
-
-    property bool autoDiscovery: false
+    property var discoveryMode
     property bool steeringWheelHeater: false
     property bool airRecirculation: false
     property bool airConditioning: true

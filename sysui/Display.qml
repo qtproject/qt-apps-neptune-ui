@@ -68,6 +68,9 @@ Item {
                     root.state = "statusBarExpanded"
                 }
             }
+            onTimePressAndHold: {
+                fpsMonitor.visible = !fpsMonitor.visible
+            }
         }
 
         Item {
@@ -126,6 +129,15 @@ Item {
             }
         }
 
+        FpsMonitor {
+            id: fpsMonitor
+            x: 0
+            y: 0
+            width: Style.hspan(4)
+            height: Style.vspan(2)
+            visible: false
+            opacity: 0.8
+        }
     }
 
     Loader {

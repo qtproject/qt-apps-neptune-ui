@@ -40,10 +40,12 @@ UIElement {
     hspan: 24
     vspan: 2
     signal clicked()
+    signal timePressAndHold();
 
     MouseArea {
         anchors.fill: parent
         onClicked: root.clicked()
+        onPressAndHold: root.timePressAndHold()
     }
 
     Rectangle {
