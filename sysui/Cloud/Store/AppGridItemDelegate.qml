@@ -50,8 +50,8 @@ UIElement {
     }
 
     Column {
-        anchors.left: parent.left; anchors.right: parent.right
-        anchors.bottom: parent.bottom; anchors.bottomMargin: Style.padding
+        anchors.fill: parent
+        anchors.bottomMargin: Style.padding
 
         spacing: Style.paddingXL
 
