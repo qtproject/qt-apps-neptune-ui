@@ -43,7 +43,7 @@ Rectangle {
 
     Item {
         width: Screen.width
-        height: width * 0.62
+        height: Math.min(width * 0.62, Screen.height)
 
         onWidthChanged: Style.cellWidth = Math.floor(width/24)
         onHeightChanged: Style.cellHeight = Math.floor(height/24)
