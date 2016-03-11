@@ -49,12 +49,29 @@ Rectangle {
         onHeightChanged: Style.cellHeight = Math.floor(height/24)
 
         Component.onCompleted: {
+            var scalFactor = (width/1280);
+
+            print("scalFactor: ", scalFactor)
+
             Style.cellWidth = Math.floor(width/24)
             Style.cellHeight = Math.floor(height/24)
-            Style.defaultSymbolSize = Style.symbolSizeM
-            Style.defaultGfxSize = 2
 
-            var scalFactor = (width/1280);
+            var symbolSize = Style.symbolSizeS
+            var gfxSize = 1
+            if (scalFactor >= 6) {
+                symbolSize = Style.symbolSizeXL
+                gfxSize = 4
+            } else if (scalFactor >= 2) {
+                symbolSize = Style.symbolSizeL
+                gfxSize = 3
+            } else if (scalFactor >= 1.5) {
+                symbolSize = Style.symbolSizeM
+                gfxSize = 2
+            }
+
+            Style.defaultSymbolSize = symbolSize
+            Style.defaultGfxSize = 4
+
 
             Style.fontSizeXXS = scalFactor * 14
 
