@@ -42,6 +42,7 @@ StackView {
     id: root
     width: Style.hspan(24)
     height: Style.vspan(24)
+    focus: true
 
     property int windowItemIndex: -1
     property Item windowItem: null
