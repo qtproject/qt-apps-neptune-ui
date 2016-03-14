@@ -20,6 +20,7 @@ ui:
   importPaths: [ "modules" ]
   additionalConfiguration:
     appStoreServerUrl: 'http://beachhead.pelagicore.de:8080'
+  windowIcon: "modules/assets/icons/active/apps@96.png"
 
 # development setup: no security
 
