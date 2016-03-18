@@ -33,11 +33,8 @@ import QtQuick.Window 2.1
 import utils 1.0
 import "sysui/Cluster"
 
-Item {
+Main {
     id: root
-
-    width: 1920
-    height: 1080
 
     Window {
         title: "CSD"
@@ -46,10 +43,7 @@ Item {
         visible: true
 
         Cluster {}
-
     }
-
-    Main1920x1080 {}
 
     Component.onCompleted: Style.withCluster = true
 }

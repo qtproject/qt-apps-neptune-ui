@@ -34,7 +34,7 @@ import utils 1.0
 
 Item {
 
-    property string background: "background_1280x800"
+    property string background: Style.displayBackground
 
     Image {
         id: bg

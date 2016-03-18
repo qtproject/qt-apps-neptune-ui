@@ -29,53 +29,34 @@
 ****************************************************************************/
 
 import QtQuick 2.1
+import QtQuick.Window 2.2
 import "sysui"
 import controls 1.0
 import utils 1.0
 
-Item {
+Rectangle {
     id: root
 
-    width: 1920
-    height: 1080
+    color: "black"
+    width: Style.screenWidth
+    height: Style.screenHeight
 
-    onWidthChanged: Style.cellWidth = Math.floor(width/24)
-    onHeightChanged: Style.cellHeight = Math.floor(height/24)
+    Item {
+        width: Style.screenWidth
+        height: Style.screenHeight
 
-    Component.onCompleted: {
-        Style.cellWidth = Math.floor(width/24)
-        Style.cellHeight = Math.floor(height/24)
-        Style.defaultSymbolSize = Style.symbolSizeM
-        Style.defaultGfxSize = 2
+        DisplayBackground {
+            id: background
+            anchors.fill: display
+        }
 
-        Style.fontSizeXXS = (1920/1366) * 14
+        Display {
+            id: display
+            anchors.fill: parent
+        }
 
-        Style.fontSizeXS = (1920/1366) * 16
-
-        Style.fontSizeS = (1920/1366) * 18
-
-        Style.fontSizeM = (1920/1366) * 24
-
-        Style.fontSizeL = (1920/1366) * 28
-
-        Style.fontSizeXL = (1920/1366) * 36
-
-        Style.fontSizeXXL = (1920/1366) * 48
-
-        Style.fontWeight = Font.Light
-    }
-
-    DisplayBackground {
-        anchors.fill: display
-        background: "background_1920x1080"
-    }
-
-    Display {
-        id: display
-        anchors.fill: parent
-    }
-
-    DisplayGrid {
-        anchors.fill: display
+        DisplayGrid {
+            anchors.fill: display
+        }
     }
 }

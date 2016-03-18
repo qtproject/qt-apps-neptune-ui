@@ -1,4 +1,5 @@
 singleton Style 1.0 Style.qml
+AutoConfig 1.0 AutoConfig.qml
 Marker 1.0 Marker.qml
 Spacer 1.0 Spacer.qml
 Tracer 1.0 Tracer.qml

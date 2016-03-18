@@ -16,10 +16,11 @@ runtimes:
 
 ui:
   fullscreen: yes
-  mainQml: "Main1280x800.qml"
+  mainQml: "Main.qml"
   importPaths: [ "modules" ]
   additionalConfiguration:
     appStoreServerUrl: 'http://beachhead.pelagicore.de:8080'
+    styleConfig: "auto"
   windowIcon: "modules/assets/icons/active/apps@96.png"
 
 # development setup: no security

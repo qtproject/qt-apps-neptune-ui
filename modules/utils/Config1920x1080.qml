@@ -28,30 +28,25 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.1
-import "sysui"
-import controls 1.0
-import utils 1.0
+import QtQuick 2.0
 
-Item {
-    id: root
+QtObject {
+    property int cellWidth: Math.floor(screenWidth/24)
+    property int cellHeight: Math.floor(screenHeight/24)
+    property var fontWeight: Font.Light
+    property int fontSizeXXS: (1920/1366) * 14
+    property int fontSizeXS: (1920/1366) * 16
+    property int fontSizeS: (1920/1366) * 18
+    property int fontSizeM: (1920/1366) * 24
+    property int fontSizeL: (1920/1366) * 28
+    property int fontSizeXL: (1920/1366) * 36
+    property int fontSizeXXL: (1920/1366) * 48
 
-    width: 1280
-    height: 800
+    property int defaultSymbolSize: symbolSizeM
+    property int defaultGfxSize: 2
 
-    Component.onCompleted: {
-        Style.cellWidth = 53  // 1280/24
-        Style.cellHeight = 33 // 800/24
-    }
+    property string displayBackground: "background_1920x1080"
 
-    DisplayBackground {
-        anchors.fill: display
-    }
-    Display {
-        id: display
-        anchors.fill: parent
-    }
-    DisplayGrid {
-        anchors.fill: display
-    }
+    property int screenWidth: 1920
+    property int screenHeight: 1080
 }
