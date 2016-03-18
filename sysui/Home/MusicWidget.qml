@@ -30,10 +30,10 @@
 
 import QtQuick 2.1
 import QtQuick.Layouts 1.0
+import io.qt.ApplicationManager 1.0
 
 import controls 1.0
 import utils 1.0
-import service.music 1.0
 
 UIPanel {
     id: root
@@ -42,9 +42,25 @@ UIPanel {
 
     signal showFullscreen()
 
-    property var track: MusicService.currentTrack
-
     scale: area.pressed?0.85:1.0
+
+    QtObject {
+        id: musicControl
+
+        property var currentTrack: {}
+        property string currentTime: "00:00"
+        property string durationTime: "00:00"
+        property bool playing: false
+
+        signal previousTrack()
+        signal nextTrack()
+        signal play()
+        signal pause()
+
+        Component.onCompleted: {
+            ApplicationManager.registerApplicationInterfaceExtension(musicControl, "com.pelagicore.music.control", {})
+        }
+    }
 
     Behavior on scale {
         NumberAnimation {}
@@ -78,7 +94,7 @@ UIPanel {
                 Label {
                     vspan: 1
                     Layout.fillWidth: true
-                    text: track ? qsTr('%1 / %2').arg(track.artist).arg(track.album) : ""
+                    text: musicControl.currentTrack ? qsTr('%1 / %2').arg(musicControl.currentTrack.artist).arg(musicControl.currentTrack.album) : ""
                     font.pixelSize: Style.fontSizeS
                     font.capitalization: Font.AllUppercase
                     horizontalAlignment: Text.AlignLeft
@@ -88,7 +104,7 @@ UIPanel {
                 Label {
                     Layout.fillWidth: true
                     vspan: 1
-                    text: track ? track.track : ""
+                    text: musicControl.currentTrack ? musicControl.currentTrack.track : ""
                     font.pixelSize: Style.fontSizeL
                     font.capitalization: Font.AllUppercase
                     horizontalAlignment: Text.AlignLeft
@@ -98,7 +114,7 @@ UIPanel {
                 Label {
                     Layout.fillWidth: true
                     vspan: 1
-                    text: qsTr('%1 / %2').arg(MusicService.currentTime).arg(MusicService.durationTime)
+                    text: qsTr('%1 / %2').arg(musicControl.currentTime).arg(musicControl.durationTime)
                     font.pixelSize: Style.fontSizeL
                     horizontalAlignment: Text.AlignLeft
                     elide: Text.ElideRight
@@ -117,27 +133,27 @@ UIPanel {
                 name: "prev"
                 vspan: 2
                 Layout.fillWidth: true
-                onClicked: MusicService.previousTrack()
+                onClicked: musicControl.previousTrack()
             }
             Tool {
                 vspan: 2
                 Layout.fillWidth: true
                 name: "play"
-                onClicked: MusicService.musicPlay()
-                active: MusicService.playing
+                onClicked: musicControl.play()
+                active: musicControl.playing
             }
             Tool {
                 vspan: 2
                 Layout.fillWidth: true
                 name: "pause"
-                onClicked: MusicService.pause()
-                active: !MusicService.playing
+                onClicked: musicControl.pause()
+                active: !musicControl.playing
             }
             Tool {
                 vspan: 2
                 Layout.fillWidth: true
                 name: "next"
-                onClicked: MusicService.nextTrack()
+                onClicked: musicControl.nextTrack()
             }
         }
     }

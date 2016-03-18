@@ -30,6 +30,7 @@
 
 pragma Singleton
 import QtQuick 2.1
+import io.qt.ApplicationManager 1.0
 import com.pelagicore.datasource 1.0
 import service.music 1.0
 
@@ -111,6 +112,40 @@ QtObject {
         MusicService.trackCount = Qt.binding(function() { return root.nowPlaying.count})
         MusicService.coverPath = Qt.binding(function() { return root.currentCover})
         MusicService.url = Qt.binding(function() { return root.currentSource})
+    }
+
+
+    property Item ipc: Item {
+        ApplicationInterfaceExtension {
+            id: musicRemoteControl
+
+            name: "com.pelagicore.music.control"
+        }
+
+        Binding { target: musicRemoteControl.object; property: "currentTrack"; value: MusicService.currentTrack }
+        Binding { target: musicRemoteControl.object; property: "currentTime"; value: MusicService.currentTime }
+        Binding { target: musicRemoteControl.object; property: "durationTime"; value: MusicService.durationTime }
+        Binding { target: musicRemoteControl.object; property: "playing"; value: MusicService.playing }
+
+        Connections {
+            target: musicRemoteControl.object
+
+            onPlay: {
+                MusicService.musicPlay()
+            }
+
+            onPause: {
+                MusicService.pause()
+            }
+
+            onPreviousTrack: {
+                MusicService.previousTrack()
+            }
+
+            onNextTrack: {
+                MusicService.nextTrack()
+            }
+        }
     }
 
     Component.onCompleted: {
