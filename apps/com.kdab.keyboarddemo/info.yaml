@@ -1,0 +1,14 @@
+formatVersion: 1
+formatType: am-application
+---
+id:      'com.kdab.keyboarddemo'
+icon:    'icon.png'
+code:    'KeyboardDemo.qml'
+runtime: 'qml'
+name:
+  en: 'Keyboard Demo'
+  de: 'Tastatur Demo'
+
+categories: [ 'app' ]
+
+built-in: yes
