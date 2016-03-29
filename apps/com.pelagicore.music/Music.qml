@@ -39,10 +39,10 @@ AppUIScreen {
 
     onClusterKeyPressed: {
         if (key === Qt.Key_Down) {
-            MusicProvider.currentIndex--
+            MusicProvider.next()
         }
         else if (key === Qt.Key_Up) {
-            MusicProvider.currentIndex++
+            MusicProvider.previous()
         }
     }
 
@@ -50,7 +50,7 @@ AppUIScreen {
         MusicProvider.initialize()
     }
 
-    //cluster: ClusterWidget {}
+    cluster: ClusterWidget {}
 
     AppStackView {
         id: stack

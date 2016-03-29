@@ -35,7 +35,7 @@ import controls 1.0
 import "."
 
 Item {
-    width: 800
+    width: 1300
     height: parent.height
 
     ListView {
@@ -44,7 +44,7 @@ Item {
         height: parent.height
         anchors.centerIn: parent
         clip: true
-        model: MusicProvider.model
+        model: MusicProvider.nowPlaying.model
         currentIndex: MusicProvider.currentIndex
         highlight: Rectangle {
             color: Style.colorWhite; opacity: 0.25

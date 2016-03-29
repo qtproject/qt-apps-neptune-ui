@@ -67,8 +67,6 @@ Item {
                 width: stack.width
                 height: stack.height
                 title: "NAVIGATOR"
-
-                Tracer {}
             }
             WidgetContainer {
                 id: musicContainer
@@ -94,23 +92,26 @@ Item {
     Connections {
         target: AppsService
         onClusterWidgetReady: {
-//            if (category === "media") {
-//                musicContainer.content = item
-//                stack.currentIndex = 1
-//            }
-            if (category === "navigation") {
-                navContainer.content = item
+            var container;
+            if (category === "media") {
+                container = musicContainer
+                stack.currentIndex = 1
+            } else if (category === "navigation") {
+                container = navContainer
                 stack.currentIndex = 0
+            } else {
+                container = otherContainer
+                stack.currentIndex = 2
             }
-//            else {
-//                otherContainer.content = item
-//                stack.currentIndex = 2
-//            }
+
+            item.parent = container
+            container.content = item
+            item.width = container.width
+            item.height = container.height
         }
     }
 
     Keys.onPressed: {
-        //print("key pressed", Qt.Key_Plus, event.key)
         if (event.key === Qt.Key_Right) {
             if (stack.currentIndex < stack.count)
                 stack.currentIndex++

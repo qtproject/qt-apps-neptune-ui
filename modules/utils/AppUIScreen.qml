@@ -122,13 +122,14 @@ ApplicationManagerWindow {
 
     ApplicationManagerWindow {
         id: cluster
-        width: parent ? parent.width : 0
-        height: parent ? parent.height : 0
+        width: parent ? parent.width : Style.cellWidth * 24
+        height: parent ? parent.height : Style.cellHeight * 24
         visible: false
         Item {
             id: clusterContainer
             anchors.fill: parent
         }
+        color: "transparent"
 
         Component.onCompleted: {
             if (pelagicoreWindow._clusterSet) {

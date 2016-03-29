@@ -30,6 +30,7 @@
 
 import QtQuick 2.1
 import QtQuick.Window 2.1
+import io.qt.ApplicationManager 1.0
 import utils 1.0
 import "sysui/Cluster"
 
@@ -37,6 +38,7 @@ Main {
     id: root
 
     Window {
+        id: cluster
         title: "CSD"
         height: 720
         width: 1920
@@ -45,5 +47,8 @@ Main {
         Cluster {}
     }
 
-    Component.onCompleted: Style.withCluster = true
+    Component.onCompleted: {
+        WindowManager.registerOutputWindow(cluster)
+        Style.withCluster = true
+    }
 }

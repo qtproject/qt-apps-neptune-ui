@@ -41,8 +41,10 @@ Item {
     default property alias content: container.children
 
     Keys.onPressed: {
-        if (container.children[0])
+        if (container.children[0]) {
             WindowManager.setSurfaceWindowProperty(container.children[0], "keyPressed", event.key)
+            WindowManager.setSurfaceWindowProperty(container.children[0], "keyPressed", 0)
+        }
     }
 
     Item {
