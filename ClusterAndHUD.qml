@@ -47,6 +47,11 @@ Main {
         Cluster {}
     }
 
+    Window.onActiveChanged: {
+         if (Window.active)
+             cluster.requestActivate()
+    }
+
     Component.onCompleted: {
         WindowManager.registerOutputWindow(cluster)
         Style.withCluster = true
