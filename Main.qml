@@ -41,6 +41,17 @@ Rectangle {
     width: Style.screenWidth
     height: Style.screenHeight
 
+    //If we run on eglfs or similar the window might be different to what we set it here
+    Window.onWidthChanged: {
+        if (Window.width > Style.screenWidth)
+            root.width = Window.width
+    }
+
+    Window.onHeightChanged: {
+        if (Window.height > Style.screenHeight)
+            root.height = Window.height
+    }
+
     Item {
         width: Style.screenWidth
         height: Style.screenHeight

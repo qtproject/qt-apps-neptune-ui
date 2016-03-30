@@ -44,6 +44,8 @@ Main {
         width: 1920
         visible: true
 
+        color: "black"
+
         Cluster {}
     }
 
