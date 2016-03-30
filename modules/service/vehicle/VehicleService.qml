@@ -36,7 +36,7 @@ import service.apps 1.0
 QtObject {
     id: root
 
-    property bool dialAnimation: false
+    property bool dialAnimation: true
     property real speed: 0
 
 
@@ -44,6 +44,7 @@ QtObject {
         SmoothedAnimation {
             velocity: 6
             duration : 5000
+            easing.overshoot: 0
         }
     }
 
@@ -89,7 +90,7 @@ QtObject {
         interval: 4000
         property bool higherValue: false
         onTriggered: {
-            root.speed = higherValue ? (root.speed - 5) : (root.speed + 5)
+            root.speed = higherValue ? (0) : (120)
             higherValue = !higherValue
         }
     }
