@@ -28,37 +28,27 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.1
-import QtQuick.Window 2.1
-import io.qt.ApplicationManager 1.0
-import com.pelagicore.ScreenManager 1.0
-import utils 1.0
-import "sysui/Cluster"
+#ifndef SCREENMANAGER_H
+#define SCREENMANAGER_H
 
-Main {
-    id: root
+#include <QtCore/QObject>
+#include <QWindow>
 
-    Window {
-        id: cluster
-        title: "CSD"
-        height: 720
-        width: 1920
-        visible: false
+class ScreenManager : public QObject
+{
+    Q_OBJECT
 
-        color: "black"
+    Q_PROPERTY(QList<QScreen*> availableScreens READ availableScreens NOTIFY availableScreensChanged)
 
-        Cluster {}
-    }
+public:
+    explicit ScreenManager(QObject *parent = 0);
 
-    Window.onActiveChanged: {
-         if (Window.active)
-             cluster.requestActivate()
-    }
+    Q_INVOKABLE int screenCount() const;
+    Q_INVOKABLE void setScreen(QWindow * window, int screen);
+    QList<QScreen*> availableScreens() const;
 
-    Component.onCompleted: {
-        WindowManager.registerOutputWindow(cluster)
-        Style.withCluster = true
-        ScreenManager.setScreen(cluster, 1)
-        cluster.show()
-    }
-}
+signals:
+    void availableScreensChanged();
+};
+
+#endif // SCREENMANAGER_H

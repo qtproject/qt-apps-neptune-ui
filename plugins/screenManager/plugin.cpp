@@ -28,37 +28,30 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.1
-import QtQuick.Window 2.1
-import io.qt.ApplicationManager 1.0
-import com.pelagicore.ScreenManager 1.0
-import utils 1.0
-import "sysui/Cluster"
+#include <QtQml/qqmlextensionplugin.h>
+#include <qqml.h>
+#include "screenmanager.h"
 
-Main {
-    id: root
+static QObject *screenManagerSingletonFactory(QQmlEngine *engine, QJSEngine *scriptEngine)
+{
+    Q_UNUSED(scriptEngine)
+    Q_UNUSED(engine)
 
-    Window {
-        id: cluster
-        title: "CSD"
-        height: 720
-        width: 1920
-        visible: false
-
-        color: "black"
-
-        Cluster {}
-    }
-
-    Window.onActiveChanged: {
-         if (Window.active)
-             cluster.requestActivate()
-    }
-
-    Component.onCompleted: {
-        WindowManager.registerOutputWindow(cluster)
-        Style.withCluster = true
-        ScreenManager.setScreen(cluster, 1)
-        cluster.show()
-    }
+    return new ScreenManager();
 }
+
+class HoundPlugin : public QQmlExtensionPlugin
+{
+    Q_OBJECT
+    Q_PLUGIN_METADATA(IID "org.qt-project.Qt.QQmlExtensionInterface/1.0")
+public:
+    virtual void registerTypes(const char *uri)
+    {
+        Q_ASSERT(QLatin1String(uri) == QLatin1String("com.pelagicore.ScreenManager"));
+        Q_UNUSED(uri);
+
+        qmlRegisterSingletonType<ScreenManager>(uri, 1, 0, "ScreenManager", screenManagerSingletonFactory);
+    }
+};
+
+#include "plugin.moc"
