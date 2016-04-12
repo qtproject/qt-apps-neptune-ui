@@ -52,7 +52,7 @@ Main {
     }
 
     Window.onActiveChanged: {
-         if (Window.active)
+         if (Window.active && !WindowManager.runningOnDesktop)
              cluster.requestActivate()
     }
 
