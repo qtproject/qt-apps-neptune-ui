@@ -90,7 +90,7 @@ Item {
     focus: Style.debugMode
 
     Keys.onPressed: {
-        if (event.key == Qt.Key_Space) {
+        if (event.key === Qt.Key_Space) {
             if (overlay.opacity < 0.5) overlay.opacity = 0.5
             else overlay.opacity = 0
         }

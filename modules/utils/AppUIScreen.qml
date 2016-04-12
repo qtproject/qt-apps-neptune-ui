@@ -123,8 +123,8 @@ ApplicationManagerWindow {
 
     ApplicationManagerWindow {
         id: cluster
-        width: parent ? parent.width : Style.cellWidth * 24
-        height: parent ? parent.height : Style.cellHeight * 24
+        width: typeof parent !== 'undefined' ? parent.width : Style.cellWidth * 24
+        height: typeof parent !== 'undefined' ? parent.height : Style.cellHeight * 24
         visible: false
         Item {
             id: clusterContainer
@@ -151,7 +151,7 @@ ApplicationManagerWindow {
     ApplicationManagerWindow {
         id: popup
         width: 285
-        height: parent ? parent.height : 0
+        height: typeof parent !== 'undefined' ? parent.height : 0
         visible: false
         Item {
             id: popupContainer

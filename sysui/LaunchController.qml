@@ -166,7 +166,7 @@ StackView {
                     acceptSurface = false;
             }
 
-            for (var i = 0; i < root.minimizedItems.length; ++i) {
+            for (i = 0; i < root.minimizedItems.length; ++i) {
                 if (appID === root.minimizedItems[i]) {
                     acceptSurface = false;
                     // For now we assume that only navigation has a widget

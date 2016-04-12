@@ -42,7 +42,7 @@ Item {
     signal loginSuccessful()
 
     function goBack() {
-        if (categoriesPage.state != "")
+        if (categoriesPage.state !== "")
             categoriesPage.goBack()
         else
             root.close();
@@ -58,11 +58,11 @@ Item {
         })
         JSONBackend.serverCall(url, data, function(data) {
             if (data !== 0) {
-                if (data.status == "ok") {
+                if (data.status === "ok") {
                     serverOnline = true
                     login()
                     //refresh()
-                } else if (data.status == "maintenance") {
+                } else if (data.status === "maintenance") {
                     serverOnline = false
                     serverReason = "maintenance"
                 } else {
@@ -81,7 +81,7 @@ Item {
         var data = {"username" : "t", "password" : "t", "imei" : "112163001487801"}
         JSONBackend.serverCall(url, data, function(data) {
             if (data !== 0) {
-                if (data.status == "ok") {
+                if (data.status === "ok") {
                     print("LOGIN SUCCESSFUL");
                     loginSuccessful()
                 } else {

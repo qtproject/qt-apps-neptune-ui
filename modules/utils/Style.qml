@@ -51,9 +51,7 @@ QtObject {
     property int cellWidth: configValue("cellWidth", 53) // 1280/24
     property int cellHeight: configValue("cellHeight", 33) // 800/24
     property string fontFamily: configValue("fontFamily", true ? 'Source Sans Pro' : fontRegular.name)
-    // enable next line to test OpenSans font
-//    property string fontFamily: fontBackup.name
-    property var fontWeight: configValue("fontWeight", Font.Light)
+    property real fontWeight: configValue("fontWeight", Font.Light)
     property int fontSizeXXS: configValue("fontSizeXXS", 14)
     property int fontSizeXS: configValue("fontSizeXS", 16)
     property int fontSizeS: configValue("fontSizeS", 18)
@@ -102,10 +100,6 @@ QtObject {
 
     property FontLoader fontLight: FontLoader {
         source: font('SourceSansPro-Light')
-    }
-
-    property FontLoader fontBackup: FontLoader {
-        source: font('OpenSans-Regular')
     }
 
     function configValue(key, defaultValue) {
