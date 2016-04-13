@@ -36,6 +36,8 @@ import controls 1.0
 
 AppUIScreen {
     id: root
+    title: "Neptune Movie Player"
+
     StackView {
         id: stack
         anchors.fill: parent

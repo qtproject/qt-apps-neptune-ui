@@ -29,7 +29,7 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.0
+import QtQuick 2.5
 import QtQuick.Controls 1.0
 import controls 1.0
 import utils 1.0
@@ -45,7 +45,6 @@ StackView {
     height: Style.vspan(24)
     focus: true
 
-    property int windowItemIndex: -1
     property Item windowItem: null
 
     property variant blackListItems: []
@@ -179,7 +178,6 @@ StackView {
 
         if (acceptSurface) {
             root.windowItem = item
-            root.windowItemIndex = index
             WindowManager.setSurfaceWindowProperty(item, "windowType", "fullScreen")
             WindowManager.setSurfaceWindowProperty(item, "visibility", true)
 
@@ -215,14 +213,12 @@ StackView {
     }
 
     function getSurfaceIndex(item) {
-        var appIndex = -1
         for (var i = 0; i < WindowManager.count; i++) {
             if (WindowManager.get(i).surfaceItem === item) {
-                appIndex = i
-                break
+                return i
             }
         }
-        return appIndex
+        return -1
     }
 
     Connections {
@@ -231,13 +227,13 @@ StackView {
             //print(":::LaunchController::: WindowManager:surfaceWindowPropertyChanged", surfaceItem, name, value)
             if (name === "visibility" && value === false) {
                 root.pop(null)
-                var id = root.getSurfaceIndex(root.windowItem)
+                var index = root.getSurfaceIndex(root.windowItem)
                 if (ApplicationManager.dummy) {
-                    if (WindowManager.get(id).categories === "navigation")
+                    if (WindowManager.get(index).categories === "navigation")
                         WindowManager.setSurfaceWindowProperty(root.windowItem, "windowType", "widget")
                 }
                 else {
-                    if (ApplicationManager.get(WindowManager.get(id).applicationId).categories[0] === "navigation") {
+                    if (ApplicationManager.get(WindowManager.get(index).applicationId).categories[0] === "navigation") {
                         // Sending after pop transition is done
                         WindowManager.setSurfaceWindowProperty(root.windowItem, "windowType", "widget")
                     }
@@ -268,9 +264,9 @@ StackView {
                 }
             }
             else if (name === "goTo" && value === "fullScreen") {
-                var appIndex = root.getSurfaceIndex(surfaceItem)
-                //print(":::LaunchController::: App found. Going to full screen the app ", appIndex, WindowManager.get(appIndex).applicationId)
-                ApplicationManager.startApplication(WindowManager.get(appIndex).applicationId)
+                index = root.getSurfaceIndex(surfaceItem)
+                //print(":::LaunchController::: App found. Going to full screen the app ", index, WindowManager.get(index).applicationId)
+                ApplicationManager.startApplication(WindowManager.get(index).applicationId)
                 WindowManager.setSurfaceWindowProperty(surfaceItem, "goTo", "")
             }
             else if (name === "liveDriveEvent") {
@@ -318,4 +314,9 @@ StackView {
         }
     }
 
+    Shortcut {
+        context: Qt.ApplicationShortcut
+        sequence: StandardKey.Cancel
+        onActivated: { root.pop(null) }
+    }
 }

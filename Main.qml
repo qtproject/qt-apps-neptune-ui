@@ -29,7 +29,7 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.1
+import QtQuick 2.5
 import QtQuick.Window 2.2
 import "sysui"
 import controls 1.0

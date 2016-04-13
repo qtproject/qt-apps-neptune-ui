@@ -41,7 +41,7 @@ Main {
 
     Window {
         id: cluster
-        title: "CSD"
+        title: "Neptune Cluster Display"
         height: 720
         width: 1920
         visible: false
@@ -49,17 +49,17 @@ Main {
         color: "black"
 
         Cluster {}
+
+        Component.onCompleted: {
+            WindowManager.registerOutputWindow(cluster)
+            Style.withCluster = true
+            ScreenManager.setScreen(cluster, 1)
+            cluster.show()
+        }
     }
 
     Window.onActiveChanged: {
          if (Window.active && !WindowManager.runningOnDesktop)
              cluster.requestActivate()
-    }
-
-    Component.onCompleted: {
-        WindowManager.registerOutputWindow(cluster)
-        Style.withCluster = true
-        ScreenManager.setScreen(cluster, 1)
-        cluster.show()
     }
 }

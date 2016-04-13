@@ -37,6 +37,7 @@ import utils 1.0
 
 AppUIScreen {
     id: root
+    title: "Neptune Browser"
 
     UIScreen {
         WebBrowser {

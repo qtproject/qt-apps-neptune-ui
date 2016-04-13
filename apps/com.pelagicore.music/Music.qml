@@ -37,6 +37,7 @@ import "."
 
 AppUIScreen {
     id: root
+    title: "Neptune Music Player"
 
     onClusterKeyPressed: {
         if (key === Qt.Key_Down) {
