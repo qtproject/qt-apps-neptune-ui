@@ -186,9 +186,22 @@ StackView {
             root.push(item)
         }
         else {
-            print("Not showing well known application : " + appID);
+            // If nobody feels responsible for this window, we need to at least give it a
+            // parent, to not block the client process which would wait for result of the
+            // expose event indefinitely.
+
+            if (!item.parent) {
+                item.parent = dummyitem
+                item.visible = false
+                item.paintingEnabled = false
+            }
         }
 
+    }
+
+    Item {
+        id: dummyitem
+        visible: false
     }
 
     function surfaceItemClosingHandler(index, item) {
