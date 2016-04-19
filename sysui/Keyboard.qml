@@ -31,8 +31,8 @@
 
 import QtQuick 2.0
 
-import QtQuick.Enterprise.VirtualKeyboard 1.3
-import QtQuick.Enterprise.VirtualKeyboard.Settings 2.0
+import QtQuick.VirtualKeyboard 2.1
+import QtQuick.VirtualKeyboard.Settings 2.1
 
 InputPanel {
     visible: active

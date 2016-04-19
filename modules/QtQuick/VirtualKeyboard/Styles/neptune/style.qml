@@ -30,8 +30,8 @@
 ****************************************************************************/
 
 import QtQuick 2.0
-import QtQuick.Enterprise.VirtualKeyboard 2.0
-import QtQuick.Enterprise.VirtualKeyboard.Styles 2.0
+import QtQuick.VirtualKeyboard 2.1
+import QtQuick.VirtualKeyboard.Styles 2.1
 import QtGraphicalEffects 1.0
 
 import utils 1.0 as Utils
