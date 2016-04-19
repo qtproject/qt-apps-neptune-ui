@@ -38,6 +38,8 @@ UIElement {
     property alias text: textInput.text
     property alias hintText: hintLabel.text
     property alias length: textInput.length
+    property alias inputMethodHints: textInput.inputMethodHints
+    property bool forceFocusOnClick: false
 
     signal accepted
 
@@ -69,8 +71,17 @@ UIElement {
 
         anchors.fill: textInput
         font.italic: true
-        opacity: !textInput.focus && textInput.length === 0
+        opacity: !textInput.activeFocus && textInput.length === 0
 
         Behavior on opacity { NumberAnimation {} }
+    }
+
+    MouseArea {
+        id: focusMouseArea
+
+        enabled: root.forceFocusOnClick && !textInput.activeFocus
+        anchors.fill: textInput
+
+        onClicked: textInput.forceActiveFocus()
     }
 }
