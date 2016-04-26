@@ -31,7 +31,7 @@
 
 import QtQuick 2.1
 import QtQuick.Window 2.1
-import io.qt.ApplicationManager 1.0
+import QtApplicationManager 1.0
 import com.pelagicore.ScreenManager 1.0
 import utils 1.0
 import "sysui/Cluster"
@@ -51,7 +51,7 @@ Main {
         Cluster {}
 
         Component.onCompleted: {
-            WindowManager.registerOutputWindow(cluster)
+            WindowManager.registerCompositorView(cluster)
             Style.withCluster = true
             ScreenManager.setScreen(cluster, 1)
             cluster.show()

@@ -33,7 +33,7 @@ import QtQuick 2.5
 import QtQuick.Controls 1.0
 import controls 1.0
 import utils 1.0
-import io.qt.ApplicationManager 1.0
+import QtApplicationManager 1.0
 import service.navigation 1.0
 import service.music 1.0
 import service.apps 1.0
@@ -126,23 +126,23 @@ StackView {
         }
     }
 
-    function surfaceItemReadyHandler(index, item) {
-        print(":::LaunchController::: WindowManager:surfaceItemReadyHandler", index, item)
-        var isWidget = (WindowManager.surfaceWindowProperty(item, "windowType") === "widgetMap")
+    function windowReadyHandler(index, item) {
+        print(":::LaunchController::: WindowManager:windowReadyHandler", index, item)
+        var isWidget = (WindowManager.windowProperty(item, "windowType") === "widgetMap")
         print(":::LaunchController:::isWidget", isWidget)
-        var isClusterWidget = (WindowManager.surfaceWindowProperty(item, "windowType") === "clusterWidget")
+        var isClusterWidget = (WindowManager.windowProperty(item, "windowType") === "clusterWidget")
         print(":::LaunchController:::isClusterWidget", isClusterWidget)
-        var isPopup = (WindowManager.surfaceWindowProperty(item, "windowType") === "popup")
+        var isPopup = (WindowManager.windowProperty(item, "windowType") === "popup")
         print(":::LaunchController:::isPopup", isPopup)
 
-        var acceptSurface = true;
+        var acceptWindow = true;
         var appID = WindowManager.get(index).applicationId;
 
         if (isWidget) {
             if (ApplicationManager.get(appID).categories[0] === "navigation") {
                 NavigationService.mapWidget = item
             }
-            acceptSurface = false
+            acceptWindow = false
         }
         else if (isClusterWidget) {
             if (ApplicationManager.get(appID).categories[0] === "navigation") {
@@ -151,35 +151,35 @@ StackView {
             else if (ApplicationManager.get(appID).categories[0] === "media") {
                 AppsService.clusterWidgetReady("media", item)
             }
-            acceptSurface = false
+            acceptWindow = false
         }
         else if (isPopup) {
             if (ApplicationManager.get(appID).categories[0] === "navigation")
                 AppsService.sendNavigationPopup(item)
-            acceptSurface = false
+            acceptWindow = false
         }
         else {
 
             for (var i = 0; i < root.blackListItems.length; ++i) {
                 if (appID === root.blackListItems[i])
-                    acceptSurface = false;
+                    acceptWindow = false;
             }
 
             for (i = 0; i < root.minimizedItems.length; ++i) {
                 if (appID === root.minimizedItems[i]) {
-                    acceptSurface = false;
+                    acceptWindow = false;
                     // For now we assume that only navigation has a widget
-                    WindowManager.setSurfaceWindowProperty(item, "windowType", "widget")
+                    WindowManager.setWindowProperty(item, "windowType", "widget")
                     root.minimizedItems.pop(appID)
                     break
                 }
             }
         }
 
-        if (acceptSurface) {
+        if (acceptWindow) {
             root.windowItem = item
-            WindowManager.setSurfaceWindowProperty(item, "windowType", "fullScreen")
-            WindowManager.setSurfaceWindowProperty(item, "visibility", true)
+            WindowManager.setWindowProperty(item, "windowType", "fullScreen")
+            WindowManager.setWindowProperty(item, "visibility", true)
 
             root.push(item)
         }
@@ -202,47 +202,38 @@ StackView {
         visible: false
     }
 
-    function surfaceItemClosingHandler(index, item) {
+    function windowClosingHandler(index, item) {
         if (item === root.windowItem) {           // start close animation
             root.pop()
         }
     }
 
-    function surfaceItemLostHandler(index, item) {
-        WindowManager.releaseSurfaceItem(index, item)   // immediately close anything which is not handled by this container
-    }
-
-    function getSurfaceIndex(item) {
-        for (var i = 0; i < WindowManager.count; i++) {
-            if (WindowManager.get(i).surfaceItem === item) {
-                return i
-            }
-        }
-        return -1
+    function windowLostHandler(index, item) {
+        WindowManager.releasewindow(item)   // immediately close anything which is not handled by this container
     }
 
     Connections {
         target: WindowManager
-        onSurfaceWindowPropertyChanged: {
-            //print(":::LaunchController::: WindowManager:surfaceWindowPropertyChanged", surfaceItem, name, value)
+        onWindowPropertyChanged: {
+            //print(":::LaunchController::: WindowManager:windowPropertyChanged", window, name, value)
             if (name === "visibility" && value === false) {
                 root.pop(null)
-                var index = root.getSurfaceIndex(root.windowItem)
+                var index = WindowManager.indexOfWindow(root.windowItem)
                 if (ApplicationManager.dummy) {
                     if (WindowManager.get(index).categories === "navigation")
-                        WindowManager.setSurfaceWindowProperty(root.windowItem, "windowType", "widget")
+                        WindowManager.setWindowProperty(root.windowItem, "windowType", "widget")
                 }
                 else {
                     if (ApplicationManager.get(WindowManager.get(index).applicationId).categories[0] === "navigation") {
                         // Sending after pop transition is done
-                        WindowManager.setSurfaceWindowProperty(root.windowItem, "windowType", "widget")
+                        WindowManager.setWindowProperty(root.windowItem, "windowType", "widget")
                     }
                 }
             }
             else if (name === "windowType" && value === "widgetMap") {
                 // Workaround for qmlscene
                 if (ApplicationManager.dummy) {
-                    NavigationService.mapWidget = surfaceItem
+                    NavigationService.mapWidget = window
                 }
             }
             else if (name === "liveDrivePopupVisible") {
@@ -254,20 +245,20 @@ StackView {
             else if (name === "windowType" && value === "clusterWidget") {
                 // Workaround for qmlscene
                 if (ApplicationManager.dummy) {
-                    AppsService.clusterWidgetReady("other", surfaceItem)
+                    AppsService.clusterWidgetReady("other", window)
                 }
             }
             else if (name === "windowType" && value === "popup") {
                 // Workaround for qmlscene
                 if (ApplicationManager.dummy) {
-                    AppsService.sendNavigationPopup(surfaceItem)
+                    AppsService.sendNavigationPopup(window)
                 }
             }
             else if (name === "goTo" && value === "fullScreen") {
-                index = root.getSurfaceIndex(surfaceItem)
+                index = WindowManager.indexOfWindow(window)
                 //print(":::LaunchController::: App found. Going to full screen the app ", index, WindowManager.get(index).applicationId)
                 ApplicationManager.startApplication(WindowManager.get(index).applicationId)
-                WindowManager.setSurfaceWindowProperty(surfaceItem, "goTo", "")
+                WindowManager.setWindowProperty(window, "goTo", "")
             }
             else if (name === "liveDriveEvent") {
                 NavigationService.liveDriveEvent = value
@@ -278,21 +269,21 @@ StackView {
         }
 
         onRaiseApplicationWindow: {
-            //print(":::LaunchController::: WindowManager:raiseApplicaitonWindow" + id + " " + WindowManager.count)
+            //print(":::LaunchController::: WindowManager:raiseApplicaitonWindow" + applicationId + " " + WindowManager.count)
             for (var i = 0; i < WindowManager.count; i++) {
-                if (WindowManager.get(i).applicationId === id) {
-                    var item = WindowManager.get(i).surfaceItem
-                    print(":::LaunchController::: App found. Running the app " + id + " Item: " + item)
-                    var isWidget = (WindowManager.surfaceWindowProperty(item, "windowType") === "widget")
-                    var isMapWidget = (WindowManager.surfaceWindowProperty(item, "windowType") === "widgetMap")
-                    var isClusterWidget = (WindowManager.surfaceWindowProperty(item, "windowType") === "clusterWidget")
-                    var isPopup = (WindowManager.surfaceWindowProperty(item, "windowType") === "popup")
+                if (WindowManager.get(i).applicationId === applicationId) {
+                    var item = WindowManager.get(i).windowItem
+                    print(":::LaunchController::: App found. Running the app " + applicationId + " Item: " + item)
+                    var isWidget = (WindowManager.windowProperty(item, "windowType") === "widget")
+                    var isMapWidget = (WindowManager.windowProperty(item, "windowType") === "widgetMap")
+                    var isClusterWidget = (WindowManager.windowProperty(item, "windowType") === "clusterWidget")
+                    var isPopup = (WindowManager.windowProperty(item, "windowType") === "popup")
                     print(":::LaunchController:::isClusterWidget", isClusterWidget)
                     print(":::LaunchController:::isWidget", isWidget, isMapWidget)
                     print(":::LaunchController:::isPopup", isPopup)
                     if (!isMapWidget && !isClusterWidget && !isPopup) {
-                        WindowManager.setSurfaceWindowProperty(item, "visibility", true)
-                        WindowManager.setSurfaceWindowProperty(item, "windowType", "fullScreen")
+                        WindowManager.setWindowProperty(item, "visibility", true)
+                        WindowManager.setWindowProperty(item, "windowType", "fullScreen")
                         root.windowItem = item
                         root.push(item)
                         break
@@ -303,9 +294,9 @@ StackView {
     }
 
     Component.onCompleted: {
-        WindowManager.surfaceItemReady.connect(surfaceItemReadyHandler)
-        WindowManager.surfaceItemClosing.connect(surfaceItemClosingHandler)
-        WindowManager.surfaceItemLost.connect(surfaceItemLostHandler)
+        WindowManager.windowReady.connect(windowReadyHandler)
+        WindowManager.windowClosing.connect(windowClosingHandler)
+        WindowManager.windowLost.connect(windowLostHandler)
         if (NavigationService.defaultNavApp) {
             root.minimizedItems.push(NavigationService.defaultNavApp)
             ApplicationManager.startApplication(NavigationService.defaultNavApp)

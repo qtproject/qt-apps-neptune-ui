@@ -31,7 +31,7 @@
 
 import QtQuick 2.0
 import utils 1.0
-import io.qt.ApplicationManager 1.0
+import QtApplicationManager 1.0
 
 Item {
     id: root
@@ -43,8 +43,8 @@ Item {
 
     Keys.onPressed: {
         if (container.children[0]) {
-            WindowManager.setSurfaceWindowProperty(container.children[0], "keyPressed", event.key)
-            WindowManager.setSurfaceWindowProperty(container.children[0], "keyPressed", 0)
+            WindowManager.setWindowProperty(container.children[0], "keyPressed", event.key)
+            WindowManager.setWindowProperty(container.children[0], "keyPressed", 0)
         }
     }
 

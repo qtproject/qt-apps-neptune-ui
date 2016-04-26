@@ -31,7 +31,7 @@
 
 import QtQuick 2.1
 import QtQuick.Layouts 1.0
-import io.qt.ApplicationManager 1.0
+import QtApplicationManager 1.0
 
 import controls 1.0
 import utils 1.0

@@ -30,7 +30,7 @@
 ****************************************************************************/
 
 import QtQuick 2.1
-import io.qt.ApplicationManager 1.0
+import QtApplicationManager 1.0
 
 
 Rectangle {

@@ -31,7 +31,7 @@
 
 pragma Singleton
 import QtQuick 2.1
-import io.qt.ApplicationManager 1.0
+import QtApplicationManager 1.0
 import com.pelagicore.datasource 1.0
 import service.music 1.0
 

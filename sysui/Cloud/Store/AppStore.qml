@@ -31,7 +31,7 @@
 
 import QtQuick 2.0
 import "JSONBackend.js" as JSONBackend
-import io.qt.ApplicationManager 1.0
+import QtApplicationManager 1.0
 
 Item {
 

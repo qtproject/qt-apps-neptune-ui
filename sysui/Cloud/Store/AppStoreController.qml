@@ -37,7 +37,7 @@ import utils 1.0
 import service.apps 1.0
 
 import "JSONBackend.js" as JSONBackend
-import io.qt.ApplicationInstaller 1.0
+import QtApplicationManager 1.0
 
 Item {
     id: root
