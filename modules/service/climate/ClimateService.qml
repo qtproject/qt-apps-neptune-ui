@@ -79,14 +79,20 @@ QtObject {
         property string symbol: "ac"
         property bool enabled: climateControl.airConditioning.value
 
-        onEnabledChanged: climateControl.airConditioning.value = enabled
+        onEnabledChanged: {
+            climateControl.airConditioning.value = enabled;
+            enabled = Qt.binding(function() { return climateControl.airConditioning.value; });
+        }
     }
 
     property QtObject airQuality: QtObject {
         property string symbol: "air_quality"
-        property bool enabled: climateControl.airRecirculation.value
+        property bool enabled: climateControl.recirculationMode.value == ClimateControl.RecirculationOn
 
-        onEnabledChanged: climateControl.airRecirculation.value = enabled
+        onEnabledChanged: {
+            climateControl.recirculationMode.value = enabled ? ClimateControl.RecirculationOn : ClimateControl.RecirculationOff;
+            enabled = Qt.binding(function() { return climateControl.recirculationMode.value == ClimateControl.RecirculationOn });
+        }
     }
 
     property QtObject eco: QtObject {
@@ -96,9 +102,12 @@ QtObject {
 
     property QtObject steeringWheelHeat: QtObject {
         property string symbol: "stearing_wheel"
-        property bool enabled: climateControl.steeringWheelHeater.enabled
+        property bool enabled: climateControl.steeringWheelHeater.value >= 5
 
-        onEnabledChanged: climateControl.steeringWheelHeater.enabled = enabled
+        onEnabledChanged: {
+            climateControl.steeringWheelHeater.value = enabled ? 10 : 0;
+            enabled = Qt.binding(function() { return climateControl.steeringWheelHeater.value >= 5 });
+        }
     }
 
     property var climateOptions: [frontHeat, rearHeat, airCondition, airQuality, eco, steeringWheelHeat]
