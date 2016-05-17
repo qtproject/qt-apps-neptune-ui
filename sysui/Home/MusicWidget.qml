@@ -45,7 +45,7 @@ UIPanel {
 
     scale: area.pressed?0.85:1.0
 
-    QtObject {
+    ApplicationIPCInterface {
         id: musicControl
 
         property var currentTrack: {}
@@ -59,7 +59,7 @@ UIPanel {
         signal pause()
 
         Component.onCompleted: {
-            ApplicationManager.registerApplicationInterfaceExtension(musicControl, "com.pelagicore.music.control", {})
+            ApplicationIPCManager.registerInterface(musicControl, "com.pelagicore.music.control", {})
         }
     }
 
