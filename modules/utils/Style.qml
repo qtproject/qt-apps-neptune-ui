@@ -83,7 +83,7 @@ QtObject {
     property url gfxUrl: Qt.resolvedUrl('../assets/gfx/')
     property url fonts: Qt.resolvedUrl('../assets/fonts/')
 
-    property bool isClient: ApplicationInterface
+    property bool isClient: typeof ApplicationInterface !== 'undefined'
     property string styleConfig: isClient ? ApplicationInterface.additionalConfiguration.styleConfig : ApplicationManager.additionalConfiguration.styleConfig
 
     property Loader styleLoader: Loader {
