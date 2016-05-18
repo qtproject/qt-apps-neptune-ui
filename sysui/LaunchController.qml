@@ -145,13 +145,18 @@ StackView {
             acceptWindow = false
         }
         else if (isClusterWidget) {
-            if (ApplicationManager.get(appID).categories[0] === "navigation") {
-                AppsService.clusterWidgetReady("navigation", item)
+            if (!Style.withCluster) {
+                acceptWindow = false
+                item.parent = null
+            } else {
+                if (ApplicationManager.get(appID).categories[0] === "navigation") {
+                    AppsService.clusterWidgetReady("navigation", item)
+                }
+                else if (ApplicationManager.get(appID).categories[0] === "media") {
+                    AppsService.clusterWidgetReady("media", item)
+                }
+                acceptWindow = false
             }
-            else if (ApplicationManager.get(appID).categories[0] === "media") {
-                AppsService.clusterWidgetReady("media", item)
-            }
-            acceptWindow = false
         }
         else if (isPopup) {
             if (ApplicationManager.get(appID).categories[0] === "navigation")
