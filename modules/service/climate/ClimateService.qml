@@ -119,6 +119,11 @@ QtObject {
     property int ventilationLevels: 7 // 6 + off (0)
     onVentilationChanged: climateControl.fanSpeedLevel.value = ventilation
 
+    property QtObject stateMachine: ClimateStateMachine {
+        climateControl: root.climateControl
+        doorsOpen: eco.enabled // TODO use QtIVI doors/window state for this eventually
+    }
+
     function calculateUnitValue(value) {
         // Defualt value is the celsius
         return (SettingsService.unitSystem === "metric") ? value : (Math.round(value * 1.8 + 32))
