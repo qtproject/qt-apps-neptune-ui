@@ -48,16 +48,15 @@ UIElement {
 
         ListViewManager {
             id: view
-
             width: Style.hspan(5)
             Layout.fillHeight: true
 
             model: ListModel {
-                ListElement { name: "Tire Pressure Monitor"; symbol: ""; slide: "Status" }
-                ListElement { name: "Warning"; symbol: "tire_pressure"; slide: "TireFault" }
+                ListElement { name: "Tire Pressure"; symbol: "tire_pressure"; slide: "TireFault" }
+                ListElement { name: "Engine"; symbol: "engine"; slide: "" }
+                ListElement { name: "Fuel"; symbol: "fuel"; slide: "" }
                 ListElement { name: "Trunk Open"; symbol: "trunk_open"; slide: "HatchFault" }
                 ListElement { name: "Door Open"; symbol: "door_open"; slide: "DoorFault" }
-                ListElement { name: "Car Color"; symbol: ""; slide: "" }
             }
 
             delegate: CategoryListItem {
