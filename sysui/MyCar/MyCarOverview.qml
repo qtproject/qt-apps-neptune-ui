@@ -33,6 +33,7 @@ import QtQuick 2.1
 import QtQuick.Layouts 1.0
 import controls 1.0
 import utils 1.0
+import visualization 1.0
 
 UIElement {
     id: root
@@ -78,17 +79,26 @@ UIElement {
             Layout.fillHeight: true
 
             Loader {
+                id: demoLoader
                 width: parent.width
                 height: Style.vspan(15)
-                sourceComponent: carDemo
+                sourceComponent: carOverview
             }
         }
     }
 
     Component {
-        id: carDemo
-        Image {
-            source: "white.png"
+        id: carOverview
+        CarVisualization { }
+    }
+
+    Connections {
+        target: view
+        onCurrentIndexChanged: {
+            if (demoLoader.status == Loader.Ready) {
+                var demo = demoLoader.item;
+                demo.overviewItem = view.currentIndex;
+            }
         }
     }
 }
