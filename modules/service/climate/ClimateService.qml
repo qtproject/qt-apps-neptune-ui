@@ -31,7 +31,7 @@
 
 pragma Singleton
 import QtQuick 2.0
-import QtIVIVehicleFunctions 1.0
+import QtIvi.VehicleFunctions 1.0
 import service.settings 1.0
 
 QtObject {
