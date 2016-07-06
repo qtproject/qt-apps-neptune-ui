@@ -19,7 +19,7 @@ ui:
   mainQml: "Main.qml"
   importPaths: [ "modules" ]
   additionalConfiguration:
-    appStoreServerUrl: 'http://beachhead.pelagicore.de:8080'
+    appStoreServerUrl: 'http://chaos.pelagicore.net:8080'
     styleConfig: "auto"
   windowIcon: "modules/assets/icons/active/apps@96.png"
 
