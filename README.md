@@ -2,6 +2,7 @@
 
 Qt >= 5.5
 Unix system
+Application Manager
 
 # Folder Structure
 
@@ -28,11 +29,7 @@ qmlscene/qmllive - have been moved to the application-manager repository.
 
 * Run scripts within the plugins/scripts folder to scan the media on the system
 
-# Run entire UI
-
-        $ qmlscene -I modules/ -I /path/to/application-manager/dummyimports/ MainWithCluster.qml
-
-or with the Application Manager
+# Run entire UI with the Application Manager
 
         $ appman --recreate-database -c $AM_CONFIG_FILE -c am-config.yaml
 

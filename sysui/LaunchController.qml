@@ -128,8 +128,8 @@ StackView {
 
     function windowReadyHandler(index, item) {
         print(":::LaunchController::: WindowManager:windowReadyHandler", index, item)
-        var isWidget = (WindowManager.windowProperty(item, "windowType") === "widgetMap")
-        print(":::LaunchController:::isWidget", isWidget)
+        var isInWidgetState = (WindowManager.windowProperty(item, "windowType") === "widgetMap")
+        print(":::LaunchController:::isWidget", isInWidgetState)
         var isClusterWidget = (WindowManager.windowProperty(item, "windowType") === "clusterWidget")
         print(":::LaunchController:::isClusterWidget", isClusterWidget)
         var isPopup = (WindowManager.windowProperty(item, "windowType") === "popup")
@@ -138,7 +138,7 @@ StackView {
         var acceptWindow = true;
         var appID = WindowManager.get(index).applicationId;
 
-        if (isWidget) {
+        if (isInWidgetState) {
             if (ApplicationManager.get(appID).categories[0] === "navigation") {
                 NavigationService.mapWidget = item
             }
@@ -224,33 +224,11 @@ StackView {
             if (name === "visibility" && value === false) {
                 root.pop(null)
                 var index = WindowManager.indexOfWindow(root.windowItem)
-                if (ApplicationManager.dummy) {
-                    if (WindowManager.get(index).categories === "navigation")
-                        WindowManager.setWindowProperty(root.windowItem, "windowType", "widget")
-                }
-                else {
-                    if (ApplicationManager.get(WindowManager.get(index).applicationId).categories[0] === "navigation") {
-                        // Sending after pop transition is done
-                        WindowManager.setWindowProperty(root.windowItem, "windowType", "widget")
-                    }
-                }
-            }
-            else if (name === "windowType" && value === "widgetMap") {
-                // Workaround for qmlscene
-                if (ApplicationManager.dummy) {
-                    NavigationService.mapWidget = window
-                }
-            }
-            else if (name === "liveDrivePopupVisible") {
-                AppsService.liveDrivePopup = value
-                if (value) {
-                     VehicleService.fuelTimer.start()
-                }
-            }
-            else if (name === "windowType" && value === "clusterWidget") {
-                // Workaround for qmlscene
-                if (ApplicationManager.dummy) {
-                    AppsService.clusterWidgetReady("other", window)
+
+                if (ApplicationManager.get(WindowManager.get(index).applicationId).categories[0] === "navigation") {
+                    // Sending after pop transition is done
+                    WindowManager.setWindowProperty(root.windowItem, "windowType", "widget")
+
                 }
             }
             else if (name === "windowType" && value === "popup") {
@@ -285,7 +263,7 @@ StackView {
                     var isPopup = (WindowManager.windowProperty(item, "windowType") === "popup")
                     print(":::LaunchController:::isClusterWidget", isClusterWidget)
                     print(":::LaunchController:::isWidget", isWidget, isMapWidget)
-                    print(":::LaunchController:::isPopup", isPopup)
+
                     if (!isMapWidget && !isClusterWidget && !isPopup) {
                         WindowManager.setWindowProperty(item, "visibility", true)
                         WindowManager.setWindowProperty(item, "windowType", "fullScreen")

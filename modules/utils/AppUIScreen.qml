@@ -41,17 +41,12 @@ ApplicationManagerWindow {
     height: Style.cellHeight * 24
 
     default property alias content: content.children
-    property alias widget: widgetContainer.children
     property alias cluster: clusterContainer.children
     property alias popup: popupContainer.children
 
-    property bool _widgetSet: false
     property bool _clusterSet: false
     property bool _popupSet: false
 
-    property bool isWidget: false
-
-    onWidgetChanged: _widgetSet = true
     onClusterChanged: _clusterSet = true
     onPopupChanged: _popupSet = true
 
@@ -62,63 +57,13 @@ ApplicationManagerWindow {
         pelagicoreWindow.setWindowProperty("visibility", false)
     }
 
-    function sendWidget() {
-        widget.setWindowProperty("windowType", "widgetMap")
-        widget.visible = true
-    }
-
     function sendClusterWidget() {
         cluster.setWindowProperty("windowType", "clusterWidget")
         cluster.visible = true
     }
 
-    function sendPopupWidget() {
-        popup.setWindowProperty("windowType", "popup")
-        popup.visible = true
-    }
-
-    function startFullScreen() {
-        pelagicoreWindow.setWindowProperty("goTo", "fullScreen")
-    }
-
-    function showPopup() {
-        pelagicoreWindow.setWindowProperty("liveDrivePopupVisible", true)
-    }
-
-    function hidePopup() {
-        pelagicoreWindow.setWindowProperty("liveDrivePopupVisible", false)
-    }
-
-    function sendLiveDriveEvent(event) {
-        cluster.setWindowProperty("liveDriveEvent", event)
-    }
-
-    function sendRouteUpdate(update) {
-        cluster.setWindowProperty("routeUpdate", update)
-    }
-
     DisplayBackground {
         anchors.fill: parent
-    }
-
-    ApplicationManagerWindow {
-        id: widget
-        width: Style.cellWidth * 12
-        height: Style.cellHeight * 19
-        visible: false
-        Item {
-            id: widgetContainer
-            anchors.fill: parent
-
-            Component.onCompleted: {
-                if (pelagicoreWindow._widgetSet) {
-                    pelagicoreWindow.sendWidget()
-                }
-                else {
-                    widget.setWindowProperty("windowType", "widgetMap")
-                }
-            }
-        }
     }
 
     ApplicationManagerWindow {
@@ -181,14 +126,8 @@ ApplicationManagerWindow {
 
     onWindowPropertyChanged: {
         //print(":::AppUIScreen::: Window property changed", name, value)
-        if (name === "windowType" && value === "widget") {
-            pelagicoreWindow.isWidget = true
-        }
-        else if (name === "windowType" && value === "fullScreen") {
-            pelagicoreWindow.isWidget = false
-        }
-        else if (name === "visibility" && value === true) {
-            root.raiseApp()
+        if (name === "visibility" && value === true) {
+            pelagicoreWindow.raiseApp()
         }
     }
 }
