@@ -35,7 +35,5 @@ import QtQuick 2.1
 QtObject {
     id: root
 
-    property bool popupVisible: false
     signal clusterWidgetReady(string category, Item item)
-    signal sendNavigationPopup(Item item)
 }

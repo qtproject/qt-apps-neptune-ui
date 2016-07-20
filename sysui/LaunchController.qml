@@ -132,8 +132,6 @@ StackView {
         print(":::LaunchController:::isWidget", isInWidgetState)
         var isClusterWidget = (WindowManager.windowProperty(item, "windowType") === "clusterWidget")
         print(":::LaunchController:::isClusterWidget", isClusterWidget)
-        var isPopup = (WindowManager.windowProperty(item, "windowType") === "popup")
-        print(":::LaunchController:::isPopup", isPopup)
 
         var acceptWindow = true;
         var appID = WindowManager.get(index).applicationId;
@@ -157,13 +155,7 @@ StackView {
                 }
                 acceptWindow = false
             }
-        }
-        else if (isPopup) {
-            if (ApplicationManager.get(appID).categories[0] === "navigation")
-                AppsService.sendNavigationPopup(item)
-            acceptWindow = false
-        }
-        else {
+        } else {
 
             for (var i = 0; i < root.blackListItems.length; ++i) {
                 if (appID === root.blackListItems[i])
@@ -231,23 +223,11 @@ StackView {
 
                 }
             }
-            else if (name === "windowType" && value === "popup") {
-                // Workaround for qmlscene
-                if (ApplicationManager.dummy) {
-                    AppsService.sendNavigationPopup(window)
-                }
-            }
             else if (name === "goTo" && value === "fullScreen") {
                 index = WindowManager.indexOfWindow(window)
                 //print(":::LaunchController::: App found. Going to full screen the app ", index, WindowManager.get(index).applicationId)
                 ApplicationManager.startApplication(WindowManager.get(index).applicationId)
                 WindowManager.setWindowProperty(window, "goTo", "")
-            }
-            else if (name === "liveDriveEvent") {
-                NavigationService.liveDriveEvent = value
-            }
-            else if (name === "routeUpdate") {
-                NavigationService.routeUpdate = value
             }
         }
 
@@ -260,11 +240,10 @@ StackView {
                     var isWidget = (WindowManager.windowProperty(item, "windowType") === "widget")
                     var isMapWidget = (WindowManager.windowProperty(item, "windowType") === "widgetMap")
                     var isClusterWidget = (WindowManager.windowProperty(item, "windowType") === "clusterWidget")
-                    var isPopup = (WindowManager.windowProperty(item, "windowType") === "popup")
                     print(":::LaunchController:::isClusterWidget", isClusterWidget)
                     print(":::LaunchController:::isWidget", isWidget, isMapWidget)
 
-                    if (!isMapWidget && !isClusterWidget && !isPopup) {
+                    if (!isMapWidget && !isClusterWidget) {
                         WindowManager.setWindowProperty(item, "visibility", true)
                         WindowManager.setWindowProperty(item, "windowType", "fullScreen")
                         root.windowItem = item

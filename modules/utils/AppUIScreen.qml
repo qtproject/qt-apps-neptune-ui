@@ -42,13 +42,10 @@ ApplicationManagerWindow {
 
     default property alias content: content.children
     property alias cluster: clusterContainer.children
-    property alias popup: popupContainer.children
 
     property bool _clusterSet: false
-    property bool _popupSet: false
 
     onClusterChanged: _clusterSet = true
-    onPopupChanged: _popupSet = true
 
     signal clusterKeyPressed(int key)
     signal raiseApp()
@@ -83,32 +80,6 @@ ApplicationManagerWindow {
             }
             else {
                 cluster.setWindowProperty("windowType", "clusterWidget")
-            }
-
-        }
-
-        onWindowPropertyChanged: {
-            //print(":::AppUIScreen::: window property changed", name, value, Qt.Key_Up)
-            pelagicoreWindow.clusterKeyPressed(value)
-        }
-    }
-
-    ApplicationManagerWindow {
-        id: popup
-        width: 285
-        height: typeof parent !== 'undefined' ? parent.height : 0
-        visible: false
-        Item {
-            id: popupContainer
-            anchors.fill: parent
-        }
-
-        Component.onCompleted: {
-            if (pelagicoreWindow._popupSet) {
-                pelagicoreWindow.sendPopupWidget()
-            }
-            else {
-                popup.setWindowProperty("windowType", "popup")
             }
 
         }
