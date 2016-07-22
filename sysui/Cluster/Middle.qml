@@ -33,7 +33,7 @@ import QtQuick 2.1
 import QtGraphicalEffects 1.0
 import utils 1.0
 import service.statusbar 1.0
-import service.apps 1.0
+import models 1.0
 
 Item {
     id: root
@@ -91,7 +91,7 @@ Item {
     }
 
     Connections {
-        target: AppsService
+        target: ApplicationManagerInterface
         onClusterWidgetReady: {
             var container;
             if (category === "media") {

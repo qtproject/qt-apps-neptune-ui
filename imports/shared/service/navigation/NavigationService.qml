@@ -30,10 +30,29 @@
 ****************************************************************************/
 
 pragma Singleton
-import QtQuick 2.1
+
+import QtQuick 2.0
 
 QtObject {
     id: root
 
-    signal clusterWidgetReady(string category, Item item)
+    property string defaultNavApp
+
+    property string distanceString
+    property string etaString
+    property string lastKnownDirection
+
+    property string currentStreet
+
+    property bool nightMode
+    property bool satelliteMode
+
+    function toggleNightMode() {
+        nightMode = !nightMode
+        satelliteMode = false
+    }
+
+    function toggleSatelliteMode() {
+        satelliteMode = !satelliteMode
+    }
 }

@@ -32,7 +32,6 @@
 pragma Singleton
 import QtQuick 2.0
 import utils 1.0
-import service.apps 1.0
 
 QtObject {
     id: root

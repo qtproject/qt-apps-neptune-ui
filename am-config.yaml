@@ -10,18 +10,18 @@ applications:
 
 runtimes:
   qml:
-    importPaths: [ "modules" ]
+    importPaths: [ "imports/shared" ]
 
 # ... as well as the SystemUI
 
 ui:
   fullscreen: yes
   mainQml: "Main.qml"
-  importPaths: [ "modules" ]
+  importPaths: [ "imports/shared", "imports/system" ]
   additionalConfiguration:
     appStoreServerUrl: 'http://chaos.pelagicore.net:8080'
     styleConfig: "auto"
-  windowIcon: "modules/assets/icons/active/apps@96.png"
+  windowIcon: "imports/shared/assets/icons/active/apps@96.png"
 
 # development setup: no security
 

@@ -35,6 +35,7 @@ import controls 1.0
 import utils 1.0
 
 import service.navigation 1.0
+import models 1.0
 
 UIPanel {
     id: root
@@ -60,12 +61,12 @@ UIPanel {
     }
 
     Connections {
-        target: NavigationService
+        target: ApplicationManagerInterface
         onMapWidgetChanged: {
             loadingLabel.visible = false
-            NavigationService.mapWidget.width = Qt.binding(function () { return loader.width})
-            NavigationService.mapWidget.height = loader.height
-            loader.children = NavigationService.mapWidget
+            ApplicationManagerInterface.mapWidget.width = Qt.binding(function () { return loader.width})
+            ApplicationManagerInterface.mapWidget.height = loader.height
+            loader.children = ApplicationManagerInterface.mapWidget
         }
     }
 }

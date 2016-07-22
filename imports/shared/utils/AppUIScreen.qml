@@ -43,20 +43,18 @@ ApplicationManagerWindow {
     default property alias content: content.children
     property alias cluster: clusterContainer.children
 
-    property bool _clusterSet: false
-
-    onClusterChanged: _clusterSet = true
-
     signal clusterKeyPressed(int key)
     signal raiseApp()
 
-    function back() {
-        pelagicoreWindow.setWindowProperty("visibility", false)
+    onWindowPropertyChanged: {
+        //print(":::AppUIScreen::: Window property changed", name, value)
+        if (name === "visibility" && value === true) {
+            pelagicoreWindow.raiseApp()
+        }
     }
 
-    function sendClusterWidget() {
-        cluster.setWindowProperty("windowType", "clusterWidget")
-        cluster.visible = true
+    function back() {
+        pelagicoreWindow.setWindowProperty("visibility", false)
     }
 
     DisplayBackground {
@@ -68,20 +66,17 @@ ApplicationManagerWindow {
         width: typeof parent !== 'undefined' ? parent.width : Style.cellWidth * 24
         height: typeof parent !== 'undefined' ? parent.height : Style.cellHeight * 24
         visible: false
+        color: "transparent"
+
         Item {
             id: clusterContainer
             anchors.fill: parent
         }
-        color: "transparent"
 
         Component.onCompleted: {
-            if (pelagicoreWindow._clusterSet) {
-                pelagicoreWindow.sendClusterWidget()
-            }
-            else {
-                cluster.setWindowProperty("windowType", "clusterWidget")
-            }
-
+            cluster.setWindowProperty("windowType", "clusterWidget")
+            // Send this wayland surface after the base wayland surface
+            timer.start()
         }
 
         onWindowPropertyChanged: {
@@ -95,10 +90,11 @@ ApplicationManagerWindow {
         anchors.fill: parent
     }
 
-    onWindowPropertyChanged: {
-        //print(":::AppUIScreen::: Window property changed", name, value)
-        if (name === "visibility" && value === true) {
-            pelagicoreWindow.raiseApp()
+    Timer {
+        id: timer
+        interval: 1000
+        onTriggered: {
+            cluster.visible = Qt.binding(function() { return clusterContainer.children.length > 0})
         }
     }
 }

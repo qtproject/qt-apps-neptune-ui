@@ -33,22 +33,13 @@ import QtQuick 2.5
 import QtQuick.Controls 1.0
 import controls 1.0
 import utils 1.0
-import QtApplicationManager 1.0
-import service.navigation 1.0
-import service.music 1.0
-import service.apps 1.0
-import service.vehicle 1.0
+import models 1.0
 
 StackView {
     id: root
     width: Style.hspan(24)
     height: Style.vspan(24)
     focus: true
-
-    property Item windowItem: null
-
-    property variant blackListItems: []
-    property var minimizedItems: [] // Apps which will be started but not shown in full screen
 
     delegate: StackViewDelegate {
         function transitionFinished(properties)
@@ -126,150 +117,29 @@ StackView {
         }
     }
 
-    function windowReadyHandler(index, item) {
-        print(":::LaunchController::: WindowManager:windowReadyHandler", index, item)
-        var isInWidgetState = (WindowManager.windowProperty(item, "windowType") === "widgetMap")
-        print(":::LaunchController:::isWidget", isInWidgetState)
-        var isClusterWidget = (WindowManager.windowProperty(item, "windowType") === "clusterWidget")
-        print(":::LaunchController:::isClusterWidget", isClusterWidget)
-
-        var acceptWindow = true;
-        var appID = WindowManager.get(index).applicationId;
-
-        if (isInWidgetState) {
-            if (ApplicationManager.get(appID).categories[0] === "navigation") {
-                NavigationService.mapWidget = item
-            }
-            acceptWindow = false
-        }
-        else if (isClusterWidget) {
-            if (!Style.withCluster) {
-                acceptWindow = false
-                item.parent = null
-            } else {
-                if (ApplicationManager.get(appID).categories[0] === "navigation") {
-                    AppsService.clusterWidgetReady("navigation", item)
-                }
-                else if (ApplicationManager.get(appID).categories[0] === "media") {
-                    AppsService.clusterWidgetReady("media", item)
-                }
-                acceptWindow = false
-            }
-        } else {
-
-            for (var i = 0; i < root.blackListItems.length; ++i) {
-                if (appID === root.blackListItems[i])
-                    acceptWindow = false;
-            }
-
-            for (i = 0; i < root.minimizedItems.length; ++i) {
-                if (appID === root.minimizedItems[i]) {
-                    acceptWindow = false;
-                    // For now we assume that only navigation has a widget
-                    WindowManager.setWindowProperty(item, "windowType", "widget")
-                    root.minimizedItems.pop(appID)
-                    break
-                }
-            }
-        }
-
-        if (acceptWindow) {
-            root.windowItem = item
-            WindowManager.setWindowProperty(item, "windowType", "fullScreen")
-            WindowManager.setWindowProperty(item, "visibility", true)
-
-            root.push(item)
-        }
-        else {
-            // If nobody feels responsible for this window, we need to at least give it a
-            // parent, to not block the client process which would wait for result of the
-            // expose event indefinitely.
-
-            if (!item.parent) {
-                item.parent = dummyitem
-                item.visible = false
-                item.paintingEnabled = false
-            }
-        }
-
-    }
-
     Item {
         id: dummyitem
-        visible: false
-    }
-
-    function windowClosingHandler(index, item) {
-        if (item === root.windowItem) {           // start close animation
-            root.pop()
-        }
-    }
-
-    function windowLostHandler(index, item) {
-        WindowManager.releasewindow(item)   // immediately close anything which is not handled by this container
-    }
-
-    Connections {
-        target: WindowManager
-        onWindowPropertyChanged: {
-            //print(":::LaunchController::: WindowManager:windowPropertyChanged", window, name, value)
-            if (name === "visibility" && value === false) {
-                root.pop(null)
-                var index = WindowManager.indexOfWindow(root.windowItem)
-
-                if (ApplicationManager.get(WindowManager.get(index).applicationId).categories[0] === "navigation") {
-                    // Sending after pop transition is done
-                    WindowManager.setWindowProperty(root.windowItem, "windowType", "widget")
-
-                }
-            }
-            else if (name === "goTo" && value === "fullScreen") {
-                index = WindowManager.indexOfWindow(window)
-                //print(":::LaunchController::: App found. Going to full screen the app ", index, WindowManager.get(index).applicationId)
-                ApplicationManager.startApplication(WindowManager.get(index).applicationId)
-                WindowManager.setWindowProperty(window, "goTo", "")
-            }
-        }
-
-        onRaiseApplicationWindow: {
-            //print(":::LaunchController::: WindowManager:raiseApplicaitonWindow" + applicationId + " " + WindowManager.count)
-            for (var i = 0; i < WindowManager.count; i++) {
-                if (WindowManager.get(i).applicationId === applicationId) {
-                    var item = WindowManager.get(i).windowItem
-                    print(":::LaunchController::: App found. Running the app " + applicationId + " Item: " + item)
-                    var isWidget = (WindowManager.windowProperty(item, "windowType") === "widget")
-                    var isMapWidget = (WindowManager.windowProperty(item, "windowType") === "widgetMap")
-                    var isClusterWidget = (WindowManager.windowProperty(item, "windowType") === "clusterWidget")
-                    print(":::LaunchController:::isClusterWidget", isClusterWidget)
-                    print(":::LaunchController:::isWidget", isWidget, isMapWidget)
-
-                    if (!isMapWidget && !isClusterWidget) {
-                        WindowManager.setWindowProperty(item, "visibility", true)
-                        WindowManager.setWindowProperty(item, "windowType", "fullScreen")
-                        root.windowItem = item
-                        root.push(item)
-                        break
-                    }
-                }
-            }
-        }
-    }
-
-    Component.onCompleted: {
-        WindowManager.windowReady.connect(windowReadyHandler)
-        WindowManager.windowClosing.connect(windowClosingHandler)
-        WindowManager.windowLost.connect(windowLostHandler)
-        if (NavigationService.defaultNavApp) {
-            root.minimizedItems.push(NavigationService.defaultNavApp)
-            ApplicationManager.startApplication(NavigationService.defaultNavApp)
-            root.minimizedItems.push(MusicService.defaultMusicApp)
-            ApplicationManager.startApplication(MusicService.defaultMusicApp)
-        }
+        anchors.fill: parent
+        //visible: false
     }
 
     Shortcut {
         context: Qt.ApplicationShortcut
         sequence: StandardKey.Cancel
         onActivated: { root.pop(null) }
+    }
+
+    Connections {
+        target: ApplicationManagerInterface
+
+        onApplicationSurfaceReady: {
+            print("itemmm", item, item.visible, item.width, item.height)
+            root.push(item)
+            print("itemmm", item, item.visible, item.width, item.height)
+        }
+
+        onReleaseApplicationSurface: {
+            root.pop(null)
+        }
     }
 }

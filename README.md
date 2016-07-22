@@ -6,10 +6,12 @@ Application Manager
 
 # Folder Structure
 
-* modules - QML modules and assets to be imported (e.g. import controls 1.0)
-* boards - visual ui tests for easier development
+* imports - QML modules and assets to be imported (e.g. import controls 1.0)
+* separated into 'shared' (availabe to apps and the system UI) and 'system'
+* (available only to system UI) boards - visual ui tests for easier development
 * apps - container for the different applications used within the system UI
-* plugins - QML and other plugins needed for fully functional UI (e.g. reading the media from database)
+* plugins - QML and other plugins needed for fully functional UI (e.g. reading
+* the media from database)
 
 Please note that am-dummyimports - the Application Manager dummy imports for running within
 qmlscene/qmllive - have been moved to the application-manager repository.
