@@ -40,51 +40,18 @@ AppUIScreen {
 
     property alias widget: widgetContainer.children
 
-    property bool _widgetSet: false
-
-    property bool isInWidgetState: false
-
-    onWidgetChanged: _widgetSet = true
-
-    function sendWidget() {
-        widget.setWindowProperty("windowType", "widgetMap")
-        widget.visible = true
-    }
-
-
-    function startFullScreen() {
-        root.setWindowProperty("goTo", "fullScreen")
-    }
-
-    ApplicationManagerWindow {
-        id: widget
+    property var widgetSurface: ApplicationManagerWindow {
         width: Style.cellWidth * 12
         height: Style.cellHeight * 19
-        visible: false
-        parent: root
+        visible: widgetContainer.children.length > 0
 
         Item {
             id: widgetContainer
             anchors.fill: parent
-
-            Component.onCompleted: {
-                if (root._widgetSet) {
-                    root.sendWidget()
-                }
-                else {
-                    widget.setWindowProperty("windowType", "widgetMap")
-                }
-            }
         }
-    }
 
-    onWindowPropertyChanged: {
-        //print(":::AppUIScreen::: Window property changed", name, value)
-        if (name === "windowType" && value === "widget") {
-            root.isInWidgetState = true
-        }
-        else if (name === "windowType" && value === "fullScreen") {
-            root.isInWidgetState = false
+        Component.onCompleted: {
+            widgetSurface.setWindowProperty("windowType", "widgetMap")
         }
     }
 }

@@ -43,9 +43,18 @@ QtObject {
     property string activeAppId
 
     property variant blackListItems: []
-    property var minimizedItems: [] // Apps which will be started but not shown in full screen
+    property var minimizedItems: [NavigationService.defaultNavApp] // Apps which will be started but not shown in full screen
     property Item windowItem
     property Item mapWidget
+
+    property Timer timer: Timer {
+        interval: 1000
+        onTriggered: {
+            for (var i in root.minimizedItems) {
+                ApplicationManager.startApplication(root.minimizedItems[i])
+            }
+        }
+    }
 
     signal applicationSurfaceReady(Item item)
     signal releaseApplicationSurface()
@@ -59,6 +68,7 @@ QtObject {
         ApplicationManager.applicationWasActivated.connect(applicationActivated)
         WindowManager.windowLost.connect(windowLostHandler)
         WindowManager.windowPropertyChanged.connect(windowPropertyChanged)
+        timer.start()
     }
 
     function windowReadyHandler(index, item) {
@@ -100,8 +110,6 @@ QtObject {
             for (i = 0; i < root.minimizedItems.length; ++i) {
                 if (appID === root.minimizedItems[i]) {
                     acceptWindow = false;
-                    // For now we assume that only navigation has a widget
-                    WindowManager.setWindowProperty(item, "windowType", "widget")
                     root.minimizedItems.pop(appID)
                     break
                 }
@@ -109,8 +117,7 @@ QtObject {
         }
 
         if (acceptWindow) {
-            //root.windowItem = item
-            WindowManager.setWindowProperty(item, "windowType", "fullScreen")
+            root.windowItem = item
             WindowManager.setWindowProperty(item, "visibility", true)
 
             root.applicationSurfaceReady(item)
@@ -132,19 +139,6 @@ QtObject {
         //print(":::LaunchController::: WindowManager:windowPropertyChanged", window, name, value)
         if (name === "visibility" && value === false) {
             root.releaseApplicationSurface()
-            var index = WindowManager.indexOfWindow(root.windowItem)
-
-            if (ApplicationManager.get(WindowManager.get(index).applicationId).categories[0] === "navigation") {
-                // Sending after pop transition is done
-                WindowManager.setWindowProperty(root.windowItem, "windowType", "widget")
-
-            }
-        }
-        else if (name === "goTo" && value === "fullScreen") {
-            index = WindowManager.indexOfWindow(window)
-            //print(":::LaunchController::: App found. Going to full screen the app ", index, WindowManager.get(index).applicationId)
-            ApplicationManager.startApplication(WindowManager.get(index).applicationId)
-            WindowManager.setWindowProperty(window, "goTo", "")
         }
     }
 
@@ -173,7 +167,6 @@ QtObject {
 
                 if (!isMapWidget && !isClusterWidget) {
                     WindowManager.setWindowProperty(item, "visibility", true)
-                    WindowManager.setWindowProperty(item, "windowType", "fullScreen")
                     root.windowItem = item
                     root.applicationSurfaceReady(item)
                     break

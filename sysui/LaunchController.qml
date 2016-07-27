@@ -133,9 +133,7 @@ StackView {
         target: ApplicationManagerInterface
 
         onApplicationSurfaceReady: {
-            print("itemmm", item, item.visible, item.width, item.height)
             root.push(item)
-            print("itemmm", item, item.visible, item.width, item.height)
         }
 
         onReleaseApplicationSurface: {

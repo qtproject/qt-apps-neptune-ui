@@ -9,4 +9,5 @@ UIPanel 1.0 UIPanel.qml
 UIScreen 1.0 UIScreen.qml
 UIPage 1.0 UIPage.qml
 AppUIScreen 1.0 AppUIScreen.qml
+NavigationUIScreen 1.0 NavigationUIScreen.qml
 Layouter 1.0 Layouter.qml

@@ -62,10 +62,10 @@ ApplicationManagerWindow {
     }
 
     ApplicationManagerWindow {
-        id: cluster
+        id: clusterSurface
         width: typeof parent !== 'undefined' ? parent.width : Style.cellWidth * 24
         height: typeof parent !== 'undefined' ? parent.height : Style.cellHeight * 24
-        visible: false
+        visible: clusterContainer.children.length > 0 && Style.withCluster
         color: "transparent"
 
         Item {
@@ -74,9 +74,7 @@ ApplicationManagerWindow {
         }
 
         Component.onCompleted: {
-            cluster.setWindowProperty("windowType", "clusterWidget")
-            // Send this wayland surface after the base wayland surface
-            timer.start()
+            clusterSurface.setWindowProperty("windowType", "clusterWidget")
         }
 
         onWindowPropertyChanged: {
@@ -88,13 +86,5 @@ ApplicationManagerWindow {
     Item {
         id: content
         anchors.fill: parent
-    }
-
-    Timer {
-        id: timer
-        interval: 1000
-        onTriggered: {
-            cluster.visible = Qt.binding(function() { return clusterContainer.children.length > 0})
-        }
     }
 }
