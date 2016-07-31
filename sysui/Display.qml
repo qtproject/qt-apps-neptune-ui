@@ -141,6 +141,12 @@ Item {
         }
     }
 
+    NotificationContainer {
+        id: notificationContainer
+
+        anchors.centerIn: parent
+    }
+
     Loader {
         id: keyboardLoader
         anchors.left: parent.left

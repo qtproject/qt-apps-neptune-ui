@@ -36,6 +36,7 @@ import QtGraphicalEffects 1.0
 import controls 1.0
 import utils 1.0
 import service.settings 1.0
+import service.notification 1.0
 
 UIPage {
     id: root
@@ -44,6 +45,12 @@ UIPage {
 
     title: qsTr('Car Settings')
     symbolName: "settings"
+
+    NotificationInterface {
+        id: notificationInterface
+        actions: ["OK"]
+        summary: "Car Settings"
+    }
 
     GridView {
         id: view
@@ -118,7 +125,11 @@ UIPage {
 
             MouseArea {
                 anchors.fill: parent
-                onClicked: active = !active
+                onClicked: {
+                    active = !active
+                    notificationInterface.body = model.description + (active ? " activated" : " deactivated")
+                    notificationInterface.show()
+                }
             }
         }
     }
