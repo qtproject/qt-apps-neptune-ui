@@ -1,6 +1,7 @@
 # Prerequisite
 
 Qt >= 5.5
+QtIvi
 Unix system
 Application Manager
 
@@ -36,6 +37,12 @@ qmlscene/qmllive - have been moved to the application-manager repository.
         $ appman --recreate-database -c $AM_CONFIG_FILE -c am-config.yaml
 
 where `AM_CONFIG_FILE` is the path to the Application Manager `config.yaml` file (inside the template-opt folder within the Application Manager delivery). The default `config.yaml` points to the `/opt/am` folder. If that folder does not exists, make sure to update the config.yaml settings to the corresponding paths.
+
+# Run the UI without QtIvi installed
+
+It is possible to run the UI also without having QtIvi build and installed. For bugreports please make sure to have QtIvi installed.
+
+        $ appman --recreate-database -c $AM_CONFIG_FILE -c am-config.yaml -I dummyimports
 
 # Style Configuration
 
