@@ -37,8 +37,8 @@ import service.settings 1.0
 import service.statusbar 1.0
 
 Item {
-    width: background.width
-    height: background.height
+    width: 0.37 * Style.clusterWidth
+    height: 0.12 * Style.clusterHeight
 
     Behavior on y {
         NumberAnimation { duration: 200}
@@ -46,6 +46,8 @@ Item {
 
     Image {
         id: background
+        width: parent.width
+        height: parent.height
         source: Style.gfx("cluster/top_bar")
         Tracer {}
     }
@@ -54,16 +56,19 @@ Item {
         id: timeText
         anchors.verticalCenter: background.verticalCenter
         anchors.left: background.left
-        anchors.verticalCenterOffset: 0
-        anchors.leftMargin: 162
+        anchors.leftMargin: 0.2 * background.width
 
-        font.pixelSize: 37
+        font.pixelSize: 0.42 * background.height
         font.bold: true
 
         text: Qt.formatTime(StatusBarService.currentDate, SettingsService.clockOption.format)
     }
 
     Item {
+        id: navigator
+
+        width: 0.25 * background.width
+        height: background.height
         anchors.verticalCenter: background.verticalCenter
         anchors.horizontalCenter: background.horizontalCenter
 
@@ -88,22 +93,23 @@ Item {
         Label {
             id: navText
 
-            anchors.centerIn: parent
-            anchors.verticalCenterOffset: 17
+            width: parent.width
+            height: parent.height - row.height
+            anchors.top: row.bottom
             horizontalAlignment: Text.AlignHCenter
             text: StatusBarService.clusterTitle
-            font.pixelSize: 32
+            font.pixelSize: 0.32 * background.height
         }
     }
 
     Label {
         id: temperatureText
         anchors.verticalCenter: background.verticalCenter
-        anchors.left: background.right
-        anchors.verticalCenterOffset: 0
-        anchors.leftMargin: -248
+        anchors.left: navigator.right
+        anchors.leftMargin: 15
 
-        font.pixelSize: 37
+        font.pixelSize: 0.42 * background.height
+        font.bold: true
 
         text: ClimateService.outsideTempText
     }

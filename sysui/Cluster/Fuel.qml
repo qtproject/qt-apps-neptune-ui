@@ -36,8 +36,9 @@ import service.vehicle 1.0
 
 Item {
     id: root
-    implicitWidth: fuel.sourceSize.width
-    implicitHeight: fuel.sourceSize.height
+
+    width: 0.73 * Style.clusterHeight
+    height: width -1
 
     property real value: VehicleService.fuel <= 0.3 ? (VehicleService.fuel + 0.1) : VehicleService.fuel
 
@@ -52,16 +53,17 @@ Item {
         height: parent.height
         clip: true
         Image {
+            width: root.width
+            height: root.height
             source: Style.gfx("cluster/fuel_level")
         }
-        Tracer { }
     }
 
     Image {
         id: fuel
+        anchors.fill: parent
         source: Style.gfx("cluster/fuel")
 
     }
-    Tracer { }
 }
 

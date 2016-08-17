@@ -37,8 +37,8 @@ import service.vehicle 1.0
 Item {
     id: root
 
-    width: 570
-    height: 720
+    width: 0.72 * Style.clusterHeight
+    height: Style.clusterHeight
 
     scale: zoom ? 0.7 : 1
     property bool zoom: false
@@ -60,14 +60,13 @@ Item {
 
     Image {
         id: overlay
+
+        width: 0.91 * root.width
+        height: 0.98 * width
         anchors.right: parent.right
-        anchors.top: parent.top
         anchors.rightMargin: 0
-        anchors.topMargin: 120
-
+        anchors.verticalCenter: parent.verticalCenter
         source: Style.gfx("cluster/left_dial")
-
-        Tracer {}
     }
 
     Text {
@@ -122,6 +121,8 @@ Item {
 
 
     Dial {
+        width: 0.66 * root.height
+        height: width
         anchors.centerIn: overlay
         anchors.verticalCenterOffset: 2
         fillImage: "cluster/dial_fill_color_left"

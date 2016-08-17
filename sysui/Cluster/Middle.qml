@@ -37,13 +37,10 @@ import models 1.0
 
 Item {
     id: root
-    width: 1300
-    height: 720
+    width: 0.67 * Style.clusterWidth
+    height: Style.clusterHeight
 
     focus: true
-
-    signal zoomIn()
-    signal zoomOut()
 
     Behavior on width {
         NumberAnimation { duration: 200}
@@ -158,6 +155,4 @@ Item {
             GradientStop { position: 0.7; color: "#0c0c0c" }
         }
     }
-
-
 }

@@ -34,15 +34,16 @@ import utils 1.0
 
 Item {
     id: root
+
+    width: 480
+    height: 480
+
     property real value: 0
     property int upDuration: 2000
     property int downDuration: 1000
     property string fillImage: "cluster/dial_fill_color_left"
     property string circleRadius: "0.193"
     property string dialCursor: "cluster/dial_cursor"
-
-    width: 480
-    height: width
 
     Image {
         id: meter

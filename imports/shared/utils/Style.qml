@@ -46,6 +46,8 @@ QtObject {
 
     property int screenWidth: configValue("screenWidth", 1280)
     property int screenHeight: configValue("screenHeight", 800)
+    property int clusterWidth: configValue("clusterWidth", 1920)
+    property int clusterHeight: configValue("clusterHeight", 720)
     property int displayHMargin: configValue("displayHMargin", 11)
     property int displayVMargin: configValue("displayVMargin", 0)
     property int cellWidth: configValue("cellWidth", 53) // 1280/24

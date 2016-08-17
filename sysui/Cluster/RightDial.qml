@@ -37,8 +37,9 @@ import service.navigation 1.0
 
 Item {
     id: root
-    width: 570
-    height: 720
+
+    width: 0.8 * Style.clusterHeight
+    height: Style.clusterHeight
 
     scale: zoom ? 0.7 : 1
     property bool zoom: false
@@ -59,36 +60,40 @@ Item {
     transform: Rotation { origin.x: root.width/2; origin.y: root.height/2; axis { x: 0; y: 1; z: 0 } angle: root.angle }
 
     Item {
-        width: parent.width/3
-        height: 50
+        width: root.width/3
+        height: 0.1 * root.width
         anchors.bottom: overlay.top
         anchors.left: parent.left
-        anchors.leftMargin: 110
+        anchors.leftMargin: 0.2 * root.width
+
         Image {
             id: gears
+
+            width: 0.2 * root.width
+            height: 0.25 * width
             anchors.bottom: parent.bottom
             anchors.right: parent.right
             source: Style.gfx("cluster/P-R-N-D")
-
         }
 
         Image {
             id: plusMinus
             anchors.bottom: parent.bottom
-            anchors.left: parent.left
-            anchors.leftMargin: 50
+            anchors.left: gears.right
+            anchors.leftMargin: 10
             source: Style.gfx("cluster/+--")
         }
-        Tracer {}
     }
 
     Image {
         id: overlay
-        anchors.left: parent.left
-        anchors.top: parent.top
-        anchors.leftMargin: 0
-        anchors.topMargin: 120
 
+        width: 0.91 * root.width
+        height: 0.99 * width
+
+        anchors.left: parent.left
+        anchors.leftMargin: 0
+        anchors.verticalCenter: parent.verticalCenter
         source: Style.gfx("cluster/right_dial")
 
         Rectangle {
@@ -132,6 +137,9 @@ Item {
 
         Image {
             id: circle
+
+            width: root.width/2
+            height: width
             anchors.centerIn: parent
             anchors.horizontalCenterOffset: -6
             anchors.verticalCenterOffset: 0
@@ -139,6 +147,9 @@ Item {
 
             Image {
                 id: circle_overlay
+
+                width: parent.width
+                height: parent.height
                 anchors.centerIn: parent
                 source: Style.gfx("cluster/middle-circle")
             }
@@ -155,7 +166,7 @@ Item {
 
             Item {
                 width: parent.width
-                height: parent.height/2
+                height: parent.height/4
                 anchors.centerIn: parent
                 anchors.verticalCenterOffset: 40
 
@@ -171,28 +182,13 @@ Item {
                     }
 
                     Label {
-                        width: 100
+                        width: parent.width
                         anchors.centerIn: parent
                         horizontalAlignment: Text.AlignHCenter
-                        font.pixelSize: 36
+                        font.pixelSize: 0.05 * root.height
                         font.bold: true
-                        //font.letterSpacing: 2
-                        color: Style.colorWhite
                         text: VehicleService.rightDialMainText
                     }
-
-                }
-                Label {
-                    id: infoText
-                    anchors.top: speedText.bottom
-                    anchors.topMargin: 20
-                    anchors.horizontalCenter: parent.horizontalCenter
-
-                    font.pixelSize: 24
-                    //font.letterSpacing: 2
-                    color: Style.colorWhite
-                    horizontalAlignment: Text.AlignHCenter
-                    text: VehicleService.rightDialSubText
                 }
             }
         }
@@ -200,22 +196,22 @@ Item {
 
     Fuel {
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: 30
+        anchors.bottomMargin: 0.05 * root.height
         anchors.horizontalCenter: parent.horizontalCenter
-        anchors.horizontalCenterOffset: -50
+        anchors.horizontalCenterOffset: -20
     }
 
     Dial {
         id: dial
+
+        width: 0.69 * root.height
+        height: width
         anchors.centerIn: overlay
-        anchors.verticalCenterOffset: 3
-        anchors.horizontalCenterOffset: 2
+        anchors.verticalCenterOffset: 0
+        anchors.horizontalCenterOffset: -5
         fillImage: "cluster/dial_fill_color"
-        circleRadius: "0.28"
+        circleRadius: "0.29"
         dialCursor: "cluster/dial_cursor_right"
         value: VehicleService.rightDialValue
-
     }
-
-    Tracer {}
 }

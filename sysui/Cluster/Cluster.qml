@@ -35,11 +35,13 @@ import utils 1.0
 Item {
     id: root
 
-    width: 1920
-    height: 720
+    width: Style.clusterWidth
+    height: Style.clusterHeight
 
-    property bool zoom: false
-
+//    Image {
+//        anchors.fill: parent
+//        source: Style.gfx("cluster/background")
+//    }
     Rectangle {
         anchors.fill: parent
         color: "#0c0c0c"
@@ -48,31 +50,20 @@ Item {
     Middle {
         id: widgetBase
         anchors.centerIn: parent
-        onZoomIn: {
-            widgetBase.width = 1000
-            root.zoom = true
-        }
-
-        onZoomOut: {
-            widgetBase.width = 700
-            root.zoom = false
-        }
     }
 
     LeftDial {
         id: leftDial
-        //x: root.zoom ? -230 : 0
-        Tracer {}
     }
 
     RightDial {
         id: rightDial
-        x: (1920 - width)
+        x: (root.width - (width + 0.1 * width))
     }
 
     Top {
         id: topbar
-        y: root.zoom ? - topbar.height : 11
+        y: 7
         anchors.horizontalCenter: parent.horizontalCenter
     }
 

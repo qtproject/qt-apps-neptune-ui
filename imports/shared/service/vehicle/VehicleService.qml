@@ -48,7 +48,7 @@ QtObject {
         }
     }
 
-    readonly property real rightDialValue: root.speed * 0.0061
+    readonly property real rightDialValue: root.speed * 0.0031
 
     property int displaySpeed: speed
     property real fuel: 0.5 // fuel precentage min 0.0; max 1.0;
