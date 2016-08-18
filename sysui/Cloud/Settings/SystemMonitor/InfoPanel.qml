@@ -29,61 +29,51 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.1
+import QtQuick 2.0
 import utils 1.0
-
 import controls 1.0
-import utils 1.0
-import service.settings 1.0
-import models 1.0
-import "SystemMonitor/"
-import utils 1.0
+import QtApplicationManager 1.0
 
-UIElement {
+UIPage {
     id: root
 
-    ListViewManager {
-        id: settingsListView
+    Column {
 
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.top: parent.top; anchors.bottom: parent.bottom
-        hspan: 14
+        anchors.centerIn: parent
+        anchors.verticalCenterOffset: -80
 
-        model: SettingsService.entries
-
-        delegate: SettingsListItem {
-            hspan: settingsListView.hspan
+        SettingsListItem {
+            hspan: 10
             vspan: 2
-
-            iconName: model.icon
-            titleText: model.title
-            checked: model.checked
-            hasChildren: model.hasChildren
-            checkedEnabled: (titleText === "SYSTEM MONITOR") ? false : true
-            onClicked: {
-                if ( titleText === "METRIC SYSTEM") {
-                    if (checked)
-                        SettingsService.unitSystem = "imp_us"
-                    else
-                        SettingsService.unitSystem = "metric"
-                }
-                else if (titleText === "SYSTEM MONITOR") {
-                    ApplicationManagerInterface.applicationSurfaceReady(systemMonitor)
-                }
-            }
+            checkedEnabled: false
+            iconName: "information"
+            titleText: "Number of cores: " + SystemMonitor.cpuCores
         }
+
+        SettingsListItem {
+            hspan: 10
+            vspan: 2
+            checkedEnabled: false
+            iconName: "information"
+            titleText: "Total RAM: " + (SystemMonitor.totalMemory/1024/1024).toFixed(2) + "MB"
+        }
+
+        SettingsListItem {
+            hspan: 10
+            vspan: 2
+            checkedEnabled: false
+            iconName: "information"
+            titleText: "Idle: " + SystemMonitor.idle
+        }
+
+        SettingsListItem {
+            hspan: 10
+            vspan: 2
+            checkedEnabled: false
+            iconName: "information"
+            titleText: "Idle load average: " + SystemMonitor.idleLoadAverage
+        }
+
     }
 
-    Image {
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.bottom: parent.bottom
-        source: Style.icon('cloud_bottom_shadow')
-        asynchronous: true
-        visible: false
-    }
-
-    MainScreen {
-        id: systemMonitor
-        visible: false
-    }
 }

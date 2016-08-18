@@ -46,7 +46,7 @@ QtObject {
         ListElement { title: "TOLL & CONGESTION FEES"; icon: "toll"; checked: false; hasChildren: true }
         ListElement { title: "METRIC SYSTEM"; icon: "fees"; checked: true; hasChildren: false }
         ListElement { title: "APP UPDATES"; icon: "updates"; checked: true; hasChildren: true }
-        ListElement { title: "INSURANCE FEATURES"; icon: "insurance"; checked: true; hasChildren: true }
+        ListElement { title: "SYSTEM MONITOR"; icon: "insurance"; checked: false; hasChildren: true }
     }
 
     property var carSettings: [
