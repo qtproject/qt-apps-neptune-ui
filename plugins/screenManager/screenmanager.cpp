@@ -41,6 +41,11 @@ ScreenManager::ScreenManager(QObject *parent)
     connect(qApp, &QGuiApplication::screenAdded, this, &ScreenManager::availableScreensChanged);
 }
 
+int ScreenManager::screenCount() const
+{
+    return QGuiApplication::screens().count();
+}
+
 void ScreenManager::setScreen(QWindow *window, int screen)
 {
     if (screen >= 0 && screen < QGuiApplication::screens().count()) {

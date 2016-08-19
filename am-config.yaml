@@ -21,6 +21,7 @@ ui:
   additionalConfiguration:
     appStoreServerUrl: 'http://chaos.pelagicore.net:8080'
     styleConfig: "auto"
+    showCluster: yes
   windowIcon: "imports/shared/assets/icons/active/apps@96.png"
 
 # development setup: no security

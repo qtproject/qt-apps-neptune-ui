@@ -31,12 +31,18 @@
 
 import QtQuick 2.5
 import QtQuick.Window 2.2
+import QtApplicationManager 1.0
+import com.pelagicore.ScreenManager 1.0
+import "sysui/Cluster"
 import "sysui"
 import controls 1.0
 import utils 1.0
 
 Rectangle {
     id: root
+
+    property bool showClusterIfPossible: ApplicationManager.additionalConfiguration.showCluster
+    property var cluster
 
     color: "black"
     width: Style.screenWidth
@@ -69,6 +75,49 @@ Rectangle {
 
         DisplayGrid {
             anchors.fill: display
+        }
+    }
+
+    Component {
+        id: clusterComponent
+        Window {
+            id: cluster
+            title: "Neptune Cluster Display"
+            height: 720
+            width: 1920
+            visible: false
+
+            color: "black"
+
+            Cluster {}
+
+            Component.onCompleted: {
+                WindowManager.registerCompositorView(cluster)
+                Style.withCluster = true
+                ScreenManager.setScreen(cluster, 1)
+                cluster.show()
+            }
+        }
+    }
+
+    Window.onActiveChanged: {
+        if (Window.active && !WindowManager.runningOnDesktop)
+            cluster.requestActivate()
+    }
+
+    Component.onCompleted: {
+        var canDisplayCluster = Screen.desktopAvailableWidth > Screen.width || WindowManager.runningOnDesktop || ScreenManager.screenCount() > 1
+
+        if (!showClusterIfPossible) {
+            console.log("Showing Instrument Cluster was disabled");
+            return
+        }
+
+        if (canDisplayCluster) {
+            console.log("Showing Instrument Cluster");
+            cluster = clusterComponent.createObject(root);
+        } else {
+            console.log("Showing the Instrument Cluster is not possible on this platform");
         }
     }
 }
