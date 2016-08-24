@@ -68,7 +68,8 @@ UIElement {
                         SettingsService.unitSystem = "metric"
                 }
                 else if (titleText === "SYSTEM MONITOR") {
-                    ApplicationManagerInterface.applicationSurfaceReady(systemMonitor)
+                    systemMonitorLoader.active = true
+                    ApplicationManagerInterface.applicationSurfaceReady(systemMonitorLoader.item)
                 }
             }
         }
@@ -82,8 +83,14 @@ UIElement {
         visible: false
     }
 
-    MainScreen {
-        id: systemMonitor
-        visible: false
+    Loader {
+        id: systemMonitorLoader
+        active: false
+        sourceComponent: Component {
+            MainScreen {
+                id: systemMonitor
+                visible: false
+            }
+        }
     }
 }
