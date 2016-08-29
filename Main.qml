@@ -83,19 +83,26 @@ Rectangle {
         Window {
             id: cluster
             title: "Neptune Cluster Display"
-            height: 720
-            width: 1920
+            height: Style.clusterHeight
+            width: Style.clusterWidth
             visible: false
 
             color: "black"
 
             Cluster {}
 
+            function calculateSize() {
+                print (Screen.width, Screen.height)
+                Style.clusterWidth = Screen.width
+                Style.clusterHeight = Screen.width * 0.375
+            }
+
             Component.onCompleted: {
                 WindowManager.registerCompositorView(cluster)
                 Style.withCluster = true
                 ScreenManager.setScreen(cluster, 1)
                 cluster.show()
+                calculateSize()
             }
         }
     }
