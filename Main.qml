@@ -59,6 +59,9 @@ Rectangle {
             root.height = Window.height
     }
 
+    //Forwards the keys to the cluster to handle it without being the active window
+    Keys.forwardTo: cluster ? cluster.clusterItem : null
+
     Item {
         width: Style.screenWidth
         height: Style.screenHeight
@@ -87,9 +90,13 @@ Rectangle {
             width: Style.clusterWidth
             visible: false
 
+            property Item clusterItem: clusterItem
+
             color: "black"
 
-            Cluster {}
+            Cluster {
+                id: clusterItem
+            }
 
             function calculateSize() {
                 print (Screen.width, Screen.height)
@@ -104,12 +111,8 @@ Rectangle {
                 cluster.show()
                 calculateSize()
             }
-        }
-    }
 
-    Window.onActiveChanged: {
-        if (Window.active && !WindowManager.runningOnDesktop)
-            cluster.requestActivate()
+        }
     }
 
     Component.onCompleted: {

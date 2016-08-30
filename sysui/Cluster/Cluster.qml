@@ -87,7 +87,7 @@ Item {
         }
     }
 
-    Keys.forwardTo: Style.debugMode ? [layouter] : null
+    Keys.forwardTo: Style.debugMode ? [layouter] : widgetBase
 
     property var layoutTarget//: notifications
 
