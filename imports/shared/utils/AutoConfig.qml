@@ -31,8 +31,10 @@
 
 import QtQuick 2.0
 import QtQuick.Window 2.2
+import com.pelagicore.ScreenManager 1.0
 
 QtObject {
+    property bool withCluster: false
     property int cellWidth: 53 // 1280/24
     property int cellHeight: 33 // 800/24
     property var fontWeight: Font.Light
@@ -52,12 +54,15 @@ QtObject {
     property int symbolSizeL: 96
     property int symbolSizeXL: 114
     property int symbolSizeXXL: 192
+    property bool showClusterIfPossible: false
 
     property string displayBackground: "background_1920x1080"
 
 
     property int screenWidth: Screen.width
     property int screenHeight: Math.min(screenWidth * 0.62, Screen.height)
+    property int clusterWidth: 1920
+    property int clusterHeight: 720
 
     onScreenWidthChanged: cellWidth = Math.floor(screenWidth/24)
     onScreenHeightChanged: cellHeight = Math.floor(screenHeight/24)
@@ -103,5 +108,14 @@ QtObject {
         fontSizeXXL = scalFactor * 48
 
         fontWeight = Font.Light
+
+        var canDisplayCluster = Screen.desktopAvailableWidth > Screen.width || ScreenManager.screenCount() > 1
+        if (canDisplayCluster) {
+            print("Instrument Cluster enabled")
+            withCluster = true
+            clusterWidth = ScreenManager.availableScreens[1].size.width
+            clusterHeight = Math.min(ScreenManager.availableScreens[1].size.width * 0.375, ScreenManager.availableScreens[1].size.height)
+            print("cluster resolution: " + clusterWidth + "x" + clusterHeight)
+        }
     }
 }

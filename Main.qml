@@ -98,20 +98,11 @@ Rectangle {
                 id: clusterItem
             }
 
-            function calculateSize() {
-                print (Screen.width, Screen.height)
-                Style.clusterWidth = Screen.width
-                Style.clusterHeight = Screen.width * 0.375
-            }
-
             Component.onCompleted: {
                 WindowManager.registerCompositorView(cluster)
-                Style.withCluster = true
                 ScreenManager.setScreen(cluster, 1)
                 cluster.show()
-                calculateSize()
             }
-
         }
     }
 

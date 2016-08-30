@@ -36,12 +36,13 @@ import controls 1.0
 import "."
 
 Item {
-    width: 1300
+    width: Style.clusterWidth * 0.677
     height: parent.height
+    anchors.horizontalCenter: parent.horizontalCenter
 
     ListView {
         id: playListView
-        width: 400
+        width: parent.width * 0.3
         height: parent.height
         anchors.centerIn: parent
         clip: true
