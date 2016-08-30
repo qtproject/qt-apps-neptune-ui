@@ -46,6 +46,7 @@ QtObject {
     property var minimizedItems: [NavigationService.defaultNavApp] // Apps which will be started but not shown in full screen
     property Item windowItem
     property Item mapWidget
+    property var itemsToRelease: []
 
     property Timer timer: Timer {
         interval: 1000
@@ -149,7 +150,29 @@ QtObject {
     }
 
     function windowLostHandler(index, item) {
-        WindowManager.releasewindow(item)   // immediately close anything which is not handled by this container
+        var isClusterWidget = (WindowManager.windowProperty(item, "windowType") === "clusterWidget")
+        //We don't have a closing transition for widgets so it's save to release them immediately
+        if (isClusterWidget) {
+            WindowManager.releaseWindow(item)
+        } else {
+            //If the item is visible the closing application hasn't been played yet and we need to wait unti it is finished
+            if (item.visible) {
+                itemsToRelease.push(item)
+                root.releaseApplicationSurface()
+            } else {
+                WindowManager.releaseWindow(item)
+            }
+        }
+    }
+
+    //Called once the closing transition has finished and it would be save to release the window
+    function releasingApplicationSurfaceDone(item) {
+        for (var i = 0; i < itemsToRelease.length; ++i) {
+            if (item === itemsToRelease[i]) {
+                itemsToRelease.splice(i, 1)
+                WindowManager.releaseWindow(item)   // immediately close anything which is not handled by this container
+            }
+        }
     }
 
     function applicationActivated(appId, appAliasId) {

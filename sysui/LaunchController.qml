@@ -107,12 +107,19 @@ StackView {
                 to: 1.0
                 duration: popTransition.duration*.2
             }
-            PropertyAnimation {
-                target: exitItem
-                property: "scale"
-                from: 1.0
-                to: 0.1
-                duration: popTransition.duration
+
+            SequentialAnimation {
+                PropertyAnimation {
+                    target: exitItem
+                    property: "scale"
+                    from: 1.0
+                    to: 0.1
+                    duration: popTransition.duration
+                }
+
+                ScriptAction {
+                    script: { exitItem.visible = false; ApplicationManagerInterface.releasingApplicationSurfaceDone(exitItem) }
+                }
             }
         }
     }
