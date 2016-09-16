@@ -48,7 +48,7 @@ UIScreen {
         anchors.left: parent.left
         anchors.right: parent.right
         height: Style.vspan(12)
-        model: MusicProvider.model
+        model: MusicProvider.nowPlaying.model
         pathItemCount: 5
         currentIndex: MusicProvider.currentIndex
         path: Path {
