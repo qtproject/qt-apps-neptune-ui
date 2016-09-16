@@ -1,0 +1,14 @@
+formatVersion: 1
+formatType: am-application
+---
+id:      'com.pelagicore.radio'
+icon:    'icon.png'
+code:    'Radio.qml'
+runtime: 'qml'
+name:
+  en: 'Radio'
+  de: 'Radio'
+
+categories: [ 'media' ]
+
+built-in: yes
