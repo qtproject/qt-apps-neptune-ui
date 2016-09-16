@@ -59,6 +59,7 @@ UIPage {
         anchors.topMargin: Style.vspan(2)
         anchors.bottom: parent.bottom
         anchors.horizontalCenter: parent.horizontalCenter
+        interactive: false
 
         width: Style.hspan(6*3)
 

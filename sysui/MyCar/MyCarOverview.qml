@@ -51,6 +51,7 @@ UIElement {
             id: view
             width: Style.hspan(5)
             Layout.fillHeight: true
+            interactive: false
 
             model: ListModel {
                 ListElement { name: "Tire Pressure"; symbol: "tire_pressure"; slide: "TireFault" }

@@ -41,6 +41,7 @@ UIElement {
     property alias currentIndex: listView.currentIndex
     property alias header: listView.header
     property bool scrollVisible: false
+    property bool interactive: true
 
     ListView {
         id: listView
@@ -49,6 +50,7 @@ UIElement {
         anchors.rightMargin: root.scrollVisible ? 5 : 0
         highlightRangeMode: root.scrollVisible ? ListView.StrictlyEnforceRange : ListView.NoHighlightRange
         clip: true
+        interactive: root.interactive
         currentIndex: root.scrollVisible ? sliderCOntainer.position*model.count : 0
     }
 
