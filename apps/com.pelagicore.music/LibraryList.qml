@@ -63,6 +63,7 @@ UIElement {
         id: listView
         anchors.fill: parent
         anchors.topMargin: 10
+        anchors.bottomMargin: 84
         model: root.nowPlaying ? MusicProvider.nowPlaying.model : MusicProvider.musicLibrary.model
         clip: true
         highlightMoveDuration: 300
@@ -134,17 +135,5 @@ UIElement {
                 }
             }
         }
-
-        Rectangle {
-            width: parent.width
-            height: 300
-            anchors.bottom: parent.bottom
-            gradient: Gradient {
-                GradientStop { position: 0.0; color: "transparent" }
-                GradientStop { position: 1.0; color: "black" }
-            }
-        }
     }
-
 }
-
