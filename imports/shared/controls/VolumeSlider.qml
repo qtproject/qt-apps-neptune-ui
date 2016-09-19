@@ -97,14 +97,14 @@ UIElement {
                 if (!item) {
                     return;
                 }
-                root.setValue(item.entry/view.count)
+                root.setValue(item.entry/(view.count - 1))
             }
             onPositionChanged: {
                 var item = view.itemAt(mouse.x, mouse.y);
                 if (!item) {
                     return;
                 }
-                root.setValue(item.entry/view.count)
+                root.setValue(item.entry/(view.count - 1))
             }
         }
     }
