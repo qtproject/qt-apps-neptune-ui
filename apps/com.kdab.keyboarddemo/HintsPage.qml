@@ -64,15 +64,17 @@ UIPage {
 
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: parent.top
-        anchors.topMargin: !Qt.inputMethod.visible ? Style.vspan(2) : Style.vspan(1)
+        anchors.topMargin: Style.vspan(1)
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: Qt.inputMethod.visible ? Style.vspan(16) : Style.vspan(2) // FIXME use height form keyboardRectangle
+        anchors.bottomMargin: Qt.inputMethod.visible ? Style.vspan(16) : Style.vspan(6) // FIXME use height form keyboardRectangle
 
         width: Style.hspan(14)
 
         spacing: Style.paddingS
 
-        clip: true
+        displayMarginBeginning: Style.vspan(1)
+        displayMarginEnd: Style.vspan(2)
+
         model: textFieldsModel
 
         delegate: Loader {
