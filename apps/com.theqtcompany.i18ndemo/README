@@ -1,0 +1,12 @@
+* First time steps
+Run create_qm.sh script inside translations sub-folder to generate translated files.
+
+
+* Add support for additional language
+(1) Change directory to "translations" sub-folder.
+
+(2) Create file named "i18napp_<languageCode>.ts"
+
+(3) Run create_ts.sh to populate the .ts file created in step (2) above.
+
+(4) Edit "Languages.qml". Locate VirtualKeyboardSettings.activeLocales and add the languageCode to the existing list

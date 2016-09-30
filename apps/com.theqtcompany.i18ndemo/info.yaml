@@ -1,0 +1,14 @@
+formatVersion: 1
+formatType: am-application
+---
+id:      'com.theqtcompany.i18ndemo'
+icon:    'icon.png'
+code:    'I18NDemo.qml'
+runtime: 'qml-inprocess'
+name:
+  en: 'i18n Demo'
+  de: 'i18n Demo'
+
+categories: [ 'app' ]
+
+built-in: yes
