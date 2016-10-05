@@ -57,7 +57,7 @@ QtObject {
         }
     }
 
-    signal applicationSurfaceReady(Item item)
+    signal applicationSurfaceReady(Item item, bool isMinimized)
     signal releaseApplicationSurface()
 
     // Cluster signals
@@ -81,12 +81,13 @@ QtObject {
 
         var acceptWindow = true;
         var appID = WindowManager.get(index).applicationId;
+        var isMinimized = false;
 
         if (isInWidgetState) {
             if (ApplicationManager.get(appID).categories[0] === "navigation") {
                 root.mapWidget = item
             }
-            acceptWindow = false
+            return
         }
         else if (isClusterWidget) {
             if (!Style.withCluster) {
@@ -99,7 +100,7 @@ QtObject {
                 else if (ApplicationManager.get(appID).categories[0] === "media") {
                     root.clusterWidgetReady("media", item)
                 }
-                acceptWindow = false
+                return
             }
         } else {
 
@@ -110,8 +111,8 @@ QtObject {
 
             for (i = 0; i < root.minimizedItems.length; ++i) {
                 if (appID === root.minimizedItems[i]) {
-                    acceptWindow = false;
                     root.minimizedItems.pop(appID)
+                    isMinimized = true;
                     break
                 }
             }
@@ -119,9 +120,9 @@ QtObject {
 
         if (acceptWindow) {
             root.windowItem = item
-            WindowManager.setWindowProperty(item, "visibility", true)
+            WindowManager.setWindowProperty(item, "visibility", !isMinimized)
 
-            root.applicationSurfaceReady(item)
+            root.applicationSurfaceReady(item, isMinimized)
         } else {
             // If nobody feels responsible for this window, we need to at least give it a
             // parent, to not block the client process which would wait for result of the
@@ -179,7 +180,7 @@ QtObject {
         print(":::LaunchController::: WindowManager:raiseApplicaitonWindow" + appId + " " + WindowManager.count)
         root.activeAppId = appId
         for (var i = 0; i < WindowManager.count; i++) {
-            if (WindowManager.get(i).applicationId === appId) {
+            if (!WindowManager.get(i).isClosing && WindowManager.get(i).applicationId === appId) {
                 var item = WindowManager.get(i).windowItem
                 print(":::LaunchController::: App found. Running the app " + appId + " Item: " + item)
                 var isWidget = (WindowManager.windowProperty(item, "windowType") === "widget")
@@ -191,7 +192,7 @@ QtObject {
                 if (!isMapWidget && !isClusterWidget) {
                     WindowManager.setWindowProperty(item, "visibility", true)
                     root.windowItem = item
-                    root.applicationSurfaceReady(item)
+                    root.applicationSurfaceReady(item, false)
                     break
                 }
             }

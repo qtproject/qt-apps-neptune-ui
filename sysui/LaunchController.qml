@@ -140,10 +140,16 @@ StackView {
         target: ApplicationManagerInterface
 
         onApplicationSurfaceReady: {
-            root.push(item)
+            if (isMinimized)
+                item.parent = dummyitem
+            else
+                root.push(item)
         }
 
         onReleaseApplicationSurface: {
+            if (root.depth <= 1)
+                return;
+
             root.pop(null)
         }
     }
