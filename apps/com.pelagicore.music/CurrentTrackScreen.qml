@@ -66,10 +66,10 @@ UIScreen {
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.verticalCenterOffset: Style.vspan(-1)
                 onClicked: {
-                    if (pathView.currentViewIndex === 0)
-                        pathView.currentViewIndex = MusicProvider.count - 1
+                    if (MusicProvider.currentIndex === 0)
+                        MusicProvider.currentIndex = MusicProvider.count - 1
                     else
-                        pathView.currentViewIndex --
+                        MusicProvider.currentIndex --
                 }
             }
 
@@ -83,8 +83,6 @@ UIScreen {
                 items: MusicProvider.nowPlaying.model
 
                 currentViewIndex: MusicProvider.currentIndex
-
-                onCurrentViewIndexChanged: MusicProvider.currentIndex = pathView.currentViewIndex
 
                 delegate: CoverItem {
                     z: PathView.z
@@ -105,10 +103,10 @@ UIScreen {
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.verticalCenterOffset: Style.vspan(-1)
                 onClicked: {
-                    if (pathView.currentViewIndex === MusicProvider.count - 1)
-                        pathView.currentViewIndex = 0
+                    if (MusicProvider.currentIndex === MusicProvider.count - 1)
+                        MusicProvider.currentIndex = 0
                     else
-                        pathView.currentViewIndex ++
+                        MusicProvider.currentIndex ++
                 }
             }
         }
