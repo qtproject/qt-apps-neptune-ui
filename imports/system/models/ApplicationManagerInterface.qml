@@ -43,19 +43,10 @@ QtObject {
     property string activeAppId
 
     property variant blackListItems: []
-    property var minimizedItems: [NavigationService.defaultNavApp] // Apps which will be started but not shown in full screen
+    property var minimizedItems: [] // Apps which will be started but not shown in full screen
     property Item windowItem
     property Item mapWidget
     property var itemsToRelease: []
-
-    property Timer timer: Timer {
-        interval: 1000
-        onTriggered: {
-            for (var i in root.minimizedItems) {
-                ApplicationManager.startApplication(root.minimizedItems[i])
-            }
-        }
-    }
 
     signal applicationSurfaceReady(Item item, bool isMinimized)
     signal releaseApplicationSurface()
@@ -64,12 +55,20 @@ QtObject {
     signal clusterWidgetReady(string category, Item item)
 
     Component.onCompleted: {
+        // Maintain a set of applications which are autostarted(preloaded)
+        // This is needed to know that these applications should be minimized
+        for (var i = 0; i < ApplicationManager.count; ++i) {
+            var app = ApplicationManager.get(i);
+            if (app.application.preload) {
+                minimizedItems.push(app.applicationId)
+            }
+        }
+
         WindowManager.windowReady.connect(windowReadyHandler)
         WindowManager.windowClosing.connect(windowClosingHandler)
         ApplicationManager.applicationWasActivated.connect(applicationActivated)
         WindowManager.windowLost.connect(windowLostHandler)
         WindowManager.windowPropertyChanged.connect(windowPropertyChanged)
-        timer.start()
     }
 
     function windowReadyHandler(index, item) {
