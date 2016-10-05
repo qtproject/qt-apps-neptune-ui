@@ -53,6 +53,9 @@ Item {
             border.color: Qt.lighter(color, 1.2)
         }
         highlightMoveDuration: 75
+        preferredHighlightBegin: parent.height / 2
+        preferredHighlightEnd: parent.height / 2
+        highlightRangeMode: ListView.StrictlyEnforceRange
         delegate: UIElement {
             hspan: 4
             vspan: 2
