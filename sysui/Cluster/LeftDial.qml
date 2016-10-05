@@ -32,7 +32,7 @@
 import QtQuick 2.1
 import QtGraphicalEffects 1.0
 import utils 1.0
-import service.vehicle 1.0
+import models 1.0
 
 Item {
     id: root
@@ -80,7 +80,7 @@ Item {
         font.pixelSize: 60
         font.letterSpacing: 4
         color: Style.colorWhite
-        text: VehicleService.displaySpeed
+        text: VehicleModel.displaySpeed
     }
 
     Rectangle {
@@ -126,7 +126,7 @@ Item {
         anchors.centerIn: overlay
         anchors.verticalCenterOffset: 2
         fillImage: "cluster/dial_fill_color_left"
-        value: VehicleService.speed / 240
+        value: VehicleModel.speed / 240
 
         Tracer {}
     }

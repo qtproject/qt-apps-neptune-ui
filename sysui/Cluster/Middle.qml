@@ -53,6 +53,8 @@ Item {
     ListView {
         id: stack
         anchors.fill: parent
+        anchors.bottomMargin: 20
+        anchors.topMargin: 25
         orientation: ListView.Horizontal
         snapMode: ListView.SnapOneItem
         highlightMoveDuration: 300

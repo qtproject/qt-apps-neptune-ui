@@ -32,12 +32,13 @@
 pragma Singleton
 import QtQuick 2.0
 import utils 1.0
+import QtApplicationManager 1.0
 
 QtObject {
     id: root
 
-    property bool dialAnimation: true
-    property real speed: 0
+    property bool dialAnimation: navigationControl.navigationRunning
+    property real speed: navigationControl.navigationRunning ? navigationControl.navigationSpeed : 0
 
 
     Behavior on speed {
@@ -90,8 +91,22 @@ QtObject {
         interval: 4000
         property bool higherValue: false
         onTriggered: {
-            root.speed = higherValue ? (0) : (120)
+            if (navigationControl.navigationRunning)
+                root.speed = higherValue ? (navigationControl.navigationSpeed - 5) : (navigationControl.navigationSpeed +5)
+            else
+                root.speed = higherValue ? (0) : (120)
             higherValue = !higherValue
+        }
+    }
+
+    // For simulations we need to communicate with nav app
+    property QtObject navigationControl: ApplicationIPCInterface {
+
+        property real navigationSpeed: 0
+        property bool navigationRunning: false
+
+        Component.onCompleted: {
+            ApplicationIPCManager.registerInterface(navigationControl, "com.pelagicore.navigation.control", {})
         }
     }
 

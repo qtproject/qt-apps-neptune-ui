@@ -34,7 +34,7 @@ import QtQuick 2.0
 import QtApplicationManager 1.0
 import service.navigation 1.0
 import service.music 1.0
-import service.vehicle 1.0
+import "."
 import utils 1.0
 
 QtObject {

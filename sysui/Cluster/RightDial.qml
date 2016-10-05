@@ -32,7 +32,7 @@
 import QtQuick 2.1
 import utils 1.0
 import controls 1.0
-import service.vehicle 1.0
+import models 1.0
 import service.navigation 1.0
 
 Item {
@@ -102,7 +102,7 @@ Item {
             height: width
             radius: width
             color: "transparent"
-            border.color: (VehicleService.fuel < 0.4 || NavigationService.traficAlert) ? Style.colorOrange : "white"
+            border.color: (VehicleModel.fuel < 0.4 || NavigationService.traficAlert) ? Style.colorOrange : "white"
             border.width: rect.borderWidth
             anchors.centerIn: parent
             anchors.horizontalCenterOffset: -3
@@ -110,7 +110,7 @@ Item {
             property int borderWidth: 3
 
             SequentialAnimation {
-                running: (VehicleService.fuel < 0.4 || NavigationService.traficAlert)
+                running: (VehicleModel.fuel < 0.4 || NavigationService.traficAlert)
                 loops: Animation.Infinite
                 NumberAnimation {
 
@@ -160,8 +160,8 @@ Item {
                 anchors.topMargin: 20
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.horizontalCenterOffset: 5
-                source: VehicleService.rightDialIcon
-                scale: VehicleService.rightIconScale
+                source: VehicleModel.rightDialIcon
+                scale: VehicleModel.rightIconScale
             }
 
             Item {
@@ -187,7 +187,7 @@ Item {
                         horizontalAlignment: Text.AlignHCenter
                         font.pixelSize: 0.05 * root.height
                         font.bold: true
-                        text: VehicleService.rightDialMainText
+                        text: VehicleModel.rightDialMainText
                     }
                 }
             }
@@ -212,6 +212,6 @@ Item {
         fillImage: "cluster/dial_fill_color"
         circleRadius: "0.29"
         dialCursor: "cluster/dial_cursor_right"
-        value: VehicleService.rightDialValue
+        value: VehicleModel.rightDialValue
     }
 }

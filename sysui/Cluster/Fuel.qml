@@ -32,7 +32,7 @@
 import QtQuick 2.1
 import utils 1.0
 import controls 1.0
-import service.vehicle 1.0
+import models 1.0
 
 Item {
     id: root
@@ -40,7 +40,7 @@ Item {
     width: 0.73 * Style.clusterHeight
     height: width -1
 
-    property real value: VehicleService.fuel <= 0.3 ? (VehicleService.fuel + 0.1) : VehicleService.fuel
+    property real value: VehicleModel.fuel <= 0.3 ? (VehicleModel.fuel + 0.1) : VehicleModel.fuel
 
     Behavior on value {
         NumberAnimation {
