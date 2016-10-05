@@ -34,6 +34,7 @@ import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.3
 
 import com.theqtcompany.comtqci18ndemo 1.0
+import QtQuick.VirtualKeyboard.Settings 2.1
 
 import controls 1.0
 import utils 1.0
