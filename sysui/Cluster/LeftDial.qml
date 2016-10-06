@@ -33,6 +33,7 @@ import QtQuick 2.1
 import QtGraphicalEffects 1.0
 import utils 1.0
 import models 1.0
+import service.settings 1.0
 
 Item {
     id: root
@@ -102,7 +103,7 @@ Item {
         font.family: Style.fontFamily
         font.pixelSize: 24
         color: Style.colorWhite
-        text: "mph"
+        text: SettingsService.metric ? "km/h" : "mph"
     }
 
 
