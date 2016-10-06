@@ -49,7 +49,7 @@ QtObject {
     property var itemsToRelease: []
 
     signal applicationSurfaceReady(Item item, bool isMinimized)
-    signal releaseApplicationSurface()
+    signal releaseApplicationSurface(Item item)
 
     // Cluster signals
     signal clusterWidgetReady(string category, Item item)
@@ -133,14 +133,14 @@ QtObject {
     function windowPropertyChanged(window, name, value) {
         //print(":::LaunchController::: WindowManager:windowPropertyChanged", window, name, value)
         if (name === "visibility" && value === false ) {
-            root.releaseApplicationSurface()
+            root.releaseApplicationSurface(window)
         }
     }
 
     function windowClosingHandler(index, item) {
         var type = windowTypes[item]
         if (type === "ivi") {           // start close animation
-            root.releaseApplicationSurface()
+            root.releaseApplicationSurface(item)
         }
     }
 
@@ -152,7 +152,7 @@ QtObject {
             //If the item is visible the closing application hasn't been played yet and we need to wait until it is finished
             if (item.visible) {
                 itemsToRelease.push(item)
-                root.releaseApplicationSurface()
+                root.releaseApplicationSurface(item)
             } else {
                 WindowManager.releaseWindow(item)
             }

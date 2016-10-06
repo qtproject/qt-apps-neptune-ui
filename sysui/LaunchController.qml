@@ -136,7 +136,39 @@ StackView {
     Shortcut {
         context: Qt.ApplicationShortcut
         sequence: StandardKey.Cancel
-        onActivated: { root.pop(null) }
+        onActivated: { root.popItem(root.currentItem) }
+    }
+
+    function popItem(item) {
+        if (root.depth <= 1)
+            return;
+
+        if (root.busy)
+            root.completeTransition()
+
+        if (item == root.currentItem) {
+            var stackItem = null;
+            if (root.depth > 2)
+                stackItem = root.get(root.depth - 2);
+            root.pop(stackItem)
+        } else {
+            var stack = []
+            for (var i = 1; i < root.depth; ++i) {
+                var stackItem = root.get(i)
+                if (stackItem === item) {
+                    item.parent = null;
+                    item.visible = false;
+                    ApplicationManagerInterface.releasingApplicationSurfaceDone(item)
+                } else {
+                    print(stackItem)
+                    stack.push({item:stackItem, immediate: true})
+                }
+            }
+            root.pop(null);
+            for (var i = 0; i < stack.length; ++i) {
+                root.push(stack[i])
+            }
+        }
     }
 
     Connections {
@@ -153,13 +185,7 @@ StackView {
         }
 
         onReleaseApplicationSurface: {
-            if (root.depth <= 1)
-                return;
-
-            if (root.busy)
-                root.completeTransition()
-
-            root.pop(null)
+             root.popItem(item)
         }
     }
 }
