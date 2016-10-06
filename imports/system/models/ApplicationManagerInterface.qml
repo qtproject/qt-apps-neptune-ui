@@ -43,8 +43,8 @@ QtObject {
     property string activeAppId
 
     property variant blackListItems: []
-    property var minimizedItems: [] // Apps which will be started but not shown in full screen
-    property Item windowItem
+    property var preloadApplications: [] // Apps which will be started but not shown in full screen
+    property var windowTypes: ({})
     property Item mapWidget
     property var itemsToRelease: []
 
@@ -60,7 +60,7 @@ QtObject {
         for (var i = 0; i < ApplicationManager.count; ++i) {
             var app = ApplicationManager.get(i);
             if (app.application.preload) {
-                minimizedItems.push(app.applicationId)
+                preloadApplications.push(app.applicationId)
             }
         }
 
@@ -83,22 +83,21 @@ QtObject {
         var isMinimized = false;
 
         if (isInWidgetState) {
+            windowTypes[item] = "widget"
             if (ApplicationManager.get(appID).categories[0] === "navigation") {
                 root.mapWidget = item
             }
             return
-        }
-        else if (isClusterWidget) {
+        } else if (isClusterWidget) {
             if (!Style.withCluster) {
                 acceptWindow = false
                 item.parent = null
             } else {
-                if (ApplicationManager.get(appID).categories[0] === "navigation") {
+                windowTypes[item] = "cluster"
+                if (ApplicationManager.get(appID).categories[0] === "navigation")
                     root.clusterWidgetReady("navigation", item)
-                }
-                else if (ApplicationManager.get(appID).categories[0] === "media") {
+                else if (ApplicationManager.get(appID).categories[0] === "media")
                     root.clusterWidgetReady("media", item)
-                }
                 return
             }
         } else {
@@ -108,60 +107,58 @@ QtObject {
                     acceptWindow = false;
             }
 
-            for (i = 0; i < root.minimizedItems.length; ++i) {
-                if (appID === root.minimizedItems[i]) {
-                    root.minimizedItems.pop(appID)
+            for (i = 0; i < root.preloadApplications.length; ++i) {
+                if (appID === root.preloadApplications[i]) {
+                    root.preloadApplications.pop(appID)
+                    windowTypes[item] = "minimized"
                     isMinimized = true;
                     break
                 }
             }
+
+            if (!isMinimized) {
+                windowTypes[item] = "ivi"
+            }
         }
 
         if (acceptWindow) {
-            root.windowItem = item
             WindowManager.setWindowProperty(item, "visibility", !isMinimized)
 
             root.applicationSurfaceReady(item, isMinimized)
         } else {
-            // If nobody feels responsible for this window, we need to at least give it a
-            // parent, to not block the client process which would wait for result of the
-            // expose event indefinitely.
-
-            if (!item.parent) {
-                item.parent = root.windowItem
-                item.visible = false
-                item.paintingEnabled = false
-            }
+            console.error("window was not accepted: ", item)
         }
-
     }
 
     function windowPropertyChanged(window, name, value) {
         //print(":::LaunchController::: WindowManager:windowPropertyChanged", window, name, value)
-        if (name === "visibility" && value === false) {
+        if (name === "visibility" && value === false ) {
             root.releaseApplicationSurface()
         }
     }
 
     function windowClosingHandler(index, item) {
-        if (item === root.windowItem) {           // start close animation
+        var type = windowTypes[item]
+        if (type === "ivi") {           // start close animation
             root.releaseApplicationSurface()
         }
     }
 
     function windowLostHandler(index, item) {
-        var isClusterWidget = (WindowManager.windowProperty(item, "windowType") === "clusterWidget")
-        //We don't have a closing transition for widgets so it's save to release them immediately
-        if (isClusterWidget) {
-            WindowManager.releaseWindow(item)
-        } else {
-            //If the item is visible the closing application hasn't been played yet and we need to wait unti it is finished
+        var type = windowTypes[item]
+
+        //For special windows (cluster, widgets) we don't have a closing anmiation, close them directly
+        if (type === "ivi") {
+            //If the item is visible the closing application hasn't been played yet and we need to wait until it is finished
             if (item.visible) {
                 itemsToRelease.push(item)
                 root.releaseApplicationSurface()
             } else {
                 WindowManager.releaseWindow(item)
             }
+        } else {
+            delete windowTypes[item]
+            WindowManager.releaseWindow(item)
         }
     }
 
@@ -190,7 +187,6 @@ QtObject {
 
                 if (!isMapWidget && !isClusterWidget) {
                     WindowManager.setWindowProperty(item, "visibility", true)
-                    root.windowItem = item
                     root.applicationSurfaceReady(item, false)
                     break
                 }

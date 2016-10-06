@@ -118,7 +118,10 @@ StackView {
                 }
 
                 ScriptAction {
-                    script: { exitItem.visible = false; ApplicationManagerInterface.releasingApplicationSurfaceDone(exitItem) }
+                    script: {
+                        exitItem.visible = false;
+                        ApplicationManagerInterface.releasingApplicationSurfaceDone(exitItem)
+                    }
                 }
             }
         }
@@ -140,6 +143,9 @@ StackView {
         target: ApplicationManagerInterface
 
         onApplicationSurfaceReady: {
+            if (root.busy)
+                root.completeTransition()
+
             if (isMinimized)
                 item.parent = dummyitem
             else
@@ -149,6 +155,9 @@ StackView {
         onReleaseApplicationSurface: {
             if (root.depth <= 1)
                 return;
+
+            if (root.busy)
+                root.completeTransition()
 
             root.pop(null)
         }
