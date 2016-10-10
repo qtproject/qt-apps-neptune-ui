@@ -37,7 +37,7 @@ import QtApplicationManager 1.0
 QtObject {
     id: root
 
-    property bool dialAnimation: navigationControl.navigationRunning
+    property bool dialAnimation: true
     property real speed: navigationControl.navigationRunning ? navigationControl.navigationSpeed : 0
 
 
@@ -91,10 +91,8 @@ QtObject {
         interval: 4000
         property bool higherValue: false
         onTriggered: {
-            if (navigationControl.navigationRunning)
-                root.speed = higherValue ? (navigationControl.navigationSpeed - 5) : (navigationControl.navigationSpeed +5)
-            else
-                root.speed = higherValue ? (0) : (120)
+            root.speed = higherValue ? (navigationControl.navigationSpeed) : (navigationControl.navigationSpeed +5)
+
             higherValue = !higherValue
         }
     }

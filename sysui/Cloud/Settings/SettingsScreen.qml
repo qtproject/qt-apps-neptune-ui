@@ -69,7 +69,7 @@ UIElement {
                 }
                 else if (titleText === "SYSTEM MONITOR") {
                     systemMonitorLoader.active = true
-                    ApplicationManagerInterface.applicationSurfaceReady(systemMonitorLoader.item)
+                    ApplicationManagerInterface.applicationSurfaceReady(systemMonitorLoader.item, false)
                 }
             }
         }
