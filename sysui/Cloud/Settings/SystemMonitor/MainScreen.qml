@@ -42,7 +42,7 @@ UIScreen {
 
     Component.onCompleted: checkReporting()
 
-    onBackScreen: ApplicationManagerInterface.releaseApplicationSurface()
+    onBackScreen: ApplicationManagerInterface.releaseApplicationSurface(root)
 
     function checkReporting() {
         SystemMonitor.reportingInterval = root.timeInterval
