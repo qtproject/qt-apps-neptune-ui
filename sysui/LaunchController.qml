@@ -175,6 +175,12 @@ StackView {
         target: ApplicationManagerInterface
 
         onApplicationSurfaceReady: {
+            //Make sure to push the items only once
+            for (var i = 1; i < root.depth; ++i) {
+                if (root.get(i) === item)
+                    return
+            }
+
             if (root.busy)
                 root.completeTransition()
 
