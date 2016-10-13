@@ -67,6 +67,7 @@ UIPanel {
             ApplicationManagerInterface.mapWidget.width = Qt.binding(function () { return loader.width})
             ApplicationManagerInterface.mapWidget.height = loader.height
             loader.children = ApplicationManagerInterface.mapWidget
+            ApplicationManagerInterface.mapWidget.visible = Qt.binding(function () { return root.visible})
         }
     }
 }

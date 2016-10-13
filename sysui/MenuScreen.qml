@@ -60,24 +60,44 @@ PageSwipeScreen {
         MyCarPage {
             width: root.itemWidth
             height: root.height
+            visible: root.currentIndex === ObjectModel.index ||
+                     root.moving &&
+                     (root.currentIndex + 1  === ObjectModel.index ||
+                      root.currentIndex - 1  === ObjectModel.index)
         }
         FunctionsPage {
             width: root.itemWidth
             height: root.height
+            visible: root.currentIndex === ObjectModel.index ||
+                     root.moving &&
+                     (root.currentIndex + 1  === ObjectModel.index ||
+                      root.currentIndex - 1  === ObjectModel.index)
         }
         HomePage {
             width: root.itemWidth
             height: root.height
+            visible: root.currentIndex === ObjectModel.index ||
+                     root.moving &&
+                     (root.currentIndex + 1  === ObjectModel.index ||
+                      root.currentIndex - 1  === ObjectModel.index)
         }
         LauncherPage {
             id: launcher
             width: root.itemWidth
             height: root.height
             onUpdateApp: currentIndex = 3
+            visible: root.currentIndex === ObjectModel.index ||
+                     root.moving &&
+                     (root.currentIndex + 1  === ObjectModel.index ||
+                      root.currentIndex - 1  === ObjectModel.index)
         }
         CloudPage {
             width: root.itemWidth
             height: root.height
+            visible: root.currentIndex === ObjectModel.index ||
+                     root.moving &&
+                     (root.currentIndex + 1  === ObjectModel.index ||
+                      root.currentIndex - 1  === ObjectModel.index)
         }
     }
 }
