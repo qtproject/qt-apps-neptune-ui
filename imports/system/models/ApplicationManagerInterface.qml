@@ -50,6 +50,7 @@ QtObject {
 
     signal applicationSurfaceReady(Item item, bool isMinimized)
     signal releaseApplicationSurface(Item item)
+    signal unhandledSurfaceReceived(Item item)
 
     // Cluster signals
     signal clusterWidgetReady(string category, Item item)
@@ -91,7 +92,6 @@ QtObject {
         } else if (isClusterWidget) {
             if (!Style.withCluster) {
                 acceptWindow = false
-                item.parent = null
             } else {
                 windowTypes[item] = "cluster"
                 if (ApplicationManager.get(appID).categories[0] === "navigation")
@@ -126,6 +126,7 @@ QtObject {
 
             root.applicationSurfaceReady(item, isMinimized)
         } else {
+            root.unhandledSurfaceReceived(item)
             console.error("window was not accepted: ", item)
         }
     }

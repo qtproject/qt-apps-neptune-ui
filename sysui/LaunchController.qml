@@ -193,5 +193,10 @@ StackView {
         onReleaseApplicationSurface: {
              root.popItem(item)
         }
+
+        onUnhandledSurfaceReceived: {
+            item.visible = false
+            item.parent = dummyitem
+        }
     }
 }
