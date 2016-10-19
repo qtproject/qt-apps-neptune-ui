@@ -54,7 +54,6 @@ QtObject {
     property int symbolSizeL: 96
     property int symbolSizeXL: 114
     property int symbolSizeXXL: 192
-    property bool showClusterIfPossible: false
 
     property string displayBackground: "background_1920x1080"
 
@@ -109,8 +108,7 @@ QtObject {
 
         fontWeight = Font.Light
 
-        var canDisplayCluster = Screen.desktopAvailableWidth > Screen.width || ScreenManager.screenCount() > 1
-        if (canDisplayCluster) {
+        if (showClusterIfPossible) {
             print("Instrument Cluster enabled")
             withCluster = true
             clusterWidth = ScreenManager.availableScreens[1].size.width

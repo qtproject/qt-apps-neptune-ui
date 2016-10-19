@@ -90,12 +90,11 @@ QtObject {
     property bool showClusterIfPossible: isClient ? ApplicationInterface.additionalConfiguration.showCluster :ApplicationManager.additionalConfiguration.showCluster
 
     property Loader styleLoader: Loader {
+        property bool showClusterIfPossible: root.showClusterIfPossible
         source: styleConfig === "auto" ? Qt.resolvedUrl("AutoConfig.qml") : styleConfig
 
         onLoaded: {
             print("StyleConfig loaded: ", source)
-            if (item.showClusterIfPossible)
-                item.showClusterIfPossible = root.showClusterIfPossible
         }
     }
 
