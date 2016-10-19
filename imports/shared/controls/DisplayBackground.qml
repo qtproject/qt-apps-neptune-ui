@@ -44,7 +44,6 @@ Item {
         //anchors.centerIn: parent
         source: Style.gfx2(background)
         visible: !Style.fakeBackground
-        asynchronous: true
         fillMode: Image.PreserveAspectCrop
     }
 
