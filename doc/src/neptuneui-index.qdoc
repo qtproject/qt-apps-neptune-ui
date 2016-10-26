@@ -1,0 +1,152 @@
+/****************************************************************************
+**
+** Copyright (C) 2016 The Qt Company Ltd.
+** Contact: https://www.qt.io/licensing/
+**
+** This file is part of the documentation of the Qt Automotive Suite.
+**
+** $QT_BEGIN_LICENSE:FDL-QTAS$
+** Commercial License Usage
+** Licensees holding valid commercial Qt Automotive Suite licenses may use
+** this file in accordance with the commercial license agreement provided
+** with the Software or, alternatively, in accordance with the terms
+** contained in a written agreement between you and The Qt Company.  For
+** licensing terms and conditions see https://www.qt.io/terms-conditions.
+** For further information use the contact form at https://www.qt.io/contact-us.
+**
+** GNU Free Documentation License Usage
+** Alternatively, this file may be used under the terms of the GNU Free
+** Documentation License version 1.3 as published by the Free Software
+** Foundation and appearing in the file included in the packaging of
+** this file. Please review the following information to ensure
+** the GNU Free Documentation License version 1.3 requirements
+** will be met: https://www.gnu.org/licenses/fdl-1.3.html.
+** $QT_END_LICENSE$
+**
+****************************************************************************/
+
+/*!
+   \page neptuneui-index.html
+   \title Neptune UI
+   \brief A reference HMI for the OEMs to test the Qt Automotive Suite.
+
+   Neptune provides IVI (infotainment) system, which depends on
+   \l {Qt Application Manager} for the necessary infrastructure. It comes with
+   support for a Head Unit and Cluster. The system also provides the
+   infrastructure to develop, maintain, and deploy applications.
+
+   \borderedimage instrument-cluster.png
+   \caption QtQuick-based digital instrument cluster
+
+   \borderedimage infotainment-cluster.png
+   \caption QtQuick-based Head Unit
+
+   The Head Unit interface provides additional pages that are accessible
+   by swiping from right-to-left:
+
+   \borderedimage infotainment-cluster-apps.png
+   \caption Available applications on the Head Unit
+
+   \borderedimage infotainment-cluster-settings.png
+   \caption \uicontrol Settings that provides more control on the HEAD Unit and
+   Cluster. The \uicontrol{APP STORE} tab in the \uicontrol Settings page lets
+   you install/uninstall applications from the Head Unit.
+
+   \section1 How to Run the UI?
+
+   Typically the UI works out-of-the-box using Qt Creator, provided you choose
+   to run your application on Qt Automotive emulator, iMX6, or DriveCX targets.
+   You can also run the Neptune UI on a Linux desktop. To run it without Qt IVI,
+   use the following command from the cloned \e neptune-ui repository:
+
+   \badcode
+   appman -r -c $AM_CONFIG_FILE -c am-config.yaml -I dummyimport
+   \endcode
+
+   Where, \c appman is a utility provided by Qt Automotive Suite,
+   \c AM_CONFIG_FILE points to the Application Manager's \c config.yaml, and
+   \c dummyimport provides the necessary data, which is usually provided by
+   Qt IVI.
+
+   \note The \c {-I dummyimport} part is not required if Qt IVI is installed.
+
+   \section2 UI Configuration
+
+   The UI configuration is split into several \c yaml files for the ease of
+   maintenance. The following is a list of those configuration files and their
+   purpose:
+
+   \list
+    \li \c config.yaml - Defines the generic parameters such as the
+    install location for applications installed from the APP STORE, database,
+    and so on.
+
+    \li \c am-config.yaml - Defines the Head Unit and Cluster-specific
+    configuration such as the built-in applications, their runtime (native or
+    qml), import paths, UI-specific configuration such as full-screen mode,
+    main QML file (if runtime is qml), and so on.
+
+    \li \c info.yaml - Defines application-specific configuration such as the
+    main QML file, its imports, and so on.
+   \endlist
+
+   The following is a sample \c am-config.yaml:
+
+   \badcode
+    formatVersion: 1
+    formatType: am-configuration
+
+    # basic AM functionality - the built-in apps are in 'apps'.
+
+    applications:
+      builtinAppsManifestDir: "apps"
+
+    # QML apps will be able to import from modules...
+
+    runtimes:
+      qml:
+        importPaths: [ "imports/shared" ]
+
+    # ... as well as the SystemUI
+
+    ui:
+      fullscreen: yes
+      mainQml: "Main.qml"
+      importPaths: [ "imports/shared", "imports/system" ]
+      additionalConfiguration:
+        appStoreServerUrl: 'http://chaos.pelagicore.net:8080'
+        styleConfig: "auto"
+        showCluster: yes
+      windowIcon: "imports/shared/assets/icons/active/apps@96.png"
+
+    # development setup: no security
+
+    flags:
+      noSecurity: yes
+      noUiWatchdog: yes
+   \endcode
+
+   These options are also configurable from the command line as a
+   parameter to the \e appman utility.
+
+   \note You must regenerate the yocto image for the desired target after
+   changing these \c yaml files.
+
+   \section1 Related Information
+
+   \list
+    \li \l{Manifest Definition}{Application manifest file}
+    \li \l{Main Configuration}{appman options}
+    \li \l{Building eLinux Image}
+    \li \l{README}
+   \endlist
+*/
+
+/*!
+    \externalpage http://code.qt.io/cgit/qt-apps/neptune-ui.git/tree/README.md
+    \title README
+*/
+/*!
+    \externalpage http://doc.qt.io/QtForDeviceCreation/qtee-custom-embedded-linux-image.html
+    \title Building eLinux Image
+*/

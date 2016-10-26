@@ -1,0 +1,22 @@
+project = NeptuneUI
+version = $QT_VERSION
+
+sourcedirs += src
+
+imagedirs += src/images
+
+depends += qtquick qtqml applicationmanager
+
+qhp.projects                               = NeptuneUI
+qhp.NeptuneUI.file                = neptuneui.qhp
+qhp.NeptuneUI.namespace           = io.qt.neptuneui.$QT_VERSION_TAG
+qhp.NeptuneUI.virtualFolder       = neptuneui
+qhp.NeptuneUI.indexTitle          = Neptune UI
+qhp.NeptuneUI.indexRoot           =
+
+qhp.NeptuneUI.filterAttributes = NeptuneUI $QT_VERSION
+qhp.NeptuneUI.customFilters.NeptuneUI.name = Neptune UI $QT_VERSION
+qhp.NeptuneUI.customFilters.NeptuneUI.filterAttributes = NeptuneUI $QT_VERSION
+
+navigation.landingpage = "Neptune UI"
+navigation.homepage    = "Qt Automotive Suite"
