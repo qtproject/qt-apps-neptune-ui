@@ -42,7 +42,7 @@
    \caption QtQuick-based Head Unit
 
    The Head Unit interface provides additional pages that are accessible
-   by swiping from right-to-left:
+   by swiping from right-to-left or left-to-right:
 
    \borderedimage infotainment-cluster-apps.png
    \caption Available applications on the Head Unit
@@ -52,23 +52,74 @@
    Cluster. The \uicontrol{APP STORE} tab in the \uicontrol Settings page lets
    you install/uninstall applications from the Head Unit.
 
+   \borderedimage infotainment-cluster-carsettings.png
+   \caption Provides options to enable or disable features on the car.
+
+   \borderedimage infotainment-cluster-mycar.png
+   \caption Provides an overview about the car itself.
+
    \section1 How to Run the UI?
 
    Typically the UI works out-of-the-box using Qt Creator, provided you choose
    to run your application on Qt Automotive emulator, iMX6, or DriveCX targets.
-   You can also run the Neptune UI on a Linux desktop. To run it without Qt IVI,
-   use the following command from the cloned \e neptune-ui repository:
+   You can also run only the HMI without your application. The following
+   sections provide instructions on how to run the HMI alone.
+
+   \section2 Emulator Image
+
+   The Qt online installer automatically creates a virtual machine setup for the
+   emulator image that comes with the \QAS installation, provided you have
+   VirtualBox installed before running the Qt installer.
+
+   Use the following command to run the virtual machine setup:
 
    \badcode
-   appman -r -c $AM_CONFIG_FILE -c am-config.yaml -I dummyimport
+    emulator --vbox QtAutomotive-10
    \endcode
 
-   Where, \c appman is a utility provided by Qt Automotive Suite,
-   \c AM_CONFIG_FILE points to the Application Manager's \c config.yaml, and
-   \c dummyimport provides the necessary data, which is usually provided by
-   Qt IVI.
+   Where, \c emulator is a tool that is shipped with \QAS, and
+   \e "QtAutomotive-10" is the name of the virtual machine setup.
+
+   \image emulator-automotive.png
+
+   \section2 Linux Desktop
+
+   If you are interested in exploring the reference HMI without installing
+   \QAS, follow these instructions to run the HMI on your Linux desktop:
+
+   \list 1
+    \li Clone the Qt Application Manager and Neptune-UI git repositories.
+
+    \li Build Qt Application Manager against Qt 5.7 or later that is
+    installed on your desktop. See the Qt Application Manager
+    \l[ApplicationManager]{Installation}{installation} page for more details
+    on building.
+
+    \li Create the required directory structure based on the path used
+    in \c <qtapplicationmanager-clone>/template-opt/am/config.yaml. For
+    example, the \c installedAppsManifestDir:  points to \c{/opt/am/manifests},
+    which must be created.
+
+    \li Copy \c <qtapplicationmanager-clone>/template-opt/am/config.yaml
+    to \c /opt/am
+
+    \note You can edit your \c config.yaml copy to comment out parts that
+    are not relevant. For example, the SD card install location under the
+    \c "installationLocations:" section.
+
+    \li Run the following command from the cloned \e neptune-ui directory:
+     \badcode
+     appman -r -c /opt/am/config.yaml -c am-config.yaml -I dummyimport
+     \endcode
+   \endlist
+
+   Where, \c appman is a utility that is installed when you built
+   Qt Application Manager, \c AM_CONFIG_FILE points to the Application
+   Manager's \c config.yaml, and \c dummyimport provides the necessary data,
+   which is usually provided by Qt IVI.
 
    \note The \c {-I dummyimport} part is not required if Qt IVI is installed.
+
 
    \section2 UI Configuration
 
@@ -138,15 +189,20 @@
     \li \l{Manifest Definition}{Application manifest file}
     \li \l{Main Configuration}{appman options}
     \li \l{Building eLinux Image}
-    \li \l{README}
+    \li \l{Qt Application Manager Git Repository}
+    \li \l{Neptune-UI Git Repository}
    \endlist
 */
 
 /*!
-    \externalpage http://code.qt.io/cgit/qt-apps/neptune-ui.git/tree/README.md
-    \title README
-*/
-/*!
     \externalpage http://doc.qt.io/QtForDeviceCreation/qtee-custom-embedded-linux-image.html
     \title Building eLinux Image
+*/
+/*!
+    \externalpage http://code.qt.io/cgit/qt/qtapplicationmanager.git/
+    \title Qt Application Manager Git Repository
+*/
+/*!
+    \externalpage http://code.qt.io/cgit/qt-apps/neptune-ui.git/
+    \title Neptune-UI Git Repository
 */
