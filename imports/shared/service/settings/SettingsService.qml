@@ -102,7 +102,7 @@ QtObject {
             active: false
         }
         ListElement {
-            description: "Lane keeping assist"
+            description: "Lane assist"
             icon: "lane_keeping_assist"
             active: false
         }
@@ -112,7 +112,7 @@ QtObject {
             active: false
         }
         ListElement {
-            description: "Driver drowsyness alert"
+            description: "Driver drowsiness alert"
             icon: "driver_drownsyness_alert"
             active: true
         }
