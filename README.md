@@ -24,7 +24,13 @@ qmlscene/qmllive - have been moved to the application-manager repository.
 
 # Build
 
-* Build datasource qml plugin
+* Build and install screenmanager qml plugin
+
+        $ cd plugins/screenmanager
+
+        $ qmake && make && make install
+
+* Build and install datasource qml plugin
 
         $ cd plugins/datasource
 

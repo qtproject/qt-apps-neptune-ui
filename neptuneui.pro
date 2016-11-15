@@ -2,7 +2,7 @@ include(doc/doc.pri)
 TEMPLATE = subdirs
 
 SUBDIRS = plugins/datasource \
-          plugins/screenManager \
+          plugins/screenmanager \
           plugins/comtqci18ndemo
 
 qml.files = apps imports sysui i18n am-config.yaml Main*.qml
