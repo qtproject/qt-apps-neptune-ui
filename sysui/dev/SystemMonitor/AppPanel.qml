@@ -138,7 +138,7 @@ UIPage {
                     anchors.top: processGraph.top
 
                     anchors.right: processGraph.right
-                    text: applicationId + " VSize: " + processGraph.memoryUsed + "KB, " + processGraph.memoryUsagePercentage + "%\nPSS: " + processGraph.pssMemoryUsed + "KB"
+                    text: applicationId + " VSize: " + processGraph.memoryUsed + "MB, " + processGraph.memoryUsagePercentage + "%\nPSS: " + processGraph.pssMemoryUsed + "MB"
                     font.pixelSize: Style.fontSizeXXS
                 }
 
@@ -148,8 +148,8 @@ UIPage {
                         var vmSizeBytes = processMonitor.memoryMonitor.get(modelIndex).vmSize
                         var pssSizeBytes = processMonitor.memoryMonitor.get(modelIndex).pss
                         processGraph.memoryUsagePercentage = (vmSizeBytes/SystemMonitor.totalMemory * 100).toFixed(1)
-                        processGraph.memoryUsed = (vmSizeBytes/1024).toFixed(1)
-                        processGraph.pssMemoryUsed = (pssSizeBytes/1024).toFixed(1)
+                        processGraph.memoryUsed = (vmSizeBytes/1024/1024).toFixed(1)
+                        processGraph.pssMemoryUsed = (pssSizeBytes/1024/1024).toFixed(1)
                     }
                 }
             }

@@ -29,88 +29,36 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.0
-import utils 1.0
-import controls 1.0
+import QtQuick 2.1
 import QtApplicationManager 1.0
 
-Item {
-    id: graphContainer
 
-    width: 300
-    height: 150
+MonitorPanel {
+    id: root
 
-    Item {
-        id: ramScaleContainer
-        anchors.bottom: parent.bottom
-        width: 5
-        height: parent.height
-
-        Rectangle {
-            id: ramScale
-            width: 2
-            height: parent.height
-            color: Style.colorOrange
-        }
-
-        Label {
-            width: 70
-            anchors.bottom: ramScale.bottom
-            anchors.right: ramScale.right
-            text: "0"
-            font.pixelSize: Style.fontSizeXXS
-        }
-
-        Label {
-            width: 70
-            anchors.top: ramScale.top
-            anchors.topMargin: 0.5*ramScale.height - height/2
-            anchors.right: ramScale.right
-            text: "50"
-            font.pixelSize: Style.fontSizeXXS
-        }
-
-        Label {
-            width: 70
-            anchors.top: ramScale.top
-            anchors.topMargin: - height/2
-            anchors.right: ramScale.right
-            text: "100"
-            font.pixelSize: Style.fontSizeXXS
-        }
-    }
-
+    descriptionText: "RAM: "
+    middleText: "50%"
+    middleLine: 0.5
 
     ListView {
         id: graph
-        anchors.top: ramScaleContainer.top
-        anchors.right: graphContainer.right
-        anchors.bottom: ramScaleContainer.bottom
-        anchors.left: ramScaleContainer.right
+        anchors.fill: parent
 
         model: SystemMonitor
         orientation: ListView.Horizontal
         interactive: false
+
         delegate: Item {
             width: graph.width / graph.model.count
             height: graph.height
 
             Rectangle {
                 width: parent.width
-                height: (model.memoryUsed/model.memoryTotal)*parent.height
-                anchors.bottom: parent.bottom
-                color: Style.colorGrey
+                height: 3
+                y: parent.height - (model.memoryUsed/model.memoryTotal)*parent.height
             }
         }
     }
-
-    Rectangle {
-        width: graph.width + 5
-        height: 2
-
-        anchors.top: graph.bottom
-        anchors.left: graph.left
-        anchors.leftMargin: -5
-        color: Style.colorOrange
-    }
 }
+
+

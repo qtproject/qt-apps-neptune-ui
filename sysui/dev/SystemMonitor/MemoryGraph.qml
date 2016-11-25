@@ -35,19 +35,24 @@ import controls 1.0
 import QtApplicationManager 1.0
 
 Item {
-    id: cpuContainer
-    width: 400
-    height: 200
+    id: graphContainer
 
+    width: 300
+    height: 150
+
+    property color barColor: Style.colorGrey
+    property bool scaleVisible: true
 
     Item {
-        id: cpuScaleContainer
+        id: ramScaleContainer
         anchors.bottom: parent.bottom
         width: 5
         height: parent.height
 
+        visible: graphContainer.scaleVisible
+
         Rectangle {
-            id: cpuScale
+            id: ramScale
             width: 2
             height: parent.height
             color: Style.colorOrange
@@ -55,26 +60,26 @@ Item {
 
         Label {
             width: 70
-            anchors.bottom: cpuScale.bottom
-            anchors.right: cpuScale.right
+            anchors.bottom: ramScale.bottom
+            anchors.right: ramScale.right
             text: "0"
             font.pixelSize: Style.fontSizeXXS
         }
 
         Label {
             width: 70
-            anchors.top: cpuScale.top
-            anchors.topMargin: 0.5*cpuScale.height - height/2
-            anchors.right: cpuScale.right
+            anchors.top: ramScale.top
+            anchors.topMargin: 0.5*ramScale.height - height/2
+            anchors.right: ramScale.right
             text: "50"
             font.pixelSize: Style.fontSizeXXS
         }
 
         Label {
             width: 70
-            anchors.top: cpuScale.top
+            anchors.top: ramScale.top
             anchors.topMargin: - height/2
-            anchors.right: cpuScale.right
+            anchors.right: ramScale.right
             text: "100"
             font.pixelSize: Style.fontSizeXXS
         }
@@ -82,40 +87,34 @@ Item {
 
 
     ListView {
-        id: cpuGraph
-        anchors.top: cpuScaleContainer.top
-        anchors.right: cpuContainer.right
-        anchors.bottom: cpuScaleContainer.bottom
-        anchors.left: cpuScaleContainer.right
+        id: graph
+        anchors.top: ramScaleContainer.top
+        anchors.right: graphContainer.right
+        anchors.bottom: ramScaleContainer.bottom
+        anchors.left: ramScaleContainer.right
 
         model: SystemMonitor
         orientation: ListView.Horizontal
         interactive: false
         delegate: Item {
-            width: cpuGraph.width / cpuGraph.model.count
-            height: cpuGraph.height
+            width: graph.width / graph.model.count
+            height: graph.height
 
-            Item {
-                id: cpuDelegate
-                anchors.fill: parent
-
-                Rectangle {
-                    width: parent.width
-                    height: model.cpuLoad * parent.height
-                    anchors.bottom: parent.bottom
-                    color: "white"
-
-                }
+            Rectangle {
+                width: parent.width
+                height: (model.memoryUsed/model.memoryTotal)*parent.height
+                anchors.bottom: parent.bottom
+                color: graphContainer.barColor
             }
         }
     }
 
     Rectangle {
-        width: cpuGraph.width + 5
+        width: graph.width + 5
         height: 2
 
-        anchors.top: cpuGraph.bottom
-        anchors.left: cpuGraph.left
+        anchors.top: graph.bottom
+        anchors.left: graph.left
         anchors.leftMargin: -5
         color: Style.colorOrange
     }

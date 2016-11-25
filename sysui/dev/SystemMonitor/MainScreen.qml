@@ -29,62 +29,59 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.1
+import QtQuick 2.0
 import utils 1.0
-
 import controls 1.0
-import utils 1.0
-import service.settings 1.0
+import QtApplicationManager 1.0
 import models 1.0
-import utils 1.0
 
-UIElement {
+UIScreen {
     id: root
 
-    ListViewManager {
-        id: settingsListView
+    property int timeInterval: 200
 
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.top: parent.top; anchors.bottom: parent.bottom
-        hspan: 14
+    Component.onCompleted: checkReporting()
 
-        model: SettingsService.entries
-
-        delegate: SettingsListItem {
-            hspan: settingsListView.hspan
-            vspan: 2
-
-            iconName: model.icon
-            titleText: model.title
-            checked: model.checked
-            hasChildren: model.hasChildren
-            checkedEnabled: (titleText === "SYSTEM MONITOR") ? false : true
-            onClicked: {
-                if ( titleText === "METRIC SYSTEM") {
-                    if (checked)
-                        SettingsService.unitSystem = "imp_us"
-                    else
-                        SettingsService.unitSystem = "metric"
-                }
-                else if (titleText === "SYSTEM MONITOR") {
-                    systemMonitorLoader.active = true
-                    ApplicationManagerInterface.applicationSurfaceReady(systemMonitorLoader.item, false)
-                }
-            }
-        }
+    onBackScreen: {
+        SystemMonitor.cpuLoadReportingEnabled = false
+        SystemMonitor.fpsReportingEnabled = false
+        SystemMonitor.memoryReportingEnabled = false
+        ApplicationManagerInterface.releaseApplicationSurface(root)
     }
 
-    Image {
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.bottom: parent.bottom
-        source: Style.icon('cloud_bottom_shadow')
-        asynchronous: true
+    function checkReporting() {
+        SystemMonitor.reportingInterval = root.timeInterval
+        SystemMonitor.reportingRange = 10 * 1000
+    }
+
+    TabView {
+        id: tabView
+        vspan: root.vspan - 3
+        hspan: root.hspan
+        anchors.centerIn: parent
+        horizontalAlignment: true
+        tabWidth: 5
+        tabs: [
+            { title : "Info", url : infoPanel, properties : {} },
+            { title : "CPU/FPS", url : systemPanel, properties : {} },
+            { title : "RAM", url : appPanel, properties : {} },
+        ]
+
+    }
+
+    InfoPanel {
+        id: infoPanel
+        visible: false
+
+    }
+
+    SystemPanel {
+        id: systemPanel
         visible: false
     }
 
-    Loader {
-        id: systemMonitorLoader
-        active: false
-        source: "../../dev/SystemMonitor/MainScreen.qml"
+    AppPanel {
+        id: appPanel
+        visible: false
     }
 }

@@ -29,54 +29,36 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.0
-import utils 1.0
-import controls 1.0
+import QtQuick 2.1
 import QtApplicationManager 1.0
-import models 1.0
 
-UIScreen {
+
+MonitorPanel {
     id: root
 
-    property int timeInterval: 200
+    descriptionText: "CPU: "
+    middleText: "50%"
+    middleLine: 0.5
 
-    Component.onCompleted: checkReporting()
+    ListView {
+        id: graph
+        anchors.fill: parent
 
-    onBackScreen: ApplicationManagerInterface.releaseApplicationSurface(root)
+        model: SystemMonitor
+        orientation: ListView.Horizontal
+        interactive: false
 
-    function checkReporting() {
-        SystemMonitor.reportingInterval = root.timeInterval
-        SystemMonitor.reportingRange = 10 * 1000
-    }
+        delegate: Item {
+            width: graph.width / graph.model.count
+            height: graph.height
 
-    TabView {
-        id: tabView
-        vspan: root.vspan - 3
-        hspan: root.hspan
-        anchors.centerIn: parent
-        horizontalAlignment: true
-        tabWidth: 5
-        tabs: [
-            { title : "Info", url : infoPanel, properties : {} },
-            { title : "CPU/FPS", url : systemPanel, properties : {} },
-            { title : "RAM", url : appPanel, properties : {} },
-        ]
-
-    }
-
-    InfoPanel {
-        id: infoPanel
-        visible: false
-
-    }
-
-    SystemPanel {
-        id: systemPanel
-        visible: false
-    }
-
-    AppPanel {
-        id: appPanel
-        visible: false
+            Rectangle {
+                width: parent.width
+                height: 3
+                y: parent.height - model.cpuLoad * parent.height
+            }
+        }
     }
 }
+
+

@@ -69,9 +69,7 @@ Item {
                     root.state = "statusBarExpanded"
                 }
             }
-            onTimePressAndHold: {
-                fpsMonitor.visible = !fpsMonitor.visible
-            }
+            onTimePressAndHold: toolBarMonitorLoader.active = !toolBarMonitorLoader.active
         }
 
         Item {
@@ -130,15 +128,15 @@ Item {
             }
         }
 
-        FpsMonitor {
-            id: fpsMonitor
-            x: 0
-            y: 0
-            width: Style.hspan(4)
-            height: Style.vspan(2)
-            visible: false
-            opacity: 0.8
+        Loader {
+            id: toolBarMonitorLoader
+            width: parent.width
+            height: 200
+            anchors.bottom: parent.bottom
+            active: false
+            source: "dev/ToolBarMonitor.qml"
         }
+
     }
 
     NotificationContainer {
