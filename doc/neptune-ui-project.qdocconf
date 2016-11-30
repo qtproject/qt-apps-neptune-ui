@@ -1,5 +1,6 @@
 project = NeptuneUI
 version = $QT_VERSION
+url     = http://doc.qt.io/neptuneui
 
 sourcedirs += src
 
@@ -20,3 +21,5 @@ qhp.NeptuneUI.customFilters.NeptuneUI.filterAttributes = NeptuneUI $QT_VERSION
 
 navigation.landingpage = "Neptune UI"
 navigation.homepage    = "Qt Automotive Suite"
+
+macro.QAS = "Qt Automotive Suite"
