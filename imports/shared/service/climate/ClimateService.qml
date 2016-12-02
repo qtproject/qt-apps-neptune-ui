@@ -127,7 +127,12 @@ QtObject {
     property int ventilation: climateControl.fanSpeedLevel.value
     property string tempSuffix: SettingsService.metric ? "°C" : "°F"
     property int ventilationLevels: 7 // 6 + off (0)
+
     onVentilationChanged: climateControl.fanSpeedLevel.value = ventilation
+    property Connections fanSpeedLevelConnections: Connections {
+        target: climateControl.fanSpeedLevel
+        onValueChanged: ventilation = climateControl.fanSpeedLevel.value
+    }
 
     property QtObject stateMachine: ClimateStateMachine {
         climateControl: root.climateControl

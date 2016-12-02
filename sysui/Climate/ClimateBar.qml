@@ -162,6 +162,10 @@ UIElement {
                     levels: ClimateService.ventilationLevels
                     currentLevel: ClimateService.ventilation
                     onCurrentLevelChanged: ClimateService.ventilation = currentLevel
+                    Connections {
+                        target: ClimateService
+                        onVentilationChanged: ventilation.currentLevel = ClimateService.ventilation
+                    }
                 }
 
                 Spacer {

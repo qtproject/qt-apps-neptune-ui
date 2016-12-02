@@ -38,19 +38,31 @@ UIElement {
 
     // Number of levels including zero which means 'off'. 7 equals 6 levels + off
     property int levels
-    property alias currentLevel: view.currentIndex
+    property int currentLevel
+
+    property bool _updateInProgress: false
+
+    onCurrentLevelChanged: if (!_updateInProgress) updateLevelInternal(currentLevel);
+
+    function updateLevelInternal(newLevel) {
+        var boundedLevel = Math.max(0, Math.min(levels - 1, newLevel));
+        _updateInProgress = true;
+        currentLevel = boundedLevel;
+        _updateInProgress = false;
+        view.currentIndex = boundedLevel;
+    }
 
     MouseArea {
         anchors.fill: view
         anchors.leftMargin: Style.hspan(2)
         anchors.rightMargin: Style.hspan(2)
-        onClicked: updateIndex(mouse.x, mouse.y)
-        onPositionChanged: updateIndex(mouse.x, mouse.y)
+        onClicked: updateLevelFromMousePosition(mouse.x, mouse.y)
+        onPositionChanged: updateLevelFromMousePosition(mouse.x, mouse.y)
 
-        function updateIndex(x, y) {
+        function updateLevelFromMousePosition(x, y) {
             var index = view.indexAt(x, y)
             if (index > 0) {
-                view.currentIndex = Math.min(index, view.count-1)
+                root.updateLevelInternal(index)
             }
         }
     }
@@ -76,7 +88,7 @@ UIElement {
             size: Style.symbolSizeS
             MouseArea {
                 anchors.fill: parent
-                onClicked: view.decrementCurrentIndex()
+                onClicked: root.updateLevelInternal(root.currentLevel - 1)
             }
         }
 
@@ -87,7 +99,7 @@ UIElement {
             size: Style.symbolSizeM
             MouseArea {
                 anchors.fill: parent
-                onClicked: view.incrementCurrentIndex()
+                onClicked: root.updateLevelInternal(root.currentLevel + 1)
             }
         }
 
