@@ -39,51 +39,17 @@ QtObject {
 
     property bool dialAnimation: true
     property real speed: navigationControl.navigationRunning ? navigationControl.navigationSpeed : 0
-
-
-    Behavior on speed {
-        SmoothedAnimation {
-            velocity: 6
-            duration : 5000
-            easing.overshoot: 0
-        }
-    }
+    property string rightDialBorderColor: navigationControl.dialBorderColor
+    property bool warningDialAnimation: navigationControl.activateWarning
 
     readonly property real rightDialValue: root.speed * 0.0031
 
     property int displaySpeed: speed
     property real fuel: 0.5 // fuel precentage min 0.0; max 1.0;
-    property string rightDialIcon: Style.gfx("cluster/my_position")
-    property string rightDialMainText: "0.6mi"
-    property string rightDialSubText: "Service in\n200mi"
-    property real rightIconScale: 1
-    property var gasStationEvent
-    property bool gasStationUpdateActive: false
-    property Timer fuelTimer: Timer {
-        interval: 5000
-        onTriggered: {
-            root.fuel = 0.2
-            root.rightDialIcon = Style.gfx("livedrive/fuel_orange")
-            root.rightIconScale = 1.4
-            root.rightDialMainText = "Low Fuel"
-            root.rightDialSubText = "Estimation: 5mi"
-            if (root.gasStationEvent) {
-                root.gasStationEvent.priority = 1
-                fuelEventTimer.start()
-            }
-        }
-    }
-
-    property Timer fuelEventTimer: Timer {
-        interval: 4000
-        onTriggered: {
-            root.rightDialIcon = Style.gfx("livedrive/fuel_orange")
-            root.rightIconScale = 1.4
-            root.rightDialMainText = root.gasStationEvent.distanceFromStart + "m"
-            root.rightDialSubText = "SHELL\n2$/Gl"
-            root.gasStationUpdateActive = true
-        }
-    }
+    property string rightDialIcon: navigationControl.rightDialIcon
+    property string rightDialMainText: navigationControl.mainText
+    property string rightDialSubText: navigationControl.subText
+    property real rightIconScale: 2
 
     property Timer timer: Timer {
         running: root.dialAnimation
@@ -102,9 +68,22 @@ QtObject {
 
         property real navigationSpeed: 0
         property bool navigationRunning: false
+        property bool activateWarning: false
+        property string dialBorderColor: Style.colorWhite
+        property string rightDialIcon: Style.gfx("cluster/my_position")
+        property string mainText: "0.6mi"
+        property string subText: "Service in 300km"
 
         Component.onCompleted: {
             ApplicationIPCManager.registerInterface(navigationControl, "com.pelagicore.navigation.control", {})
+        }
+    }
+
+    Behavior on speed {
+        SmoothedAnimation {
+            velocity: 6
+            duration : 5000
+            easing.overshoot: 0
         }
     }
 

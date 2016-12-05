@@ -102,7 +102,7 @@ Item {
             height: width
             radius: width
             color: "transparent"
-            border.color: (VehicleModel.fuel < 0.4 || NavigationService.traficAlert) ? Style.colorOrange : "white"
+            border.color: VehicleModel.rightDialBorderColor
             border.width: rect.borderWidth
             anchors.centerIn: parent
             anchors.horizontalCenterOffset: -3
@@ -110,7 +110,7 @@ Item {
             property int borderWidth: 3
 
             SequentialAnimation {
-                running: (VehicleModel.fuel < 0.4 || NavigationService.traficAlert)
+                running: VehicleModel.warningDialAnimation
                 loops: Animation.Infinite
                 NumberAnimation {
 
@@ -157,7 +157,7 @@ Item {
             Image {
                 id: fuelSymbol
                 anchors.top: parent.top
-                anchors.topMargin: 20
+                anchors.topMargin: 60
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.horizontalCenterOffset: 5
                 source: VehicleModel.rightDialIcon
@@ -185,9 +185,10 @@ Item {
                         width: parent.width
                         anchors.centerIn: parent
                         horizontalAlignment: Text.AlignHCenter
-                        font.pixelSize: 0.05 * root.height
+                        font.pixelSize: text.length > 10 ? Style.fontSizeS : Style.fontSizeM
                         font.bold: true
                         text: VehicleModel.rightDialMainText
+                        elide: Text.ElideMiddle
                     }
                 }
             }
