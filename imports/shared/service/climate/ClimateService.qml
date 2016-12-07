@@ -57,6 +57,10 @@ QtObject {
         onValueChanged: leftSeat.value =
             calculateUnitValue(climateControl.zoneAt.FrontLeft.targetTemperature.value)
     }
+    property Connections leftSeatHeaterConnections: Connections {
+        target: climateControl.zoneAt.FrontLeft.seatHeater
+        onValueChanged: leftSeat.heat = climateControl.zoneAt.FrontLeft.seatHeater.value
+    }
 
     property QtObject rightSeat: QtObject {
         property real minValue: calculateUnitValue(16)
@@ -73,6 +77,10 @@ QtObject {
         target: climateControl.zoneAt.FrontRight.targetTemperature
         onValueChanged: rightSeat.value =
             calculateUnitValue(climateControl.zoneAt.FrontRight.targetTemperature.value)
+    }
+    property Connections rightSeatHeaterConnections: Connections {
+        target: climateControl.zoneAt.FrontRight.seatHeater
+        onValueChanged: rightSeat.heat = climateControl.zoneAt.FrontRight.seatHeater.value
     }
 
     property QtObject frontHeat: QtObject {
