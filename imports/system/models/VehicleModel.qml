@@ -81,8 +81,8 @@ QtObject {
 
     Behavior on speed {
         SmoothedAnimation {
-            velocity: 6
-            duration : 5000
+            velocity: 8
+            duration : 4000
             easing.overshoot: 0
         }
     }

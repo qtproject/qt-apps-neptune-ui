@@ -156,12 +156,15 @@ Item {
 
             Image {
                 id: fuelSymbol
+                width: 70
+                height: 70
                 anchors.top: parent.top
-                anchors.topMargin: 60
+                anchors.topMargin: 55
                 anchors.horizontalCenter: parent.horizontalCenter
-                anchors.horizontalCenterOffset: 5
+                anchors.horizontalCenterOffset: 0
                 source: VehicleModel.rightDialIcon
-                scale: VehicleModel.rightIconScale
+                fillMode: Image.PreserveAspectFit
+
             }
 
             Item {
