@@ -150,8 +150,8 @@ QtObject {
 
         //For special windows (cluster, widgets) we don't have a closing anmiation, close them directly
         if (type === "ivi") {
-            //If the item is visible the closing application hasn't been played yet and we need to wait until it is finished
-            if (item.visible) {
+            //If the item is in the closing state the closing animation hasn't been played yet and we need to wait until it is finished
+            if (item.state === "closing" ) {
                 itemsToRelease.push(item)
                 root.releaseApplicationSurface(item)
             } else {
@@ -183,10 +183,13 @@ QtObject {
                 var isWidget = (WindowManager.windowProperty(item, "windowType") === "widget")
                 var isMapWidget = (WindowManager.windowProperty(item, "windowType") === "widgetMap")
                 var isClusterWidget = (WindowManager.windowProperty(item, "windowType") === "clusterWidget")
+
                 print(":::LaunchController:::isClusterWidget", isClusterWidget)
                 print(":::LaunchController:::isWidget", isWidget, isMapWidget)
 
                 if (!isMapWidget && !isClusterWidget) {
+                    if (windowTypes[item] === "minimized")
+                        windowTypes[item] = "ivi"
                     WindowManager.setWindowProperty(item, "visibility", true)
                     root.applicationSurfaceReady(item, false)
                     break
