@@ -141,6 +141,16 @@ QtObject {
         climateControl.fanSpeedLevel.value = newVentilation;
     }
 
+    property QtObject airflowDirections: QtObject {
+        property int directions: climateControl.airflowDirections.value
+        property var availableDirections: climateControl.airflowDirections.availableValues
+        onDirectionsChanged: climateControl.airflowDirections.value = directions
+    }
+    property Connections airflowDirectionsConnections: Connections {
+        target: climateControl.airflowDirections
+        onValueChanged: airflowDirections.directions = climateControl.airflowDirections.value
+    }
+
     property QtObject stateMachine: ClimateStateMachine {
         climateControl: root.climateControl
         doorsOpen: eco.enabled // TODO use QtIVI doors/window state for this eventually
