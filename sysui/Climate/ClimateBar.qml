@@ -89,7 +89,7 @@ UIElement {
                 vspan: root.collapsedVspan
                 name: "seat_left"
                 active: ClimateService.leftSeat.heat
-                onClicked: ClimateService.leftSeat.heat = !active
+                onClicked: ClimateService.leftSeat.setHeat(!active)
                 anchors.left: tempLevelLeft.right
                 anchors.verticalCenter: parent.verticalCenter
             }
@@ -108,7 +108,7 @@ UIElement {
                 vspan: root.collapsedVspan
                 name: "seat_right"
                 active: ClimateService.rightSeat.heat
-                onClicked: ClimateService.rightSeat.heat = !active
+                onClicked: ClimateService.rightSeat.setHeat(!active)
                 anchors.right: tempLevelRight.left
                 anchors.verticalCenter: parent.verticalCenter
             }
@@ -135,7 +135,7 @@ UIElement {
                 maxValue: ClimateService.leftSeat.maxValue
                 value: ClimateService.leftSeat.value
                 stepValue: ClimateService.leftSeat.stepValue
-                onValueChanged: ClimateService.leftSeat.value = value
+                onValueChanged: ClimateService.leftSeat.setValue(value)
             }
 
             Spacer {
@@ -161,11 +161,7 @@ UIElement {
                     vspan: 2
                     levels: ClimateService.ventilationLevels
                     currentLevel: ClimateService.ventilation
-                    onCurrentLevelChanged: ClimateService.ventilation = currentLevel
-                    Connections {
-                        target: ClimateService
-                        onVentilationChanged: ventilation.currentLevel = ClimateService.ventilation
-                    }
+                    onNewLevelRequested: ClimateService.setVentilation(newLevel)
                 }
 
                 Spacer {
@@ -184,7 +180,7 @@ UIElement {
                         vspan: 5
                         symbolName: modelData.symbol
                         active: modelData.enabled
-                        onClicked: modelData.enabled = !modelData.enabled
+                        onClicked: modelData.setEnabled(!modelData.enabled)
                     }
                 }
             }
@@ -203,7 +199,7 @@ UIElement {
                 maxValue: ClimateService.rightSeat.maxValue
                 value: ClimateService.rightSeat.value
                 stepValue: ClimateService.rightSeat.stepValue
-                onValueChanged: ClimateService.rightSeat.value = value
+                onValueChanged: ClimateService.rightSeat.setValue(value)
             }
 
         }
@@ -214,13 +210,4 @@ UIElement {
         }
     }
 
-    Connections {
-        target: ClimateService.leftSeat
-        onValueChanged: leftTempSlider.value = ClimateService.leftSeat.value
-    }
-
-    Connections {
-        target: ClimateService.rightSeat
-        onValueChanged: rightTempSlider.value = ClimateService.rightSeat.value
-    }
 }

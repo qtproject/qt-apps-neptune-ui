@@ -40,16 +40,13 @@ UIElement {
     property int levels
     property int currentLevel
 
-    property bool _updateInProgress: false
+    onCurrentLevelChanged: view.currentIndex = currentLevel;
 
-    onCurrentLevelChanged: if (!_updateInProgress) updateLevelInternal(currentLevel);
+    signal newLevelRequested(int newLevel)
 
     function updateLevelInternal(newLevel) {
         var boundedLevel = Math.max(0, Math.min(levels - 1, newLevel));
-        _updateInProgress = true;
-        currentLevel = boundedLevel;
-        _updateInProgress = false;
-        view.currentIndex = boundedLevel;
+        newLevelRequested( boundedLevel );
     }
 
     MouseArea {

@@ -49,17 +49,13 @@ QtObject {
 
         property bool heat: climateControl.zoneAt.FrontLeft.seatHeater.value
 
-        onValueChanged: climateControl.zoneAt.FrontLeft.targetTemperature.value = value
-        onHeatChanged: climateControl.zoneAt.FrontLeft.seatHeater.value = heat
-    }
-    property Connections leftSeatTargetTempConnections: Connections {
-        target: climateControl.zoneAt.FrontLeft.targetTemperature
-        onValueChanged: leftSeat.value =
-            calculateUnitValue(climateControl.zoneAt.FrontLeft.targetTemperature.value)
-    }
-    property Connections leftSeatHeaterConnections: Connections {
-        target: climateControl.zoneAt.FrontLeft.seatHeater
-        onValueChanged: leftSeat.heat = climateControl.zoneAt.FrontLeft.seatHeater.value
+        function setValue(newValue) {
+            climateControl.zoneAt.FrontLeft.targetTemperature.value = newValue
+        }
+
+        function setHeat(newHeat) {
+            climateControl.zoneAt.FrontLeft.seatHeater.value = newHeat
+        }
     }
 
     property QtObject rightSeat: QtObject {
@@ -70,36 +66,39 @@ QtObject {
 
         property bool heat: climateControl.zoneAt.FrontRight.seatHeater.value
 
-        onValueChanged: climateControl.zoneAt.FrontRight.targetTemperature.value = value
-        onHeatChanged: climateControl.zoneAt.FrontRight.seatHeater.value = heat
-    }
-    property Connections rightSeatTargetTempConnections: Connections {
-        target: climateControl.zoneAt.FrontRight.targetTemperature
-        onValueChanged: rightSeat.value =
-            calculateUnitValue(climateControl.zoneAt.FrontRight.targetTemperature.value)
-    }
-    property Connections rightSeatHeaterConnections: Connections {
-        target: climateControl.zoneAt.FrontRight.seatHeater
-        onValueChanged: rightSeat.heat = climateControl.zoneAt.FrontRight.seatHeater.value
+        function setValue(newValue) {
+            climateControl.zoneAt.FrontRight.targetTemperature.value = newValue
+        }
+
+        function setHeat(newHeat) {
+            climateControl.zoneAt.FrontRight.seatHeater.value = newHeat
+        }
     }
 
     property QtObject frontHeat: QtObject {
         property string symbol: "front"
         property bool enabled: true
+
+        function setEnabled(newEnabled) {
+            enabled = newEnabled;
+        }
     }
 
     property QtObject rearHeat: QtObject {
         property string symbol: "rear"
         property bool enabled: true
+
+        function setEnabled(newEnabled) {
+            enabled = newEnabled;
+        }
     }
 
     property QtObject airCondition: QtObject {
         property string symbol: "ac"
         property bool enabled: climateControl.airConditioning.value
 
-        onEnabledChanged: {
-            climateControl.airConditioning.value = enabled;
-            enabled = Qt.binding(function() { return climateControl.airConditioning.value; });
+        function setEnabled(newEnabled) {
+            climateControl.airConditioning.value = newEnabled;
         }
     }
 
@@ -107,24 +106,26 @@ QtObject {
         property string symbol: "air_quality"
         property bool enabled: climateControl.recirculationMode.value == ClimateControl.RecirculationOn
 
-        onEnabledChanged: {
-            climateControl.recirculationMode.value = enabled ? ClimateControl.RecirculationOn : ClimateControl.RecirculationOff;
-            enabled = Qt.binding(function() { return climateControl.recirculationMode.value == ClimateControl.RecirculationOn });
+        function setEnabled(newEnabled) {
+            climateControl.recirculationMode.value = newEnabled ? ClimateControl.RecirculationOn : ClimateControl.RecirculationOff;
         }
     }
 
     property QtObject eco: QtObject {
         property string symbol: "eco"
         property bool enabled: false
+
+        function setEnabled(newEnabled) {
+            enabled = newEnabled;
+        }
     }
 
     property QtObject steeringWheelHeat: QtObject {
         property string symbol: "stearing_wheel"
         property bool enabled: climateControl.steeringWheelHeater.value >= 5
 
-        onEnabledChanged: {
-            climateControl.steeringWheelHeater.value = enabled ? 10 : 0;
-            enabled = Qt.binding(function() { return climateControl.steeringWheelHeater.value >= 5 });
+        function setEnabled(newEnabled) {
+            climateControl.steeringWheelHeater.value = newEnabled ? 10 : 0;
         }
     }
 
@@ -136,10 +137,8 @@ QtObject {
     property string tempSuffix: SettingsService.metric ? "°C" : "°F"
     property int ventilationLevels: 7 // 6 + off (0)
 
-    onVentilationChanged: climateControl.fanSpeedLevel.value = ventilation
-    property Connections fanSpeedLevelConnections: Connections {
-        target: climateControl.fanSpeedLevel
-        onValueChanged: ventilation = climateControl.fanSpeedLevel.value
+    function setVentilation(newVentilation) {
+        climateControl.fanSpeedLevel.value = newVentilation;
     }
 
     property QtObject stateMachine: ClimateStateMachine {

@@ -73,7 +73,7 @@ QtObject {
                             id: airConditionOn
                             onEntered: {
                                 climateControl.airConditioning.value = true
-                                steeringWheelHeat.enabled = false
+                                steeringWheelHeat.setEnabled(false)
                             }
                             DSM.SignalTransition {
                                 targetState: airConditionOff
