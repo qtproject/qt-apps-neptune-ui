@@ -45,7 +45,7 @@ QtObject {
 
     property SqlQueryDataSource nowPlaying: SqlQueryDataSource {
         database: "media"
-        query: 'select * from music'
+        query: 'select distinct * from music order by random()'
         onQueryChanged: root.reevaluate()
     }
 
