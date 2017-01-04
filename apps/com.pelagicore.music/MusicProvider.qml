@@ -46,17 +46,20 @@ QtObject {
     property SqlQueryDataSource nowPlaying: SqlQueryDataSource {
         database: "media"
         query: 'select * from music'
+        onQueryChanged: root.reevaluate()
     }
 
     property int currentIndex: 0
     property int count: nowPlaying.count
-    onCountChanged: {
-        currentIndex = -1
-        currentIndex = 0
-    }
+
     property var currentEntry: nowPlaying.get(currentIndex);
     property url currentSource: nowPlaying.storageLocation + '/media/music/' + currentEntry.source
     property url currentCover: nowPlaying.storageLocation + '/media/music/' + currentEntry.cover
+
+    function reevaluate() {
+        currentIndex = -1
+        currentIndex = 0
+    }
 
     function queryAllAlbums() {
         musicLibrary.query = 'select * from music group by album'
