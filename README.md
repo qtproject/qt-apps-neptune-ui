@@ -63,10 +63,6 @@ Which configuration should be used can be controlled using the styleConfig param
 If the "auto" configuration doesn't work for a specific device a own configuration can be created by copying one of the existing configurations from modules/utils and place it somehwere on the filesystem.
 The styleConfig parameter in am-config.yaml will be intepreted as file path to a QML file and if available this StyleConfig will be loaded.
 
-# Media
-
-To get the media used within the Music and Movie app, download the zipped file and place the media.db and media folder inside the home folder. The download link: https://seafile.pelagicore.net/f/3713457142/
-
 # Common Terms Used In The Project
 
 Common terms and their meaning is enumerated below:
