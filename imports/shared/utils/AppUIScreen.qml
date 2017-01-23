@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 Pelagicore AG
+** Copyright (C) 2017 Pelagicore AG
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Neptune IVI UI.
@@ -29,7 +29,7 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.1
+import QtQuick 2.6
 
 import QtApplicationManager 1.0
 import controls 1.0
@@ -37,8 +37,8 @@ import utils 1.0
 
 ApplicationManagerWindow {
     id: pelagicoreWindow
-    width: Style.cellWidth * 24
-    height: Style.cellHeight * 24
+    width: Style.hspan(24)
+    height: Style.vspan(24)
 
     default property alias content: content.children
     property alias cluster: clusterContainer.children
@@ -47,24 +47,23 @@ ApplicationManagerWindow {
     signal raiseApp()
 
     onWindowPropertyChanged: {
-        //print(":::AppUIScreen::: Window property changed", name, value)
         if (name === "visibility" && value === true) {
             pelagicoreWindow.raiseApp()
         }
+    }
+
+    BackgroundPane {
+        anchors.fill: parent
     }
 
     function back() {
         pelagicoreWindow.setWindowProperty("visibility", false)
     }
 
-    DisplayBackground {
-        anchors.fill: parent
-    }
-
     ApplicationManagerWindow {
         id: clusterSurface
-        width: typeof parent !== 'undefined' ? parent.width : Style.cellWidth * 24
-        height: typeof parent !== 'undefined' ? parent.height : Style.cellHeight * 24
+        width: typeof parent !== 'undefined' ? parent.width : Style.hspan(24)
+        height: typeof parent !== 'undefined' ? parent.height : Style.vspan(24)
         visible: clusterContainer.children.length > 0 && Style.withCluster
         color: "transparent"
 

@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 Pelagicore AG
+** Copyright (C) 2017 Pelagicore AG
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Neptune IVI UI.
@@ -35,11 +35,13 @@ import controls 1.0
 import utils 1.0
 import models 1.0
 
+//TODO: To be ported to QQC2 in a separate commit
 StackView {
     id: root
     width: Style.hspan(24)
-    height: Style.vspan(24)
+    height: Style.vspan(20)
     focus: true
+
 
     delegate: StackViewDelegate {
         function transitionFinished(properties)

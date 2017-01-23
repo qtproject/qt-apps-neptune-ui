@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 Pelagicore AG
+** Copyright (C) 2017 Pelagicore AG
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Neptune IVI UI.
@@ -29,13 +29,14 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.1
+import QtQuick 2.6
+import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.0
 import QtWebEngine 1.0
 import controls 1.0
 import utils 1.0
 
-UIElement {
+Control {
     id: root
 
     property alias title: webView.title
@@ -49,8 +50,8 @@ UIElement {
         }
     }
 
-    hspan: 12
-    vspan: 10
+    width: Style.hspan(12)
+    height: Style.vspan(10)
 
     ColumnLayout {
         spacing: 0
@@ -68,18 +69,18 @@ UIElement {
                 anchors.fill: parent
 
                 Tool {
-                    hspan: 1
-                    vspan: 2
-                    name: "arrow_left"
+                    width: Style.hspan(1)
+                    height: Style.vspan(2)
+                    symbol: "arrow_left"
                     enabled: webView.canGoBack
                     opacity: enabled ? 1 : 0.5
                     onClicked: webView.goBack()
                 }
                 Tool {
 
-                    hspan: 1
-                    vspan: 2
-                    name: "arrow_right"
+                    width: Style.hspan(1)
+                    height: Style.vspan(2)
+                    symbol: "arrow_right"
                     enabled: webView.canGoForward
                     opacity: enabled ? 1 : 0.5
                     onClicked: webView.goForward()
@@ -98,9 +99,9 @@ UIElement {
                 }
 
                 Tool {
-                    hspan: 2
-                    vspan: 2
-                    name: "update"
+                    width: Style.hspan(2)
+                    height: Style.vspan(2)
+                    symbol: "update"
 
                     onClicked: webView.reload()
                 }

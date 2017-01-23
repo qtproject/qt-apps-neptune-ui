@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 Pelagicore AG
+** Copyright (C) 2017 Pelagicore AG
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Neptune IVI UI.
@@ -30,59 +30,22 @@
 ****************************************************************************/
 
 import QtQuick 2.0
-import QtQuick.Layouts 1.0
-import controls 1.0
 import utils 1.0
+import QtQuick.Controls 2.0
 
-UIElement {
+// TODO: Convert to QQC2 Page
+
+Page {
     id: root
-    hspan: 24
-    vspan: 24
+    implicitWidth: Style.hspan(24)
+    implicitHeight: Style.vspan(24)
 
-    property string title
-    property alias symbolName: symbol.name
-    property alias additionalIcon: icon.source
+    property alias _tracer_color: tracer.color
+    property alias _tracer_padding: tracer.padding
 
-    DisplayBackground {
-        anchors.fill: parent
-        visible: root.parent && root.parent.parent === null
+    Tracer {
+        id: tracer
     }
 
-    RowLayout {
-        id: infoContainer
-
-        spacing: 0
-        width: root.width - 2 * Style.cellWidth
-        anchors.top: parent.top;
-        anchors.horizontalCenter: parent.horizontalCenter
-
-        Symbol {
-            id: symbol
-            anchors.bottom: parent.bottom
-            hspan: 2
-            vspan: 2
-            size: Style.symbolSizeM
-        }
-
-        Label {
-            anchors.bottom: parent.bottom
-            hspan: 4
-            vspan: 2
-            text: qsTr(root.title.toUpperCase())
-            font.pixelSize: Style.fontSizeXL
-        }
-
-        Spacer {
-            Layout.fillWidth: true
-            Layout.fillHeight: true
-        }
-
-        Icon {
-            id: icon
-            Layout.alignment: Qt.AlignRight
-            anchors.bottom: parent.bottom
-            hspan: 3
-            vspan: 2
-        }
-    }
+    background: Item {}
 }

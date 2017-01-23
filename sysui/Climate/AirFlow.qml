@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 Pelagicore AG
+** Copyright (C) 2017 Pelagicore AG
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Neptune IVI UI.
@@ -29,17 +29,18 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.1
+import QtQuick 2.6
+import QtQuick.Controls 2.0
 import QtGraphicalEffects 1.0
 import QtIvi.VehicleFunctions 1.0
 import service.climate 1.0
 import utils 1.0
 
-UIElement {
+Control {
     id: root
 
-    hspan: 6
-    vspan: 3
+    width: Style.hspan(6)
+    height: Style.vspan(3)
 
     PathView {
         id: view
@@ -65,9 +66,9 @@ UIElement {
         preferredHighlightBegin: 0.5
         preferredHighlightEnd: 0.5
 
-        delegate: UIElement {
-            hspan: 2
-            vspan: 3
+        delegate: Control {
+            width: Style.hspan(2)
+            height: Style.vspan(3)
 
             Image {
                 anchors.top: seatPerson.top

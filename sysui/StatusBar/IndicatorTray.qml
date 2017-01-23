@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 Pelagicore AG
+** Copyright (C) 2017 Pelagicore AG
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Neptune IVI UI.
@@ -30,17 +30,18 @@
 ****************************************************************************/
 
 import QtQuick 2.0
+import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.0
 import controls 1.0
 import utils 1.0
 
-UIElement {
+Control {
     id: root
 
     property alias model: repeater.model
 
-    hspan: model ? model.length : 0
-    vspan: 2
+    width: Style.hspan(model ? model.length : 0)
+    height: Style.vspan(2)
 
     RowLayout {
         spacing: Style.paddingXL

@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 Pelagicore AG
+** Copyright (C) 2017 Pelagicore AG
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Neptune IVI UI.
@@ -30,33 +30,43 @@
 ****************************************************************************/
 
 import QtQuick 2.1
+
 import utils 1.0
 
-UIScreen {
+PathView {
     id: root
 
-    showBack: false
+    property int contentWidth: Style.hspan(4)
 
-    property alias count: view.count
-    property alias delegate: view.delegate
-    property alias items: view.model
-    property alias currentIndex: view.currentIndex
-    property alias moving: view.moving
-    property alias currentItem: view.currentItem
-    property int itemWidth
+    property int padding: (width-root.contentWidth)/2
 
-    ListView {
-        id: view
+    clip: true
 
-        anchors.fill: parent
+    snapMode: PathView.SnapOneItem
 
-        orientation: Qt.Horizontal
-        highlightMoveDuration: 400
-        snapMode: ListView.SnapOneItem
-        highlightRangeMode: ListView.StrictlyEnforceRange
-        preferredHighlightBegin: 0
-        preferredHighlightEnd: view.width
+    pathItemCount: 3
 
-        maximumFlickVelocity: 15000
+    preferredHighlightBegin: 0.5
+    preferredHighlightEnd: 0.5
+
+    path: Path {
+        startX: -root.contentWidth+root.padding
+        startY: root.height/2
+        PathAttribute { name: "scale"; value: 0.5 }
+        PathAttribute { name: "angle"; value: -100 }
+        PathAttribute { name: "z"; value: 0 }
+        PathAttribute { name: "yTranslate"; value: Style.vspan(4) }
+
+        PathLine { x:  root.width/2; y: root.height/2 }
+        PathAttribute { name: "scale"; value: 1 }
+        PathAttribute { name: "angle"; value: 0 }
+        PathAttribute { name: "z"; value: 1 }
+        PathAttribute { name: "yTranslate"; value: 0 }
+
+        PathLine { x: root.width + root.contentWidth-root.padding; y: root.height/2 }
+        PathAttribute { name: "scale"; value: 0.5 }
+        PathAttribute { name: "angle"; value: 100 }
+        PathAttribute { name: "z"; value: 0 }
+        PathAttribute { name: "yTranslate"; value: Style.vspan(4) }
     }
 }

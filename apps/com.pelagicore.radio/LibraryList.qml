@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 Pelagicore AG
+** Copyright (C) 2017 Pelagicore AG
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Neptune IVI UI.
@@ -29,17 +29,18 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.1
+import QtQuick 2.6
 import QtQuick.Layouts 1.0
+import QtQuick.Controls 2.0
 
 import controls 1.0
 import utils 1.0
 import "."
 
-UIElement {
+Control {
     id: root
-    hspan: 10
-    vspan: 18
+    width: Style.hspan(10)
+    height: Style.vspan(18)
 
     property string type: ""
 
@@ -63,9 +64,9 @@ UIElement {
         highlightFollowsCurrentItem: false
         currentIndex: RadioProvider.currentIndex
 
-        delegate: UIElement {
-            hspan: root.hspan
-            vspan: 3
+        delegate: Control {
+            width: root.width
+            height: Style.vspan(3)
 
             Rectangle {
                 anchors.fill: parent
@@ -84,14 +85,14 @@ UIElement {
                 anchors.verticalCenter: parent.verticalCenter
                 Column {
                     Label {
-                        hspan: 7
-                        vspan: 1
+                        width: Style.hspan(7)
+                        height: Style.vspan(1)
                         text: model.item.stationName.toUpperCase()
                         font.pixelSize: Style.fontSizeM
                     }
                     Label {
-                        hspan: 7
-                        vspan: 1
+                        width: Style.hspan(7)
+                        height: Style.vspan(1)
                         text: (model.item.frequency / 1000000).toFixed(1)
                         font.pixelSize: Style.fontSizeS
                         font.bold: true

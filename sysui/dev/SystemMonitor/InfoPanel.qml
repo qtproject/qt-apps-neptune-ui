@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 Pelagicore AG
+** Copyright (C) 2017 Pelagicore AG
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Neptune IVI UI.
@@ -42,38 +42,42 @@ UIPage {
         anchors.centerIn: parent
         anchors.verticalCenterOffset: -80
 
-        SettingsListItem {
-            hspan: 10
-            vspan: 2
-            checkedEnabled: false
-            iconName: "information"
-            titleText: "Number of cores: " + SystemMonitor.cpuCores
+        SettingsItemDelegate {
+            width: Style.hspan(10)
+            height: Style.vspan(2)
+            checkable: false
+            icon: "information"
+            text: "Number of cores: " + SystemMonitor.cpuCores
         }
 
-        SettingsListItem {
-            hspan: 10
-            vspan: 2
-            checkedEnabled: false
-            iconName: "information"
-            titleText: "Total RAM: " + (SystemMonitor.totalMemory/1024/1024).toFixed(2) + "MB"
+        SettingsItemDelegate {
+            width: Style.hspan(10)
+            height: Style.vspan(2)
+            checkable: false
+            icon: "information"
+            text: "Total RAM: " + (SystemMonitor.totalMemory/1024/1024).toFixed(2) + "MB"
         }
 
-        SettingsListItem {
-            hspan: 10
-            vspan: 2
-            checkedEnabled: false
-            iconName: "information"
-            titleText: "Idle: " + SystemMonitor.idle
+        SettingsItemDelegate {
+            width: Style.hspan(10)
+            height: Style.vspan(2)
+            checkable: false
+            icon: "information"
+            text: "Idle: " + SystemMonitor.idle
         }
-
-        SettingsListItem {
-            hspan: 10
-            vspan: 2
-            checkedEnabled: false
-            iconName: "information"
-            titleText: "Idle load threshold: " + SystemMonitor.idleLoadThreshold
+        SettingsItemDelegate {
+            width: Style.hspan(10)
+            height: Style.vspan(2)
+            checkable: false
+            icon: "information"
+            text: "Idle load threshold: " + SystemMonitor.idleLoadThreshold
         }
-
+        SettingsItemDelegate {
+            width: Style.hspan(10)
+            height: Style.vspan(2)
+            checkable: false
+            icon: "information"
+            text: "Idle load average: " + SystemMonitor.idleLoadAverage
+        }
     }
-
 }

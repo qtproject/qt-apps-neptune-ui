@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 Pelagicore AG
+** Copyright (C) 2017 Pelagicore AG
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Neptune IVI UI.
@@ -29,16 +29,18 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.1
+import QtQuick 2.6
+import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.0
 import QtGraphicalEffects 1.0
+
 import utils 1.0
 import controls 1.0
 
-UIElement {
+Control {
     id: root
-    hspan: 4
-    vspan: 7
+    width: Style.hspan(4)
+    height: Style.vspan(7)
     signal clicked()
     property alias source: image.source
     property alias title: title.text
@@ -79,7 +81,7 @@ UIElement {
             horizontalAlignment: Text.AlignHCenter
             font.weight: Font.Light
             font.pixelSize: Style.fontSizeXS
-            vspan: 1
+            height: Style.vspan(1)
             elide: Text.ElideRight
         }
     }

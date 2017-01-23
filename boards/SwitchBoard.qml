@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 Pelagicore AG
+** Copyright (C) 2017 Pelagicore AG
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Neptune IVI UI.
@@ -31,15 +31,14 @@
 
 import QtQuick 2.0
 import QtQuick.Layouts 1.0
-
-import controls 1.0
+import QtQuick.Controls 2.0
 import utils 1.0
 
 BaseBoard {
     id: root
 
     title: 'Switch Board'
-    color: "gray"
+    color: "#666"
 
     GridLayout {
         anchors.fill: parent; anchors.margins: Style.padding
@@ -66,18 +65,16 @@ BaseBoard {
         }
 
         Label {
-            text: "hspan: 4; vspan: 4"
+            text: "hspan(4), vspan(4)"
             font.pixelSize: Style.fontSizeXS
         }
 
-        UIElement {
-            hspan: 4; vspan: 4
-
-            Marker { anchors.fill: parent }
+        Control {
+            width: Style.hspan(4); height: Style.vspan(4)
 
             Switch {
                 id: switch3
-                hspan: 4; vspan: 4
+                width: Style.hspan(4); height: Style.vspan(4)
                 checked: true
 
             }
@@ -85,6 +82,8 @@ BaseBoard {
 
         Spacer {
             Layout.fillHeight: true
+            Layout.fillWidth: true
+            Layout.columnSpan: 2
         }
     }
 }

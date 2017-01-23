@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 Pelagicore AG
+** Copyright (C) 2017 Pelagicore AG
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Neptune IVI UI.
@@ -30,7 +30,7 @@
 ****************************************************************************/
 
 import QtQuick 2.2
-import QtQuick.Controls 1.0
+import QtQuick.Controls 2.0
 import utils 1.0
 import controls 1.0
 

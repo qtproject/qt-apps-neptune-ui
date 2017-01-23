@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 Pelagicore AG
+** Copyright (C) 2017 Pelagicore AG
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Neptune IVI UI.
@@ -29,7 +29,7 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.1
+import QtQuick 2.6
 import QtGraphicalEffects 1.0
 
 import controls 1.0
@@ -47,97 +47,79 @@ Item {
 
     // Content Elements
 
-    Component {
-        id: topMenu
-        MenuScreen {
-            itemWidth: content.width
+
+    StatusBar {
+        id: statusBar
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.top: parent.top
+        height: Style.vspan(2)
+        onClicked: {
+            if (climateBar.expanded) {
+                climateBar.expanded = false
+            } else {
+                root.state = "statusBarExpanded"
+            }
+        }
+        onTimePressAndHold: toolBarMonitorLoader.active = !toolBarMonitorLoader.active
+        onOverviewClicked: windowOverview.show()
+    }
+
+
+    LaunchController {
+        id: launcher
+        anchors.top: statusBar.bottom
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: Style.vspan(climateBar.collapsedVspan)
+        initialItem: Qt.resolvedUrl('MenuScreen.qml')
+    }
+
+    FastBlur {
+        id: fastBlur
+        anchors.fill: launcher
+        source: launcher
+        radius: 0
+        visible: !launcher.visible
+        enabled: visible
+    }
+
+    About {
+        id: about
+        anchors.bottom: parent.top; anchors.bottomMargin: height
+        anchors.left: parent.left; anchors.right: parent.right
+        height: Style.vspan(20)
+        onClicked: {
+            if (climateBar.expanded) {
+                climateBar.expanded = false
+            } else {
+                root.state = ""
+            }
         }
     }
 
-    Item {
-        anchors.fill: parent
+    // Foreground Elements
 
-        StatusBar {
-            id: statusBar
-            anchors.left: parent.left
-            anchors.right: parent.right
-            vspan: 2
-            onClicked: {
-                if (climateBar.expanded) {
-                    climateBar.expanded = false
-                } else {
-                    root.state = "statusBarExpanded"
-                }
-            }
-            onTimePressAndHold: toolBarMonitorLoader.active = !toolBarMonitorLoader.active
-            onOverviewClicked: windowOverview.show()
+    ClimateBar {
+        id: climateBar
+        height: Style.vspan(24) - statusBar.height
+        y: expanded ? statusBar.height : root.height - Style.vspan(climateBar.collapsedVspan)
+        anchors.left: parent.left
+        anchors.right: parent.right
+
+        Behavior on y {
+            NumberAnimation { duration: 450; easing.type: Easing.OutCubic}
         }
+    }
 
-        Item {
-            id: content
-
-            anchors.top: statusBar.bottom
-            anchors.left: parent.left
-            anchors.right: parent.right
-            height: root.height - statusBar.height - Style.vspan(climateBar.collapsedVspan)//Style.vspan(24-4)
-
-            LaunchController {
-                id: launcher
-                width: parent.width //Style.hspan(24)
-                anchors.horizontalCenter: parent.horizontalCenter
-                anchors.top: parent.top
-                anchors.bottom: parent.bottom
-                initialItem: topMenu
-            }
-
-        }
-
-        FastBlur {
-            id: fastBlur
-            anchors.fill: content
-            source: content
-            radius: 0
-            visible: !content.visible
-            enabled: visible
-        }
-
-        About {
-            id: about
-            anchors.bottom: parent.top; anchors.bottomMargin: height
-            anchors.left: parent.left; anchors.right: parent.right
-            vspan: 20
-            onClicked: {
-                if (climateBar.expanded) {
-                    climateBar.expanded = false
-                } else {
-                    root.state = ""
-                }
-            }
-        }
-
-        // Foreground Elements
-
-        ClimateBar {
-            id: climateBar
-            vspan: 24-statusBar.vspan
-            y: expanded ? Style.vspan(statusBar.vspan) : root.height - Style.vspan(collapsedVspan)
-            anchors.left: parent.left
-            anchors.right: parent.right
-
-            Behavior on y {
-                NumberAnimation { duration: 450; easing.type: Easing.OutCubic}
-            }
-        }
-
-        Loader {
-            id: toolBarMonitorLoader
-            width: parent.width
-            height: 200
-            anchors.bottom: parent.bottom
-            active: false
-            source: "dev/ToolBarMonitor.qml"
-        }
-
+    Loader {
+        id: toolBarMonitorLoader
+        width: parent.width
+        height: 200
+        anchors.bottom: parent.bottom
+        active: false
+        source: "dev/ToolBarMonitor.qml"
     }
 
     WindowOverview {
@@ -164,8 +146,8 @@ Item {
     states: [
         State {
             name: "statusBarExpanded"
-            PropertyChanges { target: about; anchors.bottomMargin: -Style.vspan(about.vspan) }
-            PropertyChanges { target: content; visible: false }
+            PropertyChanges { target: about; anchors.bottomMargin: -about.height }
+            PropertyChanges { target: launcher; visible: false }
             PropertyChanges { target: fastBlur; radius: 100 }
         }
     ]
@@ -183,11 +165,11 @@ Item {
             from: "statusBarExpanded"; to: ""
             SequentialAnimation {
                 ParallelAnimation {
-                    PropertyAction { target: content; property: "visible"; value: false }
+                    PropertyAction { target: launcher; property: "visible"; value: false }
                     NumberAnimation { target: fastBlur; property: "radius"; duration: 200 }
                     NumberAnimation { target: about; property: "anchors.bottomMargin"; duration: 500 }
                 }
-                PropertyAction { target: content; property: "visible"; value: true }
+                PropertyAction { target: launcher; property: "visible"; value: true }
             }
         }
     ]

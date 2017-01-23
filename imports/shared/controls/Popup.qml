@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 Pelagicore AG
+** Copyright (C) 2017 Pelagicore AG
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Neptune IVI UI.
@@ -30,13 +30,18 @@
 ****************************************************************************/
 
 import QtQuick 2.0
+import QtQuick.Controls 2.0
 import controls 1.0
 import utils 1.0
 
-UIElement {
+// TODO: Convert to use QQC2 Popup
+// TODO: Check that QQC2 Popups are supported by AppMan
+
+
+Control {
     id: root
-    hspan: 6
-    vspan: 7
+    width: Style.hspan(6)
+    height: Style.vspan(7)
 
     property alias source: icon.source
     property alias text: label.text
@@ -57,8 +62,8 @@ UIElement {
 
     Label {
         id: label
-        hspan: 7
-        vspan: 3
+        width: Style.hspan(7)
+        height: Style.vspan(3)
         horizontalAlignment: Text.AlignHCenter
         anchors.horizontalCenter: icon.horizontalCenter
         anchors.top: icon.bottom

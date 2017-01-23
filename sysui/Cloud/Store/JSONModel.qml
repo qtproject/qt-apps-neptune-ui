@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 Pelagicore AG
+** Copyright (C) 2017 Pelagicore AG
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Neptune IVI UI.
@@ -28,6 +28,8 @@
 ** SPDX-License-Identifier: GPL-3.0
 **
 ****************************************************************************/
+
+// TODO: Move tis to a library location
 
 import QtQuick 2.0
 import "JSONBackend.js" as JSONBackend

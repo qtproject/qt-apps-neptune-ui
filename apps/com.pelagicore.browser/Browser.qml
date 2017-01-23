@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 Pelagicore AG
+** Copyright (C) 2017 Pelagicore AG
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Neptune IVI UI.
@@ -29,7 +29,7 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.1
+import QtQuick 2.6
 
 import controls 1.0
 import utils 1.0
@@ -43,7 +43,7 @@ AppUIScreen {
         WebBrowser {
             id: browser
             anchors.fill: parent
-            anchors.leftMargin: Style.cellHeight * 4
+            anchors.leftMargin: Style.vspan(4)
             url: "http://www.qt.io/qt-automotive-suite"
         }
 

@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 Pelagicore AG
+** Copyright (C) 2017 Pelagicore AG
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Neptune IVI UI.
@@ -62,7 +62,7 @@ Item {
 
         Label {
             id: valueText
-            hspan: 2
+            width: Style.hspan(2)
             font.pixelSize: Style.fontSizeL
         }
     }
@@ -95,7 +95,7 @@ Item {
 
         Label {
             id: middleLineText
-            hspan: 1
+            width: Style.hspan(1)
             anchors.left: dottedLine.right
             anchors.verticalCenter: dottedLine.verticalCenter
             color: "#4d4d4d"

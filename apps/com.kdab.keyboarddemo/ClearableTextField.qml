@@ -30,11 +30,12 @@
 ****************************************************************************/
 
 import QtQuick 2.5
+import QtQuick.Controls 2.0
 
 import utils 1.0
 import controls 1.0
 
-UIElement {
+Control {
     id: root
 
     property alias text: textField.text;
@@ -54,7 +55,7 @@ UIElement {
         TextField {
             id: textField
 
-            hspan: 10
+            width: Style.hspan(10)
 
             anchors.top: parent.top
             anchors.bottom: parent.bottom

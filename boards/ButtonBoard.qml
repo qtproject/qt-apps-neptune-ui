@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 Pelagicore AG
+** Copyright (C) 2017 Pelagicore AG
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Neptune IVI UI.
@@ -29,8 +29,8 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.1
-import QtQuick.Controls 1.0
+import QtQuick 2.6
+import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.0
 
 import controls 1.0
@@ -58,34 +58,43 @@ BaseBoard {
 
             columns: 2
 
-            Label { hspan: 8; text: "No Text, No Icon, grid 2x2" }
+            Label { width: Style.hspan(8); text: "No Text, No Icon, grid 2x2" }
             Button {
-                hspan: 2; vspan: 2
+                Layout.preferredWidth: Style.hspan(2)
+                Layout.preferredHeight: Style.vspan(2)
+                width: Style.hspan(2); height: Style.vspan(2)
 
                 Marker { anchors.fill: parent; visible: parent.pressed }
                 Tracer { visible: true }
             }
 
-            Label { hspan: 8; text: "Only text, grid 2x1" }
+            Label { width: Style.hspan(8); text: "Only text, grid 2x1" }
             Button {
-                hspan: 2; vspan: 1
+                Layout.preferredWidth: Style.hspan(2)
+                Layout.preferredHeight: Style.vspan(1)
+                width: Style.hspan(2); height: Style.vspan(1)
                 text: "Press me"
 
                 Marker { anchors.fill: parent; visible: parent.pressed }
             }
 
-            Label { hspan: 8; text: "Only icon, grid 1x2" }
+            Label { width: Style.hspan(8); text: "Only icon, grid 1x2" }
             Button {
-                hspan: 1; vspan: 2
-                iconName: "widgets_play_track"
+                Layout.preferredWidth: Style.hspan(1)
+                Layout.preferredHeight: Style.vspan(2)
+                width: Style.hspan(1); height: Style.vspan(2)
+                symbol: "widgets_play_track"
 
                 Marker { anchors.fill: parent; visible: parent.pressed }
             }
 
-            Label { hspan: 8;  text: "Text & Icon, grid 3x3" }
+            Label { width: Style.hspan(8);  text: "Text & Icon, grid 3x3" }
             Button {
-                hspan: 3; vspan: 3
-                iconName: "widgets_play_track"
+                Layout.preferredWidth: Style.hspan(3)
+                Layout.preferredHeight: Style.vspan(3)
+
+                width: Style.hspan(3); height: Style.vspan(3)
+                symbol: "widgets_play_track"
                 text: "Hello World"
 
                 Marker { anchors.fill: parent; visible: parent.pressed }

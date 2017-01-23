@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 Pelagicore AG
+** Copyright (C) 2017 Pelagicore AG
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Neptune IVI UI.
@@ -29,7 +29,7 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.1
+import QtQuick 2.6
 import QtQuick.Layouts 1.0
 
 import controls 1.0
@@ -40,9 +40,6 @@ import QtApplicationManager 1.0
 UIPage {
     id: root
 
-    anchors.top: parent.top
-    anchors.bottom: parent.bottom
-
     property bool leftMap: true
 
     // Left widget side
@@ -51,7 +48,7 @@ UIPage {
         anchors.top: parent.top
         anchors.left: root.leftMap ? parent.left : parent.horizontalCenter
         width: root.width/2
-        vspan: 20
+        height: Style.vspan(20)
     }
 
     // Right widget side
@@ -61,7 +58,7 @@ UIPage {
         width: root.width/2 - Style.hspan(1)
 
         onShowFullscreen: {
-                ApplicationManager.startApplication(MusicService.defaultMusicApp)
+            ApplicationManager.startApplication(MusicService.defaultMusicApp)
         }
     }
 
@@ -71,6 +68,7 @@ UIPage {
         anchors.verticalCenter: parent.verticalCenter
         anchors.left: root.leftMap ? parent.horizontalCenter : parent.left
         anchors.leftMargin: Style.hspan(1)
+        width: root.width/2 - Style.hspan(1)
     }
 
     PhoneWidget {

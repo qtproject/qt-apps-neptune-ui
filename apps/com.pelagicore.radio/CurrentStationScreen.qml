@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 Pelagicore AG
+** Copyright (C) 2017 Pelagicore AG
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Neptune IVI UI.
@@ -31,6 +31,7 @@
 
 import QtQuick 2.5
 import QtQuick.Layouts 1.0
+import QtQuick.Controls 2.0
 
 import controls 1.0
 import utils 1.0
@@ -39,8 +40,8 @@ import "."
 
 UIScreen {
     id: root
-    hspan: 24
-    vspan: 24
+    width: Style.hspan(24)
+    height: Style.vspan(20)
 
     title: 'Radio'
 
@@ -58,36 +59,38 @@ UIScreen {
     ColumnLayout {
         id: stationControl
         width: Style.hspan(12)
-        height: Style.vspan(20)
+        height: Style.vspan(18)
         anchors.horizontalCenter: parent.horizontalCenter
-        anchors.verticalCenter: parent.verticalCenter
         spacing: 0
-        Spacer {}
-            Item {
-                anchors.horizontalCenter: parent.horizontalCenter
-                id: radioStationInformation
+        Spacer {
+            Layout.preferredHeight: Style.vspan(1)
+            Layout.fillWidth: true
+        }
+        Item {
+            anchors.horizontalCenter: parent.horizontalCenter
+            id: radioStationInformation
 
-                width: stationInfo.width
-                height: stationInfo.height
+            Layout.preferredWidth: stationInfo.width
+            Layout.preferredHeight: stationInfo.height
 
-                property bool tuningMode: false
+            property bool tuningMode: false
 
-                StationInfo {
-                    id: stationInfo
-                    title: RadioProvider.currentStation.stationName
-                    radioText: RadioProvider.currentStation.radioText
-                    frequency: radioStationInformation.tuningMode ? slider.value : RadioProvider.currentFrequency
-                }
+            StationInfo {
+                id: stationInfo
+                title: RadioProvider.currentStation.stationName
+                radioText: RadioProvider.currentStation.radioText
+                frequency: radioStationInformation.tuningMode ? slider.value : RadioProvider.currentFrequency
             }
+        }
 
         RowLayout {
             anchors.horizontalCenter: parent.horizontalCenter
-            spacing: 10
+            spacing: 0
 
             Tool {
-                hspan: 1
-                vspan: 1
-                name: 'backward'
+                Layout.preferredWidth: Style.hspan(1)
+                Layout.preferredHeight: Style.vspan(1)
+                symbol: 'backward'
                 anchors.verticalCenter: parent.verticalCenter
                 size: Style.symbolSizeS
                 onClicked: {
@@ -98,13 +101,14 @@ UIScreen {
             TunerSlider {
                 id: slider
 
+                Layout.preferredWidth: Style.hspan(9)
+                Layout.preferredHeight: Style.vspan(1)
+
                 useAnimation: true
 
                 readonly property real minFrequency: RadioProvider.minimumFrequency
                 readonly property real maxFrequency: RadioProvider.maximumFrequency
 
-                hspan: 9
-                vspan: 1
 
                 value: RadioProvider.currentFrequency
                 minimum: minFrequency
@@ -129,9 +133,9 @@ UIScreen {
             }
 
             Tool {
-                hspan: 1
-                vspan: 1
-                name: 'forward'
+                Layout.preferredWidth: Style.hspan(1)
+                Layout.preferredHeight: Style.vspan(1)
+                symbol: 'forward'
                 anchors.verticalCenter: parent.verticalCenter
                 size: Style.symbolSizeS
                 onClicked: {
@@ -142,26 +146,26 @@ UIScreen {
         RowLayout {
             anchors.horizontalCenter: parent.horizontalCenter
             spacing: 0
-            Spacer { hspan: 2 }
+            Spacer { Layout.preferredWidth: Style.hspan(2) }
             Tool {
-                hspan: 2
-                name: RadioService.playing?'pause':'play'
+                Layout.preferredWidth: Style.hspan(2)
+                symbol: RadioService.playing?'pause':'play'
                 onClicked: RadioService.togglePlay()
             }
-            Spacer { hspan: 2 }
+            Spacer { Layout.preferredWidth: Style.hspan(2) }
         }
         RowLayout {
             anchors.horizontalCenter: parent.horizontalCenter
             spacing: 0
             Symbol {
-                vspan: 2
-                hspan: 1
+                Layout.preferredWidth: Style.hspan(1)
+                Layout.preferredHeight: Style.vspan(2)
                 size: Style.symbolSizeXS
                 name: 'speaker'
             }
             VolumeSlider {
-                hspan: 8
-                vspan: 2
+                Layout.preferredWidth: Style.hspan(8)
+                Layout.preferredHeight: Style.vspan(2)
                 anchors.horizontalCenter: parent.horizontalCenter
                 value: RadioService.volume
                 onValueChanged: {
@@ -169,9 +173,10 @@ UIScreen {
                 }
             }
             Label {
-                hspan: 1
-                vspan: 2
+                Layout.preferredWidth: Style.hspan(1)
+                Layout.preferredHeight: Style.vspan(2)
                 text: Math.floor(RadioService.volume*100)
+                horizontalAlignment: Text.AlignHCenter
             }
         }
         Spacer {
@@ -180,36 +185,35 @@ UIScreen {
         }
     }
 
-    UIElement {
+    Control {
         id: sourceOption
-        hspan: 4
-        vspan: 12
+        width: Style.hspan(4)
+        height: Style.vspan(9)
         anchors.right: stationControl.left
-        anchors.rightMargin: 60
+        anchors.rightMargin: Style.hspan(1)
         anchors.verticalCenter: parent.verticalCenter
-        anchors.verticalCenterOffset: -60
 
         Column {
-            spacing: 1
+            spacing: 0
             Button {
-                hspan: 4
-                vspan: 4
+                width: Style.hspan(4)
+                height: Style.vspan(3)
                 text: "FM"
-                label.font.pixelSize: Style.fontSizeL
+                font.pixelSize: Style.fontSizeL
             }
             Button {
-                hspan: 4
-                vspan: 4
+                width: Style.hspan(4)
+                height: Style.vspan(3)
                 text: "AM"
                 enabled: false
-                label.font.pixelSize: Style.fontSizeL
+                font.pixelSize: Style.fontSizeL
             }
             Button {
-                hspan: 4
-                vspan: 4
+                width: Style.hspan(4)
+                height: Style.vspan(3)
                 text: "SiriusXM"
                 enabled: false
-                label.font.pixelSize: Style.fontSizeL
+                font.pixelSize: Style.fontSizeL
             }
         }
     }

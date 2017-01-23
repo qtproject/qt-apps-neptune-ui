@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 Pelagicore AG
+** Copyright (C) 2017 Pelagicore AG
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Neptune IVI UI.
@@ -30,7 +30,7 @@
 ****************************************************************************/
 
 pragma Singleton
-import QtQuick 2.1
+import QtQuick 2.6
 import QtApplicationManager 1.0
 import com.pelagicore.datasource 1.0
 import service.music 1.0

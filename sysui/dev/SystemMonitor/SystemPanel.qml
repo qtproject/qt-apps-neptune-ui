@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 Pelagicore AG
+** Copyright (C) 2017 Pelagicore AG
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Neptune IVI UI.
@@ -319,7 +319,7 @@ UIPage {
     }
 
     Button {
-        hspan: 3
+        width: Style.hspan(3)
         anchors.left: parent.left
         anchors.leftMargin: 100
         anchors.verticalCenter: parent.verticalCenter

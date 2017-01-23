@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 Pelagicore AG
+** Copyright (C) 2017 Pelagicore AG
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Neptune IVI UI.
@@ -29,17 +29,18 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.1
-
+import QtQuick 2.6
 import QtQuick.Layouts 1.0
+import QtQuick.Controls 2.0
 import QtGraphicalEffects 1.0
+
 import utils 1.0
 import controls 1.0
 
-UIElement {
+Control {
     id: root
-    hspan: 7
-    vspan: 12
+    width: Style.hspan(8)
+    height: Style.vspan(12)
     signal clicked()
     property alias title: title.text
     property alias radioText: radioText.text
@@ -67,7 +68,7 @@ UIElement {
                 horizontalAlignment: Text.AlignRight
                 verticalAlignment: Text.AlignBottom
 
-                fontSize: Style.fontSizeXXL
+                font.pixelSize: Style.fontSizeXXL
             }
             Label {
                 id: suffix
@@ -76,7 +77,7 @@ UIElement {
 
                 text: "MHz"
 
-                fontSize: Style.fontSizeXXS
+                font.pixelSize: Style.fontSizeXXS
                 horizontalAlignment: Text.AlignLeft
                 verticalAlignment: Text.AlignTop
 

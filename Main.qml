@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 Pelagicore AG
+** Copyright (C) 2017 Pelagicore AG
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Neptune IVI UI.
@@ -33,52 +33,30 @@ import QtQuick 2.5
 import QtQuick.Window 2.2
 import QtApplicationManager 1.0
 import com.pelagicore.ScreenManager 1.0
+import QtQuick.Controls 2.0
 import "sysui/Cluster"
 import "sysui"
 import controls 1.0
 import utils 1.0
+import QtQuick.Window 2.2
+import com.pelagicore.styles.neptune 1.0
 
-Rectangle {
+BackgroundPane {
     id: root
 
     property bool showClusterIfPossible: ApplicationManager.systemProperties.showCluster
     property var cluster
 
-    color: "black"
-    width: Style.screenWidth
-    height: Style.screenHeight
 
-    //If we run on eglfs or similar the window might be different to what we set it here
-    Window.onWidthChanged: {
-        if (Window.width > Style.screenWidth)
-            root.width = Window.width
-    }
-
-    Window.onHeightChanged: {
-        if (Window.height > Style.screenHeight)
-            root.height = Window.height
-    }
+    width: NeptuneStyle.windowWidth
+    height: NeptuneStyle.windowHeight
 
     //Forwards the keys to the cluster to handle it without being the active window
     Keys.forwardTo: cluster ? cluster.clusterItem : null
 
-    Item {
-        width: Style.screenWidth
-        height: Style.screenHeight
-
-        DisplayBackground {
-            id: background
-            anchors.fill: display
-        }
-
-        Display {
-            id: display
-            anchors.fill: parent
-        }
-
-        DisplayGrid {
-            anchors.fill: display
-        }
+    Display {
+        id: display
+        anchors.fill: parent
     }
 
     Component {

@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 Pelagicore AG
+** Copyright (C) 2017 Pelagicore AG
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Neptune IVI UI.
@@ -29,7 +29,7 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.1
+import QtQuick 2.6
 import QtQuick.Layouts 1.0
 
 import controls 1.0
@@ -48,36 +48,38 @@ BaseBoard {
 
         Column {
             Label {
-                hspan: 3
-                vspan: 1
+                width: Style.hspan(3)
+                height: Style.vspan(1)
                 text: qsTr("Value: %1").arg(temp.value.toFixed(1))
                 horizontalAlignment: Qt.AlignHCenter
             }
 
             TemperatureSlider {
                 id: temp
-                hspan: 3
-                vspan: 14
+                width: Style.hspan(3)
+                height: Style.vspan(14)
             }
         }
 
         Column {
             Label {
-                hspan: 3
-                vspan: 1
-                text: qsTr("Value: %1").arg(temp2.value)
+                width: Style.hspan(3)
+                height: Style.vspan(1)
+                text: qsTr("Value: %1").arg(temp2.value.toFixed(1))
                 horizontalAlignment: Qt.AlignHCenter
             }
 
             TemperatureSlider {
                 id: temp2
-                hspan: 3
-                vspan: 20
+                width: Style.hspan(3)
+                height: Style.vspan(20)
                 mirrorSlider: true
                 roundingMode: roundingModeWhole
-                minValue: 0
-                maxValue: 20
+                from: 0
+                to: 20
+                stepSize: 2
                 value: 10
+
             }
         }
 

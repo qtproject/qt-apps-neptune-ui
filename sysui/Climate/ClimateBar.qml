@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 Pelagicore AG
+** Copyright (C) 2017 Pelagicore AG
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Neptune IVI UI.
@@ -29,40 +29,42 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.1
+import QtQuick 2.6
+import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.0
 import controls 1.0
 import utils 1.0
 import service.climate 1.0
 
-UIElement {
+Control {
     id: root
 
     property bool expanded: false
     property int collapsedVspan: 3
 
-    hspan: 24
-    vspan: 24
+    width: Style.hspan(24)
+    height: Style.vspan(24)
 
-    MouseArea {
-        anchors.fill: parent
-        onClicked: climateBar.expanded = !climateBar.expanded
-    }
 
-    DisplayBackground {
+
+    BackgroundPane {
         anchors.fill: parent
         visible: climatePanelBackground.opacity !== 1
     }
 
-    ClimatePanelBackground {
+    Pane {
         id: climatePanelBackground
-
-        vspan: collapsedVspan
+        height: Style.vspan(root.collapsedVspan)
         anchors.left: parent.left
         anchors.right: parent.right
         opacity: !expanded
         visible: opacity !== 0
         Behavior on opacity { NumberAnimation { duration: 450 } }
+    }
+
+    MouseArea {
+        anchors.fill: parent
+        onClicked: root.expanded = !root.expanded
     }
 
     ColumnLayout {
@@ -72,7 +74,7 @@ UIElement {
         anchors.horizontalCenter: parent.horizontalCenter
         width: Style.hspan(23)
 
-        Item {
+        Item { // This is the actual climate bar
             height: Style.vspan(root.collapsedVspan)
             Layout.preferredWidth: mainLayout.width
 
@@ -85,18 +87,18 @@ UIElement {
 
             Tool {
                 id: leftSeatHeat
-                hspan: 2
-                vspan: root.collapsedVspan
-                name: "seat_left"
-                active: ClimateService.leftSeat.heat
-                onClicked: ClimateService.leftSeat.setHeat(!active)
+                width: Style.hspan(2)
+                height: Style.vspan(root.collapsedVspan)
+                symbol: "seat_left"
+                checked: ClimateService.leftSeat.heat
+                onClicked: ClimateService.leftSeat.heat = !ClimateService.leftSeat.heat
                 anchors.left: tempLevelLeft.right
                 anchors.verticalCenter: parent.verticalCenter
             }
 
             AirFlow {
-                hspan: 6
-                vspan: root.collapsedVspan
+                width: Style.hspan(6)
+                height: Style.vspan(root.collapsedVspan)
                 anchors.left: leftSeatHeat.right
                 anchors.right: rightSeatHeat.left
                 anchors.verticalCenter: parent.verticalCenter
@@ -104,11 +106,11 @@ UIElement {
 
             Tool {
                 id: rightSeatHeat
-                hspan: 2
-                vspan: root.collapsedVspan
-                name: "seat_right"
-                active: ClimateService.rightSeat.heat
-                onClicked: ClimateService.rightSeat.setHeat(!active)
+                width: Style.hspan(2)
+                height: Style.vspan(root.collapsedVspan)
+                symbol: "seat_right"
+                checked: ClimateService.rightSeat.heat
+                onClicked: ClimateService.rightSeat.heat = !ClimateService.rightSeat.heat
                 anchors.right: tempLevelRight.left
                 anchors.verticalCenter: parent.verticalCenter
             }
@@ -120,22 +122,22 @@ UIElement {
                 anchors.right: parent.right
                 anchors.verticalCenter: parent.verticalCenter
             }
-        }
+        } // end of climate bar
 
-        RowLayout {
+        RowLayout { // climate control
             spacing: 0
             Layout.preferredHeight: Style.vspan(19)
             visible: climatePanelBackground.opacity !== 1
 
             TemperatureSlider {
                 id: leftTempSlider
-                hspan: 3
+                width: Style.hspan(3)
                 Layout.fillHeight: true
-                minValue: ClimateService.leftSeat.minValue
-                maxValue: ClimateService.leftSeat.maxValue
+                from: ClimateService.leftSeat.minValue
+                to: ClimateService.leftSeat.maxValue
                 value: ClimateService.leftSeat.value
-                stepValue: ClimateService.leftSeat.stepValue
-                onValueChanged: ClimateService.leftSeat.setValue(value)
+                stepSize: ClimateService.leftSeat.stepValue
+                onValueChanged: ClimateService.leftSeat.value = value
             }
 
             Spacer {
@@ -143,22 +145,22 @@ UIElement {
                 Layout.fillHeight: true
             }
 
-            ColumnLayout {
+            ColumnLayout { // inner controls
                 spacing: 20
                 Layout.alignment: Qt.AlignTop
                 Layout.fillWidth: true
 
                 Spacer {
                     Layout.fillWidth: true
-                    vspan: 2
+                    Layout.preferredHeight: Style.vspan(2)
                 }
 
                 Ventilation {
                     id: ventilation
 
                     Layout.alignment: Qt.AlignHCenter
-                    hspan: 10
-                    vspan: 2
+                    Layout.preferredWidth: Style.hspan(10)
+                    Layout.preferredHeight: Style.vspan(2)
                     levels: ClimateService.ventilationLevels
                     currentLevel: ClimateService.ventilation
                     onNewLevelRequested: ClimateService.setVentilation(newLevel)
@@ -166,18 +168,18 @@ UIElement {
 
                 Spacer {
                     Layout.fillWidth: true
-                    vspan: 2
+                    Layout.preferredHeight: Style.vspan(2)
                 }
 
-                ClimateOptionsGrid {
+                ClimateOptionsGrid { // tool grid
                     Layout.alignment: Qt.AlignHCenter
-                    hspan: 9
-                    vspan: 10
+                    Layout.preferredWidth: Style.hspan(9)
+                    Layout.preferredHeight: Style.vspan(10)
 
                     model: ClimateService.climateOptions
                     delegate: ClimateGridButton {
-                        hspan: 3
-                        vspan: 5
+                        width: Style.hspan(3)
+                        height: Style.vspan(5)
                         symbolName: modelData.symbol
                         active: modelData.enabled
                         onClicked: modelData.setEnabled(!modelData.enabled)
@@ -193,13 +195,13 @@ UIElement {
             TemperatureSlider {
                 id: rightTempSlider
                 Layout.fillHeight: true
-                hspan: 3
+                width: Style.hspan(3)
                 mirrorSlider: true
-                minValue: ClimateService.rightSeat.minValue
-                maxValue: ClimateService.rightSeat.maxValue
+                from: ClimateService.rightSeat.minValue
+                to: ClimateService.rightSeat.maxValue
                 value: ClimateService.rightSeat.value
-                stepValue: ClimateService.rightSeat.stepValue
-                onValueChanged: ClimateService.rightSeat.setValue(value)
+                stepSize: ClimateService.rightSeat.stepValue
+                onValueChanged: ClimateService.rightSeat.value = value
             }
 
         }

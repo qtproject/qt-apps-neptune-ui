@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 Pelagicore AG
+** Copyright (C) 2017 Pelagicore AG
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Neptune IVI UI.
@@ -29,64 +29,23 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.1
-import QtQuick.Layouts 1.0
+import QtQuick 2.8
+import QtQuick.Templates 2.1 as T
+import com.pelagicore.styles.neptune 1.0
 
-import controls 1.0
-import utils 1.0
-import service.settings 1.0
+T.Frame {
+    id: control
 
-UIPage {
-    id: root
+    implicitWidth: Math.max(background ? background.implicitWidth : 0, contentWidth + leftPadding + rightPadding)
+    implicitHeight: Math.max(background ? background.implicitHeight : 0, contentHeight + topPadding + bottomPadding)
 
-    hspan: 24
-    vspan: 24
+    contentWidth: contentItem.implicitWidth || (contentChildren.length === 1 ? contentChildren[0].implicitWidth : 0)
+    contentHeight: contentItem.implicitHeight || (contentChildren.length === 1 ? contentChildren[0].implicitHeight : 0)
 
-    title: qsTr('Car Settings')
-    symbolName: "settings"
+    padding: 12
 
-
-    ListView {
-        id: settingsListView
-
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.top: parent.top
-        anchors.topMargin: Style.vspan(2)
-        anchors.bottom: parent.bottom
-        width: Style.hspan(14)
-
-        clip: true
-        model: SettingsService.carSettings
-
-        delegate: Loader {
-            width: ListView.view.width
-            height: Style.vspan(2)
-
-            sourceComponent: modelData.option.options ? multiValueSetting : booleanSetting
-            asynchronous: true
-            onLoaded: item.option = modelData.option
-        }
-    }
-
-    Image {
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.bottom: parent.bottom
-        source: Style.icon('cloud_bottom_shadow')
-        asynchronous: true
-        visible: false
-    }
-
-    Component {
-        id: multiValueSetting
-
-        MultiValueSetting {
-        }
-    }
-
-    Component {
-        id: booleanSetting
-
-        BooleanSetting {
-        }
+    background: Rectangle {
+        color: NeptuneStyle.lighter50(NeptuneStyle.darkColor)
+        border.color: NeptuneStyle.darkColor
     }
 }

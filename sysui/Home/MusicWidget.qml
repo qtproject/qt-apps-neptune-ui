@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 Pelagicore AG
+** Copyright (C) 2017 Pelagicore AG
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Neptune IVI UI.
@@ -29,7 +29,7 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.1
+import QtQuick 2.6
 import QtQuick.Layouts 1.0
 import QtApplicationManager 1.0
 
@@ -38,8 +38,8 @@ import utils 1.0
 
 UIPanel {
     id: root
-    hspan: 10
-    vspan: 8
+    width: Style.hspan(10)
+    height: Style.vspan(8)
 
     signal showFullscreen()
 
@@ -86,14 +86,15 @@ UIPanel {
             spacing: 0
 
             Spacer {
-                width: Style.hspan(0.5)
+                Layout.preferredWidth: Style.hspan(0.5)
+                Layout.fillHeight: true
             }
 
             ColumnLayout {
                 spacing: Style.paddingXS
 
                 Label {
-                    vspan: 1
+                    height: Style.vspan(1)
                     Layout.fillWidth: true
                     text: musicControl.currentTrack ? qsTr('%1 / %2').arg(musicControl.currentTrack.artist).arg(musicControl.currentTrack.album) : ""
                     font.pixelSize: Style.fontSizeS
@@ -104,7 +105,7 @@ UIPanel {
 
                 Label {
                     Layout.fillWidth: true
-                    vspan: 1
+                    height: Style.vspan(1)
                     text: musicControl.currentTrack ? musicControl.currentTrack.track : ""
                     font.pixelSize: Style.fontSizeL
                     font.capitalization: Font.AllUppercase
@@ -114,7 +115,7 @@ UIPanel {
 
                 Label {
                     Layout.fillWidth: true
-                    vspan: 1
+                    height: Style.vspan(1)
                     text: qsTr('%1 / %2').arg(musicControl.currentTime).arg(musicControl.durationTime)
                     font.pixelSize: Style.fontSizeL
                     horizontalAlignment: Text.AlignLeft
@@ -123,37 +124,39 @@ UIPanel {
             }
 
             Spacer {
-                width: Style.hspan(0.25)
+                width: Style.hspan(0.5)
+                Layout.fillHeight: true
             }
         }
 
         RowLayout {
             spacing: Style.hspan(1)
+            Layout.preferredHeight: Style.vspan(4)
 
             Tool {
-                name: "prev"
-                vspan: 2
+                symbol: "prev"
+                Layout.preferredHeight: Style.vspan(2)
                 Layout.fillWidth: true
                 onClicked: musicControl.previousTrack()
             }
             Tool {
-                vspan: 2
+                Layout.preferredHeight: Style.vspan(2)
                 Layout.fillWidth: true
-                name: "play"
+                symbol: "play"
                 onClicked: musicControl.play()
-                active: musicControl.playing
+                checked: musicControl.playing
             }
             Tool {
-                vspan: 2
+                Layout.preferredHeight: Style.vspan(2)
                 Layout.fillWidth: true
-                name: "pause"
+                symbol: "pause"
                 onClicked: musicControl.pause()
-                active: !musicControl.playing
+                checked: !musicControl.playing
             }
             Tool {
-                vspan: 2
+                Layout.preferredHeight: Style.vspan(2)
                 Layout.fillWidth: true
-                name: "next"
+                symbol: "next"
                 onClicked: musicControl.nextTrack()
             }
         }

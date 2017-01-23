@@ -28,11 +28,11 @@ OTHER_FILES = qmldir
 }
 
 isEmpty(INSTALL_PREFIX) {
-    INSTALL_PREFIX=/opt
+    INSTALL_PREFIX=/opt/neptune
 }
 
 qmldir.files = qmldir
-installPath = $$INSTALL_PREFIX/neptune/imports/shared/$$replace(uri, \\., /)
+installPath = $$INSTALL_PREFIX/imports/shared/$$replace(uri, \\., /)
 qmldir.path = $$installPath
 target.path = $$installPath
 INSTALLS += target qmldir

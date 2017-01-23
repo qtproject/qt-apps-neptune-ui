@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 Pelagicore AG
+** Copyright (C) 2017 Pelagicore AG
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Neptune IVI UI.
@@ -38,66 +38,38 @@ import "Settings"
 import "Home"
 import "Launcher"
 import "Cloud"
+import QtQuick.Controls 2.0
 
-PageSwipeScreen {
+UIScreen {
     id: root
 
-    title: currentItem.title
+    hideBack: true
 
-    statusItem: PageIndicator {
-        count: root.count
-        currentIndex: root.currentIndex
-        onClicked: {
-            root.currentIndex = index
-        }
-    }
-
-    itemWidth: Style.hspan(24)
-
-    currentIndex: Math.floor(root.count/2)
-
-    items: ObjectModel {
+    SwipeView {
+        id: view
+        anchors.fill: parent
+        currentIndex: 2
         MyCarPage {
-            width: root.itemWidth
-            height: root.height
-            visible: root.currentIndex === ObjectModel.index ||
-                     root.moving &&
-                     (root.currentIndex + 1  === ObjectModel.index ||
-                      root.currentIndex - 1  === ObjectModel.index)
         }
         FunctionsPage {
-            width: root.itemWidth
-            height: root.height
-            visible: root.currentIndex === ObjectModel.index ||
-                     root.moving &&
-                     (root.currentIndex + 1  === ObjectModel.index ||
-                      root.currentIndex - 1  === ObjectModel.index)
         }
+
         HomePage {
-            width: root.itemWidth
-            height: root.height
-            visible: root.currentIndex === ObjectModel.index ||
-                     root.moving &&
-                     (root.currentIndex + 1  === ObjectModel.index ||
-                      root.currentIndex - 1  === ObjectModel.index)
         }
         LauncherPage {
             id: launcher
-            width: root.itemWidth
-            height: root.height
-            onUpdateApp: currentIndex = 3
-            visible: root.currentIndex === ObjectModel.index ||
-                     root.moving &&
-                     (root.currentIndex + 1  === ObjectModel.index ||
-                      root.currentIndex - 1  === ObjectModel.index)
+            onUpdateApp: {
+                view.currentIndex = index;
+            }
         }
         CloudPage {
-            width: root.itemWidth
-            height: root.height
-            visible: root.currentIndex === ObjectModel.index ||
-                     root.moving &&
-                     (root.currentIndex + 1  === ObjectModel.index ||
-                      root.currentIndex - 1  === ObjectModel.index)
         }
+    }
+
+    PageIndicator {
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.top: parent.top
+        currentIndex: view.currentIndex
+        count: view.count
     }
 }

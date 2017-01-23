@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 Pelagicore AG
+** Copyright (C) 2017 Pelagicore AG
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Neptune IVI UI.
@@ -29,7 +29,7 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.1
+import QtQuick 2.6
 
 import QtApplicationManager 1.0
 import controls 1.0
@@ -41,8 +41,8 @@ AppUIScreen {
     property alias widget: widgetContainer.children
 
     property var widgetSurface: ApplicationManagerWindow {
-        width: Style.cellWidth * 12
-        height: Style.cellHeight * 19
+        width: Style.hspan(12)
+        height: Style.vspan(19)
         visible: widgetContainer.children.length > 0
 
         Item {

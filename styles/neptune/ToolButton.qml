@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 Pelagicore AG
+** Copyright (C) 2017 Pelagicore AG
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Neptune IVI UI.
@@ -29,41 +29,10 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.1
-import controls 1.0
-import utils 1.0
+import QtQuick 2.6
+import QtQuick.Controls 2.0 as C
+import QtQuick.Templates 2.0 as T
 
-UIElement {
-    id: wrapper
-
-    property var option
-
-    Row {
-        anchors.verticalCenter: parent.verticalCenter
-
-        Label {
-            id: titleLabel
-
-            hspan: 10; vspan: 2
-            text: option.name
-            font.pixelSize: Style.fontSizeXL
-            font.capitalization: Font.AllUppercase
-        }
-
-        Switch {
-            checked: option.active
-            onCheckedChanged: option.active = checked
-        }
-    }
-
-    HDiv {
-        anchors.verticalCenter: parent.bottom
-        anchors.horizontalCenter: parent.horizontalCenter
-        _tracer_color: 'transparent'
-    }
-
-    MouseArea {
-        anchors.fill: parent
-        onClicked: option.active = !option.active
-    }
+T.ToolButton {
+    background: Item {}
 }

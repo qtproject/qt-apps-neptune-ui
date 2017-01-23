@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 Pelagicore AG
+** Copyright (C) 2017 Pelagicore AG
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Neptune IVI UI.
@@ -30,14 +30,15 @@
 ****************************************************************************/
 
 import QtQuick 2.0
+import QtQuick.Controls 2.0
 
 import utils 1.0
 
-Item {
-    width: Style.cellWidth * hspan
-    height: Style.cellHeight * vspan
-    property int hspan: 4
-    property int vspan: 1
+Control {
+    implicitWidth: Style.hspan(4)
+    implicitHeight: Style.vspan(1)
+    width: implicitWidth
+    height: implicitHeight
 
     property alias _tracer_color: tracer.color
     property alias _tracer_padding: tracer.padding

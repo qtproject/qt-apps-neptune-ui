@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 Pelagicore AG
+** Copyright (C) 2017 Pelagicore AG
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Neptune IVI UI.
@@ -30,8 +30,8 @@
 ****************************************************************************/
 
 import QtQuick 2.0
+import QtQuick.Controls 2.0
+// TODO: Convert to QQC2 Pane
 
-UIElement {
-   _tracer_color: '#fecb2f'
-   _tracer_padding: -1
+Control {
 }

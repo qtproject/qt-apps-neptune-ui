@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 Pelagicore AG
+** Copyright (C) 2017 Pelagicore AG
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Neptune IVI UI.
@@ -29,7 +29,7 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.1
+import QtQuick 2.6
 import QtQuick.Layouts 1.0
 import QtGraphicalEffects 1.0
 
@@ -40,11 +40,8 @@ import service.notification 1.0
 
 UIPage {
     id: root
-    hspan: 24
-    vspan: 24
-
-    title: qsTr('Car Settings')
-    symbolName: "settings"
+    width: Style.hspan(24)
+    height: Style.vspan(24)
 
     NotificationInterface {
         id: notificationInterface
@@ -52,13 +49,17 @@ UIPage {
         summary: "Car Settings"
     }
 
+    header : AppInfoPanel {
+        Layout.fillWidth: true
+        Layout.preferredHeight: Style.vspan(2)
+        title: 'Car Settings'
+        symbolName: 'settings'
+    }
+
     GridView {
         id: view
+        anchors.fill: parent
 
-        anchors.top: parent.top
-        anchors.topMargin: Style.vspan(2)
-        anchors.bottom: parent.bottom
-        anchors.horizontalCenter: parent.horizontalCenter
         interactive: false
 
         width: Style.hspan(6*3)
@@ -79,7 +80,7 @@ UIPage {
             HDiv {
                 id: div
                 width: parent.width
-                vspan: 1
+                height: Style.vspan(1)
             }
 
             RowLayout {

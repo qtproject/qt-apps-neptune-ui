@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 Pelagicore AG
+** Copyright (C) 2017 Pelagicore AG
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Neptune IVI UI.
@@ -33,13 +33,26 @@ import QtQuick 2.0
 
 import utils 1.0
 
-Item {
+MouseArea {
     id: root
     anchors.fill: parent
-    property color color: '#ac193d'
-    property alias text: note.text
-    property int padding: 1
+    property color color: randomColor();
+    property string text: parent.objectName
+    property real padding: 0.5
     visible: Style.debugMode
+    property bool fill: root.opaque
+    acceptedButtons: Qt.RightButton
+    property bool opaque: false
+
+    propagateComposedEvents: true
+
+    Rectangle {
+        id: fill
+        anchors.fill: parent
+        anchors.margins: root.padding
+        color: root.fill?root.color:'transparent'
+        opacity: root.opaque? 1.0 : 0.10
+    }
 
     Rectangle {
         id: frame
@@ -47,8 +60,8 @@ Item {
         anchors.margins: root.padding
         color: 'transparent'
         border.color: root.color
-        border.width: 2
-        opacity: 0.5
+        border.width: 1
+        opacity: 0.80
     }
 
     Text {
@@ -57,7 +70,25 @@ Item {
         anchors.right: parent.right
         anchors.margins: 4
         horizontalAlignment: Text.AlignRight
-        font.pixelSize: 12
+        text: root.text
+        font.pixelSize: 10
         color: root.color
+    }
+
+    function randomColor() {
+        return Qt.rgba(Math.random(), Math.random(), Math.random(), 1.0)
+    }
+
+    onPressAndHold: {
+        console.log('trace: ' + root.parent)
+
+        console.log('Hierarchy: ')
+        var parent = root.parent;
+        var indent = '  ';
+        while (parent) {
+            console.log(indent + '+ ' + parent)
+            indent += '  ';
+            parent = parent.parent;
+        }
     }
 }

@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 Pelagicore AG
+** Copyright (C) 2017 Pelagicore AG
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Neptune IVI UI.
@@ -29,7 +29,7 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.1
+import QtQuick 2.6
 import QtQuick.Layouts 1.0
 
 import controls 1.0
@@ -57,8 +57,8 @@ BaseBoard {
         }
 
         Label {
-            vspan: 3
-            hspan: 5
+            height: Style.vspan(3)
+            width: Style.hspan(5)
             text: "vspan=3, hspan=5"
         }
 

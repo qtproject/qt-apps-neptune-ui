@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 Pelagicore AG
+** Copyright (C) 2017 Pelagicore AG
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Neptune IVI UI.
@@ -29,65 +29,28 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.1
-import QtQuick.Layouts 1.0
+#include "neptunetheme.h"
 
-import controls 1.0
-import utils 1.0
+#include <QDebug>
+#include <QtGui/QFont>
+#include <QtGui/QFontInfo>
 
-UIElement {
-    id: root
-
-    property alias iconName: icon.name
-    property alias titleText: titleLabel.text
-    property alias checked: switchControl.checked
-    property alias hasChildren: childIndicator.visible
-    property bool checkedEnabled: true
-
-    signal clicked()
-
-    Row {
-        anchors.verticalCenter: parent.verticalCenter
-
-        Symbol {
-            id: icon
-
-            hspan: 2; vspan: 2
-            opacity: 0.4
-        }
-
-        Label {
-            id: titleLabel
-
-            hspan: 8; vspan: 2
-            text: model.title
-        }
-
-        Switch {
-            id: switchControl
-            visible: root.checkedEnabled
-            hspan: 3; vspan: 2
-        }
-
-        Icon {
-            id: childIndicator
-
-            hspan: 1; vspan: 2
-            source: Style.icon("cloud_arrow")
-        }
+NeptuneTheme::NeptuneTheme(QPlatformTheme *theme)
+{
+    qDebug() << "NeptuneTheme::NeptuneTheme()";
+    const QFont font(QLatin1String("Source Sans Pro"));
+    if (QFontInfo(font).family() == QLatin1String("Source Sans Pro")) {
+        const QString family = font.family();
+        m_systemFont.setFamily(family);
     }
 
-    HDiv {
-        anchors.verticalCenter: parent.bottom
-        anchors.horizontalCenter: parent.horizontalCenter
-        _tracer_color: 'transparent'
-    }
+    m_systemFont.setPixelSize(15);
+}
 
-    MouseArea {
-        anchors.fill: parent
-        onClicked: {
-            root.clicked()
-            root.checked = !root.checked
-        }
+const QFont *NeptuneTheme::font(QPlatformTheme::Font type) const
+{
+    switch (type) {
+    default:
+        return &m_systemFont;
     }
 }

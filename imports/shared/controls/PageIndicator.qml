@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 Pelagicore AG
+** Copyright (C) 2017 Pelagicore AG
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Neptune IVI UI.
@@ -29,53 +29,15 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.1
-import QtQuick.Controls 1.0
+import QtQuick 2.6
+import QtQuick.Controls 2.0 as QQC2
 import QtQuick.Controls.Styles 1.0
 import utils 1.0
 
-UIElement {
+// TODO: Convert to use QQC2 PageIndicator
+QQC2.PageIndicator {
     id: root
-    hspan: 4
-    vspan: 2
+    implicitWidth: Style.hspan(4)
+    implicitHeight: Style.vspan(2)
 
-    property alias count: repeater.model
-    property int currentIndex: 0
-
-    signal clicked(int index)
-
-
-    // Prevent click 'leakage' between items
-    MouseArea {
-        anchors.fill: parent
-    }
-
-    Row {
-        id: row
-        anchors.centerIn: parent
-
-        Repeater {
-            id: repeater
-
-            delegate: Item {
-                width: Style.hspan(1)
-                height: Style.vspan(2)
-
-                Rectangle {
-                    anchors.centerIn: parent
-                    width: height
-                    height: parent.height * 0.3
-                    color: root.currentIndex === index ? Style.colorWhite : Style.colorGrey
-                    radius: width/2
-                    border.color: Qt.darker(color, 1.5)
-
-                }
-
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: root.clicked(index)
-                }
-            }
-        }
-    }
 }

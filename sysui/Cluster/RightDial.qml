@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 Pelagicore AG
+** Copyright (C) 2017 Pelagicore AG
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Neptune IVI UI.
@@ -29,8 +29,9 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.1
+import QtQuick 2.6
 import utils 1.0
+import QtQuick.Controls 2.1
 import controls 1.0
 import models 1.0
 import service.navigation 1.0
@@ -205,7 +206,7 @@ Item {
         anchors.horizontalCenterOffset: -20
     }
 
-    Dial {
+    ClusterDial {
         id: dial
 
         width: 0.69 * root.height

@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 Pelagicore AG
+** Copyright (C) 2017 Pelagicore AG
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Neptune IVI UI.
@@ -30,36 +30,30 @@
 ****************************************************************************/
 
 import QtQuick 2.0
-import QtQuick.Controls 1.0
+import QtQuick.Controls 2.0
 import utils 1.0
 import controls 1.0
 
-UIElement {
+Page {
     id: root
-    hspan: 24
-    vspan: 24
+    implicitWidth: Style.hspan(24)
+    implicitHeight: Style.vspan(24)
 
-    property Component statusItem: Item {}
-    property string title
-    property bool showBack: true
+    background: Item {}
+
+    property bool hideBack: false
 
     signal backScreen()
 
-    DisplayBackground {
-        anchors.fill: parent
-        visible: root.parent && root.parent.parent === null
-    }
 
     Tool {
         id: backButton
-        z: 5
         anchors.left: parent.left
         anchors.top: parent.top
-        anchors.margins: Style.padding
-        hspan: 2
-        vspan: 2
-        visible: root.showBack
-        name: 'back'
+        width: Style.hspan(2)
+        height: Style.vspan(2)
+        visible: !root.hideBack
+        symbol: 'back'
         onClicked: root.backScreen()
     }
 

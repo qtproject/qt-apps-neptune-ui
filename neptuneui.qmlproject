@@ -3,7 +3,7 @@
 import QmlProject 1.1
 
 Project {
-    mainFile: "MainWithCluser.qml"
+    mainFile: "Main.qml"
 
     /* Include .qml, .js, and image files from current directory and subdirectories */
     QmlFiles {
@@ -18,6 +18,20 @@ Project {
     Files {
         directory: "."
         filter: "*.json"
+    }
+    Files {
+        directory: "."
+        filter: "*.yaml"
+    }
+
+    Files {
+        directory: "."
+        filter: "qmldir"
+    }
+
+    Files {
+        directory: "."
+        filter: "*.md"
     }
 
     /* List of plugin directories passed to QML runtime */

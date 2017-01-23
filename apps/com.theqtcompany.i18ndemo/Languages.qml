@@ -96,8 +96,8 @@ UIPage {
                 id: lblHeader
                 //% "Language Selection"
                 text: qsTrId("lang_selection_id") + ctd.emptyString
-                hspan: 5
-                vspan: 1
+                width: Style.hspan(5)
+                height: Style.vspan(1)
                 font.pixelSize: Style.fontSizeM
                 LayoutMirroring.enabled: (Qt.locale(ctd.languageLocale).textDirection === Qt.RightToLeft)
             }
@@ -150,14 +150,14 @@ UIPage {
                     anchors.horizontalCenter: parent.horizontalCenter
 
                     Label {
-                        hspan: 4
+                        width: Style.hspan(4)
                         //% "Number"
                         text: qsTrId("number_id") + ctd.emptyString
                         font.pixelSize: Style.fontSizeL
                     }
 
                     Label {
-                        hspan: 6
+                        width: Style.hspan(6)
 
                         text: Number(10.5456).toLocaleString(Qt.locale(ctd.languageLocale), 'f', 4)
                         font.pixelSize: Style.fontSizeL
@@ -169,14 +169,14 @@ UIPage {
                     anchors.horizontalCenter: parent.horizontalCenter
 
                     Label {
-                        hspan: 4
+                        width: Style.hspan(4)
                         //% "Currency"
                         text: qsTrId("currency_id") + ctd.emptyString
                         font.pixelSize: Style.fontSizeL
                     }
 
                     Label {
-                        hspan: 6
+                        width: Style.hspan(6)
 
                         text: Number(2900.40).toLocaleCurrencyString(Qt.locale(ctd.languageLocale))
                     }
@@ -186,7 +186,7 @@ UIPage {
                     anchors.horizontalCenter: parent.horizontalCenter
 
                     Label {
-                        hspan: 4
+                        width: Style.hspan(4)
 
                         //% "Date"
                         text: qsTrId("date_id") + ctd.emptyString
@@ -194,7 +194,7 @@ UIPage {
                     }
 
                     Label {
-                        hspan: 6
+                        width: Style.hspan(6)
 
                         text: new Date().toLocaleDateString(Qt.locale(ctd.languageLocale))
                     }
@@ -204,7 +204,7 @@ UIPage {
                     anchors.horizontalCenter: parent.horizontalCenter
 
                     Label {
-                        hspan: 4
+                        width: Style.hspan(4)
 
                         //% "Time"
                         text: qsTrId("time_id") + ctd.emptyString
@@ -212,7 +212,7 @@ UIPage {
                     }
 
                     Label {
-                        hspan: 6
+                        width: Style.hspan(6)
 
                         text: new Date().toLocaleTimeString(Qt.locale(ctd.languageLocale))
                     }
@@ -222,7 +222,7 @@ UIPage {
                     anchors.horizontalCenter: parent.horizontalCenter
 
                     Label {
-                        hspan: 4
+                        width: Style.hspan(4)
 
                         //% "Name"
                         text: qsTrId("name_id") + ctd.emptyString
@@ -230,7 +230,7 @@ UIPage {
                     }
 
                     TextField {
-                        hspan: 6
+                        width: Style.hspan(6)
 
                         forceFocusOnClick: true
                     }
@@ -240,7 +240,7 @@ UIPage {
                     anchors.horizontalCenter: parent.horizontalCenter
 
                     Label {
-                        hspan: 4
+                        width: Style.hspan(4)
 
                         //% "Description"
                         text: qsTrId("description_id") + ctd.emptyString
@@ -258,8 +258,8 @@ UIPage {
 
                         Label {
                             id: txtDesc
-                            hspan: 8
-                            vspan: 10
+                            width: Style.hspan(8)
+                            height: Style.vspan(10)
 
                             verticalAlignment: Text.AlignTop
 

@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 Pelagicore AG
+** Copyright (C) 2017 Pelagicore AG
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Neptune IVI UI.
@@ -65,6 +65,7 @@ QtObject {
 
     onScreenWidthChanged: cellWidth = Math.floor(screenWidth/24)
     onScreenHeightChanged: cellHeight = Math.floor(screenHeight/24)
+
 
     Component.onCompleted: {
         var scalFactor = (screenWidth/1280);

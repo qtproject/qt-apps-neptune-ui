@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 Pelagicore AG
+** Copyright (C) 2017 Pelagicore AG
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Neptune IVI UI.
@@ -29,24 +29,35 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.1
+import QtQuick 2.6
 import controls 1.0
 import utils 1.0
+import QtQuick.Layouts 1.1
 
 UIPage {
     id: root
-    hspan: 24
-    vspan: 24
 
-    title: 'My Car'
-    symbolName: "information"
+    header: AppInfoPanel {
+        Layout.fillWidth: true
+        Layout.preferredHeight: Style.vspan(2)
+        title: 'My Car'
+        symbolName: 'information'
+    }
+
 
     TabView {
-        id: tabView
         anchors.fill: parent
         tabs: [
-            { title : "OVERVIEW", url : Qt.resolvedUrl("MyCarOverview.qml"), properties : {} },
-            { title : "OWNERS MANUAL", url : Qt.resolvedUrl("OwnersManual.qml"), properties : {} },
+            {
+                title : "OVERVIEW",
+                url : Qt.resolvedUrl("MyCarOverview.qml"),
+                properties : {}
+            },
+            {
+                title : "OWNERS MANUAL",
+                url : Qt.resolvedUrl("OwnersManual.qml"),
+                properties : {}
+            },
         ]
     }
 }

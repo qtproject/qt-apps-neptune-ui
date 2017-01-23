@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 Pelagicore AG
+** Copyright (C) 2017 Pelagicore AG
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Neptune IVI UI.
@@ -32,6 +32,8 @@
 import QtQuick 2.0
 import "JSONBackend.js" as JSONBackend
 import QtApplicationManager 1.0
+
+// TODO: Move this to a library and convert to QObject
 
 Item {
 

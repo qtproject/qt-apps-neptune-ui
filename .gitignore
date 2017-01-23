@@ -54,3 +54,4 @@ doc-pak
 
 .directory
 core
+*.qmlc

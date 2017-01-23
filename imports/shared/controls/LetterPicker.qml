@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 Pelagicore AG
+** Copyright (C) 2017 Pelagicore AG
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Neptune IVI UI.
@@ -30,18 +30,22 @@
 ****************************************************************************/
 
 import QtQuick 2.0
+import QtQuick.Controls 2.0
 import QtGraphicalEffects 1.0
 import utils 1.0
 
-UIElement {
+// TODO: Derive form QQC2 Pane
+
+Control {
     id: root
 
-    hspan: 1
-    vspan: 20
+    width: Style.hspan(1)
+    height: Style.vspan(20)
 
     property string letter: letterModel[pathView.currentIndex]
     property color textColor: "white"
     property alias numOfVisibleLetters: pathView.pathItemCount
+    // TODO: use 'abcde'.split('')
     property var letterModel: ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "x", "y", "z"]
 
     PathView {

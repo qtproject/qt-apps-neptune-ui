@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 Pelagicore AG
+** Copyright (C) 2017 Pelagicore AG
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Neptune IVI UI.
@@ -56,8 +56,8 @@ UIScreen {
 
     TabView {
         id: tabView
-        vspan: root.vspan - 3
-        hspan: root.hspan
+        width: root.width
+        height: root.height - Style.vspan(3)
         anchors.centerIn: parent
         horizontalAlignment: true
         tabWidth: 5

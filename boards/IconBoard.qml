@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 Pelagicore AG
+** Copyright (C) 2017 Pelagicore AG
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Neptune IVI UI.
@@ -29,7 +29,7 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.1
+import QtQuick 2.6
 import QtQuick.Layouts 1.0
 
 import controls 1.0
@@ -51,7 +51,7 @@ BaseBoard {
             font.pixelSize: Style.fontSizeXS
         }
         Icon {
-            vspan: 2
+            height: Style.vspan(2)
             source: Style.icon("climatebar_icon_seating_person")
         }
 
@@ -61,7 +61,7 @@ BaseBoard {
             font.pixelSize: Style.fontSizeXS
         }
         Icon {
-            hspan: 3; vspan: 3
+            width: Style.hspan(3); height: Style.vspan(3)
             source: Style.icon("climatebar_icon_seating_person")
         }
 
@@ -72,7 +72,7 @@ BaseBoard {
         }
         Icon {
             source: Style.icon("climatebar_icon_seating_person")
-            hspan: 1; vspan: 1
+            width: Style.hspan(1); height: Style.vspan(1)
             clip: true
         }
 
@@ -113,7 +113,7 @@ BaseBoard {
             Icon {
                 id: disableEnableOpacityIcon
 
-                vspan: 2
+                height: Style.vspan(2)
                 source: Style.icon("climatebar_icon_seating_person")
                 enabled: false
             }
@@ -134,7 +134,7 @@ BaseBoard {
             Icon {
                 id: disableEnableImageIcon
 
-                vspan: 2
+                height: Style.vspan(2)
                 source: Style.icon ("climatebar_icon_seating_person")
                 enabled: false
             }

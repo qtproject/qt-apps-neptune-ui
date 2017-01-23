@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 Pelagicore AG
+** Copyright (C) 2017 Pelagicore AG
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Neptune IVI UI.
@@ -29,7 +29,7 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.1
+import QtQuick 2.6
 
 import controls 1.0
 import utils 1.0
@@ -37,8 +37,8 @@ import utils 1.0
 AppUIScreen {
     id: root
 
-    hspan: 24
-    vspan: 24
+    width: Style.hspan(24)
+    height: Style.vspan(24)
 
     title: 'Not available'
 

@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 Pelagicore AG
+** Copyright (C) 2017 Pelagicore AG
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Neptune IVI UI.
@@ -30,8 +30,10 @@
 ****************************************************************************/
 
 pragma Singleton
-import QtQuick 2.1
+import QtQuick 2.6
 import QtApplicationManager 1.0
+import QtQuick.Window 2.0
+import com.pelagicore.styles.neptune 1.0
 
 QtObject {
     id: root
@@ -44,34 +46,35 @@ QtObject {
     property int paddingL: configValue("paddingL", 12)
     property int paddingXL: configValue("paddingXL", 16)
 
-    property int screenWidth: configValue("screenWidth", 1280)
-    property int screenHeight: configValue("screenHeight", 800)
+    property int screenWidth: NeptuneStyle.windowWidth
+    property int screenHeight: NeptuneStyle.windowHeight
     property int clusterWidth: configValue("clusterWidth", 1920)
     property int clusterHeight: configValue("clusterHeight", 720)
     property int displayHMargin: configValue("displayHMargin", 11)
     property int displayVMargin: configValue("displayVMargin", 0)
-    property int cellWidth: configValue("cellWidth", 53) // 1280/24
-    property int cellHeight: configValue("cellHeight", 33) // 800/24
-    property string fontFamily: configValue("fontFamily", true ? 'Source Sans Pro' : fontRegular.name)
-    property real fontWeight: configValue("fontWeight", Font.Light)
-    property int fontSizeXXS: configValue("fontSizeXXS", 14)
-    property int fontSizeXS: configValue("fontSizeXS", 16)
-    property int fontSizeS: configValue("fontSizeS", 18)
-    property int fontSizeM: configValue("fontSizeM", 24)
-    property int fontSizeL: configValue("fontSizeL", 28)
-    property int fontSizeXL: configValue("fontSizeXL", 36)
-    property int fontSizeXXL: configValue("fontSizeXXL", 38)
-    property color colorWhite: configValue("colorWhite", '#ffffff')
-    property color colorOrange: configValue("colorOrange", '#f07d00')
-    property color colorGrey: configValue("colorGrey", '#999999')
-    property color colorBlack: configValue("colorBlack", '#000000')
+    property int cellWidth: configValue("cellWidth", screenWidth/24) // 1280/24
+    property int cellHeight: configValue("cellHeight", screenHeight/24) // 800/24
+    property string fontFamily: NeptuneStyle.fontFamily
+    property real fontWeight: Font.Light
+    property real fontFactor: NeptuneStyle.fontFactor
+    property int fontSizeXXS: NeptuneStyle.fontSizeXXS
+    property int fontSizeXS: NeptuneStyle.fontSizeXS
+    property int fontSizeS: NeptuneStyle.fontSizeS
+    property int fontSizeM: NeptuneStyle.fontSizeM
+    property int fontSizeL: NeptuneStyle.fontSizeL
+    property int fontSizeXL: NeptuneStyle.fontSizeXL
+    property int fontSizeXXL: NeptuneStyle.fontSizeXXL
+    property color colorWhite: NeptuneStyle.brightColor
+    property color colorOrange: NeptuneStyle.accentColor
+    property color colorGrey: NeptuneStyle.lighter25(NeptuneStyle.darkColor)
+    property color colorBlack: NeptuneStyle.darkColor
     property bool debugMode: configValue("debugMode", false)
     property bool gridMode: configValue("gridMode", false)
     property bool fakeBackground: configValue("fakeBackground", false)
-    property string displayBackground: configValue("displayBackground", "background_1280x800")
+    property string displayBackground: NeptuneStyle.backgroundImage
     property real disabledIconOpacity: configValue("disabledIconOpacity", 0.6)
 
-    property int defaultSymbolSize: configValue("defaultSymbolSize", symbolSizeS)
+    property int defaultSymbolSize: configValue("defaultSymbolSize", symbolSizeM)
     property int defaultGfxSize: configValue("defaultGfxSize", 1)
     property int symbolSizeXS: configValue("symbolSizeXS", 32)
     property int symbolSizeS: configValue("symbolSizeS", 48)
@@ -98,23 +101,14 @@ QtObject {
         }
     }
 
-    property FontLoader fontRegular: FontLoader {
-        source: font('SourceSansPro-Regular')
-    }
-
-    property FontLoader fontLight: FontLoader {
-        source: font('SourceSansPro-Light')
-    }
-
     function configValue(key, defaultValue) {
         return (styleLoader.item && styleLoader.item[key] )? styleLoader.item[key]: defaultValue
     }
 
 
     function symbol(name, size, active) {
-        if (size === 0)
-            size = defaultSymbolSize
-        return symbolUrl + (active ? '/active/' : '/') + name + '@' + size + '.png'
+        size = size || defaultSymbolSize;
+        return symbolUrl + (active ? '/active/' : '/') + name + '@' + size + '.png';
     }
 
     function symbolXS(name, active) {

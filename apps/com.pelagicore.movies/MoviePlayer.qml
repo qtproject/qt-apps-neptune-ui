@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 Pelagicore AG
+** Copyright (C) 2017 Pelagicore AG
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Neptune IVI UI.
@@ -29,9 +29,9 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.1
+import QtQuick 2.6
 import QtQuick.Layouts 1.0
-import QtQuick.Controls 1.0
+import QtQuick.Controls 2.0
 import QtMultimedia 5.0
 import QtGraphicalEffects 1.0
 
@@ -41,8 +41,8 @@ import "."
 
 UIScreen {
     id: root
-    hspan: 24
-    vspan: 24
+    width: Style.hspan(24)
+    height: Style.vspan(24)
 
     title: 'Movies'
 
@@ -90,43 +90,43 @@ UIScreen {
             anchors.horizontalCenter: parent.horizontalCenter
             spacing: Style.hspan(2)
             Tool {
-                name: 'prev'
+                symbol: 'prev'
                 onClicked: MovieService.previous()
             }
             Tool {
-                name: video.running?'pause':'play'
+                symbol: video.running?'pause':'play'
                 onClicked: video.togglePlay()
             }
             Tool {
-                name: 'next'
+                symbol: 'next'
                 onClicked: MovieProvider.next()
             }
         }
         Slider {
             anchors.horizontalCenter: parent.horizontalCenter
             value: video.position
-            minimum: 0.00
-            maximum: video.duration
-            vspan: 1
+            from: 0.00
+            to: video.duration
+            height: Style.vspan(1)
             function valueToString() {
                 return Math.floor(value/60000) + ':' + Math.floor((value/1000)%60)
             }
-            onActiveValueChanged: {
-                video.seek(activeValue)
+            onValueChanged: {
+                video.seek(value)
             }
         }
         RowLayout {
             anchors.horizontalCenter: parent.horizontalCenter
             spacing: 0
             Symbol {
-                hspan: 1
-                vspan: 2
+                width: Style.hspan(1)
+                height: Style.vspan(2)
                 size: Style.symbolSizeXS
                 name: 'speaker'
             }
             VolumeSlider {
-                hspan: 8
-                vspan: 2
+                width: Style.hspan(8)
+                height: Style.vspan(2)
                 anchors.horizontalCenter: parent.horizontalCenter
                 value: video.volume
                 onValueChanged: {
@@ -134,8 +134,8 @@ UIScreen {
                 }
             }
             Label {
-                hspan: 1
-                vspan: 2
+                width: Style.hspan(1)
+                height: Style.vspan(2)
                 text: Math.floor(video.volume*100)
             }
         }

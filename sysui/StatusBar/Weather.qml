@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 Pelagicore AG
+** Copyright (C) 2017 Pelagicore AG
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Neptune IVI UI.
@@ -30,18 +30,19 @@
 ****************************************************************************/
 
 import QtQuick 2.0
+import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.0
 import utils 1.0
 import service.climate 1.0
 
-UIElement {
+Control {
     id: root
 
     property int currentTemperature: 0
     property string weatherIcon
 
-    hspan: 2
-    vspan: 2
+    width: Style.hspan(2)
+    height: Style.vspan(2)
 
     RowLayout {
         spacing: Style.paddingL

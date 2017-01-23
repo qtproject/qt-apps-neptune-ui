@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 Pelagicore AG
+** Copyright (C) 2017 Pelagicore AG
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Neptune IVI UI.
@@ -29,9 +29,9 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.1
+import QtQuick 2.6
 import QtQuick.Layouts 1.0
-import QtQuick.Controls 1.0
+import QtQuick.Controls 2.0
 import QtMultimedia 5.0
 import QtGraphicalEffects 1.0
 
@@ -41,8 +41,8 @@ import "."
 
 UIScreen {
     id: root
-    hspan: 24
-    vspan: 24
+    width: Style.hspan(24)
+    height: Style.vspan(24)
 
     title: 'Movies'
 
@@ -54,19 +54,19 @@ UIScreen {
     ColumnLayout {
         anchors.centerIn: parent
         spacing: 0
-        UIElement {
-            hspan: 24
-            vspan: 10
+        Control {
+            Layout.preferredWidth: Style.hspan(24)
+            Layout.preferredHeight: Style.vspan(10)
             RowLayout {
                 anchors.fill: parent
                 spacing: 0
                 Spacer {
-                    hspan: 8
-                    vspan: 8
+                    Layout.preferredWidth: Style.hspan(8)
+                    Layout.preferredHeight: Style.vspan(8)
                 }
                 Item {
-                    width: Style.hspan(4)
-                    height: Style.vspan(10)
+                    Layout.preferredWidth: Style.hspan(4)
+                    Layout.preferredHeight: Style.vspan(10)
                     Rectangle {
                         anchors.fill: parent
                         color: Style.colorWhite
@@ -86,19 +86,19 @@ UIScreen {
                 ColumnLayout {
                     spacing: 0
                     Label {
-                        hspan: 10
+                        Layout.preferredWidth: Style.hspan(10)
                         text: root.track.title
                     }
                     Label {
-                        hspan: 10
+                        Layout.preferredWidth: Style.hspan(10)
                         text: root.track.genre
                     }
                     Label {
-                        hspan: 10
+                        Layout.preferredWidth: Style.hspan(10)
                         text: Qt.formatDate(root.track.year, 'MMMM yyyy')
                     }
                     Label {
-                        hspan: 10
+                        Layout.preferredWidth: Style.hspan(10)
                         Layout.fillHeight: true
                         text: root.track.desc; wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                         font.pixelSize: Style.fontSizeS
@@ -115,7 +115,7 @@ UIScreen {
         }
 
         Spacer {
-            vspan: 1
+            Layout.preferredHeight: Style.vspan(1)
         }
 
         ListView {
@@ -127,7 +127,7 @@ UIScreen {
             currentIndex: MovieProvider.currentIndex
             highlightMoveDuration: 150
             delegate: MovieCoverDelegate {
-                hspan: 4
+                width: Style.hspan(4)
                 source: MovieProvider.coverPath(model.cover)
                 title: model.title
                 onClicked: MovieProvider.currentIndex = index

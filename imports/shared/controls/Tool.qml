@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 Pelagicore AG
+** Copyright (C) 2017 Pelagicore AG
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Neptune IVI UI.
@@ -30,35 +30,21 @@
 ****************************************************************************/
 
 import QtQuick 2.0
+import QtQuick.Controls 2.0
 import controls 1.0
 import utils 1.0
 
-UIElement {
+ToolButton {
     id: root
-    hspan: 1
-    vspan: 2
-    property alias name: icon.name
-    property alias size: icon.size
-    property bool active
-    scale: area.pressed ? 1.1 : 1.0
+    width: Style.hspan(4)
+    height: Style.vspan(2)
+    property string symbol
+    property int size
+    scale: pressed ? 1.1 : 1.0
     Behavior on scale { NumberAnimation { duration: 25 } }
 
-    signal clicked()
-
-    function toggle() {
-        active = !active
-    }
-
-    Symbol {
-        id: icon
-        anchors.fill: parent
-        active: area.pressed || root.active
-        opacity: 0.75
-    }
-
-    MouseArea {
-        id: area
-        anchors.fill: parent
-        onClicked: root.clicked()
+    indicator: Image {
+        anchors.centerIn: parent
+        source: root.symbol ? Style.symbol(root.symbol, root.size, root.checked) : ""
     }
 }

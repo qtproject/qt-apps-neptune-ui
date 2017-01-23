@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 Pelagicore AG
+** Copyright (C) 2017 Pelagicore AG
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Neptune IVI UI.
@@ -32,6 +32,7 @@
 import QtQuick 2.0
 import utils 1.0
 
+// TODO: Convert to use QQC2 ScrollIndicator
 Item {
     id: sliderCOntainer
     width: 5

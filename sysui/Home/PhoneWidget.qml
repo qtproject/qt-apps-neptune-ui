@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 Pelagicore AG
+** Copyright (C) 2017 Pelagicore AG
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Neptune IVI UI.
@@ -29,21 +29,22 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.1
+import QtQuick 2.6
 import QtQuick.Layouts 1.0
 
-import controls 1.0
+import controls 1.0 as C
 import utils 1.0
+import QtQuick.Controls 2.1
 
 UIPanel {
     id: root
 
-    vspan: 4
+    height: Style.vspan(4)
 
-    Icon {
+    C.Icon {
         id: phoneIcon
-
-        hspan: 2; vspan: 4
+        width: Style.hspan(2);
+        height: Style.vspan(4)
         source: Style.icon("widgets_phone")
     }
 
@@ -61,6 +62,10 @@ UIPanel {
             text: qsTr("%1   | %2").arg("John Doe").arg("02:55")
             font.pixelSize: Style.fontSizeXL
             font.capitalization: Font.AllUppercase
+            Component.onCompleted: {
+                console.log('101: ' + font.pixelSize);
+                console.log('102: ' + font.family);
+            }
         }
     }
 

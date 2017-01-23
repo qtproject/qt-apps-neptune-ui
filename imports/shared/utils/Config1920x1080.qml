@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 Pelagicore AG
+** Copyright (C) 2017 Pelagicore AG
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Neptune IVI UI.
@@ -35,13 +35,13 @@ QtObject {
     property int cellWidth: Math.floor(screenWidth/24)
     property int cellHeight: Math.floor(screenHeight/24)
     property var fontWeight: Font.Light
-    property int fontSizeXXS: (1920/1366) * 14
-    property int fontSizeXS: (1920/1366) * 16
-    property int fontSizeS: (1920/1366) * 18
-    property int fontSizeM: (1920/1366) * 24
-    property int fontSizeL: (1920/1366) * 28
-    property int fontSizeXL: (1920/1366) * 36
-    property int fontSizeXXL: (1920/1366) * 48
+    property int fontSizeXXS: (1920/1080) * 14
+    property int fontSizeXS: (1920/1080) * 16
+    property int fontSizeS: (1920/1080) * 18
+    property int fontSizeM: (1920/1080) * 24
+    property int fontSizeL: (1920/1080) * 28
+    property int fontSizeXL: (1920/1080) * 36
+    property int fontSizeXXL: (1920/1080) * 48
 
     property int defaultSymbolSize: symbolSizeM
     property int defaultGfxSize: 2

@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 Pelagicore AG
+** Copyright (C) 2017 Pelagicore AG
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Neptune IVI UI.
@@ -29,66 +29,22 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.1
+import QtQuick 2.6
 import QtQuick.Layouts 1.0
 
 import utils 1.0
+import QtQuick.Controls 2.0 as C
 
-UIElement {
+C.Button {
     id: root
-    vspan: 2
+    implicitWidth: Style.hspan(4)
+    implicitHeight: Style.vspan(2)
 
-    property alias text: label.text
-    property string iconName
-    property alias label: label
-    property alias icon: icon
-    property alias pressed: mouseArea.pressed
+    property string symbol
 
-    property int spacing: Style.padding
+//    indicator: Image {
+//        anchors.centerIn: parent
+//        source: root.symbol ? Style.symbol(root.symbol, root.size, root.checked) : ""
+//    }
 
-    signal clicked
-
-    Rectangle {
-        anchors.fill: parent
-        color: '#000'
-        opacity: 0.85
-
-        Behavior on scale { NumberAnimation {} }
-    }
-
-    Column {
-        id: layout
-
-        anchors.centerIn: parent
-
-        spacing: root.spacing
-
-        Image {
-            id: icon
-
-            source: iconName ? Style.icon(iconName) : ""
-            anchors.horizontalCenter: parent.horizontalCenter
-            visible: source !== undefined
-            asynchronous: true
-        }
-
-        Label {
-            id: label
-
-            hspan: root.hspan; vspan: 1
-            visible: text
-            opacity: root.enabled ? 1.0 : 0.6
-            horizontalAlignment: Text.AlignHCenter
-            font.pixelSize: Style.fontSizeM
-            scale: mouseArea.pressed?0.85:1.0
-            Behavior on scale { NumberAnimation {} }
-        }
-    }
-
-    MouseArea {
-        id: mouseArea
-
-        anchors.fill: parent
-        onClicked: root.clicked()
-    }
 }

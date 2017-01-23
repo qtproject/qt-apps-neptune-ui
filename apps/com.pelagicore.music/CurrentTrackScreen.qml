@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 Pelagicore AG
+** Copyright (C) 2017 Pelagicore AG
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Neptune IVI UI.
@@ -29,9 +29,9 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.1
+import QtQuick 2.6
 import QtQuick.Layouts 1.0
-
+import QtQuick.Controls 2.0
 import controls 1.0
 import utils 1.0
 import service.music 1.0
@@ -39,32 +39,29 @@ import "."
 
 UIScreen {
     id: root
-    hspan: 24
-    vspan: 24
-
-    title: 'Music'
+    objectName: 'CurrentTrackScreen'
+    width: Style.hspan(24)
+    height: Style.vspan(24)
 
     property var track: MusicProvider.currentEntry
     property bool libraryVisible: false
 
     signal showAlbums()
 
+
     ColumnLayout {
         id: musicControl
         width: Style.hspan(12)
-        height: Style.vspan(20)
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.verticalCenter: parent.verticalCenter
+        height: parent.height - Style.vspan(2)
+        anchors.centerIn: parent
         spacing: 0
-        Spacer {}
+//        Spacer { Layout.preferredHeight: Style.vspan(1); Layout.fillWidth: true }
         RowLayout {
             anchors.horizontalCenter: parent.horizontalCenter
             spacing: 0
             Tool {
-                hspan: 2
-                name: 'prev'
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.verticalCenterOffset: Style.vspan(-1)
+                Layout.preferredWidth: Style.hspan(2)
+                symbol: 'prev'
                 onClicked: {
                     if (MusicProvider.currentIndex === 0)
                         MusicProvider.currentIndex = MusicProvider.count - 1
@@ -73,16 +70,15 @@ UIScreen {
                 }
             }
 
-            SwipeView {
-                id: pathView
-                itemWidth: Style.cellWidth * 6
+            TrackSwipeView {
+                contentWidth: Style.hspan(6)
 
-                width: Style.cellWidth * 6
-                height: Style.cellHeight * 12
+                Layout.preferredWidth: Style.hspan(6)
+                Layout.preferredHeight: Style.vspan(12)
 
-                items: MusicProvider.nowPlaying.model
+                model: MusicProvider.nowPlaying.model
 
-                currentViewIndex: MusicProvider.currentIndex
+                currentIndex: MusicProvider.currentIndex
 
                 delegate: CoverItem {
                     z: PathView.z
@@ -98,10 +94,8 @@ UIScreen {
             }
 
             Tool {
-                hspan: 2
-                name: 'next'
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.verticalCenterOffset: Style.vspan(-1)
+                Layout.preferredWidth: Style.hspan(2)
+                symbol: 'next'
                 onClicked: {
                     if (MusicProvider.currentIndex === MusicProvider.count - 1)
                         MusicProvider.currentIndex = 0
@@ -113,32 +107,31 @@ UIScreen {
 
         RowLayout {
             anchors.horizontalCenter: parent.horizontalCenter
-            spacing: 10
+            spacing: 0
 
             Label {
-                hspan: 1
+                Layout.preferredWidth: Style.hspan(1)
                 text: MusicService.currentTime
                 font.pixelSize: Style.fontSizeS
             }
 
             Slider {
                 id: slider
-                //anchors.horizontalCenter: parent.horizontalCenter
-                hspan: 9
+                Layout.preferredWidth: Style.hspan(9)
                 value: MusicService.position
-                minimum: 0.00
-                maximum: MusicService.duration
-                vspan: 1
+                from: 0.00
+                to: MusicService.duration
+                Layout.preferredHeight: Style.vspan(1)
                 function valueToString() {
                     return Math.floor(value/60000) + ':' + Math.floor((value/1000)%60)
                 }
-                onActiveValueChanged: {
-                    MusicService.seek(activeValue)
+                onValueChanged: {
+                    MusicService.seek(value)
                 }
             }
 
             Label {
-                hspan: 1
+                Layout.preferredWidth: Style.hspan(1)
                 text: MusicService.durationTime
                 font.pixelSize: Style.fontSizeS
             }
@@ -148,21 +141,21 @@ UIScreen {
             anchors.horizontalCenter: parent.horizontalCenter
             spacing: 0
             Tool {
-                hspan: 2
-                name: 'shuffle'
+                Layout.preferredWidth: Style.hspan(2)
+                symbol: 'shuffle'
                 onClicked: toggle()
                 size: Style.symbolSizeXS
             }
-            Spacer { hspan: 2 }
+            Spacer { Layout.preferredWidth: Style.hspan(2) }
             Tool {
-                hspan: 2
-                name: MusicService.playing?'pause':'play'
+                Layout.preferredWidth: Style.hspan(2)
+                symbol: MusicService.playing?'pause':'play'
                 onClicked: MusicService.togglePlay()
             }
-            Spacer { hspan: 2 }
+            Spacer { Layout.preferredWidth: Style.hspan(2) }
             Tool {
-                hspan: 2
-                name: 'loop'
+                Layout.preferredWidth: Style.hspan(2)
+                symbol: 'loop'
                 onClicked: toggle()
                 size: Style.symbolSizeXS
             }
@@ -171,14 +164,13 @@ UIScreen {
             anchors.horizontalCenter: parent.horizontalCenter
             spacing: 0
             Symbol {
-                vspan: 2
-                hspan: 1
+                Layout.preferredWidth: Style.hspan(1)
                 size: Style.symbolSizeXS
                 name: 'speaker'
             }
             VolumeSlider {
-                hspan: 8
-                vspan: 2
+                Layout.preferredWidth: Style.hspan(8)
+                Layout.preferredHeight: Style.vspan(2)
                 anchors.horizontalCenter: parent.horizontalCenter
                 value: MusicService.volume
                 onValueChanged: {
@@ -186,8 +178,9 @@ UIScreen {
                 }
             }
             Label {
-                hspan: 1
-                vspan: 2
+                Layout.preferredWidth: Style.hspan(1)
+                horizontalAlignment: Text.AlignHCenter
+                height: Style.vspan(2)
                 text: Math.floor(MusicService.volume*100)
             }
         }
@@ -200,6 +193,9 @@ UIScreen {
     Library {
         id: library
         x: parent.width
+        anchors.top: parent.top
+        anchors.bottom: parent.bottom
+        anchors.topMargin: Style.vspan(2)
         opacity: 0
         visible: opacity > 0
         onClose: {
@@ -207,50 +203,49 @@ UIScreen {
         }
     }
 
-    UIElement {
+    Control {
         id: sourceOption
-        hspan: 4
-        vspan: 12
+        width: Style.hspan(4)
+        height: Style.vspan(12)
         anchors.right: musicControl.left
-        anchors.rightMargin: 60
+        anchors.rightMargin: Style.hspan(1)
         anchors.verticalCenter: parent.verticalCenter
-        anchors.verticalCenterOffset: -60
 
         Column {
-            spacing: 1
+            spacing: 0
             Button {
-                hspan: 4
-                vspan: 4
+                width: Style.hspan(4)
+                height: Style.vspan(4)
                 text: "BLUETOOTH"
-                label.font.pixelSize: Style.fontSizeL
+                font.pixelSize: Style.fontSizeL
             }
             Button {
-                hspan: 4
-                vspan: 4
+                width: Style.hspan(4)
+                height: Style.vspan(4)
                 text: "USB"
                 enabled: false
-                label.font.pixelSize: Style.fontSizeL
+                font.pixelSize: Style.fontSizeL
             }
             Button {
-                hspan: 4
-                vspan: 4
+                width: Style.hspan(4)
+                height: Style.vspan(4)
                 text: "SPOTIFY"
                 enabled: false
-                label.font.pixelSize: Style.fontSizeL
+                font.pixelSize: Style.fontSizeL
             }
         }
     }
 
-    TextTool {
+    Tool {
         id: libraryButton
-        hspan: 3
-        vspan: 5
+        width: Style.hspan(3)
+        height: Style.vspan(5)
         anchors.left: musicControl.right
-        anchors.leftMargin: 30
+        anchors.leftMargin: Style.hspan(1)
         anchors.verticalCenter: parent.verticalCenter
-        size: 72
+        size: Style.symbolSizeM
 
-        name: "music"
+        symbol: "music"
         text: "LIBRARY"
 
         onClicked: root.libraryVisible = true
@@ -299,5 +294,4 @@ UIScreen {
             NumberAnimation { target: musicControl; properties: "x"; duration: 300 }
         }
     }
-
 }

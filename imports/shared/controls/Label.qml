@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 Pelagicore AG
+** Copyright (C) 2017 Pelagicore AG
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Neptune IVI UI.
@@ -29,37 +29,7 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.1
-import utils 1.0
+import QtQuick.Controls 2.0
 
-UIElement {
-    id: root
-
-    property alias textObject: textElement
-    property alias text: textElement.text
-    property alias font: textElement.font
-    property alias fontSize: textElement.font.pixelSize
-    property alias color: textElement.color
-    property alias textFormat: textElement.textFormat
-    property alias horizontalAlignment: textElement.horizontalAlignment
-    property alias elide: textElement.elide
-    property alias wrapMode: textElement.wrapMode
-    property alias verticalAlignment: textElement.verticalAlignment
-
-    Text {
-        id: textElement
-
-        anchors.fill: parent
-        anchors.margins: Style.padding
-
-        verticalAlignment: Text.AlignVCenter
-
-        font.family: Style.fontFamily
-        font.pixelSize: Style.fontSizeL
-        font.weight: Style.fontWeight
-
-        color: Style.colorWhite
-
-        clip: Style.debugMode
-    }
+Label {
 }

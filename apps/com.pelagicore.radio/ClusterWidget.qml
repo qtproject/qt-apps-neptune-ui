@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 Pelagicore AG
+** Copyright (C) 2017 Pelagicore AG
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Neptune IVI UI.
@@ -31,6 +31,8 @@
 
 import QtQuick 2.0
 import QtQuick.Layouts 1.0
+import QtQuick.Controls 2.0
+
 import utils 1.0
 import controls 1.0
 import "."
@@ -40,9 +42,9 @@ Item {
     height: parent.height
     anchors.horizontalCenter: parent.horizontalCenter
 
-    UIElement {
-        hspan: 4
-        vspan: 3
+    Control {
+        width: Style.hspan(4)
+        height: Style.vspan(3)
 
         anchors.topMargin: Style.vspan(2)
         anchors.top: parent.top

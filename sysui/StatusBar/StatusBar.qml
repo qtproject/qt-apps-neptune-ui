@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 Pelagicore AG
+** Copyright (C) 2017 Pelagicore AG
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Neptune IVI UI.
@@ -29,7 +29,8 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.1
+import QtQuick 2.6
+import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.0
 
 import utils 1.0
@@ -37,10 +38,10 @@ import controls 1.0
 import service.statusbar 1.0
 import service.settings 1.0
 
-UIElement {
+Pane {
     id: root
-    hspan: 24
-    vspan: 2
+    width: Style.hspan(24)
+    height: Style.vspan(2)
     signal clicked()
     signal timePressAndHold();
     signal overviewClicked();
@@ -49,13 +50,6 @@ UIElement {
         anchors.fill: parent
         onClicked: root.clicked()
         onPressAndHold: root.timePressAndHold()
-    }
-
-    Rectangle {
-        id: background
-        anchors.fill: parent
-        color: Style.colorBlack
-        opacity: 0.7
     }
 
     RowLayout {
@@ -81,7 +75,7 @@ UIElement {
 
         Tool {
             Layout.fillHeight: true
-            name: "fullscreen"
+            symbol: "fullscreen"
             onClicked: root.overviewClicked()
         }
 

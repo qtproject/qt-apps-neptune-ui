@@ -28,11 +28,11 @@ OTHER_FILES = qmldir
 }
 
 isEmpty(INSTALL_PREFIX) {
-    INSTALL_PREFIX=/opt
+    INSTALL_PREFIX=/opt/neptune
 }
 
 qmldir.files = qmldir
-installPath = $$INSTALL_PREFIX/neptune/imports/shared/$$replace(uri, \\., /)
+installPath = $$INSTALL_PREFIX/imports/shared/$$replace(uri, \\., /)
 qmldir.path = $$installPath
 
 # var, prepend, append
@@ -78,7 +78,7 @@ qm.CONFIG += no_link
 QMAKE_EXTRA_COMPILERS += qm
 
 qmfiles.files = $$prependAll(supportedLocales, $$shadowed($$qmlAppPath/translations)/i18napp_, .qm)
-qmfiles.path = $$INSTALL_PREFIX/neptune/apps/com.theqtcompany.i18ndemo/translations
+qmfiles.path = $$INSTALL_PREFIX/apps/com.theqtcompany.i18ndemo/translations
 qmfiles.CONFIG += no_check_exist
 
 INSTALLS += target qmldir qmfiles

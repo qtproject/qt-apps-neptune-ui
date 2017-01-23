@@ -37,8 +37,8 @@ import utils 1.0
 UIPage {
     id: root
 
-    hspan: 24
-    vspan: 24
+    width: Style.hspan(24)
+    height: Style.vspan(24)
 
     ListModel {
         id: textFieldsModel
@@ -56,7 +56,9 @@ UIPage {
         ListElement { label: "Numbers"; source: "Images/icon_numbers.png"; inputMethodHints: Qt.ImhFormattedNumbersOnly }
         ListElement { label: "Date"; source: "Images/icon_date.png"; inputMethodHints: Qt.ImhDate }
 
-        Component.onCompleted: textFieldsModel.setProperty(8, "inputMethodHints", Qt.ImhNoAutoUppercase | Qt.ImhNoPredictiveText | Qt.ImhSensitiveData | Qt.ImhHiddenText)
+        Component.onCompleted: {
+            textFieldsModel.setProperty(8, "inputMethodHints", Qt.ImhNoAutoUppercase | Qt.ImhNoPredictiveText | Qt.ImhSensitiveData | Qt.ImhHiddenText)
+        }
     }
 
     ListView {
@@ -96,7 +98,7 @@ UIPage {
         id: separatorComponent
 
         HDiv {
-            hspan: 14
+            width: Style.hspan(14)
         }
     }
 

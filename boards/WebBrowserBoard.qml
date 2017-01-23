@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 Pelagicore AG
+** Copyright (C) 2017 Pelagicore AG
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Neptune IVI UI.
@@ -29,7 +29,7 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.1
+import QtQuick 2.6
 import QtQuick.Layouts 1.0
 
 import controls 1.0
@@ -39,7 +39,7 @@ BaseBoard {
     id: root
 
     width: Style.hspan(20)
-    height: Style.hspan(12)
+    height: Style.vspan(12)
 
     title: "WebBrowser Board"
 

@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 Pelagicore AG
+** Copyright (C) 2017 Pelagicore AG
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Neptune IVI UI.
@@ -29,15 +29,17 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.1
+import QtQuick 2.6
 import QtQuick.Layouts 1.0
+import QtQuick.Controls 2.0
+
 import utils 1.0
 import controls 1.0
 
-UIElement {
+Control {
     id: root;
-    hspan: 8
-    vspan: 2
+    width: Style.hspan(8)
+    height: Style.vspan(2)
     property real value // value is read/write.
     property real minimum: 0
     property real maximum: 1
@@ -95,7 +97,7 @@ UIElement {
                     anchors.bottom: parent.bottom
 
                     font.family: Style.fontFamily
-                    fontSize: Style.fontSizeS
+                    font.pixelSize: Style.fontSizeS
                     font.weight: Style.fontWeight
 
                     color: Style.colorWhite
@@ -111,7 +113,7 @@ UIElement {
                     horizontalAlignment: Text.AlignLeft
                     verticalAlignment: Text.AlignBottom
 
-                    fontSize: Style.fontSizeXXS
+                    font.pixelSize: Style.fontSizeXXS
                 }
 
                 Label {
@@ -127,7 +129,7 @@ UIElement {
 
 
                     font.family: Style.fontFamily
-                    fontSize: Style.fontSizeM
+                    font.pixelSize: Style.fontSizeM
                     font.weight: Style.fontWeight
 
                     color: Style.colorWhite
@@ -143,7 +145,7 @@ UIElement {
                     horizontalAlignment: Text.AlignLeft
                     verticalAlignment: Text.AlignBottom
 
-                    fontSize: Style.fontSizeXXS
+                    font.pixelSize: Style.fontSizeXXS
                 }
 
                 Label {
@@ -157,7 +159,7 @@ UIElement {
                     anchors.bottom: parent.bottom
 
                     font.family: Style.fontFamily
-                    fontSize: Style.fontSizeS
+                    font.pixelSize: Style.fontSizeS
                     font.weight: Style.fontWeight
 
                     color: Style.colorWhite
@@ -173,7 +175,7 @@ UIElement {
                     horizontalAlignment: Text.AlignLeft
                     verticalAlignment: Text.AlignBottom
 
-                    fontSize: Style.fontSizeXXS
+                    font.pixelSize: Style.fontSizeXXS
                 }
         }
 

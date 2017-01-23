@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 Pelagicore AG
+** Copyright (C) 2017 Pelagicore AG
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Neptune IVI UI.
@@ -29,7 +29,7 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.1
+import QtQuick 2.6
 
 import controls 1.0
 import utils 1.0
@@ -71,12 +71,12 @@ BaseBoard {
             text: "Settings List Item"
         }
 
-        delegate: SettingsListItem {
-            hspan: 6
-            vspan: 2
-            checkedEnabled: index%2 === 0 ? true : false
-            titleText: index%2 === 0 ? "Settings item with check option": "Settings item without check option"
-            iconName: "tire_pressure"
+        delegate: SettingsItemDelegate {
+            width: Style.hspan(6)
+            height: Style.vspan(2)
+            checkable: index%2 === 0 ? true : false
+            text: index%2 === 0 ? "Settings item with check option": "Settings item without check option"
+            icon: "tire_pressure"
         }
 
     }
@@ -84,7 +84,7 @@ BaseBoard {
     ListViewManager {
         id: listView
         anchors.top: settingsListView.bottom
-        hspan: 11
+        width: Style.hspan(11)
         height: parent.height/3
         model: ListModel {
             ListElement {
@@ -111,8 +111,8 @@ BaseBoard {
         }
 
         delegate: ListItem {
-            hspan: 11
-            vspan: 2
+            width: Style.hspan(11)
+            height: Style.vspan(2)
 
             titleText: "Normal List Item"
             iconName: Style.symbol("tire_pressure", Style.defaultSymbolSize, false)

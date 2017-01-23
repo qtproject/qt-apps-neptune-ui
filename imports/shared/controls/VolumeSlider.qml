@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 Pelagicore AG
+** Copyright (C) 2017 Pelagicore AG
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Neptune IVI UI.
@@ -30,42 +30,34 @@
 ****************************************************************************/
 
 import QtQuick 2.0
+import QtQuick.Controls 2.0
 import utils 1.0
 
-UIElement {
+Slider {
     id: root
-    hspan: 8
-    vspan: 2
+    implicitWidth: Style.hspan(16)
+    implicitHeight: Style.vspan(2)
 
-    property real value;
-    property real minimum: 0;
-    property real maximum: 1;
-
-    function setValue(value) {
-        root.value = value
-        var index = Math.floor(value*view.count)
-        view.currentIndex = index
-    }
-
-
-    Image {
-        anchors.centerIn: parent
-        source: Style.gfx('volume_slider_overlay')
-        opacity: 0.2
-        asynchronous: true
-    }
-
-
-    Item {
-        id: content
-        anchors.fill: parent
-        anchors.margins: Style.padding
+    background: Item {
+        x: root.leftPadding
+        y: root.topPadding + root.availableHeight / 2 - height / 2
+        implicitWidth: Style.hspan(8)
+        implicitHeight: Style.vspan(2)
+        Image {
+            anchors.centerIn: parent
+            source: Style.gfx('volume_slider_overlay')
+            opacity: 0.2
+            asynchronous: true
+        }
         ListView {
             id: view
             anchors.fill: parent
+            anchors.topMargin: Style.paddingXL
+            anchors.bottomMargin: Style.paddingXL
             orientation: Qt.Horizontal
             interactive: false
-            model: 40
+            model: width/12
+            currentIndex: root.position * count
             Behavior on currentIndex { SmoothedAnimation { velocity: view.count*2} }
             delegate: Item {
                 width: view.width/view.count
@@ -85,31 +77,17 @@ UIElement {
                     Behavior on opacity { NumberAnimation {} }
                 }
             }
+            Tracer {}
         }
-
-
-        MouseArea {
-            anchors.fill: view
-            hoverEnabled: false
-            preventStealing: true
-            onClicked: {
-                var item = view.itemAt(mouse.x, mouse.y);
-                if (!item) {
-                    return;
-                }
-                root.setValue(item.entry/(view.count - 1))
-            }
-            onPositionChanged: {
-                var item = view.itemAt(mouse.x, mouse.y);
-                if (!item) {
-                    return;
-                }
-                root.setValue(item.entry/(view.count - 1))
-            }
-        }
+        Tracer {}
     }
 
-    Component.onCompleted: {
-        setValue(root.value)
+    handle: Item {
+        // we need to have a pseudo handle otherwise drag does not work
+        x: root.leftPadding + root.visualPosition * (root.availableWidth - width)
+        y: root.topPadding + root.availableHeight / 2 - height / 2
+        width: Style.hspan(1)
+        height: Style.vspan(2)
+        Tracer {}
     }
 }

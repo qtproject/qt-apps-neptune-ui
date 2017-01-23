@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 Pelagicore AG
+** Copyright (C) 2017 Pelagicore AG
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Neptune IVI UI.
@@ -29,11 +29,13 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.1
+import QtQuick 2.6
+import QtQuick.Controls 2.0
+
 import controls 1.0
 import utils 1.0
 
-UIElement {
+Control {
     id: root
 
     // Number of levels including zero which means 'off'. 7 equals 6 levels + off
@@ -79,8 +81,8 @@ UIElement {
         Behavior on currentIndex { SmoothedAnimation { velocity: view.count*2} }
 
         header: Symbol {
-            hspan: 2
-            vspan: 2
+            width: Style.hspan(2)
+            height: Style.vspan(2)
             name: "fan"
             size: Style.symbolSizeS
             MouseArea {
@@ -90,8 +92,8 @@ UIElement {
         }
 
         footer: Symbol {
-            hspan: 2
-            vspan: 2
+            width: Style.hspan(2)
+            height: Style.vspan(2)
             name: "fan"
             size: Style.symbolSizeM
             MouseArea {

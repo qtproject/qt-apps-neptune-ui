@@ -44,7 +44,11 @@ AppUIScreen {
             id: tabView
             anchors.fill: parent
             tabs: [
-                { title : "Hints", url : Qt.resolvedUrl("HintsPage.qml"), properties : {} },
+                {
+                    title : "Hints",
+                    url : Qt.resolvedUrl("HintsPage.qml"),
+                    properties : {}
+                },
             ]
         }
 

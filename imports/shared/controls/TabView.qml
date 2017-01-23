@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 Pelagicore AG
+** Copyright (C) 2017 Pelagicore AG
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Neptune IVI UI.
@@ -29,83 +29,81 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.1
-import QtQuick.Controls 1.0 as QControls
+import QtQuick 2.6
+import QtQuick.Controls 2.0
 
 import controls 1.0
 import utils 1.0
 
-UIElement {
+Control {
     id: root
 
-    property int currentIndex: 0
+    property alias currentIndex: tabRow.currentIndex
     property alias tabs: repeater.model
-    property real tabWidth: 3
+    property real tabWidth: Style.hspan(4)
+    property real tabHeight: Style.vspan(1)
     property bool horizontalAlignment: true
     property int viewLeftMargin: 0
 
-    Row {
+    TabBar {
         id: tabRow
-
+        anchors.top: parent.top
         anchors.horizontalCenter: root.horizontalAlignment ? parent.horizontalCenter : undefined
-        spacing: 0
-
+        height: root.tabHeight
         Repeater {
             id: repeater
-
-
-            Tab {
-                id: tabTest
+            TabButton {
+                width: Style.hspan(4)
+                height: Style.vspan(1)
                 text: modelData.title
-                selected: root.currentIndex === index
-                hspan: root.tabWidth
-                onClicked: {
-                    if (root.currentIndex === index)
-                        return
-
-                    root.currentIndex = index
-
-                    tabContent.push({item: modelData.url, properties: modelData.properties, replace: true})
-                }
+                onClicked: tabContent.replace(null, modelData.url, modelData.properties)
             }
         }
     }
 
-    QControls.StackView {
+
+    StackView {
         id: tabContent
 
-        anchors.top: tabRow.bottom; anchors.bottom: parent.bottom
-        anchors.left: parent.left; anchors.right: parent.right
+        anchors.top: tabRow.bottom;
+        anchors.bottom: parent.bottom
+        anchors.left: parent.left;
+        anchors.right: parent.right
         anchors.leftMargin: root.viewLeftMargin
 
         clip: true
 
-        initialItem: {"item" : root.tabs[root.currentIndex].url, "properties" : root.tabs[root.currentIndex].properties}
-
-        delegate: QControls.StackViewDelegate {
-
-            function transitionFinished(properties)
-            {
-                properties.exitItem.opacity = 1
-            }
-
-            pushTransition: QControls.StackViewTransition {
-                PropertyAnimation {
-                    target: enterItem
-                    property: "opacity"
-                    from: 0
-                    to: 1
-                    duration: 250
-                }
-
-                PropertyAnimation {
-                    target: exitItem
-                    property: "opacity"
-                    from: 1
-                    to: 0
-                    duration: 250
-                }
-            }
+        Component.onCompleted: {
+            console.log('push initial item for tab view')
+            push(root.tabs[root.currentIndex].url, root.tabs[root.currentIndex].properties)
         }
+
+        // TODO: Replace StackViewDelegate
+
+//        delegate: QControls.StackViewDelegate {
+
+//            function transitionFinished(properties)
+//            {
+//                properties.exitItem.opacity = 1
+//            }
+
+//            pushTransition: QControls.StackViewTransition {
+//                PropertyAnimation {
+//                    target: enterItem
+//                    property: "opacity"
+//                    from: 0
+//                    to: 1
+//                    duration: 250
+//                }
+
+//                PropertyAnimation {
+//                    target: exitItem
+//                    property: "opacity"
+//                    from: 1
+//                    to: 0
+//                    duration: 250
+//                }
+//            }
+//        }
     }
 }

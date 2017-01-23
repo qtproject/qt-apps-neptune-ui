@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 Pelagicore AG
+** Copyright (C) 2017 Pelagicore AG
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Neptune IVI UI.
@@ -29,59 +29,49 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.1
+import QtQuick 2.6
 import QtQuick.Layouts 1.0
-import QtQuick.Controls 1.0
+import QtQuick.Controls 2.0
 import controls 1.0
 import utils 1.0
 
 StackView {
     id: stack
 
-    delegate: StackViewDelegate {
-        function transitionFinished(properties)
-        {
-        }
 
-        pushTransition: StackViewTransition {
-            id: pushTransition
-            property int duration: 400
+    property int pushDuration: 400
+    property int popDuration: 250
 
-
-            PropertyAnimation {
-                target: exitItem
-                property: "x"
-                to: -(2*exitItem.width)
-                duration: pushTransition.duration
-            }
-
-            PropertyAnimation {
-                target: enterItem
-                property: "x"
-                from: 2*enterItem.width
-                to: 0
-                duration: pushTransition.duration
-            }
-        }
-        popTransition: StackViewTransition {
-            id: popTransition
-            property int duration: 250
-
-            PropertyAnimation {
-                target: exitItem
-                property: "x"
-                to: 2*exitItem.width
-                duration: popTransition.duration
-            }
-
-            PropertyAnimation {
-                target: enterItem
-                property: "x"
-                from: -(2*enterItem.width)
-                to: 0
-                duration: popTransition.duration
-            }
+    pushEnter: Transition {
+        XAnimator {
+            from: 2*stack.width
+            to: 0
+            duration: pushDuration
         }
     }
+
+    pushExit: Transition {
+        XAnimator {
+            to: -2*stack.width
+            duration: pushDuration
+        }
+    }
+
+    popEnter: Transition {
+        XAnimator {
+            from: -2*stack.width
+            to: 0
+            duration: popDuration
+        }
+    }
+
+    popExit: Transition {
+        XAnimator {
+            from: 0
+            to: 2*stack.width
+            duration: popDuration
+        }
+    }
+
     Tracer{}
 }

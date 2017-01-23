@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 Pelagicore AG
+** Copyright (C) 2017 Pelagicore AG
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Neptune IVI UI.
@@ -29,7 +29,7 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.1
+import QtQuick 2.6
 import QtQuick.Layouts 1.0
 
 import controls 1.0
@@ -37,6 +37,9 @@ import utils 1.0
 
 import "JSONBackend.js" as JSONBackend
 import QtApplicationManager 1.0
+
+
+// TODO: extract operations into a library, leave UI here. Think about a better name then controller
 
 Item {
     id: root
@@ -90,7 +93,7 @@ Item {
                     id: categoryView
 
                     anchors.left: parent.left; anchors.right: parent.right
-                    vspan: 14
+                    height: Style.vspan(14)
 
                     model: categoriesModel
 

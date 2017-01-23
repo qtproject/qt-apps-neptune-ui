@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 Pelagicore AG
+** Copyright (C) 2017 Pelagicore AG
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Neptune IVI UI.
@@ -29,7 +29,10 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.1
+import QtQml.Models 2.2
+import QtQuick 2.6
+import QtQuick.Controls 2.0
+
 import utils 1.0
 
 import controls 1.0
@@ -38,35 +41,42 @@ import service.settings 1.0
 import models 1.0
 import utils 1.0
 
-UIElement {
+
+Control {
     id: root
+    width: Style.hspan(24)
+    height: Style.vspan(21)
 
     ListViewManager {
-        id: settingsListView
+        id: view
 
         anchors.horizontalCenter: parent.horizontalCenter
-        anchors.top: parent.top; anchors.bottom: parent.bottom
-        hspan: 14
+        anchors.top: parent.top;
+        anchors.bottom: parent.bottom
+        width: Style.hspan(14)
 
-        model: SettingsService.entries
-
-        delegate: SettingsListItem {
-            hspan: settingsListView.hspan
-            vspan: 2
-
-            iconName: model.icon
-            titleText: model.title
-            checked: model.checked
-            hasChildren: model.hasChildren
-            checkedEnabled: (titleText === "SYSTEM MONITOR") ? false : true
-            onClicked: {
-                if ( titleText === "METRIC SYSTEM") {
-                    if (checked)
-                        SettingsService.unitSystem = "imp_us"
-                    else
-                        SettingsService.unitSystem = "metric"
+        model: ObjectModel {
+            SettingsItemDelegate {
+                text: "USER PROFILE"; icon: "profile"; checked: true; hasChildren: true
+            }
+            SettingsItemDelegate {
+                text: "SERVICE & SUPPORT"; icon: "service"; checkable: false
+            }
+            SettingsItemDelegate {
+                text: "TRAFFIC INFORMATION"; icon: "warning"; checked: true; hasChildren: true
+            }
+            SettingsItemDelegate {
+                text: "METRIC SYSTEM"; icon: "fees"; checked: true
+                onClicked: {
+                    SettingsService.unitSystem = checked? "imp_us" : "metric";
                 }
-                else if (titleText === "SYSTEM MONITOR") {
+            }
+            SettingsItemDelegate {
+                text: "APP UPDATES"; icon: "updates"; checked: true; hasChildren: true
+            }
+            SettingsItemDelegate {
+                text: "SYSTEM MONITOR"; icon: "insurance"; checkable: false; hasChildren: true
+                onClicked: {
                     systemMonitorLoader.active = true
                     ApplicationManagerInterface.applicationSurfaceReady(systemMonitorLoader.item, false)
                 }
@@ -74,17 +84,14 @@ UIElement {
         }
     }
 
-    Image {
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.bottom: parent.bottom
-        source: Style.icon('cloud_bottom_shadow')
-        asynchronous: true
-        visible: false
-    }
 
+    // TODO: Fix this relative loading. E.g. do not use '..' in paths here
     Loader {
         id: systemMonitorLoader
         active: false
-        source: "../../dev/SystemMonitor/MainScreen.qml"
+        source: Qt.resolvedUrl("../../dev/SystemMonitor/MainScreen.qml")
     }
+
+    Tracer {}
+
 }

@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 Pelagicore AG
+** Copyright (C) 2017 Pelagicore AG
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Neptune IVI UI.
@@ -29,7 +29,7 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.1
+import QtQuick 2.6
 import QtQuick.Layouts 1.0
 
 import controls 1.0
@@ -40,24 +40,23 @@ import QtApplicationManager 1.0
 
 UIPage {
     id: root
-    hspan: 24
-    vspan: 21
-
-    title: qsTr("App Launcher")
-    symbolName: "apps"
 
     signal updateApp()
 
+    header: AppInfoPanel {
+        Layout.fillWidth: true
+        Layout.preferredHeight: Style.vspan(2)
+        title: 'App Launcher'
+        symbolName: 'apps'
+    }
+
     GridView {
         id: view
+        anchors.fill: parent
 
         property bool editMode: false
-        property int columns: root.width/Style.hspan(4)
+        property int columns: root.width/cellWidth
 
-        anchors.top: parent.top
-        anchors.topMargin: Style.vspan(3)
-        anchors.bottom: parent.bottom
-        anchors.horizontalCenter: parent.horizontalCenter
         width: cellWidth*columns
 
         clip: true

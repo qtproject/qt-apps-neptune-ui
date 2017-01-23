@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 Pelagicore AG
+** Copyright (C) 2017 Pelagicore AG
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Neptune IVI UI.
@@ -29,17 +29,18 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.1
+import QtQuick 2.6
 import QtQuick.Layouts 1.0
+import QtQuick.Controls 2.0
 
 import controls 1.0
 import utils 1.0
 import "."
 
-UIElement {
+Control {
     id: root
-    hspan: 6
-    vspan: 3
+    width: Style.hspan(6)
+    height: Style.vspan(3)
 
     readonly property real minFrequency: RadioProvider.minimumFrequency * 0.000001
     readonly property real maxFrequency: RadioProvider.maximumFrequency * 0.000001
@@ -69,7 +70,7 @@ UIElement {
 
             Rectangle {
                 width: 2
-                height: Style.cellHeight * 2.3
+                height: Style.vspan(2.3)
                 color: '#E61123'
                 opacity: 0.6
             }
@@ -77,7 +78,7 @@ UIElement {
 
         ListView {
             id: view
-            height: Style.cellHeight * 2
+            height: Style.vspan(2)
             anchors.left: parent.left
             anchors.right: parent.right
             anchors.bottom: parent.bottom

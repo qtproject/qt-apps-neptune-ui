@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 Pelagicore AG
+** Copyright (C) 2017 Pelagicore AG
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Neptune IVI UI.
@@ -29,25 +29,38 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.1
+import QtQuick 2.6
 
 import controls 1.0
 import utils 1.0
+import QtQuick.Controls 2.0
+import QtQuick.Layouts 1.3
 
 UIPage {
     id: root
-    hspan: 24
-    vspan: 24
+    width: Style.hspan(24)
+    height: Style.vspan(24)
 
-    title: "MY CLOUD"
-    symbolName: "my_cloud"
+    header: AppInfoPanel {
+        Layout.fillWidth: true
+        Layout.preferredHeight: Style.vspan(2)
+        title: 'MY CLOUD'
+        symbolName: 'my_cloud'
+    }
 
     TabView {
-        id: tabView
         anchors.fill: parent
         tabs: [
-            { title : "SETTINGS", url : Qt.resolvedUrl("Settings/SettingsScreen.qml"), properties : {} },
-            { title : "APP STORE", url : Qt.resolvedUrl("Store/StoreScreen.qml"), properties : {} },
+            {
+                title : "SETTINGS",
+                url : Qt.resolvedUrl("Settings/SettingsScreen.qml"),
+                properties : {}
+            },
+            {
+                title : "APP STORE",
+                url : Qt.resolvedUrl("Store/StoreScreen.qml"),
+                properties : {}
+            },
         ]
     }
 }

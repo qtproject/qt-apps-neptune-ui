@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 Pelagicore AG
+** Copyright (C) 2017 Pelagicore AG
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Neptune IVI UI.
@@ -30,7 +30,7 @@
 ****************************************************************************/
 
 pragma Singleton
-import QtQuick 2.1
+import QtQuick 2.6
 
 QtObject {
     id: root
@@ -40,7 +40,7 @@ QtObject {
     property bool metric: unitSystem === "metric"
 
     property ListModel entries: ListModel {
-        ListElement { title: "USER PROFILE"; icon: "profile"; checked: true; hasChildren: true }
+        ListElement { title: "USER PROFILE"; icon: "profile"; checked: true; hasChildren: true; hasCheck: true }
         ListElement { title: "SERVICE & SUPPORT"; icon: "service"; checked: false; hasChildren: false }
         ListElement { title: "TRAFFIC INFORMATION"; icon: "warning"; checked: true; hasChildren: true }
         ListElement { title: "TOLL & CONGESTION FEES"; icon: "toll"; checked: false; hasChildren: true }

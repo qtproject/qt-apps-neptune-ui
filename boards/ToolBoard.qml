@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 Pelagicore AG
+** Copyright (C) 2017 Pelagicore AG
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Neptune IVI UI.
@@ -29,7 +29,7 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.1
+import QtQuick 2.6
 
 import controls 1.0
 import utils 1.0
@@ -43,32 +43,32 @@ BaseBoard {
         spacing: 50
 
         Tool {
-            name: "music"
+            symbol: "music"
             size: 32
         }
 
         Tool {
-            name: "music"
+            symbol: "music"
             size: 48
         }
 
         Tool {
-            name: "music"
+            symbol: "music"
             size: 72
         }
 
         Tool {
-            name: "music"
+            symbol: "music"
             size: 96
         }
 
         Tool {
-            name: "music"
+            symbol: "music"
             size: 144
         }
 
         Tool {
-            name: "music"
+            symbol: "music"
             size: 192
         }
     }

@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 Pelagicore AG
+** Copyright (C) 2017 Pelagicore AG
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Neptune IVI UI.
@@ -29,40 +29,14 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.1
+import QtQuick 2.6
+import QtQuick.Controls 2.0
 
 import utils 1.0
 
-UIElement {
+ListView {
     id: root
-
-    property alias delegate: listView.delegate
-    property alias model: listView.model
-    property alias currentIndex: listView.currentIndex
-    property alias header: listView.header
-    property bool scrollVisible: false
-    property bool interactive: true
-
-    ListView {
-        id: listView
-
-        anchors.fill: parent
-        anchors.rightMargin: root.scrollVisible ? 5 : 0
-        highlightRangeMode: root.scrollVisible ? ListView.StrictlyEnforceRange : ListView.NoHighlightRange
-        clip: true
-        interactive: root.interactive
-        currentIndex: root.scrollVisible ? sliderCOntainer.position*model.count : 0
-    }
-
-    ScrollIndicator {
-        id: sliderCOntainer
-        width: 5
-        height: listView.height
-        anchors.right: parent.right
-        anchors.top: parent.top
-        visible: root.scrollVisible
-
-        givenPosition: (listView.currentIndex/listView.model.count) * listView.height // 0.0 up to 1.0
-        scrollerSize: listView.height/listView.model.count + 100
-    }
+    clip: true
+    ScrollBar.vertical: ScrollBar { }
 }
+

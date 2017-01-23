@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 Pelagicore AG
+** Copyright (C) 2017 Pelagicore AG
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Neptune IVI UI.
@@ -29,13 +29,15 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.1
+import QtQuick 2.6
+import QtQuick.Controls 2.0
+
 import utils 1.0
 
-UIElement {
+Control {
     id: root
-    hspan: 2
-    vspan: 2
+    implicitWidth: Style.hspan(2)
+    implicitHeight: Style.vspan(2)
 
     property string source
     property bool fit: false
@@ -48,6 +50,7 @@ UIElement {
         source: root.source ? root.source : ""
         opacity: root.enabled ? 1.0 : 0.5
         asynchronous: true
+        antialiasing: true
         fillMode: root.fit ? Image.PreserveAspectFit : Image.Pad
         Behavior on opacity { NumberAnimation { duration: 250 } }
     }

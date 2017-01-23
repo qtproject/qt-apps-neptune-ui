@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 Pelagicore AG
+** Copyright (C) 2017 Pelagicore AG
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Neptune IVI UI.
@@ -29,13 +29,17 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.1
+import QtQuick 2.6
 import QtQuick.Layouts 1.0
+import QtQuick.Controls 2.0
 
 import controls 1.0
 import utils 1.0
 
-UIElement {
+// TODO: Convert to use QQC2 ItemDelegate
+// TODO: Convert to use RowLayout
+// TODO: Remove this as it is never used
+Control {
     id: root
 
     property alias iconName: image.source
@@ -50,27 +54,27 @@ UIElement {
         Icon {
             id: image
 
-            hspan: 2
-            vspan: 2
+            width: Style.hspan(2)
+            height: Style.vspan(2)
             opacity: 0.6
         }
 
         Label {
             id: titleLabel
 
-            hspan: 8; vspan: 2
+            width: Style.hspan(8); height: Style.vspan(2)
         }
 
         Icon {
             id: childIndicator
 
-            hspan: 1; vspan: 2
+            width: Style.hspan(1); height: Style.vspan(2)
             source: Style.icon("cloud_arrow")
         }
     }
 
     Divider {
-        hspan: parent.hspan
+        width: parent.width
         anchors.bottom: parent.bottom
         anchors.bottomMargin: -5
     }

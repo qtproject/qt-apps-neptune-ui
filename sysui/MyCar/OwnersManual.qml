@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 Pelagicore AG
+** Copyright (C) 2017 Pelagicore AG
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Neptune IVI UI.
@@ -29,16 +29,16 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.1
+import QtQuick 2.6
 import QtQuick.Layouts 1.0
 import controls 1.0
 import utils 1.0
 
-UIElement {
+UIPage {
     id: root
 
-    hspan: 18
-    vspan: 24
+//    width: Style.hspan(24)
+//    height: Style.vspan(24)
 
     ListViewManager {
         id: settingsListView
@@ -46,7 +46,7 @@ UIElement {
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: parent.top
         anchors.topMargin: Style.vspan(1)
-        hspan: 12
+        width: Style.hspan(12)
         height: parent.height
 
         model: ListModel {
@@ -59,12 +59,12 @@ UIElement {
             ListElement { title: "Overhead control panel" }
         }
 
-        delegate: SettingsListItem {
-            hspan: settingsListView.hspan
-            vspan: 2
-            checkedEnabled: false
-            iconName: "information"
-            titleText: model.title
+        delegate: SettingsItemDelegate {
+            width: settingsListView.width
+            height: Style.vspan(2)
+            checkable: false
+            icon: "information"
+            text: model.title
         }
     }
 }

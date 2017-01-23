@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 Pelagicore AG
+** Copyright (C) 2017 Pelagicore AG
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Neptune IVI UI.
@@ -35,8 +35,8 @@ import utils 1.0
 
 Item {
     id: root
-    width: Style.cellWidth*12
-    height: Style.cellHeight*24
+    width: Style.hspan(12)
+    height: Style.vspan(24)
     property alias title: label.text
 
     default property alias content: content.children

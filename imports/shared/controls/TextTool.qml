@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 Pelagicore AG
+** Copyright (C) 2017 Pelagicore AG
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Neptune IVI UI.
@@ -30,13 +30,14 @@
 ****************************************************************************/
 
 import QtQuick 2.0
+import QtQuick.Controls 2.0
 import controls 1.0
 import utils 1.0
 
-UIElement {
+Control {
     id: root
-    hspan: 1
-    vspan: 2
+    width: Style.hspan(1)
+    height: Style.vspan(2)
     property alias name: icon.name
     property bool active
     property alias size: icon.size
@@ -56,9 +57,9 @@ UIElement {
         opacity: 0.5
     }
 
-    UIElement {
-        hspan: parent.hspan
-        vspan: icon.vspan + label.vspan
+    Control {
+        width: root.width
+        height: icon.height + label.height
         anchors.centerIn: parent
 
         Symbol {

@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 Pelagicore AG
+** Copyright (C) 2017 Pelagicore AG
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Neptune IVI UI.
@@ -30,33 +30,30 @@
 ****************************************************************************/
 
 import QtQuick 2.0
+import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.0
 import utils 1.0
 
-UIElement {
+Control {
     id: root
 
     property string timeFormat: "hh:mm"
     property var currentDate: new Date()
 
-    hspan: 3
-    vspan: 2
+    width: Style.hspan(3)
+    height: Style.vspan(2)
 
     RowLayout {
         anchors.top: parent.top
         anchors.right: parent.right
         spacing: Style.padding
 
-        Text {
+        Label {
             id: clock
             Layout.preferredHeight: root.height
             verticalAlignment: Text.AlignVCenter
 
-            font.family: Style.fontFamily
-            font.weight: Font.Light
-            font.pixelSize: Style.fontSizeXXL
-
-            color: Style.colorWhite
+            font.pixelSize: Style.fontSizeXL
 
             text: Qt.formatTime(root.currentDate, root.timeFormat)
         }
