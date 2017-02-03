@@ -1,6 +1,6 @@
 project = NeptuneUI
 version = $QT_VERSION
-url     = http://doc.qt.io/neptuneui
+url     = http://doc.qt.io/NeptuneUI
 
 sourcedirs += src
 

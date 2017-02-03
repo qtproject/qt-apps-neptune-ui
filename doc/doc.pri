@@ -1,7 +1,6 @@
 isEmpty(VERSION): VERSION=1.0.0
 build_online_docs: {
-    QMAKE_DOCS_TARGETDIR = html
-    QMAKE_DOCS = $$PWD/neptune-ui-online.qdocconf
+    QMAKE_DOCS = $$PWD/online/neptune-ui.qdocconf
 } else {
     QMAKE_DOCS = $$PWD/neptune-ui.qdocconf
 }

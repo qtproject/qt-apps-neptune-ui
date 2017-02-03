@@ -1,8 +1,9 @@
+include($QT_INSTALL_DOCS/global/qt-module-defaults-online.qdocconf)
 
 HTML.footer = \
     "   </div>\n" \
     "   <p class=\"copy-notice\">\n" \
-    "   <acronym title=\"Copyright\">&copy;</acronym> 2016 Pelagicore AG.\n" \
+    "   <acronym title=\"Copyright\">&copy;</acronym> 2017 Pelagicore AG.\n" \
     "   Documentation contributions included herein are the copyrights of\n" \
     "   their respective owners. " \
     "   The documentation provided herein is licensed under the terms of the" \
@@ -12,9 +13,14 @@ HTML.footer = \
     "   in Finland and/or other countries worldwide. All other trademarks are property\n" \
     "   of their respective owners. </p>\n"
 
-include($QT_INSTALL_DOCS/global/qt-module-defaults-online.qdocconf)
+# online site footer
+include($QT_INSTALL_DOCS/global/html-footer-online.qdocconf)
 
 # Add an .html file with sidebar content, used in the online style
-HTML.stylesheets               += style/qt5-sidebar.html
+#HTML.stylesheets               += style/qt5-sidebar.html
 
-include(neptune-ui-project.qdocconf)
+# override defaults for Qt module documentation
+HTML.nosubdirs = "false"
+HTML.outputsubdir = "neptune-ui"
+
+include(../neptune-ui-project.qdocconf)
