@@ -21,6 +21,6 @@ include($QT_INSTALL_DOCS/global/html-footer-online.qdocconf)
 
 # override defaults for Qt module documentation
 HTML.nosubdirs = "false"
-HTML.outputsubdir = "neptune-ui"
+HTML.outputsubdir = "neptuneui"
 
-include(../neptune-ui-project.qdocconf)
+include(../neptuneui-project.qdocconf)
