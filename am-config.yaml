@@ -4,25 +4,25 @@ formatType: am-configuration
 # basic AM functionality - the builtin apps are in 'apps'.
 
 applications:
-  builtinAppsManifestDir: "apps"
+  builtinAppsManifestDir: "${CONFIG_PWD}/apps"
 
 # QML apps will be able to import from modules...
 
 runtimes:
   qml:
-    importPaths: [ "imports/shared" ]
+    importPaths: [ "${CONFIG_PWD}/imports/shared" ]
 
 # ... as well as the SystemUI
 
 ui:
   fullscreen: yes
-  mainQml: "Main.qml"
-  importPaths: [ "imports/shared", "imports/system" ]
+  mainQml: "${CONFIG_PWD}/Main.qml"
+  importPaths: [ "${CONFIG_PWD}/imports/shared", "${CONFIG_PWD}/imports/system" ]
   additionalConfiguration:
     appStoreServerUrl: 'http://chaos.pelagicore.net:8080'
     styleConfig: "auto"
     showCluster: yes
-  windowIcon: "imports/shared/assets/icons/active/apps@96.png"
+  windowIcon: "${CONFIG_PWD}/imports/shared/assets/icons/active/apps@96.png"
 
 # development setup: no security
 
