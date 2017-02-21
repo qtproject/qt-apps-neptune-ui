@@ -146,6 +146,8 @@ StackView {
         if (root.busy)
             root.completeTransition()
 
+        item.state = "closing"
+
         if (item == root.currentItem) {
             var stackItem = null;
             if (root.depth > 2)

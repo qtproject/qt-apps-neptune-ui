@@ -31,6 +31,8 @@
 
 import QtQuick 2.1
 import QtGraphicalEffects 1.0
+import QtIvi.VehicleFunctions 1.0
+import service.climate 1.0
 import utils 1.0
 
 UIElement {
@@ -42,19 +44,22 @@ UIElement {
     PathView {
         id: view
 
+        property int directions: ClimateService.airflowDirections.directions
+        property var availableDirections: ClimateService.airflowDirections.availableDirections
+
+        // currentIndex is updated by dragging items around *and* by explicitly setting it from
+        // an onClicked() handler, so keeping all the bindings working is tricky. This works.
+        onDirectionsChanged: currentIndex = availableDirections.indexOf(directions)
+        Component.onCompleted: currentIndex = availableDirections.indexOf(directions)
+        onCurrentIndexChanged: ClimateService.airflowDirections.directions = availableDirections[currentIndex]
+
         width: Style.hspan(6)
         height: Style.vspan(3)
         anchors.centerIn: parent
 
         clip: true
 
-        currentIndex: 1
-
-        model: ListModel {
-            ListElement { up: 1; down: 0 }
-            ListElement { up: 0; down: 1 }
-            ListElement { up: 1; down: 1 }
-        }
+        model: availableDirections
 
         snapMode: PathView.SnapOneItem
         preferredHighlightBegin: 0.5
@@ -70,7 +75,7 @@ UIElement {
                 anchors.horizontalCenterOffset: -Style.padding
                 source: Style.symbolXS("arrow")
                 rotation: 90
-                visible: model.up
+                visible: view.availableDirections[index] & ClimateControl.Dashboard
             }
 
             Image {
@@ -87,7 +92,7 @@ UIElement {
                 anchors.verticalCenterOffset: 12
                 source: Style.symbolXS("arrow")
                 rotation: 90
-                visible: model.down
+                visible: view.availableDirections[index] & ClimateControl.Floor
             }
 
             MouseArea {

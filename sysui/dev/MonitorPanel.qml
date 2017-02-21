@@ -78,7 +78,7 @@ Item {
 
         Row {
             id: dottedLine
-            y: root.middleLine * root.graphHeight
+            y: root.graphHeight - (root.middleLine * root.graphHeight)
             spacing: 4
 
             Repeater {

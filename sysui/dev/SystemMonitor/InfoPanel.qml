@@ -71,7 +71,7 @@ UIPage {
             vspan: 2
             checkedEnabled: false
             iconName: "information"
-            titleText: "Idle load average: " + SystemMonitor.idleLoadAverage
+            titleText: "Idle load threshold: " + SystemMonitor.idleLoadThreshold
         }
 
     }
