@@ -73,17 +73,17 @@ QtObject {
     }
 
     function windowReadyHandler(index, item) {
-        print(":::LaunchController::: WindowManager:windowReadyHandler", index, item)
-        var isInWidgetState = (WindowManager.windowProperty(item, "windowType") === "widgetMap")
-        print(":::LaunchController:::isWidget", isInWidgetState)
+        var isMapWidget = (WindowManager.windowProperty(item, "windowType") === "widgetMap")
         var isClusterWidget = (WindowManager.windowProperty(item, "windowType") === "clusterWidget")
-        print(":::LaunchController:::isClusterWidget", isClusterWidget)
+
+        print("AMI.windowReadyHandler: index:" + index + ", item:" + item + ", map:"
+              + (isMapWidget ? "yes" : "no") + ", cluster:" + (isClusterWidget ? "yes" : "no"))
 
         var acceptWindow = true;
         var appID = WindowManager.get(index).applicationId;
         var isMinimized = false;
 
-        if (isInWidgetState) {
+        if (isMapWidget) {
             windowTypes[item] = "widget"
             if (ApplicationManager.get(appID).categories[0] === "navigation") {
                 root.mapWidget = item
@@ -127,12 +127,11 @@ QtObject {
             root.applicationSurfaceReady(item, isMinimized)
         } else {
             root.unhandledSurfaceReceived(item)
-            console.error("window was not accepted: ", item)
+            console.error("AMI.windowReadyHandler: window was not accepted: ", item)
         }
     }
 
     function windowPropertyChanged(window, name, value) {
-        //print(":::LaunchController::: WindowManager:windowPropertyChanged", window, name, value)
         if (name === "visibility" && value === false ) {
             root.releaseApplicationSurface(window)
         }
@@ -174,18 +173,16 @@ QtObject {
     }
 
     function applicationActivated(appId, appAliasId) {
-        print(":::LaunchController::: WindowManager:raiseApplicaitonWindow" + appId + " " + WindowManager.count)
+        print("AMI.applicationActivated: appId:" + appId + ", appAliasId:" + appAliasId)
         root.activeAppId = appId
         for (var i = 0; i < WindowManager.count; i++) {
             if (!WindowManager.get(i).isClosing && WindowManager.get(i).applicationId === appId) {
                 var item = WindowManager.get(i).windowItem
-                print(":::LaunchController::: App found. Running the app " + appId + " Item: " + item)
-                var isWidget = (WindowManager.windowProperty(item, "windowType") === "widget")
                 var isMapWidget = (WindowManager.windowProperty(item, "windowType") === "widgetMap")
                 var isClusterWidget = (WindowManager.windowProperty(item, "windowType") === "clusterWidget")
 
-                print(":::LaunchController:::isClusterWidget", isClusterWidget)
-                print(":::LaunchController:::isWidget", isWidget, isMapWidget)
+                print("AMI.applicationActivated: appId:" + appId + " found item:" + item + ", map:"
+                      + (isMapWidget ? "yes" : "no") + ", cluster:" + (isClusterWidget ? "yes" : "no"))
 
                 if (!isMapWidget && !isClusterWidget) {
                     if (windowTypes[item] === "minimized")
