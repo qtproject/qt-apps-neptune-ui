@@ -1,0 +1,13 @@
+formatVersion: 1
+formatType: am-application
+---
+id:      'com.pelagicore.nestedwayland'
+icon:    'icon.png'
+code:    'main.qml'
+runtime: 'qml'
+name:
+  en: 'Nested Compositor'
+
+categories: [ 'app' ]
+
+built-in: yes
