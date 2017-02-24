@@ -23,8 +23,12 @@ OTHER_FILES = qmldir
     PRE_TARGETDEPS += $$copy_qmldir.target
 }
 
+isEmpty(INSTALL_PREFIX) {
+    INSTALL_PREFIX=/opt
+}
+
 qmldir.files = qmldir
-installPath = $$[QT_INSTALL_QML]/$$replace(uri, \\., /)
+installPath = $$INSTALL_PREFIX/neptune/imports/shared/$$replace(uri, \\., /)
 qmldir.path = $$installPath
 target.path = $$installPath
 INSTALLS += target qmldir
