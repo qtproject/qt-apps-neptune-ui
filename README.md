@@ -1,6 +1,6 @@
 # Prerequisite
 
-Qt >= 5.5
+Qt >= 5.6
 QtIvi
 Unix system
 Application Manager
@@ -24,17 +24,16 @@ qmlscene/qmllive - have been moved to the application-manager repository.
 
 # Build
 
-* Build and install screenmanager qml plugin
-
-        $ cd plugins/screenmanager
+* Build and install neptune-ui
 
         $ qmake && make && make install
 
-* Build and install datasource qml plugin
+This will build all neptune-ui plugins and installs the complete neptune-ui to /opt/neptune
+To define the install location of neptune you can use the INSTALL_PREFIX config variable:
 
-        $ cd plugins/datasource
+        $ qmake INSTALL_PREFIX=$$PWD/install && make && make install
 
-        $ qmake && make && make install
+This will install all qml files and plugins into the neptune subfolder of $$PWD/install
 
 * Run scripts within the plugins/scripts folder to scan the media on the system
 
