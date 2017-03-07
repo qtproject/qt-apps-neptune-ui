@@ -164,11 +164,14 @@
       fullscreen: yes
       mainQml: "Main.qml"
       importPaths: [ "imports/shared", "imports/system" ]
-      additionalConfiguration:
-        appStoreServerUrl: 'http://chaos.pelagicore.net:8080'
-        styleConfig: "auto"
-        showCluster: yes
       windowIcon: "imports/shared/assets/icons/active/apps@96.png"
+
+    systemProperties:
+      public:
+        styleConfig: "Config1920x1080.qml"
+        showCluster: yes
+      private:
+        appStoreServerUrl: 'http://chaos.pelagicore.net:8080'
 
     # development setup: no security
 

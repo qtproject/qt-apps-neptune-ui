@@ -37,7 +37,7 @@ Item {
 
     property bool serverOnline: false
     property string serverReason
-    property string server: ApplicationManager.additionalConfiguration.appStoreServerUrl
+    property string server: ApplicationManager.systemProperties.appStoreServerUrl
 
     signal loginSuccessful()
 

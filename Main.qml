@@ -41,7 +41,7 @@ import utils 1.0
 Rectangle {
     id: root
 
-    property bool showClusterIfPossible: ApplicationManager.additionalConfiguration.showCluster
+    property bool showClusterIfPossible: ApplicationManager.systemProperties.showCluster
     property var cluster
 
     color: "black"
