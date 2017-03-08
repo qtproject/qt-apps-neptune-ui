@@ -48,10 +48,6 @@ AppUIScreen {
         }
     }
 
-    onRaiseApp: {
-        MusicProvider.initialize()
-    }
-
     cluster: ClusterWidget {}
 
 

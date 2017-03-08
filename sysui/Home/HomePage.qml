@@ -34,7 +34,6 @@ import QtQuick.Layouts 1.0
 
 import controls 1.0
 import utils 1.0
-import service.music 1.0
 import QtApplicationManager 1.0
 
 UIPage {
@@ -58,7 +57,7 @@ UIPage {
         width: root.width/2 - Style.hspan(1)
 
         onShowFullscreen: {
-            ApplicationManager.startApplication(MusicService.defaultMusicApp)
+            ApplicationManager.startApplication("com.pelagicore.music")
         }
     }
 

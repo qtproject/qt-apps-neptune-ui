@@ -94,9 +94,11 @@ Control {
         nowPlaying: true
     }
 
-    LibraryList {
+    Component {
         id: library
-        visible: false
+        LibraryList {
+            visible: false
+        }
     }
 }
 

@@ -34,7 +34,6 @@ import QtQuick.Layouts 1.0
 import QtQuick.Controls 2.0
 import controls 1.0
 import utils 1.0
-import service.music 1.0
 import "."
 
 UIScreen {
@@ -62,12 +61,7 @@ UIScreen {
             Tool {
                 Layout.preferredWidth: Style.hspan(2)
                 symbol: 'prev'
-                onClicked: {
-                    if (MusicProvider.currentIndex === 0)
-                        MusicProvider.currentIndex = MusicProvider.count - 1
-                    else
-                        MusicProvider.currentIndex --
-                }
+                onClicked: { MusicProvider.previous() }
             }
 
             TrackSwipeView {
@@ -75,17 +69,16 @@ UIScreen {
 
                 Layout.preferredWidth: Style.hspan(6)
                 Layout.preferredHeight: Style.vspan(12)
-
-                model: MusicProvider.nowPlaying.model
+                model: MusicProvider.nowPlaying
 
                 currentIndex: MusicProvider.currentIndex
 
                 delegate: CoverItem {
                     z: PathView.z
                     scale: PathView.scale
-                    source: MusicProvider.coverPath(model.cover)
-                    title: model.title
-                    subTitle: model.artist
+                    source: model.item.coverArtUrl
+                    title: model.item.title
+                    subTitle: model.item.artist
                     onClicked: {
                         root.showAlbums()
                     }
@@ -96,12 +89,7 @@ UIScreen {
             Tool {
                 Layout.preferredWidth: Style.hspan(2)
                 symbol: 'next'
-                onClicked: {
-                    if (MusicProvider.currentIndex === MusicProvider.count - 1)
-                        MusicProvider.currentIndex = 0
-                    else
-                        MusicProvider.currentIndex ++
-                }
+                onClicked: { MusicProvider.next() }
             }
         }
 
@@ -111,28 +99,27 @@ UIScreen {
 
             Label {
                 Layout.preferredWidth: Style.hspan(1)
-                text: MusicService.currentTime
-                font.pixelSize: Style.fontSizeS
+                text: MusicProvider.currentTime
             }
 
             Slider {
                 id: slider
                 Layout.preferredWidth: Style.hspan(9)
-                value: MusicService.position
+                value: MusicProvider.position
                 from: 0.00
-                to: MusicService.duration
+                to: MusicProvider.duration
                 Layout.preferredHeight: Style.vspan(1)
                 function valueToString() {
                     return Math.floor(value/60000) + ':' + Math.floor((value/1000)%60)
                 }
                 onValueChanged: {
-                    MusicService.seek(value)
+                    MusicProvider.position = value
                 }
             }
 
             Label {
                 Layout.preferredWidth: Style.hspan(1)
-                text: MusicService.durationTime
+                text: MusicProvider.durationTime
                 font.pixelSize: Style.fontSizeS
             }
         }
@@ -149,8 +136,8 @@ UIScreen {
             Spacer { Layout.preferredWidth: Style.hspan(2) }
             Tool {
                 Layout.preferredWidth: Style.hspan(2)
-                symbol: MusicService.playing?'pause':'play'
-                onClicked: MusicService.togglePlay()
+                symbol: MusicProvider.playing?'pause':'play'
+                onClicked: MusicProvider.togglePlay()
             }
             Spacer { Layout.preferredWidth: Style.hspan(2) }
             Tool {
@@ -169,19 +156,20 @@ UIScreen {
                 name: 'speaker'
             }
             VolumeSlider {
+                id: volumeSlider
                 Layout.preferredWidth: Style.hspan(8)
                 Layout.preferredHeight: Style.vspan(2)
                 anchors.horizontalCenter: parent.horizontalCenter
-                value: MusicService.volume
-                onValueChanged: {
-                    MusicService.volume = value
-                }
+                value: 1 //MusicService.volume
+//                onValueChanged: {
+//                    MusicService.volume = value
+//                }
             }
             Label {
                 Layout.preferredWidth: Style.hspan(1)
                 horizontalAlignment: Text.AlignHCenter
                 height: Style.vspan(2)
-                text: Math.floor(MusicService.volume*100)
+                text: Math.floor(volumeSlider.value*100)
             }
         }
         Spacer {
@@ -250,8 +238,6 @@ UIScreen {
 
         onClicked: root.libraryVisible = true
     }
-
-    Component.onCompleted: MusicProvider.selectRandomTracks()
 
     states: State {
         name: "libaryMode"; when: root.libraryVisible

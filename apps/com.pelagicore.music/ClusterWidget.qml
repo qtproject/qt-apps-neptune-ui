@@ -47,7 +47,7 @@ Item {
         height: parent.height
         anchors.centerIn: parent
         clip: true
-        model: MusicProvider.nowPlaying.model
+        model: MusicProvider.nowPlaying
         currentIndex: MusicProvider.currentIndex
         highlight: Rectangle {
             color: Style.colorWhite; opacity: 0.25
@@ -83,7 +83,7 @@ Item {
                             anchors.centerIn: parent
                             height: parent.height
                             width: parent.height
-                            source: MusicProvider.coverPath(model.cover)
+                            source: model.item.coverArtUrl
                             fillMode: Image.PreserveAspectCrop
                             asynchronous: true
                         }
@@ -92,14 +92,14 @@ Item {
                 ColumnLayout {
                     spacing: 0
                     Label {
-                        text: model.title
+                        text: model.item.title
                         font.pixelSize: Style.fontSizeXS
                         opacity: 0.5
                         elide: Text.ElideRight
                         Layout.fillWidth: true
                     }
                     Label {
-                        text: model.artist
+                        text: model.item.artist
                         font.pixelSize: Style.fontSizeS
                         Layout.fillWidth: true
                         elide: Text.ElideRight

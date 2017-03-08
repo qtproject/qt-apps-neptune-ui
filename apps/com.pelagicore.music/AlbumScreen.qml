@@ -48,7 +48,7 @@ UIScreen {
         anchors.left: parent.left
         anchors.right: parent.right
         height: Style.vspan(12)
-        model: MusicProvider.nowPlaying.model
+        model: MusicProvider.nowPlaying
         pathItemCount: 5
         currentIndex: MusicProvider.currentIndex
         path: Path {
@@ -64,9 +64,9 @@ UIScreen {
         preferredHighlightEnd: 0.5
 
         delegate: CoverItem {
-            source: MusicProvider.coverPath(model.cover)
-            title: model.title
-            subTitle: model.artist
+            source: model.item.coverArtUrl
+            title: model.item.title
+            subTitle: model.item.artist
             onClicked: {
                 MusicProvider.currentIndex = index
                 root.backScreen()

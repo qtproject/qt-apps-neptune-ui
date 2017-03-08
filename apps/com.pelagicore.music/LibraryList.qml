@@ -32,10 +32,10 @@
 import QtQuick 2.6
 import QtQuick.Layouts 1.0
 import QtQuick.Controls 2.0
+import QtIvi 1.0
 
 import controls 1.0
 import utils 1.0
-import service.music 1.0
 import "."
 
 Control {
@@ -45,14 +45,19 @@ Control {
 
     property string type: ""
     property bool nowPlaying: false
+    property SearchAndBrowseModel model: SearchAndBrowseModel {
+        contentType: ""
+        onContentTypeChanged: print("CONTENT TYPE CHANGE: ", contentType)
+        serviceObject: MusicProvider.player.serviceObject
+    }
 
     onTypeChanged: {
         if (type === "songs")
-            MusicProvider.querySongs()
+            model.contentType = "track"
         else if (type === "artists")
-            MusicProvider.queryArtists()
+            model.contentType = "artist"
         else if (type === "albums")
-            MusicProvider.queryAllAlbums()
+            model.contentType = "album"
     }
 
     Rectangle {
@@ -63,14 +68,31 @@ Control {
     ListView {
         id: listView
         anchors.fill: parent
-//        anchors.topMargin: 10
-//        anchors.bottomMargin: 84
-        model: root.nowPlaying ? MusicProvider.nowPlaying.model : MusicProvider.musicLibrary.model
+        model: root.nowPlaying ? MusicProvider.nowPlaying : root.model
         clip: true
         highlightMoveDuration: 300
         highlightFollowsCurrentItem: false
         snapMode: ListView.SnapOneItem
-        currentIndex: MusicProvider.currentIndex
+        currentIndex: nowPlaying ? MusicProvider.currentIndex : -1
+
+        header: UIElement {
+            width: root.width
+            height: Style.vspan(root.model.canGoBack ? 3 : 0)
+            visible: root.model.canGoBack
+
+            Rectangle {
+                width: parent.width
+                height: 1
+                opacity: 0.2
+                color: "white"
+            }
+
+            Tool {
+                anchors.fill: parent
+                symbol: 'back'
+                onClicked: root.model.goBack()
+            }
+        }
 
         delegate: Control {
             width: root.width
@@ -89,6 +111,23 @@ Control {
                 color: "white"
             }
 
+            MouseArea {
+                anchors.fill: parent
+                onClicked: {
+                    if (root.nowPlaying) {
+                        MusicProvider.currentIndex = index
+                        MusicProvider.player.play()
+                    } else {
+                        if (item.type === "audiotrack") {
+                            MusicProvider.nowPlaying.insert(MusicProvider.nowPlaying.count, model.item)
+                            MusicProvider.player.play()
+                        } else {
+                            root.model.goForward(model.index, SearchAndBrowseModel.InModelNavigation)
+                        }
+                    }
+                }
+            }
+
             Row {
                 anchors.verticalCenter: parent.verticalCenter
                 padding: Style.padding
@@ -97,7 +136,7 @@ Control {
                     width: height
                     height: Style.vspan(3)
                     fit: true
-                    source: MusicProvider.coverPath(model.cover)
+                    source: model.item.coverArtUrl ? model.item.coverArtUrl : model.item.data.coverArtUrl
                 }
 
                 Column {
@@ -106,37 +145,26 @@ Control {
                     Label {
                         width: Style.hspan(7)
                         height: Style.vspan(2)
-                        text: root.type === "albums" ? model.album.toUpperCase() : model.title.toUpperCase()
+                        text: model.name.toUpperCase()
                         font.pixelSize: Style.fontSizeM
                     }
+
                     Label {
                         width: Style.hspan(7)
                         height: Style.vspan(1)
-                        text: model.artist.toUpperCase()
+                        text: model.type === "audiotrack" ? model.item.artist.toUpperCase() : (model.type === "album" ? model.item.data.artist.toUpperCase() : "")
                         font.pixelSize: Style.fontSizeS
                         font.bold: true
                     }
                 }
-            }
 
-            MouseArea {
-                anchors.fill: parent
-                onClicked: {
-                    if (root.nowPlaying) {
-                        MusicProvider.currentIndex = index
-                    }
-                    else {
-                        listView.currentIndex = index
-                        if (root.type === "songs") {
-                            MusicProvider.selectSpecSong()
-                            MusicProvider.currentIndex = index
-                        }
-                        else if (root.type === "artists")
-                            MusicProvider.querySpecArtist(model.artist)
-                        else if (root.type === "albums")
-                            MusicProvider.querySpecAlbum(model.album)
-                    }
-                    MusicService.play()
+                Tool {
+                    width: Style.hspan(1)
+                    height: Style.vspan(3)
+                    size: Style.symbolSizeS
+                    symbol: "close"
+                    visible: root.nowPlaying
+                    onClicked: MusicProvider.nowPlaying.remove(index)
                 }
             }
         }

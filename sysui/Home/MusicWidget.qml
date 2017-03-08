@@ -106,7 +106,7 @@ UIPanel {
                 Label {
                     Layout.fillWidth: true
                     height: Style.vspan(1)
-                    text: musicControl.currentTrack ? musicControl.currentTrack.track : ""
+                    text: musicControl.currentTrack ? musicControl.currentTrack.title : ""
                     font.pixelSize: Style.fontSizeL
                     font.capitalization: Font.AllUppercase
                     horizontalAlignment: Text.AlignLeft

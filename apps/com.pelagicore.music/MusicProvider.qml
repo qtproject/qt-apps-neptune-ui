@@ -33,91 +33,60 @@ pragma Singleton
 import QtQuick 2.6
 import QtApplicationManager 1.0
 import com.pelagicore.datasource 1.0
-import service.music 1.0
+import QtIvi 1.0
+import QtIvi.Media 1.0
 
 QtObject {
     id: root
 
-    property SqlQueryDataSource musicLibrary: SqlQueryDataSource {
-        database: "media"
-        query: 'select * from music'
+    property alias nowPlaying: player.playQueue
+
+    property MediaPlayer player: MediaPlayer {
+        id: player
     }
 
-    property SqlQueryDataSource nowPlaying: SqlQueryDataSource {
-        database: "media"
-        query: 'select distinct * from music order by random()'
-        onQueryChanged: root.reevaluate()
+    property int currentIndex: player.playQueue.currentIndex
+    onCurrentIndexChanged: {
+        player.playQueue.currentIndex = currentIndex
     }
 
-    property int currentIndex: 0
-    property int count: nowPlaying.count
+    property Connections con: Connections {
+        target: player.playQueue
+        onCurrentIndexChanged: {
+            root.currentIndex = currentIndex
+        }
 
-    property var currentEntry: nowPlaying.get(currentIndex);
-    property url currentSource: nowPlaying.storageLocation + '/media/music/' + currentEntry.source
-    property url currentCover: nowPlaying.storageLocation + '/media/music/' + currentEntry.cover
-
-    function reevaluate() {
-        currentIndex = -1
-        currentIndex = 0
+        onRowsInserted: {
+            print("ROW INSERTED: NEW INDEX: ", first)
+            player.playQueue.currentIndex = first;
+        }
     }
 
-    function queryAllAlbums() {
-        musicLibrary.query = 'select * from music group by album'
-    }
-
-    function querySongs() {
-        musicLibrary.query = 'select distinct * from music'
-    }
-
-    function queryArtists() {
-        musicLibrary.query = 'select * from music group by artist'
-    }
-
-    function querySpecArtist(artist) {
-        nowPlaying.query = "select distinct * from music where artist='" + artist + "'"
-    }
-
-    function querySpecAlbum(album) {
-        nowPlaying.query = "select distinct * from music where album='" + album + "'"
-    }
-
-    function selectSpecSong () {
-        nowPlaying.query = 'select distinct * from music'
-    }
-
-    function selectRandomTracks() {
-        nowPlaying.query = 'select distinct * from music order by random()'
-    }
-
-    function coverPath(cover) {
-        return Qt.resolvedUrl(root.nowPlaying.storageLocation + '/media/music/' + cover)
-    }
-
-    function sourcePath(source) {
-        return Qt.resolvedUrl(root.nowPlaying.storageLocation + '/media/music/' + source)
-    }
+    property int count: player.playQueue.count
+    property var currentEntry: player.currentTrack;
+    property alias position: player.position
+    property alias duration: player.duration
+    property string currentTime: Qt.formatTime(new Date(player.position), 'mm:ss')
+    property string durationTime: Qt.formatTime(new Date(player.duration), 'mm:ss')
 
     function next() {
         print('MusicService.nextTrack()')
-        if (root.currentIndex < root.count - 1)
-            currentIndex++
+        player.next()
     }
 
     function previous() {
         print('MusicService.previousTrack()')
-        if (currentIndex > 0)
-            currentIndex--
+        player.previous()
     }
 
-    function initialize() {
-        MusicService.musicProvider = root
-        MusicService.currentIndex = Qt.binding(function() { return root.currentIndex})
-        MusicService.currentTrack = Qt.binding(function() { return root.currentEntry})
-        MusicService.trackCount = Qt.binding(function() { return root.nowPlaying.count})
-        MusicService.coverPath = Qt.binding(function() { return root.currentCover})
-        MusicService.url = Qt.binding(function() { return root.currentSource})
-    }
+    property bool playing: player.playState === MediaPlayer.Playing
 
+    function togglePlay() {
+        if (root.playing)
+            player.pause()
+        else
+            player.play();
+    }
 
     property Item ipc: Item {
         ApplicationInterfaceExtension {
@@ -126,34 +95,29 @@ QtObject {
             name: "com.pelagicore.music.control"
         }
 
-        Binding { target: musicRemoteControl.object; property: "currentTrack"; value: MusicService.currentTrack }
-        Binding { target: musicRemoteControl.object; property: "currentTime"; value: MusicService.currentTime }
-        Binding { target: musicRemoteControl.object; property: "durationTime"; value: MusicService.durationTime }
-        Binding { target: musicRemoteControl.object; property: "playing"; value: MusicService.playing }
+        Binding { target: musicRemoteControl.object; property: "currentTrack"; value: player.currentTrack }
+        Binding { target: musicRemoteControl.object; property: "currentTime"; value: root.currentTime }
+        Binding { target: musicRemoteControl.object; property: "durationTime"; value: root.durationTime }
+        Binding { target: musicRemoteControl.object; property: "playing"; value: root.playing }
 
         Connections {
             target: musicRemoteControl.object
 
             onPlay: {
-                MusicService.musicPlay()
+                player.play()
             }
 
             onPause: {
-                MusicService.pause()
+                player.pause()
             }
 
             onPreviousTrack: {
-                MusicService.previousTrack()
+                root.previous()
             }
 
             onNextTrack: {
-                MusicService.nextTrack()
+                root.next()
             }
         }
-    }
-
-    Component.onCompleted: {
-        print("MusicProvider completed", root.count)
-
     }
 }
