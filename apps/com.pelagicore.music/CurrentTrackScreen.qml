@@ -180,6 +180,10 @@ UIScreen {
         }
     }
 
+    IndexerStatus {
+        anchors.horizontalCenter: musicControl.horizontalCenter
+    }
+
     Library {
         id: library
         x: parent.width
