@@ -130,7 +130,8 @@ UIScreen {
             Tool {
                 Layout.preferredWidth: Style.hspan(2)
                 symbol: 'shuffle'
-                onClicked: toggle()
+                checked: MusicProvider.shuffleOn
+                onClicked: MusicProvider.toggleShuffle()
                 size: Style.symbolSizeXS
             }
             Spacer { Layout.preferredWidth: Style.hspan(2) }
@@ -143,7 +144,8 @@ UIScreen {
             Tool {
                 Layout.preferredWidth: Style.hspan(2)
                 symbol: 'loop'
-                onClicked: toggle()
+                checked: MusicProvider.repeatOn
+                onClicked: MusicProvider.toggleRepeat()
                 size: Style.symbolSizeXS
             }
         }

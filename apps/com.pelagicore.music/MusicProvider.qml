@@ -69,6 +69,9 @@ QtObject {
     property string currentTime: Qt.formatTime(new Date(player.position), 'mm:ss')
     property string durationTime: Qt.formatTime(new Date(player.duration), 'mm:ss')
 
+    property bool shuffleOn: player.playMode === MediaPlayer.Shuffle
+    property bool repeatOn: player.playMode === MediaPlayer.RepeatTrack
+
     function next() {
         print('MusicService.nextTrack()')
         player.next()
@@ -86,6 +89,20 @@ QtObject {
             player.pause()
         else
             player.play();
+    }
+
+    function toggleShuffle() {
+        if (shuffleOn)
+            player.playMode = MediaPlayer.Normal
+        else
+            player.playMode = MediaPlayer.Shuffle
+    }
+
+    function toggleRepeat() {
+        if (repeatOn)
+            player.playMode = MediaPlayer.Normal
+        else
+            player.playMode = MediaPlayer.RepeatTrack
     }
 
     property Item ipc: Item {
