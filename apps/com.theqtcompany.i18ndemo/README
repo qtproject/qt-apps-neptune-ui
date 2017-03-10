@@ -1,12 +1,4 @@
-* First time steps
-Run create_qm.sh script inside translations sub-folder to generate translated files.
-
-
 * Add support for additional language
-(1) Change directory to "translations" sub-folder.
-
-(2) Create file named "i18napp_<languageCode>.ts"
-
-(3) Run create_ts.sh to populate the .ts file created in step (2) above.
-
-(4) Edit "Languages.qml". Locate VirtualKeyboardSettings.activeLocales and add the languageCode to the existing list
+(1) Edit "comtqci18ndemo.pro". Locate 'supportedLocales' and add the languageCode to the existing list.
+(2) Edit "Languages.qml". Locate VirtualKeyboardSettings.activeLocales and add the languageCode to the existing list.
+(3) Run "make ts" to generate/update translation catalogs.
