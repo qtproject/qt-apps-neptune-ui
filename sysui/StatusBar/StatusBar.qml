@@ -33,6 +33,7 @@ import QtQuick 2.1
 import QtQuick.Layouts 1.0
 
 import utils 1.0
+import controls 1.0
 import service.statusbar 1.0
 import service.settings 1.0
 
@@ -42,6 +43,7 @@ UIElement {
     vspan: 2
     signal clicked()
     signal timePressAndHold();
+    signal overviewClicked();
 
     MouseArea {
         anchors.fill: parent
@@ -75,6 +77,12 @@ UIElement {
         Spacer {
             Layout.fillHeight: true
             Layout.fillWidth: true
+        }
+
+        Tool {
+            Layout.fillHeight: true
+            name: "fullscreen"
+            onClicked: root.overviewClicked()
         }
 
         Weather {

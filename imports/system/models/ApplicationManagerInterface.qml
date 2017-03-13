@@ -50,6 +50,7 @@ QtObject {
 
     signal applicationSurfaceReady(Item item, bool isMinimized)
     signal releaseApplicationSurface(Item item)
+    signal applicationSurfaceLost(Item item)
     signal unhandledSurfaceReceived(Item item)
 
     // Cluster signals
@@ -70,6 +71,10 @@ QtObject {
         ApplicationManager.applicationWasActivated.connect(applicationActivated)
         WindowManager.windowLost.connect(windowLostHandler)
         WindowManager.windowPropertyChanged.connect(windowPropertyChanged)
+    }
+
+    function appIdFromWindow(item) {
+        return WindowManager.get(WindowManager.indexOfWindow(item)).applicationId
     }
 
     function windowReadyHandler(index, item) {
@@ -149,6 +154,8 @@ QtObject {
 
         //For special windows (cluster, widgets) we don't have a closing anmiation, close them directly
         if (type === "ivi") {
+            root.applicationSurfaceLost(item)
+
             //If the item is in the closing state the closing animation hasn't been played yet and we need to wait until it is finished
             if (item.state === "closing" ) {
                 itemsToRelease.push(item)

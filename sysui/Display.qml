@@ -70,6 +70,7 @@ Item {
                 }
             }
             onTimePressAndHold: toolBarMonitorLoader.active = !toolBarMonitorLoader.active
+            onOverviewClicked: windowOverview.show()
         }
 
         Item {
@@ -137,6 +138,11 @@ Item {
             source: "dev/ToolBarMonitor.qml"
         }
 
+    }
+
+    WindowOverview {
+        id: windowOverview
+        anchors.fill: parent
     }
 
     NotificationContainer {
