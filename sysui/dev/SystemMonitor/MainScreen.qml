@@ -51,7 +51,7 @@ UIScreen {
 
     function checkReporting() {
         SystemMonitor.reportingInterval = root.timeInterval
-        SystemMonitor.reportingRange = 10 * 1000
+        SystemMonitor.count = 50
     }
 
     TabView {

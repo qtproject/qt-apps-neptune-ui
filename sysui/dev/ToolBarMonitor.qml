@@ -54,7 +54,7 @@ Rectangle {
 
     function initialize() {
         SystemMonitor.reportingInterval = 200
-        SystemMonitor.reportingRange = 2000
+        SystemMonitor.count = 10
         SystemMonitor.fpsReportingEnabled = root.visible
         SystemMonitor.cpuLoadReportingEnabled = root.visible
         SystemMonitor.memoryReportingEnabled = root.visible
