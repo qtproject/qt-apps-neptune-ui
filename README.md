@@ -39,15 +39,13 @@ This will install all qml files and plugins into the neptune subfolder of $$PWD/
 
 # Run entire UI with the Application Manager
 
-        $ appman --recreate-database -c $AM_CONFIG_FILE -c am-config.yaml
-
-where `AM_CONFIG_FILE` is the path to the Application Manager `config.yaml` file (inside the template-opt folder within the Application Manager delivery). The default `config.yaml` points to the `/opt/am` folder. If that folder does not exists, make sure to update the config.yaml settings to the corresponding paths.
+        $ appman --recreate-database -c am-config.yaml
 
 # Run the UI without QtIvi installed
 
 It is possible to run the UI also without having QtIvi build and installed. For bugreports please make sure to have QtIvi installed.
 
-        $ appman --recreate-database -c $AM_CONFIG_FILE -c am-config.yaml -I dummyimports
+        $ appman --recreate-database -c am-config.yaml -I dummyimports
 
 # Style Configuration
 

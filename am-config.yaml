@@ -2,9 +2,13 @@ formatVersion: 1
 formatType: am-configuration
 ---
 # basic AM functionality - the builtin apps are in 'apps'.
+# installations will go into the standard /tmp/am hierarchy
 
 applications:
   builtinAppsManifestDir: "${CONFIG_PWD}/apps"
+  installedAppsManifestDir: "/tmp/am/manifests"
+  appImageMountDir: "/tmp/am/image-mounts"
+  database: "/tmp/am/apps.db"
 
 # QML apps will be able to import from modules...
 
@@ -33,3 +37,30 @@ flags:
   noSecurity: yes
   noUiWatchdog: yes
 
+# simulate an internal and a SD-card installation location
+
+installationLocations:
+- id: "internal-0"
+  installationPath: "/tmp/am/apps"
+  documentPath: "/tmp/am/docs"
+  mountPoint: "/tmp"
+  isDefault: true
+
+# useful debug wrappers - mainly for Unix
+# %program% and %arguments% are internal variables
+
+debugWrappers:
+- name: gdbserver
+  command: [ '/usr/bin/gdbserver', ':%port%', '%program%', '%arguments%' ]
+  parameters:  # <name>: <default value>
+    port: 5555
+  supportedRuntimes: [ native, qml ]
+  supportedContainers: [ process ]
+- name: valgrind
+  command: [ '/usr/bin/valgrind', '%program%', '%arguments%' ]
+  supportedRuntimes: [ native, qml ]
+  supportedContainers: [ process ]
+- name: strace
+  command: [ '/usr/bin/strace', '%program%', '%arguments%' ]
+  supportedRuntimes: [ native, qml ]
+  supportedContainers: [ process ]
