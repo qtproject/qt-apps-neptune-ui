@@ -67,7 +67,7 @@ UIElement {
                 horizontalAlignment: Text.AlignRight
                 verticalAlignment: Text.AlignBottom
 
-                font.pixelSize: Style.fontSizeXXL
+                fontSize: Style.fontSizeXXL
             }
             Label {
                 id: suffix
@@ -76,7 +76,7 @@ UIElement {
 
                 text: "MHz"
 
-                font.pixelSize: Style.fontSizeXXS
+                fontSize: Style.fontSizeXXS
                 horizontalAlignment: Text.AlignLeft
                 verticalAlignment: Text.AlignTop
 

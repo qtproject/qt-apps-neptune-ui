@@ -88,14 +88,14 @@ UIElement {
                     id: minFreqLabel
                     text: minimum
 
-                    width: 0
+                    width: textObject.contentWidth
                     horizontalAlignment: Text.AlignHCenter
 
                     anchors.horizontalCenter: parent.left
                     anchors.bottom: parent.bottom
 
                     font.family: Style.fontFamily
-                    font.pixelSize: Style.fontSizeS
+                    fontSize: Style.fontSizeS
                     font.weight: Style.fontWeight
 
                     color: Style.colorWhite
@@ -104,21 +104,21 @@ UIElement {
                 Label {
                     text: "MHz"
 
-                    anchors.left: minFreqLabel.left
+                    anchors.left: minFreqLabel.right
 
-                    width: Style.hspan(0.9)
+                    width: Style.hspan(0.8)
 
-                    horizontalAlignment: Text.AlignRight
+                    horizontalAlignment: Text.AlignLeft
                     verticalAlignment: Text.AlignBottom
 
-                    font.pixelSize: Style.fontSizeXXS
+                    fontSize: Style.fontSizeXXS
                 }
 
                 Label {
                     id: meanFreqLabel
                     text: (minimum + maximum) / 2
 
-                    width: 0
+                    width: textObject.contentWidth
                     horizontalAlignment: Text.AlignHCenter
 
                     anchors.horizontalCenter: parent.horizontalCenter
@@ -127,7 +127,7 @@ UIElement {
 
 
                     font.family: Style.fontFamily
-                    font.pixelSize: Style.fontSizeM
+                    fontSize: Style.fontSizeM
                     font.weight: Style.fontWeight
 
                     color: Style.colorWhite
@@ -136,28 +136,28 @@ UIElement {
                 Label {
                     text: "MHz"
 
-                    width: Style.hspan(1.1)
+                    width: Style.hspan(1)
 
-                    anchors.left: meanFreqLabel.left
+                    anchors.left: meanFreqLabel.right
 
-                    horizontalAlignment: Text.AlignRight
+                    horizontalAlignment: Text.AlignLeft
                     verticalAlignment: Text.AlignBottom
 
-                    font.pixelSize: Style.fontSizeXXS
+                    fontSize: Style.fontSizeXXS
                 }
 
                 Label {
                     id: maxFreqLabel
                     text: maximum
 
-                    width: 0
+                    width: textObject.contentWidth
                     horizontalAlignment: Text.AlignHCenter
 
                     anchors.horizontalCenter: parent.right
                     anchors.bottom: parent.bottom
 
                     font.family: Style.fontFamily
-                    font.pixelSize: Style.fontSizeS
+                    fontSize: Style.fontSizeS
                     font.weight: Style.fontWeight
 
                     color: Style.colorWhite
@@ -166,14 +166,14 @@ UIElement {
                 Label {
                     text: "MHz"
 
-                    width: Style.hspan(0.9)
+                    width: Style.hspan(0.8)
 
-                    anchors.left: maxFreqLabel.left
+                    anchors.left: maxFreqLabel.right
 
-                    horizontalAlignment: Text.AlignRight
+                    horizontalAlignment: Text.AlignLeft
                     verticalAlignment: Text.AlignBottom
 
-                    font.pixelSize: Style.fontSizeXXS
+                    fontSize: Style.fontSizeXXS
                 }
         }
 

@@ -35,8 +35,10 @@ import utils 1.0
 UIElement {
     id: root
 
+    property alias textObject: textElement
     property alias text: textElement.text
     property alias font: textElement.font
+    property alias fontSize: textElement.font.pixelSize
     property alias color: textElement.color
     property alias textFormat: textElement.textFormat
     property alias horizontalAlignment: textElement.horizontalAlignment
