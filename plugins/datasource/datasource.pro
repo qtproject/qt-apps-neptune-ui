@@ -28,9 +28,9 @@ isEmpty(INSTALL_PREFIX) {
 }
 
 !equals(_PRO_FILE_PWD_, $$OUT_PWD) {
-    copy_qmldir.target = $$OUT_PWD/qmldir
-    copy_qmldir.depends = $$_PRO_FILE_PWD_/qmldir
-    copy_qmldir.commands = $(COPY_FILE) \"$$replace(copy_qmldir.depends, /, $$QMAKE_DIR_SEP)\" \"$$replace(copy_qmldir.target, /, $$QMAKE_DIR_SEP)\"
+    copy_qmldir.target = $$replace(OUT_PWD, /, $$QMAKE_DIR_SEP)$${QMAKE_DIR_SEP}qmldir
+    copy_qmldir.depends = $$replace(_PRO_FILE_PWD_, /, $$QMAKE_DIR_SEP)$${QMAKE_DIR_SEP}qmldir
+    copy_qmldir.commands = $(COPY_FILE) \"$$copy_qmldir.depends\" \"$$copy_qmldir.target\"
     QMAKE_EXTRA_TARGETS += copy_qmldir
     PRE_TARGETDEPS += $$copy_qmldir.target
 }
