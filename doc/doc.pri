@@ -1,14 +1,16 @@
-isEmpty(VERSION): VERSION=1.0.0
 build_online_docs: {
     QMAKE_DOCS = $$PWD/online/neptuneui.qdocconf
 } else {
     QMAKE_DOCS = $$PWD/neptuneui.qdocconf
 }
 
-CONFIG += prepare_docs
-load(qt_docs_targets)
-
-OTHER_FILES += \
-    $$PWD/*.qdocconf \
-    $$PWD/src/*.qdoc \
-    $$PWD/src/images/*.png
+DISTFILES += \
+    $$PWD/neptuneui.qdocconf \
+    $$PWD/online/neptuneui.qdocconf \
+    $$PWD/src/neptuneui-index.qdoc \
+    $$PWD/src/images/emulator-automotive.png \
+    $$PWD/src/images/infotainment-cluster-apps.png \
+    $$PWD/src/images/infotainment-cluster-carsettings.png \
+    $$PWD/src/images/infotainment-cluster-mycar.png \
+    $$PWD/src/images/infotainment-cluster-settings.png \
+    $$PWD/src/images/infotainment-cluster.png

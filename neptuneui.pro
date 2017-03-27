@@ -1,10 +1,9 @@
-include(doc/doc.pri)
-
 TEMPLATE = subdirs
 
 SUBDIRS = plugins/datasource \
           plugins/screenmanager \
-          plugins/comtqci18ndemo
+          plugins/comtqci18ndemo \
+          doc
 
 isEmpty(INSTALL_PREFIX) {
     INSTALL_PREFIX=/opt
