@@ -90,35 +90,34 @@
    \list 1
     \li Clone the Qt Application Manager and Neptune-UI git repositories.
 
-    \li Build Qt Application Manager against Qt 5.7 or later that is
+    \li Build Qt Application Manager against Qt 5.6 or later that is
     installed on your desktop. See the Qt Application Manager
     \l[ApplicationManager]{Installation}{installation} page for more details
     on building.
 
-    \li Create the required directory structure based on the path used
-    in \c <qtapplicationmanager-clone>/template-opt/am/config.yaml. For
-    example, the \c installedAppsManifestDir:  points to \c{/opt/am/manifests},
-    which must be created.
+    \li Build Neptune UI and install it by using the following command:
+    \badcode
+    qmake -r INSTALL_PREFIX=<choose a loation> neptuneui.pro
+    make && make install
+    \endcode
 
-    \li Copy \c <qtapplicationmanager-clone>/template-opt/am/config.yaml
-    to \c /opt/am
+    \li Run the following command from the directory where \e neptune-ui is installed:
+    \badcode
+    appman -r -c am-config.yaml
+    \endcode
 
-    \note You can edit your \c config.yaml copy to comment out parts that
+    \note You can edit the \c am-config.yaml to comment out parts that
     are not relevant. For example, the SD card install location under the
     \c "installationLocations:" section.
 
-    \li Run the following command from the cloned \e neptune-ui directory:
-     \badcode
-     appman -r -c /opt/am/config.yaml -c am-config.yaml -I dummyimport
-     \endcode
    \endlist
 
    Where, \c appman is a utility that is installed when you built
    Qt Application Manager, \c AM_CONFIG_FILE points to the Application
-   Manager's \c config.yaml, and \c dummyimport provides the necessary data,
-   which is usually provided by Qt IVI.
+   Manager's \c config.yaml.
 
-   \note The \c {-I dummyimport} part is not required if Qt IVI is installed.
+   \note Add \c {-I <neptune-ui git clone>/dummyimport} to the appman command-line in case
+   you don't have Qt IVI installed.
 
 
    \section2 UI Configuration
