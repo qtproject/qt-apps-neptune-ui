@@ -3,6 +3,10 @@ TARGET  = screenmanagerplugin
 QT += qml quick
 CONFIG += qt plugin c++11
 
+# Add a long padded rpath, so the installer can replace it with a relative rpath
+QMAKE_RPATHDIR += "$$INSTALL_PREFIX/long_padding/long_padding/long_padding/long_padding/long_padding\
+                   long_padding/long_padding/long_padding/long_padding/long_padding/long_padding/"
+
 TARGET = $$qtLibraryTarget($$TARGET)
 uri = com.pelagicore.ScreenManager
 
