@@ -120,6 +120,23 @@
    you don't have Qt IVI installed.
 
 
+   \section2 Neptune-UI Development
+
+   As it is inconvenient to always run "make install" when working directly on the neptune-ui,
+   qmake is generating a plugins.yaml file which contains all the settings you need to run the
+   UI also without installation.
+
+   \badcode
+   appman -r -c am-config.yaml -c <build-folder>/plugins.yaml
+   \endcode
+
+   In QtCreator you can use the following line:
+
+   \badcode
+   appman --recreate-database -c am-config.yaml -c %{buildDir}/plugins.yaml
+   \endcode
+
+
    \section2 UI Configuration
 
    The UI configuration is split into several \c yaml files for the ease of

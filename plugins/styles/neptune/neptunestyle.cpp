@@ -52,22 +52,22 @@ public:
 
 
 static QHash<NeptuneStyle::SystemColor, QColor>
-GlobalLightColors({
+GlobalLightColors {
                       {NeptuneStyle::DarkColor, QColor(0xFF1F1F1F)},
                       {NeptuneStyle::BrightColor, QColor(0xFFFEFEFE)},
                       {NeptuneStyle::AccentColor, QColor(0xFFF6A623)},
                       {NeptuneStyle::PositiveColor, QColor(0xFF50E3C2)},
                       {NeptuneStyle::NegativeColor, QColor(0xFF303030)}
-                  });
+                  };
 
 static QHash<NeptuneStyle::SystemColor, QColor>
-GlobalDarkColors({
+GlobalDarkColors {
                      {NeptuneStyle::DarkColor, QColor(0xFF1F1F1F)},
                      {NeptuneStyle::BrightColor, QColor(0xFFFEFEFE)},
                      {NeptuneStyle::AccentColor, QColor(0xFFF6A623)},
                      {NeptuneStyle::PositiveColor, QColor(0xFF50E3C2)},
                      {NeptuneStyle::NegativeColor, QColor(0xFF303030)}
-                 });
+                 };
 
 //TODO: replace with typedef
 static ThemeData GlobalDarkThemeData(GlobalDarkColors);

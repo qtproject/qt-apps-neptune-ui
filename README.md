@@ -47,6 +47,18 @@ It is possible to run the UI also without having QtIvi build and installed. For 
 
         $ appman --recreate-database -c am-config.yaml -I dummyimports
 
+# Development
+
+As it is inconvenient to always run "make install" when working directly on the neptune-ui,
+qmake is generating a plugins.yaml file which contains all the settings you need to run the
+UI also without installation.
+
+        $ appman --recreate-database -c am-config.yaml -c <build-folder>/plugins.yaml
+
+In QtCreator you can use the following line:
+
+        $ appman --recreate-database -c am-config.yaml -c %{buildDir}/plugins.yaml
+
 # Style Configuration
 
 Neptune UI supports different styleConfigs which can be used to adapt the style to the needs of the Hardware the UI should be running on.
