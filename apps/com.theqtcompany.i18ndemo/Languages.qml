@@ -125,7 +125,7 @@ UIPage {
                 }
             }
             Component.onCompleted: {
-                VirtualKeyboardSettings.activeLocales = new Array("ar_AR", "de_DE", "en_GB", "fr_FR", "fi_FI", "ko_KR", "ja_JP", "zh_CN", "zh_TW", "ru_RU")
+                VirtualKeyboardSettings.activeLocales = new Array(/*"ar_AR",*/ "de_DE", "en_GB", "fr_FR", "fi_FI", "ko_KR", "ja_JP", "zh_CN", "zh_TW", "ru_RU")
             }
         }
 
