@@ -20,6 +20,7 @@ runtimes:
 
 ui:
   fullscreen: yes
+  style: "styles/neptune"
   mainQml: "${CONFIG_PWD}/Main.qml"
   importPaths: [ "${CONFIG_PWD}/imports/shared", "${CONFIG_PWD}/imports/system" ]
   windowIcon: "${CONFIG_PWD}/imports/shared/assets/icons/active/apps@96.png"
