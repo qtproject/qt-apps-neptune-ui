@@ -26,7 +26,7 @@ ui:
 
 systemProperties:
     public:
-      styleConfig: "Config1920x1080.qml"
+      styleConfig: "auto"
       showCluster: yes
     private:
       appStoreServerUrl: 'http://chaos.pelagicore.net:8080'
