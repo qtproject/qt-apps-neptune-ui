@@ -29,63 +29,47 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.6
-
-import QtApplicationManager 1.0
-import controls 1.0
+import QtQuick 2.2
+import QtQuick.Controls 2.1
 import utils 1.0
+import service.phone 1.0
+import com.pelagicore.styles.neptune 1.0
 
-ApplicationManagerWindow {
-    id: pelagicoreWindow
-    width: Style.hspan(24)
-    height: Style.vspan(24)
+UIScreen {
+    id: root
 
-    default property alias content: content.children
-    property alias cluster: clusterContainer.children
+    signal dial(string name, string number)
 
-    signal clusterKeyPressed(int key)
-    signal raiseApp()
-    signal closeApp()
+    Frame {
+        width: Style.hspan(10)
+        height:  Style.vspan(17)
+        anchors.centerIn: parent
 
-    onWindowPropertyChanged: {
-        if (name === "visibility" && value === true) {
-            pelagicoreWindow.raiseApp()
-        }
-    }
-
-    BackgroundPane {
-        anchors.fill: parent
-    }
-
-    function back() {
-        pelagicoreWindow.setWindowProperty("visibility", false)
-        closeApp();
-    }
-
-    ApplicationManagerWindow {
-        id: clusterSurface
-        width: typeof parent !== 'undefined' ? parent.width : Style.hspan(24)
-        height: typeof parent !== 'undefined' ? parent.height : Style.vspan(24)
-        visible: clusterContainer.children.length > 0 && Style.withCluster
-        color: "transparent"
-
-        Item {
-            id: clusterContainer
+        ListView {
+            id: contactList
             anchors.fill: parent
-        }
+            anchors.centerIn: parent
+            model: PhoneService.contactsModel
 
-        Component.onCompleted: {
-            clusterSurface.setWindowProperty("windowType", "clusterWidget")
+            delegate: ItemDelegate {
+                width: ListView.view.width
+                height: Style.vspan(2)
+                text: model.name + " " + model.number
+                RoundButton {
+                    width: 80
+                    height: 80
+                    anchors.right: parent.right
+                    font.pixelSize: 40
+                    anchors.rightMargin: 10
+                    anchors.verticalCenter: parent.verticalCenter
+                    text: "\u2706"
+                    onClicked: {
+                        contactList.currentIndex = index;
+                        dial(model.name, model.number);
+                    }
+                }
+                onClicked: { contactList.currentIndex = index; }
+            }
         }
-
-        onWindowPropertyChanged: {
-            //print(":::AppUIScreen::: window property changed", name, value, Qt.Key_Up)
-            pelagicoreWindow.clusterKeyPressed(value)
-        }
-    }
-
-    Item {
-        id: content
-        anchors.fill: parent
     }
 }

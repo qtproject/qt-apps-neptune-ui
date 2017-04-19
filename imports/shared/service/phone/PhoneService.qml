@@ -29,60 +29,27 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.6
-import QtQuick.Layouts 1.0
+pragma Singleton
 
-import controls 1.0 as C
-import utils 1.0
-import QtQuick.Controls 2.1
-import QtApplicationManager 1.0
+import QtQuick 2.2
 
-UIPanel {
+QtObject {
     id: root
 
-    height: Style.vspan(4)
+    property string currentPairedDeviceName: ''
+    property bool isAnyDevicePaired: false
 
-    C.Icon {
-        id: phoneIcon
-        width: Style.hspan(2);
-        height: Style.vspan(4)
-        source: Style.icon("widgets_phone")
+    property ListModel contactsModel: ListModel {
+        ListElement { name: "Andreas N." ; number: "01555222" }
+        ListElement { name: "Alexandra F." ; number: "02524446" }
+        ListElement { name: "Alvaro R." ; number: "0369885" }
+        ListElement { name: "Bill T." ; number: "0784795" }
     }
 
-    RowLayout {
-        id: nameLayout
-
-        anchors.top: phoneIcon.top
-        anchors.topMargin: Style.vspan(0.75)
-        anchors.left: phoneIcon.right
-        anchors.leftMargin: Style.padding
-        anchors.right: parent.right
-
-        Label {
-            Layout.fillWidth: true
-            text: qsTr("%1   | %2").arg("John Doe").arg("02:55")
-            font.pixelSize: Style.fontSizeXL
-            font.capitalization: Font.AllUppercase
-            Component.onCompleted: {
-                console.log('101: ' + font.pixelSize);
-                console.log('102: ' + font.family);
-            }
-        }
-    }
-
-    Label {
-        anchors.bottom: phoneIcon.bottom
-        anchors.bottomMargin: Style.vspan(0.75)
-        anchors.left: nameLayout.left
-        anchors.right: nameLayout.right
-
-        text: "555-55 55 55"
-        font.pixelSize: Style.fontSizeXL
-    }
-    MouseArea {
-        anchors.fill: parent
-        onClicked: {
-            ApplicationManager.startApplication('com.pelagicore.phone');
-        }
+    property ListModel availableDevices: ListModel {
+        ListElement { name: "BlackBerry Z30" ; code: "0123" }
+        ListElement { name: "Samsung-123" ; number: "0000" }
+        ListElement { name: "i-Phone 6S" ; number: "1111" }
+        ListElement { name: "Nexus" ; number: "8524" }
     }
 }
