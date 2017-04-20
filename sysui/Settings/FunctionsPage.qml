@@ -32,8 +32,9 @@
 import QtQuick 2.6
 import QtQuick.Layouts 1.0
 import QtGraphicalEffects 1.0
-
 import controls 1.0
+import QtQuick.Controls 2.0
+
 import utils 1.0
 import service.settings 1.0
 import service.notification 1.0
@@ -59,77 +60,29 @@ UIPage {
     GridView {
         id: view
         anchors.fill: parent
+        anchors.margins: 24
 
         interactive: false
-
-        width: Style.hspan(6*3)
 
         model: SettingsService.functions
 
         clip: false // true
 
-        cellWidth: Style.hspan(6)
-        cellHeight: Style.vspan(5)
+        cellWidth: width/3
+        cellHeight: height/3
 
         delegate: Item {
-            property bool active: model.active
-
-            width: view.cellWidth
-            height: view.cellHeight
-
-            HDiv {
-                id: div
-                width: parent.width
-                height: Style.vspan(1)
-            }
-
-            RowLayout {
-                spacing: Style.paddingXL
-                anchors.top: div.bottom
-                anchors.bottom: parent.bottom
-                anchors.left: parent.left
-                anchors.right: parent.right
-                anchors.margins: 4
-
-                Item {
-                    Layout.preferredWidth: rect.width
-                    Layout.preferredHeight: parent.height
-
-                    RectangularGlow {
-                        anchors.fill: rect
-                        glowRadius: 5
-                        spread: 0
-                        color: Style.colorOrange
-                        cornerRadius: 10
-                        visible: active
-                    }
-
-                    Rectangle {
-                        id: rect
-                        color: active ? Style.colorOrange : "#444"
-                        width: 4
-                        radius: 2
-                        height: parent.height
-                    }
-                }
-
-                Image {
-                    source: Style.symbolM(model.icon)
-                }
-
-                Label {
-                    Layout.fillHeight: true
-                    Layout.fillWidth: true
-                    text: model.description
-                    wrapMode: Text.WordWrap
-                }
-            }
-
-            MouseArea {
+            width: GridView.view.cellWidth
+            height: GridView.view.cellHeight
+            Button {
+                checked: model.active
+                text: model.description
                 anchors.fill: parent
+                anchors.margins: padding
+                checkable: true
                 onClicked: {
-                    active = !active
-                    notificationInterface.body = model.description + (active ? " activated" : " deactivated")
+                    model.active = !model.active
+                    notificationInterface.body = model.description + (checked ? " activated" : " deactivated")
                     notificationInterface.show()
                 }
             }

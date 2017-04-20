@@ -35,31 +35,42 @@ import QtQuick.Controls 2.0
 import controls 1.0
 import utils 1.0
 
-Control {
+GridView {
     id: root
-
+    clip: true
     property string appCategory: ""
-    property alias cellWidth: grid.cellWidth
-    property alias cellHeight: grid.cellHeight
-    property alias model: grid.model
-    property alias delegate: grid.delegate
     property bool loading: true
 
-    onLoadingChanged: print("loading: ", loading, model.count)
+    property url serverUrl
+    signal requestDownload(string appId)
 
-    GridView {
-        id: grid
+    delegate: Item {
+        width: GridView.view.cellWidth
+        height: GridView.view.cellHeight
 
-        anchors.fill: parent
+        Button {
+            anchors.fill: parent
+            anchors.margins: padding
+            text: model.name
+            topPadding: indicator.height
 
-        clip: true
+            onClicked: root.requestDownload(model.id)
 
-        NotFoundOverlay {
-            anchors.top: parent.top; anchors.topMargin: Style.vspan(6)
-            width: parent.width
-
-            text: loading ? "Loading..." : model.count === 0 ? qsTr("No apps found in %1").arg(root.appCategory) : ""
-            overlayVisible: loading || model.count === 0
+            indicator: Image {
+                anchors.top: parent.top
+                anchors.topMargin: parent.padding
+                anchors.horizontalCenter: parent.horizontalCenter
+                asynchronous: true
+                source: root.serverUrl + "/app/icon?id=" + model.id
+            }
         }
+    }
+
+    NotFoundOverlay {
+        anchors.top: parent.top; anchors.topMargin: Style.vspan(6)
+        width: parent.width
+
+        text: loading ? "Loading..." : model.count === 0 ? qsTr("No apps found in %1").arg(root.appCategory) : ""
+        overlayVisible: loading || model.count === 0
     }
 }

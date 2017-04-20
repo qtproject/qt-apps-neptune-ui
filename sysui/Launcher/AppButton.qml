@@ -30,109 +30,73 @@
 ****************************************************************************/
 
 import QtQuick 2.6
-import QtQuick.Controls 2.0
+import QtQuick.Controls 2.1
 
 import utils 1.0
 import controls 1.0
+import com.pelagicore.styles.neptune 1.0
 
-// TODO: Convert this to a QQC2 button
-// TODO: Move this to controls
-Control {
+Button {
     id: root
 
-    property alias name: nameLabel.text
-    property alias icon: icon.source
+    property string name
+    text: name
+    property url icon: icon.source
     property bool editMode: false
     property bool removable: false
     property bool isUpdating: false
+    topPadding: root.height * .75
 
-    // Installation progress from 0 to 1. 1 means that the application is installed.
+    // Installation progress from 0.0 to 1.0, where 1.0 means
+    // that the application is installed.
     property real installProgress: 1.0
 
-    signal clicked()
     signal removeClicked()
-    signal pressAndHold()
 
     width: Style.hspan(4)
     height: Style.vspan(7)
 
     scale: editMode ? 0.8 : 1
 
-    Behavior on scale { NumberAnimation { easing.type: Easing.OutBounce } }
-
-    Rectangle {
-        id: background
-
-        anchors.fill: parent
-        anchors.margins: 1
-        color: Style.colorBlack
-        opacity: 0.5
+    Behavior on scale {
+        ScaleAnimator {
+            easing.type: Easing.OutBounce
+        }
     }
 
-    Rectangle {
-        anchors.top: background.top
-        anchors.bottom: background.bottom
-        anchors.left: background.left
-        width: isUpdating ? background.width * Math.min(1.0, Math.max(0.0, installProgress)) : background.width
-        color: Style.colorBlack
-        opacity: 0.25
 
-        Behavior on width { SmoothedAnimation { } }
+    indicator: Image {
+        anchors.centerIn: parent
+        source: root.icon
     }
 
-    Icon {
-        id: icon
-
-        anchors.verticalCenter: parent.verticalCenter
-        anchors.verticalCenterOffset: -Style.padding*3
-        anchors.horizontalCenter: parent.horizontalCenter
-        width: Style.hspan(2)
-        height: Style.vspan(3)
-        property bool active: mouseArea.pressed && !root.editMode && root.installProgress >= 1.0
-        opacity: (installProgress === 0.0 || installProgress === 1.0) ? 1.0 : 0.4
-        visible: root.icon
-
-        Behavior on opacity { NumberAnimation {  } }
-    }
-
-    Label {
-        id: nameLabel
-
-        width: parent.width
+    ProgressBar {
+        anchors.left: parent.left
+        anchors.right: parent.right
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: Style.padding*3
-
-        horizontalAlignment: Qt.AlignHCenter
-        font.pixelSize: Style.fontSizeM
-        opacity: icon.opacity
+        padding: 6
+        enabled: root.icon && (root.installProgress > 0.0 && root.installProgress < 1.0)
+        visible: enabled
+        value: root.installProgress
     }
 
-    MouseArea {
-        id: mouseArea
-
-        anchors.fill: parent
-        onClicked: root.clicked()
-        onPressAndHold: root.pressAndHold()
-    }
-
-    Symbol {
-        id: removeIcon
-
-        anchors.verticalCenter: background.top
-        anchors.horizontalCenter: background.right
-
-        name: "close"
-        size: Style.symbolSizeS
+    RoundButton {
+        text: "\u2715"
+        font.pixelSize: root.NeptuneStyle.fontSizeL
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: -padding
+        anchors.rightMargin: -padding
+        height: width
+        radius: width/2
         visible: root.editMode && root.removable
-        active: removeMouseArea.pressed
-        scale: active ? 0.8 : 1
-    }
-
-    MouseArea {
-        id: removeMouseArea
-
-        anchors.fill: removeIcon
-        enabled: root.editMode && root.removable
+        enabled: root.editMode
         onClicked: root.removeClicked()
+        scale: root.editMode ? 2.0 : 1.0
+        Behavior on scale {
+            ScaleAnimator {
+                easing.type: Easing.OutBounce
+            }
+        }
     }
 }

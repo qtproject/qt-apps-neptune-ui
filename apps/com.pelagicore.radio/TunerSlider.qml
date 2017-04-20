@@ -90,7 +90,7 @@ Control {
                     id: minFreqLabel
                     text: minimum
 
-                    width: textObject.contentWidth
+                    width: contentWidth
                     horizontalAlignment: Text.AlignHCenter
 
                     anchors.horizontalCenter: parent.left
@@ -120,7 +120,7 @@ Control {
                     id: meanFreqLabel
                     text: (minimum + maximum) / 2
 
-                    width: textObject.contentWidth
+                    width: contentWidth
                     horizontalAlignment: Text.AlignHCenter
 
                     anchors.horizontalCenter: parent.horizontalCenter
@@ -152,7 +152,7 @@ Control {
                     id: maxFreqLabel
                     text: maximum
 
-                    width: textObject.contentWidth
+                    width: contentWidth
                     horizontalAlignment: Text.AlignHCenter
 
                     anchors.horizontalCenter: parent.right

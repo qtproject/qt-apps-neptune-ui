@@ -62,12 +62,17 @@ UIPage {
                 ListElement { name: "Door Open"; symbol: "door_open"; slide: "DoorFault" }
             }
 
-            delegate: CategoryListItem {
+            delegate: ToolButton {
                 width: ListView.view.width
                 height: Style.vspan(3)
 
                 text: model.name.toUpperCase()
-                symbol: model.symbol
+                indicator: Image {
+                    anchors.right: parent.right
+                    anchors.rightMargin: parent.rightPadding
+                    anchors.verticalCenter: parent.verticalCenter
+                    source: Style.symbolM(model.symbol, true)
+                }
 
                 onClicked: {
                     view.currentIndex = index

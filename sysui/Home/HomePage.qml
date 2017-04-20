@@ -30,6 +30,7 @@
 ****************************************************************************/
 
 import QtQuick 2.6
+import QtQuick.Controls 2.1
 import QtQuick.Layouts 1.0
 
 import controls 1.0
@@ -39,40 +40,33 @@ import QtApplicationManager 1.0
 UIPage {
     id: root
 
-    property bool leftMap: true
-
     // Left widget side
     MapWidget {
         id: mapWidget
         anchors.top: parent.top
-        anchors.left: root.leftMap ? parent.left : parent.horizontalCenter
-        width: root.width/2
-        height: Style.vspan(20)
+        anchors.left: parent.left
+        anchors.right: parent.horizontalCenter
+        anchors.bottom: parent.bottom
     }
 
-    // Right widget side
+    // Right widget side upper widget
     MusicWidget {
-        anchors.bottom: hDiv.top
-        anchors.left: hDiv.left
-        width: root.width/2 - Style.hspan(1)
+        id: musicWidget
+        anchors.top: parent.top
+        anchors.left: mapWidget.right
+        anchors.right: parent.right
+        anchors.bottom: parent.verticalCenter
 
         onShowFullscreen: {
             ApplicationManager.startApplication("com.pelagicore.music")
         }
     }
 
-    HDiv {
-        id: hDiv
-
-        anchors.verticalCenter: parent.verticalCenter
-        anchors.left: root.leftMap ? parent.horizontalCenter : parent.left
-        anchors.leftMargin: Style.hspan(1)
-        width: root.width/2 - Style.hspan(1)
-    }
-
+    // Right side lower widget
     PhoneWidget {
-        anchors.top: hDiv.bottom
-        anchors.left: hDiv.left
-        width: root.width/2 - Style.hspan(1)
+        anchors.top: parent.verticalCenter
+        anchors.left: mapWidget.right
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
     }
 }

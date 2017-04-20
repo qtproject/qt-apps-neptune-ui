@@ -29,12 +29,9 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.6
-import QtQuick.Controls 2.0 as C
-import utils 1.0
+import QtQuick.Controls 2.0
 
-C.Slider {
-    id: root;
-    width: Style.hspan(8)
-    height: Style.vspan(2)
+
+Pane {
+    id: control
 }

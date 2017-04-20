@@ -52,18 +52,16 @@ Control {
 
         Symbol {
             id: symbol
-            anchors.bottom: parent.bottom
             Layout.preferredWidth: Style.hspan(2)
-            Layout.preferredHeight: Style.vspan(2)
+            Layout.fillHeight: true
             size: Style.symbolSizeM
         }
 
         Label {
             id: title
-            anchors.bottom: parent.bottom
             Layout.fillWidth: true
-            Layout.preferredHeight: Style.vspan(2)
-            height: Style.vspan(2)
+            Layout.fillHeight: true
+            verticalAlignment: Text.AlignVCenter
             text: qsTr(root.title.toUpperCase())
             font.pixelSize: Style.fontSizeXL
         }

@@ -29,22 +29,29 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.6
-import QtQuick.Layouts 1.0
+import QtQuick 2.8
+import QtQuick.Controls 2.1
+import QtQuick.Layouts 1.1
 
-import utils 1.0
-import QtQuick.Controls 2.0 as C
-
-C.Button {
+BasePage {
     id: root
-    implicitWidth: Style.hspan(4)
-    implicitHeight: Style.vspan(2)
 
-    property string symbol
+    description: "A Switch is a toggle button that can be switched on (checked) or off (unchecked)."
 
-//    indicator: Image {
-//        anchors.centerIn: parent
-//        source: root.symbol ? Style.symbol(root.symbol, root.size, root.checked) : ""
-//    }
 
+
+    ListView {
+        id: listView
+        anchors.centerIn: parent
+        anchors.margins: 24
+        width: parent.width/2
+        height: parent.height * .75
+        model: 10
+        delegate: SwitchDelegate {
+            width: ListView.view.width
+            text: 'Switch #' + index
+            highlighted: ListView.isCurrentItem
+            onClicked: listView.currentIndex = index
+        }
+    }
 }

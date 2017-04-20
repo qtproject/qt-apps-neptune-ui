@@ -30,6 +30,7 @@
 ****************************************************************************/
 
 import QtQuick 2.6
+import QtQuick.Controls 2.1
 import QtQuick.Layouts 1.0
 
 import controls 1.0
@@ -69,91 +70,77 @@ Item {
 
     AppStore {
         id: appstore
-        onLoginSuccessful: categoriesModel.refresh()
+        onLoginSuccessful: categoryModel.refresh()
     }
 
     JSONModel {
-        id: categoriesModel
+        id: categoryModel
         url: appstore.server + "/category/list"
     }
 
     JSONModel {
         id: appModel
         url: appstore.server + "/app/list"
-        data: root.categoryid >= 0 ? { "filter" : root.filter , "category_id" : root.categoryid} : { "filter" : root.filter}
+        data: root.categoryid >= 0 ? ({ "filter" : root.filter , "category_id" : root.categoryid}) : ({ "filter" : root.filter})
     }
 
-        Row {
-            anchors.horizontalCenter: parent.horizontalCenter
-
-            Column {
-                width: Style.hspan(4)
-
-                ListViewManager {
-                    id: categoryView
-
-                    anchors.left: parent.left; anchors.right: parent.right
-                    height: Style.vspan(14)
-
-                    model: categoriesModel
-
-                    header: Label {
-                        // The graphics for the category list is not align to the grid, have to specify hardcoded values.
-                        height: Style.vspan(5/3)
-                        anchors.left: parent.left; anchors.right: parent.right
-                        anchors.margins: Style.paddingXL
-
-                        text: "CATEGORY"
-                        font.pixelSize: Style.fontSizeM
-                    }
-
-                    delegate: CategoryListItem {
-                        width: ListView.view.width
-                        height: Style.vspan(5/3)
-                        text: model.name
-                        onClicked: ListView.view.currentIndex = index
-                    }
-
-                    onCurrentIndexChanged: {
-                        appGrid.appCategory = model.get(currentIndex) ? model.get(currentIndex).name : ""
-                        categoryid = model.get(currentIndex) ? model.get(currentIndex).id : 1
-                        appModel.refresh()
-                    }
-                }
-            }
-
-            AppGridView {
-                id: appGrid
-                // The graphics for the category list is not align to the grid, have to specify hardcoded values.
-                width: Style.hspan(3)*4
-                height: root.height
-                loading: categoriesModel.status !== "ready" || appModel.status !== "ready"
-
-                cellWidth: Style.hspan(3)
-                cellHeight:Style.vspan(5)
-
-                appCategory: ""
-
-                model: appModel
-
-                delegate: AppGridItemDelegate {
-                    width: GridView.view.cellWidth
-                    height: GridView.view.cellHeight
-
-                    icon: appstore.server + "/app/icon?id=" + model.id //model.icon
-                    titleText: model.name //model.title
-                    subtitleText: model.category //model.subtitle
-
-                    onClicked: download(model.id)
-                }
-            }
+    function selectCategory(index) {
+        var category = categoryModel.get(index);
+        if (category) {
+            appGrid.appCategory = category.name;
+            root.categoryid = category.id;
+        } else {
+            appGrid.appCategory = '';
+            root.categoryid = 1;
         }
+        appModel.refresh();
+    }
 
-        Image {
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.bottom: parent.bottom
-            source: Style.icon('appstore_bottom_shadow')
-            asynchronous: true
-            visible: false
+    RowLayout {
+        anchors.centerIn: parent
+        width: root.width*.5
+        height: root.height*.75
+        spacing: Style.hspan(1)
+
+        ListView {
+            id: categoryView
+            clip: true
+            Layout.fillHeight: true
+            Layout.preferredWidth: Style.hspan(4)
+
+            model: categoryModel
+
+            header: Label {
+                text: "CATEGORY"
+                font.pixelSize: Style.fontSizeM
+            }
+
+            delegate: Button {
+                width: ListView.view.width
+                text: model.name
+                highlighted: ListView.isCurrentItem
+                onClicked: {
+                    ListView.view.currentIndex = index;
+                    root.selectCategory(index);
+                }
+            }
+            ScrollBar.vertical: ScrollBar { }
+        }
+        AppGridView {
+            id: appGrid
+            // The graphics for the category list is not align to the grid, have to specify hardcoded values.
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+            loading: categoryModel.status !== "ready" || appModel.status !== "ready"
+            serverUrl: appstore.server
+            cellWidth: Style.hspan(3)
+            cellHeight: Style.vspan(5)
+
+            model: appModel
+
+            onRequestDownload: {
+                root.download(appId);
+            }
         }
     }
+}

@@ -50,6 +50,7 @@ BackgroundPane {
 
     width: NeptuneStyle.windowWidth
     height: NeptuneStyle.windowHeight
+    padding: 0
 
     //Forwards the keys to the cluster to handle it without being the active window
     Keys.forwardTo: cluster ? cluster.clusterItem : null

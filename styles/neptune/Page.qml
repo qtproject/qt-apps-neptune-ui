@@ -30,26 +30,25 @@
 ****************************************************************************/
 
 import QtQuick 2.8
-import QtQuick.Controls 2.1
-import QtQuick.Layouts 1.1
+import QtQuick.Templates 2.1 as T
+import com.pelagicore.styles.neptune 1.0
 
-BasePage {
-    id: root
+T.Page {
+    id: control
 
-    description: "Item delegate with a switch indicator that can be toggled on or off."
+    implicitWidth: Math.max(background ? background.implicitWidth : 0,
+                            Math.max(contentWidth,
+                                     header && header.visible ? header.implicitWidth : 0,
+                                     footer && footer.visible ? footer.implicitWidth : 0) + leftPadding + rightPadding)
+    implicitHeight: Math.max(background ? background.implicitHeight : 0,
+                             contentHeight + topPadding + bottomPadding
+                             + (header && header.visible ? header.implicitHeight + spacing : 0)
+                             + (footer && footer.visible ? footer.implicitHeight + spacing : 0))
 
-    ListView {
-        id: listView
-        model: 10
-        width: 120
-        height: 900
-        anchors.top: parent.top
-        anchors.topMargin: 50
-        anchors.horizontalCenter: parent.horizontalCenter
-        delegate: ItemDelegate {
-            text: modelData
-            highlighted: ListView.isCurrentItem
-            onClicked: listView.currentIndex = index
-        }
+    contentWidth: contentItem.implicitWidth || (contentChildren.length === 1 ? contentChildren[0].implicitWidth : 0)
+    contentHeight: contentItem.implicitHeight || (contentChildren.length === 1 ? contentChildren[0].implicitHeight : 0)
+
+    background: Rectangle {
+        color: control.NeptuneStyle.darkColor
     }
 }

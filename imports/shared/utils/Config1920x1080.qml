@@ -32,22 +32,22 @@
 import QtQuick 2.0
 
 QtObject {
-    property int cellWidth: Math.floor(screenWidth/24)
-    property int cellHeight: Math.floor(screenHeight/24)
-    property var fontWeight: Font.Light
-    property int fontSizeXXS: (1920/1080) * 14
-    property int fontSizeXS: (1920/1080) * 16
-    property int fontSizeS: (1920/1080) * 18
-    property int fontSizeM: (1920/1080) * 24
-    property int fontSizeL: (1920/1080) * 28
-    property int fontSizeXL: (1920/1080) * 36
-    property int fontSizeXXL: (1920/1080) * 48
+//    property int cellWidth: Math.floor(screenWidth/24)
+//    property int cellHeight: Math.floor(screenHeight/24)
+//    property var fontWeight: Font.Light
+//    property int fontSizeXXS: (1920/1080) * 14
+//    property int fontSizeXS: (1920/1080) * 16
+//    property int fontSizeS: (1920/1080) * 18
+//    property int fontSizeM: (1920/1080) * 24
+//    property int fontSizeL: (1920/1080) * 28
+//    property int fontSizeXL: (1920/1080) * 36
+//    property int fontSizeXXL: (1920/1080) * 48
 
-    property int defaultSymbolSize: symbolSizeM
-    property int defaultGfxSize: 2
+//    property int defaultSymbolSize: symbolSizeM
+//    property int defaultGfxSize: 2
 
-    property string displayBackground: "background_1920x1080"
+//    property string displayBackground: "background_1920x1080"
 
-    property int screenWidth: 1920
-    property int screenHeight: 1080
+//    property int screenWidth: 1920
+//    property int screenHeight: 1080
 }

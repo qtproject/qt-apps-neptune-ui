@@ -56,7 +56,6 @@ Control {
 
         width: Style.hspan(6)
         height: Style.vspan(3)
-        anchors.centerIn: parent
 
         clip: true
 

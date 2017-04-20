@@ -31,6 +31,7 @@
 
 import QtQuick 2.6
 import utils 1.0
+import QtQuick.Controls 2.1
 import controls 1.0
 import service.climate 1.0
 import service.settings 1.0

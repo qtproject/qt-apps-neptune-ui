@@ -30,10 +30,10 @@
 ****************************************************************************/
 
 import QtQuick 2.6
-import controls 1.0
-import utils 1.0
 import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.0
+import utils 1.0
+import controls 1.0
 
 Control {
     id: root
@@ -82,7 +82,6 @@ Control {
                 anchors.fill: parent
                 onClicked: slider.increase()
             }
-            Tracer {}
         }
 
         Slider {
@@ -157,14 +156,12 @@ Control {
 
                 Symbol {
                     anchors.right: parent.right
-//                    y: parent.height - (parent.height * slider.position) - height/2
                     anchors.verticalCenter: parent.verticalCenter
                     opacity: 0.4
                     name: "slider_marker"
                     height: Style.vspan(1)
                 }
             }
-            Tracer { }
         }
 
         Label {
@@ -183,11 +180,9 @@ Control {
                 anchors.fill: parent
                 onClicked: slider.decrease()
             }
-            Tracer {}
         }
     }
 
-    Tracer {}
     function _clamp(value) {
         return Math.round(Math.min(root.maxValue, Math.max(root.minValue, value))*root.roundingMode)/root.roundingMode
     }

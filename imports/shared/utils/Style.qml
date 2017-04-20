@@ -35,6 +35,7 @@ import QtApplicationManager 1.0
 import QtQuick.Window 2.0
 import com.pelagicore.styles.neptune 1.0
 
+// TODO: Remove dependency to AppMan. Otherwise all controls will depend on AppMan
 QtObject {
     id: root
 

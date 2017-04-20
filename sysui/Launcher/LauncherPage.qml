@@ -41,7 +41,7 @@ import QtApplicationManager 1.0
 UIPage {
     id: root
 
-    signal updateApp()
+    signal updateApp(int index)
 
     header: AppInfoPanel {
         Layout.fillWidth: true
@@ -57,11 +57,9 @@ UIPage {
         property bool editMode: false
         property int columns: root.width/cellWidth
 
-        width: cellWidth*columns
-
         clip: true
-        cellWidth: Style.hspan(4)
-        cellHeight: Style.vspan(7)
+        cellWidth: width/4
+        cellHeight: height/3
 
         model: ApplicationManager
 
@@ -82,36 +80,42 @@ UIPage {
             NumberAnimation { properties: "x,y"; duration: 200 }
         }
 
-        delegate: AppButton {
-            width: view.cellWidth
-            height: view.cellHeight
+        delegate: Item {
+            width: GridView.view.cellWidth
+            height: GridView.view.cellHeight
+            AppButton {
+                anchors.fill: parent
+                anchors.margins: padding
+                name: model.name
+                icon: Qt.resolvedUrl(model.icon)
 
-            name: model.name
-            icon: Qt.resolvedUrl(model.icon)
+                editMode: view.editMode
+                removable: model.isRemovable
+                installProgress: model.updateProgress
+                isUpdating: model.isUpdating
 
-            editMode: view.editMode
-            removable: model.isRemovable
-            installProgress: model.updateProgress
-            isUpdating: model.isUpdating
-
-            onIsUpdatingChanged: {
-                if (isUpdating)
-                    root.updateApp()
-            }
-
-            onClicked: {
-                if (view.editMode) {
-                    view.editMode = false
-                } else {
-                    if (!model.isUpdating)
-                        console.log("Starting app " + model.applicationId + ": " + ApplicationManager.startApplication(model.applicationId));
+                onIsUpdatingChanged: {
+                    if (isUpdating)
+                        root.updateApp(index)
                 }
-            }
 
-            onRemoveClicked: {
-                ApplicationInstaller.removePackage(model.applicationId, false /*keepDocuments*/, true /*force*/)
+                onClicked: {
+                    if (view.editMode) {
+                        view.editMode = false
+                    } else {
+                        if (!model.isUpdating) {
+                            console.log("Starting app " + model.applicationId + ": " + ApplicationManager.startApplication(model.applicationId));
+                        }
+                    }
+                }
+
+                onRemoveClicked: {
+                    console.log('003: remove app')
+                    view.editMode = false;
+                    ApplicationInstaller.removePackage(model.applicationId, false /*keepDocuments*/, true /*force*/);
+                }
+                onPressAndHold: view.editMode = true
             }
-            onPressAndHold: view.editMode = true
         }
     }
 }

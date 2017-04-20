@@ -40,12 +40,5 @@ Page {
     implicitWidth: Style.hspan(24)
     implicitHeight: Style.vspan(24)
 
-    property alias _tracer_color: tracer.color
-    property alias _tracer_padding: tracer.padding
-
-    Tracer {
-        id: tracer
-    }
-
     background: Item {}
 }

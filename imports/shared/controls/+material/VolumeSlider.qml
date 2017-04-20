@@ -29,15 +29,9 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.6
-import QtQuick.Controls 2.0 as QQC2
-import QtQuick.Controls.Styles 1.0
-import utils 1.0
+import QtQuick.Controls 2.0
 
-// TODO: Convert to use QQC2 PageIndicator
-QQC2.PageIndicator {
-    id: root
-    implicitWidth: Style.hspan(4)
-    implicitHeight: Style.vspan(2)
 
+Slider {
+    id: control
 }

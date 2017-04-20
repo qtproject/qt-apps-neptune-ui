@@ -30,7 +30,6 @@
 ****************************************************************************/
 
 import QtQuick 2.6
-import QtQuick.Controls 2.0 as C
 import QtQuick.Templates 2.0 as T
 import com.pelagicore.styles.neptune 1.0
 
@@ -58,8 +57,8 @@ T.Button {
     }
 
     background: Rectangle {
-        implicitWidth: control.NeptuneStyle.cellWidth * 4
-        implicitHeight: control.NeptuneStyle.cellHeight*2
+        implicitWidth: control.NeptuneStyle.cellWidth
+        implicitHeight: control.NeptuneStyle.cellHeight
         visible: !control.flat || control.down || control.checked || control.highlighted
         color: control.checked ? control.NeptuneStyle.lighter25(control.NeptuneStyle.darkColor) : control.NeptuneStyle.darkColor
         border.color: control.NeptuneStyle.lighter25(color)

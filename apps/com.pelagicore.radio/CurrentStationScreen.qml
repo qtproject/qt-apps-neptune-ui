@@ -31,7 +31,7 @@
 
 import QtQuick 2.5
 import QtQuick.Layouts 1.0
-import QtQuick.Controls 2.0
+import QtQuick.Controls 2.1
 
 import controls 1.0
 import utils 1.0
@@ -61,7 +61,6 @@ UIScreen {
         width: Style.hspan(12)
         height: Style.vspan(18)
         anchors.horizontalCenter: parent.horizontalCenter
-        spacing: 0
         Spacer {
             Layout.preferredHeight: Style.vspan(1)
             Layout.fillWidth: true
@@ -193,24 +192,24 @@ UIScreen {
         anchors.rightMargin: Style.hspan(1)
         anchors.verticalCenter: parent.verticalCenter
 
-        Column {
-            spacing: 0
-            Button {
-                width: Style.hspan(4)
-                height: Style.vspan(3)
+        ColumnLayout {
+            anchors.fill: parent
+            ToolButton {
+                Layout.fillWidth: true
+                Layout.fillHeight: true
                 text: "FM"
                 font.pixelSize: Style.fontSizeL
             }
-            Button {
-                width: Style.hspan(4)
-                height: Style.vspan(3)
+            ToolButton {
+                Layout.fillWidth: true
+                Layout.fillHeight: true
                 text: "AM"
                 enabled: false
                 font.pixelSize: Style.fontSizeL
             }
-            Button {
-                width: Style.hspan(4)
-                height: Style.vspan(3)
+            ToolButton {
+                Layout.fillWidth: true
+                Layout.fillHeight: true
                 text: "SiriusXM"
                 enabled: false
                 font.pixelSize: Style.fontSizeL

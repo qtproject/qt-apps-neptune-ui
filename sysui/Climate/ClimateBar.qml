@@ -101,6 +101,7 @@ Control {
                 height: Style.vspan(root.collapsedVspan)
                 anchors.left: leftSeatHeat.right
                 anchors.right: rightSeatHeat.left
+                anchors.centerIn: parent
                 anchors.verticalCenter: parent.verticalCenter
             }
 
@@ -177,11 +178,14 @@ Control {
                     Layout.preferredHeight: Style.vspan(10)
 
                     model: ClimateService.climateOptions
-                    delegate: ClimateGridButton {
+                    delegate: Button {
                         width: Style.hspan(3)
                         height: Style.vspan(5)
-                        symbolName: modelData.symbol
-                        active: modelData.enabled
+                        indicator: Image {
+                            anchors.centerIn: parent
+                            source: Style.symbol(modelData.symbol)
+                        }
+                        checked: modelData.enabled
                         onClicked: modelData.setEnabled(!modelData.enabled)
                     }
                 }

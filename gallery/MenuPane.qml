@@ -31,13 +31,12 @@
 
 import QtQuick 2.8
 import QtQuick.Controls 2.1
-import QtQuick.Controls.Styles 1.4
 import QtQuick.Layouts 1.1
 
 ApplicationWindow {
     id: root
-    width: 640
-    height: 960
+    width: 1920
+    height: 1080
 
     ListModel {
         id: listEntries
@@ -50,6 +49,7 @@ ApplicationWindow {
         ListElement { title: 'Switch' ; source: 'gallery/pages/SwitchPage.qml' }
         ListElement { title: 'Colors' ; source: 'gallery/pages/ColorPage.qml' }
         ListElement { title: 'Item Delegate' ; source: 'gallery/pages/ItemDelegatePage.qml' }
+        ListElement { title: 'Switch Delegate' ; source: 'gallery/pages/SwitchDelegatePage.qml' }
         ListElement { title: 'Frame' ; source: 'gallery/pages/FramePage.qml' }
         ListElement { title: 'Pane' ; source: 'gallery/pages/PanePage.qml' }
     }
@@ -59,16 +59,12 @@ ApplicationWindow {
         width: root.width / 4
         anchors.top: parent.top
         anchors.bottom: parent.bottom
-        clip: true
-        background: Rectangle {
-            anchors.fill: parent
-            color: "orange"
-        }
         ListView {
             id: view
             anchors.topMargin: 20
             anchors.fill: parent
             model: listEntries
+            clip: true
             delegate: ItemDelegate {
                 width: ListView.view.width
                 text: model.title
@@ -77,7 +73,7 @@ ApplicationWindow {
                     view.currentIndex = index;
                     //make sure there is nothing else on the stack
                     stackView.clear();
-                    stackView.push(model.source);
+                    stackView.replace(model.source);
                 }
             }
         }

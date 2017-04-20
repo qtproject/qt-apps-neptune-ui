@@ -36,7 +36,7 @@ import QtApplicationManager 1.0
 // TODO: Move this to a library and convert to QObject
 
 Item {
-
+    id: root
     property bool serverOnline: false
     property string serverReason
     property string server: ApplicationManager.systemProperties.appStoreServerUrl
@@ -62,7 +62,7 @@ Item {
             if (data !== 0) {
                 if (data.status === "ok") {
                     serverOnline = true
-                    login()
+                    root.login()
                     //refresh()
                 } else if (data.status === "maintenance") {
                     serverOnline = false

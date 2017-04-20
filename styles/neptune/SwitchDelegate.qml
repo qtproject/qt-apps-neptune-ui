@@ -29,50 +29,48 @@
 **
 ****************************************************************************/
 
-
 import QtQuick 2.8
 import QtQuick.Templates 2.1 as T
 import com.pelagicore.styles.neptune 1.0
 
-T.ToolButton {
+T.SwitchDelegate {
     id: control
+
 
     implicitWidth: Math.max(background ? background.implicitWidth : 0,
                             contentItem.implicitWidth + leftPadding + rightPadding)
     implicitHeight: Math.max(background ? background.implicitHeight : 0,
-                             contentItem.implicitHeight + topPadding + bottomPadding)
+                             Math.max(contentItem.implicitHeight,
+                                      indicator ? indicator.implicitHeight : 0) + topPadding + bottomPadding)
     baselineOffset: contentItem.y + contentItem.baselineOffset
 
-    padding: 6
-    font.pixelSize: control.NeptuneStyle.fontSizeM
-    font.family: control.NeptuneStyle.fontFamily
+    padding: 16
+    topPadding: 8
+    bottomPadding: 8
+    spacing: 16
+
+    indicator: SwitchIndicator {
+        x: text ? (control.mirrored ? control.leftPadding : control.width - width - control.rightPadding) : control.leftPadding + (control.availableWidth - width) / 2
+        y: control.topPadding + (control.availableHeight - height) / 2
+        control: control
+    }
 
     contentItem: Text {
+        leftPadding: !control.mirrored ? 0 : control.indicator.width + control.spacing
+        rightPadding: control.mirrored ? 0 : control.indicator.width + control.spacing
+
         text: control.text
         font: control.font
-        elide: Text.ElideRight
-        horizontalAlignment: Text.AlignHCenter
-        verticalAlignment: Text.AlignVCenter
-
-        opacity: enabled ? 1.0 : 0.2
         color: control.NeptuneStyle.brightColor
+        elide: Text.ElideRight
+        visible: control.text
+        horizontalAlignment: Text.AlignLeft
+        verticalAlignment: Text.AlignVCenter
     }
 
     background: Rectangle {
-        implicitWidth: 68
         implicitHeight: 48
 
-        color: control.enabled && (control.highlighted || control.checked)
-               ? control.NeptuneStyle.darkColor
-                 : "transparent"
-
-        Rectangle {
-            width: parent.width
-            height: parent.height
-            visible: control.down || control.hovered
-            color: control.down
-                   ? control.NeptuneStyle.lighter25(control.NeptuneStyle.darkColor)
-                   : control.NeptuneStyle.darkColor
-        }
+        color: control.highlighted ? control.NeptuneStyle.lighter50(control.NeptuneStyle.darkColor) : "transparent"
     }
 }

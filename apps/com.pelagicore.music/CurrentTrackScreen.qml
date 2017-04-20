@@ -31,7 +31,7 @@
 
 import QtQuick 2.6
 import QtQuick.Layouts 1.0
-import QtQuick.Controls 2.0
+import QtQuick.Controls 2.1
 import controls 1.0
 import utils 1.0
 import "."
@@ -54,7 +54,6 @@ UIScreen {
         height: parent.height - Style.vspan(2)
         anchors.centerIn: parent
         spacing: 0
-//        Spacer { Layout.preferredHeight: Style.vspan(1); Layout.fillWidth: true }
         RowLayout {
             anchors.horizontalCenter: parent.horizontalCenter
             spacing: 0
@@ -198,31 +197,29 @@ UIScreen {
     }
 
     Control {
-        id: sourceOption
         width: Style.hspan(4)
         height: Style.vspan(12)
         anchors.right: musicControl.left
         anchors.rightMargin: Style.hspan(1)
         anchors.verticalCenter: parent.verticalCenter
-
-        Column {
-            spacing: 0
-            Button {
-                width: Style.hspan(4)
-                height: Style.vspan(4)
+        ColumnLayout {
+            anchors.fill: parent
+            ToolButton {
+                Layout.fillWidth: true
+                Layout.fillHeight: true
                 text: "BLUETOOTH"
                 font.pixelSize: Style.fontSizeL
             }
-            Button {
-                width: Style.hspan(4)
-                height: Style.vspan(4)
+            ToolButton {
+                Layout.fillWidth: true
+                Layout.fillHeight: true
                 text: "USB"
                 enabled: false
                 font.pixelSize: Style.fontSizeL
             }
-            Button {
-                width: Style.hspan(4)
-                height: Style.vspan(4)
+            ToolButton {
+                Layout.fillWidth: true
+                Layout.fillHeight: true
                 text: "SPOTIFY"
                 enabled: false
                 font.pixelSize: Style.fontSizeL
