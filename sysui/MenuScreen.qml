@@ -39,6 +39,7 @@ import "Home"
 import "Launcher"
 import "Cloud"
 import QtQuick.Controls 2.0
+import service.statusbar 1.0
 
 UIScreen {
     id: root
@@ -49,11 +50,14 @@ UIScreen {
         id: view
         anchors.fill: parent
         currentIndex: 2
+        onCurrentIndexChanged: {
+            StatusBarService.updatePageIndicator(currentIndex, count);
+        }
+
         MyCarPage {
         }
         FunctionsPage {
         }
-
         HomePage {
         }
         LauncherPage {
@@ -64,12 +68,9 @@ UIScreen {
         }
         CloudPage {
         }
-    }
 
-    PageIndicator {
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.top: parent.top
-        currentIndex: view.currentIndex
-        count: view.count
+        Component.onCompleted: {
+            StatusBarService.updatePageIndicator(currentIndex, count);
+        }
     }
 }

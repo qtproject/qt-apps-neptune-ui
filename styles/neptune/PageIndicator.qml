@@ -29,39 +29,38 @@
 **
 ****************************************************************************/
 
-pragma Singleton
-import QtQuick 2.0
-import service.settings 1.0
+import QtQuick 2.8
+import QtQuick.Templates 2.1 as T
+import com.pelagicore.styles.neptune 1.0
 
-Item {
-    id: root
+T.PageIndicator {
+    id: control
 
-    property string clusterTitle: ""
-    property int pageIndicatorSize: 0
-    property int currentPage: 0
+    implicitWidth: Math.max(background ? background.implicitWidth : 0,
+                            contentItem.implicitWidth + leftPadding + rightPadding)
+    implicitHeight: Math.max(background ? background.implicitHeight : 0,
+                             contentItem.implicitHeight + topPadding + bottomPadding)
 
-    property var indicators: [
-        { name: "battery", active: true },
-        { name: "wifi",  active: true },
-        { name: "break", active: false },
-        { name: "bluetooth", active: SettingsService.bluetoothOption.active }
-    ]
+    padding: 6
+    spacing: 6
 
-    property var currentDate: new Date();
+    delegate: Rectangle {
+        implicitWidth: 8
+        implicitHeight: 8
 
-    function updatePageIndicator(index, count) {
-        currentPage = index;
-        pageIndicatorSize = count;
+        radius: width / 2
+        color: control.NeptuneStyle.accentColor
+
+        opacity: index === currentIndex ? 0.95 : pressed ? 0.7 : 0.45
+        Behavior on opacity { OpacityAnimator { duration: 100 } }
     }
 
-    Timer {
-        interval: 1000
-        repeat: true
-        running: true
-        onTriggered: {
-            currentDate = new Date();
+    contentItem: Row {
+        spacing: control.spacing
+
+        Repeater {
+            model: control.count
+            delegate: control.delegate
         }
     }
-
-    visible: false
 }

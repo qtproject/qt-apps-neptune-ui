@@ -29,39 +29,8 @@
 **
 ****************************************************************************/
 
-pragma Singleton
 import QtQuick 2.0
-import service.settings 1.0
 
 Item {
-    id: root
 
-    property string clusterTitle: ""
-    property int pageIndicatorSize: 0
-    property int currentPage: 0
-
-    property var indicators: [
-        { name: "battery", active: true },
-        { name: "wifi",  active: true },
-        { name: "break", active: false },
-        { name: "bluetooth", active: SettingsService.bluetoothOption.active }
-    ]
-
-    property var currentDate: new Date();
-
-    function updatePageIndicator(index, count) {
-        currentPage = index;
-        pageIndicatorSize = count;
-    }
-
-    Timer {
-        interval: 1000
-        repeat: true
-        running: true
-        onTriggered: {
-            currentDate = new Date();
-        }
-    }
-
-    visible: false
 }

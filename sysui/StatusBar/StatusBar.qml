@@ -53,25 +53,36 @@ Pane {
     }
 
     RowLayout {
-        id: layout
+        anchors.left: parent.left
+        anchors.top: parent.top
+        anchors.bottom: parent.bottom
+        anchors.topMargin: Style.padding
+        anchors.bottomMargin: Style.padding
         spacing: Style.padding
+        IndicatorTray {
+            Layout.fillHeight: true
+            model: StatusBarService.indicators
+        }
+    }
+
+    PageIndicator {
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: parent.top
         anchors.bottom: parent.bottom
         anchors.topMargin: Style.padding
         anchors.bottomMargin: Style.padding
 
-        width: Style.hspan(23)
+        currentIndex: StatusBarService.currentPage
+        count: StatusBarService.pageIndicatorSize
+    }
 
-        IndicatorTray {
-            Layout.fillHeight: true
-            model: StatusBarService.indicators
-        }
-
-        Spacer {
-            Layout.fillHeight: true
-            Layout.fillWidth: true
-        }
+    RowLayout {
+        spacing: Style.padding
+        anchors.right: parent.right
+        anchors.top: parent.top
+        anchors.bottom: parent.bottom
+        anchors.topMargin: Style.padding
+        anchors.bottomMargin: Style.padding
 
         Tool {
             Layout.fillHeight: true
