@@ -68,9 +68,8 @@ Control {
         height: root.height
         anchors.verticalCenter: parent.verticalCenter
         anchors.left: parent.left
-        horizontalAlignment: false
+        tabWidth: Style.hspan(4)
         viewLeftMargin: letterPicker.width
-        tabWidth: 2
         tabs: [
             { title : "PLAYING", url : nowPlaying, properties : {} },
             { title : "ARTISTS", url : library, properties : { type: "artists" } },

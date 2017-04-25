@@ -40,7 +40,7 @@ Control {
 
     property alias currentIndex: tabRow.currentIndex
     property alias tabs: repeater.model
-    property real tabWidth: Style.hspan(4)
+    property real tabWidth: Style.hspan(2)
     property real tabHeight: Style.vspan(1)
     property bool horizontalAlignment: true
     property int viewLeftMargin: 0
@@ -53,8 +53,9 @@ Control {
         Repeater {
             id: repeater
             TabButton {
-                width: Style.hspan(4)
-                height: Style.vspan(1)
+                property real maxTabWidth: repeater.count ? root.width / repeater.count : root.width
+                width: Math.min(maxTabWidth, root.tabWidth)
+                height: root.tabHeight
                 text: modelData.title
                 onClicked: tabContent.replace(null, modelData.url, modelData.properties)
             }
