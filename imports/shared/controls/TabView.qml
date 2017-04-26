@@ -38,7 +38,7 @@ import utils 1.0
 Control {
     id: root
 
-    property alias currentIndex: tabRow.currentIndex
+    property int currentIndex: 0
     property alias tabs: repeater.model
     property real tabWidth: Style.hspan(2)
     property real tabHeight: Style.vspan(1)
@@ -50,6 +50,7 @@ Control {
         anchors.top: parent.top
         anchors.horizontalCenter: root.horizontalAlignment ? parent.horizontalCenter : undefined
         height: root.tabHeight
+
         Repeater {
             id: repeater
             TabButton {
@@ -57,7 +58,12 @@ Control {
                 width: Math.min(maxTabWidth, root.tabWidth)
                 height: root.tabHeight
                 text: modelData.title
-                onClicked: tabContent.replace(null, modelData.url, modelData.properties)
+                onClicked: {
+                    if (root.currentIndex !== index) {
+                        tabContent.replace(null, modelData.url, modelData.properties);
+                        root.currentIndex = tabRow.currentIndex;
+                    }
+                }
             }
         }
     }
