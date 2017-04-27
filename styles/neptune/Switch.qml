@@ -82,7 +82,6 @@ T.Switch {
                     rotation: 180
                     asynchronous: true
                 }
-
                 Image {
                     id: iconOff
                     anchors.verticalCenter: background.verticalCenter
@@ -104,18 +103,17 @@ T.Switch {
         }
     }
 
+    states: [
+        State {
+            name: "checked"
+            when: root.checked
 
+            PropertyChanges { target: iconOn; visible: true }
+            PropertyChanges { target: iconOff; visible: false }
+            PropertyChanges { target: background; rotation: 0 }
+        }
+    ]
 
-//    states: [
-//        State {
-//            name: "checked"
-//            when: root.checked
-
-//            PropertyChanges { target: iconOn; visible: true }
-//            PropertyChanges { target: iconOff; visible: false }
-//            PropertyChanges { target: background; rotation: 0 }
-//        }
-//    ]
 //    Tracer {}
 
     //    Component.onCompleted: {
