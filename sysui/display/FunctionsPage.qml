@@ -38,15 +38,22 @@ import QtQuick.Controls 2.0
 import utils 1.0
 import models.settings 1.0
 import service.notification 1.0
+import service.popup 1.0
 
 UIPage {
     id: root
     width: Style.hspan(24)
     height: Style.vspan(24)
 
+    PopupInterface {
+        id: popupInterface
+        actions: [ { text: "Cancel" } ]
+        title: "Car Settings"
+    }
+
     NotificationInterface {
         id: notificationInterface
-        actions: ["OK"]
+        actions: [ "Cancel" ]
         summary: "Car Settings"
     }
 
@@ -71,6 +78,7 @@ UIPage {
         cellHeight: height/3
 
         delegate: Item {
+            id: delegatedItem
             width: GridView.view.cellWidth
             height: GridView.view.cellHeight
             Button {
@@ -79,10 +87,17 @@ UIPage {
                 anchors.fill: parent
                 anchors.margins: padding
                 checkable: true
+
                 onClicked: {
                     model.active = !model.active
-                    notificationInterface.body = model.description + (checked ? " activated" : " deactivated")
-                    notificationInterface.show()
+                    if (index % 2) {
+                        notificationInterface.icon = Style.symbolM(model.icon)
+                        notificationInterface.body = model.description + (model.active ? " activated" : " deactivated");
+                        notificationInterface.show();
+                    } else {
+                        popupInterface.summary = model.description + (model.active ? " activated" : " deactivated");
+                        popupInterface.show();
+                    }
                 }
             }
         }

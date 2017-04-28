@@ -29,74 +29,31 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.6
+import QtQuick 2.0
+import QtApplicationManager 1.0
 
-import controls 1.0
-import utils 1.0
-import climate 1.0
-import statusbar 1.0
-import notification 1.0
-import popup 1.0
-import windowoverview 1.0
-
-import models.system 1.0
-
-Item {
+Notification {
     id: root
 
-    width: 1280
-    height: 800
+    category: "popup"
+    timeout: 0
 
-    // Background Elements
+    property string title: ""
+    property string subtitle: ""
 
-    // Content Elements
-    StatusBar {
-        id: statusBar
+    onTitleChanged: {
+        root.updatePopup();
     }
 
-    LaunchController {
-        id: launcher
-        anchors.top: statusBar.bottom
+    onSubtitleChanged: {
+        root.updatePopup();
     }
 
-    About {
-        id: about
-    }
-
-    // Foreground Elements
-
-    ClimateBar {
-    }
-
-    Loader {
-        id: toolBarMonitorLoader
-        width: parent.width
-        height: 200
-        anchors.bottom: parent.bottom
-        active: SystemModel.toolBarMonitorVisible
-        source: "dev/ToolBarMonitor.qml"
-    }
-
-    WindowOverview {
-        id: windowOverview
-        anchors.fill: parent
-    }
-
-    PopupContainer {
-        id: popupContainer
-        anchors.centerIn: parent
-    }
-
-    NotificationContainer {
-        id: notificationContainer
-        anchors.horizontalCenter: parent.horizontalCenter
-    }
-
-    Loader {
-        id: keyboardLoader
-        anchors.left: parent.left
-        anchors.right: parent.right
-        anchors.bottom: parent.bottom
-        source: "Keyboard.qml"
+    function updatePopup() {
+        root.extended = {
+            "title": root.title,
+            "subtitle": root.subtitle
+        }
+        root.update();
     }
 }

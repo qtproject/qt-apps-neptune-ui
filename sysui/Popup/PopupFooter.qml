@@ -30,73 +30,28 @@
 ****************************************************************************/
 
 import QtQuick 2.6
-
+import QtQuick.Controls 2.0
 import controls 1.0
-import utils 1.0
-import climate 1.0
-import statusbar 1.0
-import notification 1.0
-import popup 1.0
-import windowoverview 1.0
 
-import models.system 1.0
-
-Item {
+Row {
     id: root
 
-    width: 1280
-    height: 800
+    property int popupWidth: 0
+    property alias model: buttonModel.model
+    signal buttonClicked(var buttonIndex)
 
-    // Background Elements
+    spacing: 2
 
-    // Content Elements
-    StatusBar {
-        id: statusBar
-    }
+    Repeater {
+        id: buttonModel
 
-    LaunchController {
-        id: launcher
-        anchors.top: statusBar.bottom
-    }
+        property int buttonWidth: model ? root.popupWidth / model.length : 0
 
-    About {
-        id: about
-    }
-
-    // Foreground Elements
-
-    ClimateBar {
-    }
-
-    Loader {
-        id: toolBarMonitorLoader
-        width: parent.width
-        height: 200
-        anchors.bottom: parent.bottom
-        active: SystemModel.toolBarMonitorVisible
-        source: "dev/ToolBarMonitor.qml"
-    }
-
-    WindowOverview {
-        id: windowOverview
-        anchors.fill: parent
-    }
-
-    PopupContainer {
-        id: popupContainer
-        anchors.centerIn: parent
-    }
-
-    NotificationContainer {
-        id: notificationContainer
-        anchors.horizontalCenter: parent.horizontalCenter
-    }
-
-    Loader {
-        id: keyboardLoader
-        anchors.left: parent.left
-        anchors.right: parent.right
-        anchors.bottom: parent.bottom
-        source: "Keyboard.qml"
+        delegate: Button {
+            width: buttonModel.buttonWidth
+            height: 80
+            text: modelData.text
+            onClicked: root.buttonClicked(index)
+        }
     }
 }

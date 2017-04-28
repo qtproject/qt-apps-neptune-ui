@@ -41,11 +41,11 @@ QtObject {
     readonly property int maxNotifications: 20
 
     property bool notificationVisible: false
-
     property int notificationIndex: -1
 
     property string title
     property string description
+    property string icon
 
     property var buttonModel: []
 
@@ -53,64 +53,74 @@ QtObject {
         target: NotificationManager
 
         onNotificationAdded: {
-            console.log("::: Notification received :::", id)
-            addNotification()
+            var receivedContent = NotificationManager.notification(id);
+
+            if (receivedContent.category === "notification") {
+                console.log("::: Notification received :::", id);
+                addNotification(receivedContent);
+            }
         }
 
         onNotificationChanged: {
-            console.log("::: Notification changed :::", id)
-            updateNotification(id)
+            var receivedContent = NotificationManager.notification(id);
+
+            if (receivedContent.category === "notification") {
+                console.log("::: Notification changed :::", id);
+                updateNotification(receivedContent);
+            }
         }
 
         onNotificationAboutToBeRemoved: {
-            console.log("::: Notification closing :::", id)
-            closeNotification()
+            var receivedContent = NotificationManager.notification(id);
+
+            if (receivedContent.category === "notification") {
+                closeNotification();
+            }
         }
     }
 
-    function addNotification() {
-        var notification = NotificationManager.get(NotificationManager.count - 1)
-        var notificationId = notification.id
-        var actions = []
+    function addNotification(notification) {
+        var notificationId = notification.id;
+        var actions = [];
         for (var i in notification.actions) {
-            actions.push(i)
+            actions.push(i);
         }
-        root.buttonModel = actions
-        root.notificationIndex = notificationId
-        root.title = notification.summary
-        root.description = notification.body
-        root.notificationVisible = true
+        root.buttonModel = actions;
+        root.notificationIndex = notificationId;
+        root.title = notification.summary;
+        root.description = notification.body;
+        root.icon = notification.icon;
+        root.notificationVisible = true;
     }
 
-    function updateNotification(index) {
-        var notification = NotificationManager.notification(index)
-        root.notificationIndex = notification.id
-        root.title = notification.summary
-        root.description = notification.body
-        var actions = []
+    function updateNotification(notification) {
+        root.notificationIndex = notification.id;
+        root.title = notification.summary;
+        root.description = notification.body;
+        root.icon = notification.icon;
+        var actions = [];
         for (var i in notification.actions) {
-            actions.push(i)
+            actions.push(i);
         }
-        root.buttonModel = actions
-        root.notificationVisible = true
+        root.buttonModel = actions;
+        root.notificationVisible = true;
     }
 
     function closeNotification() {
-        root.title = root.description = ""
-        root.buttonModel = []
-        root.notificationIndex = -1
-        root.notificationVisible = false
+        root.title = root.description = "";
+        root.buttonModel = [];
+        root.notificationIndex = -1;
+        root.notificationVisible = false;
     }
 
-    function removeNotification() {
-        NotificationManager.dismissNotification(root.notificationIndex)
-        closeNotification()
+    function removeNotification(index) {
+        NotificationManager.dismissNotification(index);
+        closeNotification();
     }
 
     function buttonClicked(index) {
-        NotificationManager.triggerNotificationAction(root.notificationIndex, root.buttonModel[index])
-        closeNotification()
+        NotificationManager.triggerNotificationAction(root.notificationIndex, root.buttonModel[index]);
+        closeNotification();
     }
-
 }
 

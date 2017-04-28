@@ -30,73 +30,41 @@
 ****************************************************************************/
 
 import QtQuick 2.6
-
+import QtQuick.Controls 2.0
 import controls 1.0
 import utils 1.0
-import climate 1.0
-import statusbar 1.0
-import notification 1.0
-import popup 1.0
-import windowoverview 1.0
-
-import models.system 1.0
 
 Item {
     id: root
 
-    width: 1280
-    height: 800
+    property alias title: title.text
+    property alias subtitle: subtitle.text
+    property int headerMargin: subtitle.text !== "" ? 10 : 8
+    property int verticalOffset: subtitle.text !== "" ? 2 : 3
 
-    // Background Elements
-
-    // Content Elements
-    StatusBar {
-        id: statusBar
-    }
-
-    LaunchController {
-        id: launcher
-        anchors.top: statusBar.bottom
-    }
-
-    About {
-        id: about
-    }
-
-    // Foreground Elements
-
-    ClimateBar {
-    }
-
-    Loader {
-        id: toolBarMonitorLoader
-        width: parent.width
-        height: 200
-        anchors.bottom: parent.bottom
-        active: SystemModel.toolBarMonitorVisible
-        source: "dev/ToolBarMonitor.qml"
-    }
-
-    WindowOverview {
-        id: windowOverview
-        anchors.fill: parent
-    }
-
-    PopupContainer {
-        id: popupContainer
-        anchors.centerIn: parent
-    }
-
-    NotificationContainer {
-        id: notificationContainer
+    Column {
+        id: titleSubtitleColumn
+        height: subtitle.text !== "" ? title.paintedHeight + subtitle.paintedHeight + spacing : title.paintedHeight
+        anchors.verticalCenter: parent.verticalCenter
         anchors.horizontalCenter: parent.horizontalCenter
-    }
+        anchors.verticalCenterOffset: root.verticalOffset
+        spacing: root.headerMargin
 
-    Loader {
-        id: keyboardLoader
-        anchors.left: parent.left
-        anchors.right: parent.right
-        anchors.bottom: parent.bottom
-        source: "Keyboard.qml"
+        Label {
+            id: title
+            font.pixelSize: Style.fontSizeM
+            anchors.horizontalCenter: parent.horizontalCenter
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignTop
+        }
+
+        Label {
+            id: subtitle
+            font.pixelSize: Style.fontSizeS
+            anchors.horizontalCenter: parent.horizontalCenter
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignTop
+        }
     }
 }
+

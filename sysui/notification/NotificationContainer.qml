@@ -38,16 +38,11 @@ import models.notification 1.0
 Control {
     id: root
 
-    width: Style.hspan(8)
-    height: Style.vspan(6)
+    width: Style.screenWidth
+    height: Style.vspan(2)
 
-    visible: opacity > 0
-
-    scale: NotificationModel.notificationVisible ? 1 : 0
-    Behavior on scale { NumberAnimation { duration: 200 } }
-
-    opacity: NotificationModel.notificationVisible ? 1 : 0
-    Behavior on opacity { NumberAnimation { duration: 200 } }
+    y: NotificationModel.notificationVisible ? 0 : -height
+    Behavior on y { NumberAnimation { duration: 200 } }
 
     Rectangle {
         anchors.fill: parent
@@ -55,44 +50,31 @@ Control {
         opacity: 0.85
     }
 
-    Label {
-        id: title
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.top: parent.top
-        text: NotificationModel.title
-    }
-
-    Label {
-        id: body
-
-        width: parent.width
-        anchors.bottom: buttonsRow.top
-        anchors.top: title.bottom
-        anchors.topMargin: 10
-        font.pixelSize: Style.fontSizeM
-        text: NotificationModel.description
-        horizontalAlignment: Text.AlignHCenter
-    }
-
     Row {
-        id: buttonsRow
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.bottom: parent.bottom
-        spacing: 2
+        id: contentRow
+        height: root.height
+        anchors.left: root.left
+        anchors.leftMargin: 20
+        spacing: 20
 
-        Repeater {
-            id: buttonModel
+        Image {
+            id: icon
+            source: NotificationModel.icon
+        }
 
-            property int buttonWidth: model ? root.width / model.length : 0
+        Column {
+            spacing: 5
+            Label {
+                id: title
+                text: NotificationModel.title
+            }
 
-            model: NotificationModel.buttonModel
-
-            delegate: Button {
-                width: buttonModel.buttonWidth
-                text: modelData
-                onClicked: NotificationModel.buttonClicked(index)
+            Label {
+                id: body
+                width: parent.width
+                font.pixelSize: Style.fontSizeM
+                text: NotificationModel.description
             }
         }
     }
-
 }
