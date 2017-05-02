@@ -30,101 +30,73 @@
 ****************************************************************************/
 
 import QtQuick 2.5
-import QtQuick.Controls 1.0
+import QtQuick.Controls 2.1
 import controls 1.0
 import utils 1.0
 import models 1.0
 
-//TODO: To be ported to QQC2 in a separate commit
 StackView {
     id: root
     width: Style.hspan(24)
     height: Style.vspan(20)
     focus: true
 
-
-    delegate: StackViewDelegate {
-        function transitionFinished(properties)
-        {
+    pushEnter: Transition {
+        ScaleAnimator {
+            from: 0
+            to: 1
+            duration: 150
         }
+        OpacityAnimator {
+            from: 0
+            to: 1
+            duration: 150
+        }
+    }
 
-        pushTransition: StackViewTransition {
-            id: pushTransition
-            property int duration: 150
-            property int intialPauseDuration: 200
-
-            PropertyAction { target: enterItem; property: "scale"; value: 0.0 }
-            PropertyAnimation { target: exitItem; property: "opacity"; to: 0.8; duration: pushTransition.intialPauseDuration }
-
-            SequentialAnimation {
-                PauseAnimation { duration: pushTransition.intialPauseDuration }
-                ParallelAnimation {
-
-                    PropertyAnimation {
-                        target: enterItem
-                        property: "scale"
-                        from: 0.1
-                        to: 1.0
-                        duration: pushTransition.duration
-                    }
-                    PropertyAnimation {
-                        target: enterItem
-                        property: "opacity"
-                        from: 0.0
-                        to: 1.0
-                        duration: pushTransition.duration*.5
-                    }
-                    PropertyAnimation {
-                        target: exitItem
-                        property: "scale"
-                        from: 1.0
-                        to: 10.0
-                        duration: pushTransition.duration
-                    }
-                    PropertyAnimation {
-                        target: exitItem
-                        property: "opacity"
-                        from: 0.8
-                        to: 0.0
-                        duration: pushTransition.duration*0.95
-                    }
-                }
+    pushExit: Transition {
+        ParallelAnimation {
+            ScaleAnimator {
+                from: 1
+                to: 0
+                duration: 150
+            }
+            OpacityAnimator {
+                from: 1
+                to: 0
+                duration: 50
             }
         }
+    }
 
-        popTransition: StackViewTransition {
-            id: popTransition
-            property int duration: 150
-            PropertyAnimation {
-                target: enterItem
-                property: "scale"
-                from: 10.0
-                to: 1.0
-                duration: popTransition.duration
-            }
-            PropertyAnimation {
-                target: enterItem
-                property: "opacity"
-                from: 0.0
-                to: 1.0
-                duration: popTransition.duration*.2
-            }
 
-            SequentialAnimation {
-                PropertyAnimation {
-                    target: exitItem
-                    property: "scale"
-                    from: 1.0
-                    to: 0.1
-                    duration: popTransition.duration
-                }
+    popEnter: Transition {
+        ScaleAnimator {
+            from: 0
+            to: 1
+            duration: 150
+        }
+        OpacityAnimator {
+            from: 0
+            to: 1
+            duration: 150
+        }
+    }
 
-                ScriptAction {
-                    script: {
-                        exitItem.visible = false;
-                        ApplicationManagerInterface.releasingApplicationSurfaceDone(exitItem)
-                    }
-                }
+    popExit: Transition {
+        ScaleAnimator {
+            from: 1
+            to: 0
+            duration: 150
+        }
+        OpacityAnimator {
+            from: 1
+            to: 0
+            duration: 100
+        }
+        ScriptAction {
+            script: {
+                ApplicationManagerInterface.releasingApplicationSurfaceDone(currentItem)
             }
         }
     }
@@ -138,41 +110,7 @@ StackView {
     Shortcut {
         context: Qt.ApplicationShortcut
         sequence: StandardKey.Cancel
-        onActivated: { root.popItem(root.currentItem) }
-    }
-
-    function popItem(item) {
-        if (root.depth <= 1)
-            return;
-
-        if (root.busy)
-            root.completeTransition()
-
-        item.state = "closing"
-
-        if (item == root.currentItem) {
-            var stackItem = null;
-            if (root.depth > 2)
-                stackItem = root.get(root.depth - 2);
-            root.pop(stackItem)
-        } else {
-            var stack = []
-            for (var i = 1; i < root.depth; ++i) {
-                var stackItem = root.get(i)
-                if (stackItem === item) {
-                    item.parent = null;
-                    item.visible = false;
-                    ApplicationManagerInterface.releasingApplicationSurfaceDone(item)
-                } else {
-                    print(stackItem)
-                    stack.push({item:stackItem, immediate: true})
-                }
-            }
-            root.pop(null);
-            for (var i = 0; i < stack.length; ++i) {
-                root.push(stack[i])
-            }
-        }
+        onActivated: { root.pop(); }
     }
 
     Connections {
@@ -185,17 +123,15 @@ StackView {
                     return
             }
 
-            if (root.busy)
-                root.completeTransition()
-
-            if (isMinimized)
+            if (isMinimized) {
                 item.parent = dummyitem
-            else
-                root.push(item)
+            } else {
+                root.push(item, {"width": Style.hspan(24), "height": Style.vspan(24)})
+            }
         }
 
         onReleaseApplicationSurface: {
-             root.popItem(item)
+             root.pop()
         }
 
         onUnhandledSurfaceReceived: {
