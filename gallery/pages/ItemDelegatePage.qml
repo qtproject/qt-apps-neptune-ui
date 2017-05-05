@@ -47,6 +47,7 @@ BasePage {
         anchors.topMargin: 50
         anchors.horizontalCenter: parent.horizontalCenter
         delegate: ItemDelegate {
+            font.pixelSize: 20
             text: modelData
             highlighted: ListView.isCurrentItem
             onClicked: listView.currentIndex = index

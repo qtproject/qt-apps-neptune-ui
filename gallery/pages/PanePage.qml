@@ -45,9 +45,9 @@ BasePage {
         anchors.horizontalCenter: parent.horizontalCenter
         ColumnLayout {
             anchors.fill: parent
-            CheckBox { text: qsTr("E-mail") }
-            CheckBox { text: qsTr("Calendar") }
-            CheckBox { text: qsTr("Contacts") }
+            CheckBox { text: qsTr("E-mail") ; font.pixelSize: 20 }
+            CheckBox { text: qsTr("Calendar") ; font.pixelSize: 20 }
+            CheckBox { text: qsTr("Contacts") ; font.pixelSize: 20 }
         }
     }
 }

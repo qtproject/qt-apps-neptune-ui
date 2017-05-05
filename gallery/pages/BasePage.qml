@@ -40,5 +40,6 @@ Page {
         id: label
         padding: 20
         wrapMode: Label.Wrap
+        font.pixelSize: 20
     }
 }

@@ -46,14 +46,17 @@ BasePage {
 
         RowLayout {
             ToolButton {
+                font.pixelSize: 20
                 text: 'Orange Button'
                 onClicked: bgColor.color = 'orange';
             }
             ToolButton {
+                font.pixelSize: 20
                 text: 'Yellow Button'
                 onClicked: bgColor.color = 'yellow';
             }
             ToolButton {
+                font.pixelSize: 20
                 text: 'Pink Button'
                 onClicked: bgColor.color = 'pink';
             }

@@ -31,9 +31,8 @@
 
 import QtQuick 2.8
 import QtQuick.Controls 2.1
-import QtQuick.Layouts 1.1
 
-ApplicationWindow {
+Item {
     id: root
     width: 1920
     height: 1080
@@ -69,6 +68,7 @@ ApplicationWindow {
                 width: ListView.view.width
                 text: model.title
                 highlighted: ListView.isCurrentItem
+                font.pixelSize: 20
                 onClicked: {
                     view.currentIndex = index;
                     //make sure there is nothing else on the stack

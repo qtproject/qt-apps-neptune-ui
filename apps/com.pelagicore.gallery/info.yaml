@@ -1,0 +1,12 @@
+formatVersion: 1
+formatType: am-application
+---
+id:      'com.pelagicore.gallery'
+icon:    'icon.png'
+code:    'Gallery.qml'
+runtime: 'qml'
+name:
+  en: 'Widgets Gallery'
+  de: '---'
+
+categories: [ 'app' ]

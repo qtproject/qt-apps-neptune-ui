@@ -29,30 +29,21 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.8
-import QtQuick.Controls 2.1
-import QtQuick.Layouts 1.1
+import QtQuick 2.2
+import QtQuick.Controls 2.0
+import utils 1.0
+import "../../"
 
-BasePage {
+AppUIScreen {
     id: root
-
-    description: "A Switch is a toggle button that can be switched on (checked) or off (unchecked)."
-
-
-
-    ListView {
-        id: listView
-        anchors.centerIn: parent
-        anchors.margins: 24
-        width: parent.width/2
-        height: parent.height * .75
-        model: 10
-        delegate: SwitchDelegate {
-            width: ListView.view.width
-            font.pixelSize: 20
-            text: 'Switch #' + index
-            highlighted: ListView.isCurrentItem
-            onClicked: listView.currentIndex = index
+    title: "Neptune Widgets Gallery App"
+    UIScreen {
+        anchors.fill: parent
+        onBackScreen: { root.back(); }
+        MenuPane {
+            anchors.centerIn: parent
+            width: Style.hspan(13)
+            height: Style.vspan(24)
         }
     }
 }
