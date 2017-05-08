@@ -38,6 +38,7 @@ import com.pelagicore.styles.neptune 1.0
 UIScreen {
     id: root
 
+    /*! This signal is emitted when the dial button is pressed. */
     signal dial(string name, string number)
 
     Frame {

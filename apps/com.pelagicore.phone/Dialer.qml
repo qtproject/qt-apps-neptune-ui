@@ -38,9 +38,13 @@ import "."
 UIScreen {
     id: root
 
+    /*! The number to be dialed. */
     property alias number: dialInputText.text
 
+    /*! This signal is emitted when the dial button is pressed. */
     signal dial(string number)
+
+    /*! This signal is emitted when the hang up button is pressed. */
     signal hangUp()
 
     Frame {

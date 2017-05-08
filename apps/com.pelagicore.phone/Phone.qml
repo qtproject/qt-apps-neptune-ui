@@ -29,6 +29,23 @@
 **
 ****************************************************************************/
 
+/*!
+\l{Neptune UI Phone Application to Neptune UI}
+\title Neptune UI Phone Application
+\brief This is the phone application of Neptune UI.
+It's a basic implementetion where currently only
+few features are supported.
+\caption Features list:
+\list
+    \li Device pairing
+    \li Display list of available devices
+    \li Display list of contacts
+    \li Dialer
+    \li Call a contact or a number from dialer
+\endlist
+Dummy backend service is implemented for simulation purposes.
+*/
+
 import QtQuick 2.2
 import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.3
@@ -41,6 +58,7 @@ AppUIScreen {
     id: root
     title: "Neptune Phone App"
 
+    /*! Internal */
     property QtObject popupItem : NotificationInterface { }
 
     onRaiseApp: {

@@ -35,10 +35,13 @@ import QtQuick 2.2
 
 QtObject {
     id: root
-
+    //This service shall be implemented as a model in the final version
+    /*! Provides the name of the current paired device. */
     property string currentPairedDeviceName: ''
+    /*! Provides information about if any device is currently paired. */
     property bool isAnyDevicePaired: false
 
+    /*! Provides contacts list model of the currently paired devices'. */
     property ListModel contactsModel: ListModel {
         ListElement { name: "Andreas N." ; number: "01555222" }
         ListElement { name: "Alexandra F." ; number: "02524446" }
@@ -46,6 +49,7 @@ QtObject {
         ListElement { name: "Bill T." ; number: "0784795" }
     }
 
+    /*! Provides the currently available devices list model. */
     property ListModel availableDevices: ListModel {
         ListElement { name: "BlackBerry Z30" ; code: "0123" }
         ListElement { name: "Samsung-123" ; number: "0000" }
