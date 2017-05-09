@@ -30,7 +30,7 @@
 ****************************************************************************/
 
 import QtQuick 2.6
-import QtQuick.Window 2.2
+import QtQuick.Window 2.3
 import QtApplicationManager 1.0
 import com.pelagicore.ScreenManager 1.0
 import utils 1.0
@@ -41,6 +41,7 @@ Window {
     height: Style.clusterHeight
     width: Style.clusterWidth
     visible: true
+    screen: Qt.application.screens[1]
 
     readonly property alias cluster: clusterItem
 
@@ -53,7 +54,6 @@ Window {
 
     Component.onCompleted: {
         WindowManager.registerCompositorView(cluster)
-        ScreenManager.setScreen(cluster, 1)
         StartupTimer.checkpoint("Cluster window created!");
         StartupTimer.createReport();
     }
