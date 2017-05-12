@@ -37,6 +37,7 @@ import QtGraphicalEffects 1.0
 
 import controls 1.0
 import utils 1.0
+import "models"
 import "."
 
 UIScreen {
@@ -48,7 +49,7 @@ UIScreen {
 
     signal playMovie()
 
-    property var track: MovieProvider.currentEntry
+    property var track: MovieModel.currentEntry
 
 
     ColumnLayout {
@@ -75,7 +76,7 @@ UIScreen {
                     Image {
                         id: image
                         anchors.fill: parent
-                        source: MovieProvider.coverPath(root.track.cover)
+                        source: MovieModel.coverPath(root.track.cover)
                         fillMode: Image.PreserveAspectCrop
                         sourceSize.width: image.width
                         sourceSize.height: image.height
@@ -124,21 +125,21 @@ UIScreen {
             orientation: Qt.Horizontal
             width: Style.hspan(22)
             height: Style.vspan(8)
-            currentIndex: MovieProvider.currentIndex
+            currentIndex: MovieModel.currentIndex
             highlightMoveDuration: 150
             delegate: MovieCoverDelegate {
                 width: Style.hspan(4)
-                source: MovieProvider.coverPath(model.cover)
+                source: MovieModel.coverPath(model.cover)
                 title: model.title
-                onClicked: MovieProvider.currentIndex = index
+                onClicked: MovieModel.currentIndex = index
                 selected: ListView.isCurrentItem
             }
         }
     }
 
     Component.onCompleted: {
-        MovieProvider.selectRandom()
-        view.model = MovieProvider.model
-        print("Movie Tracks completed")
+        MovieModel.selectRandom()
+        view.model = MovieModel.model
+        console.log("Movie Tracks completed")
     }
 }

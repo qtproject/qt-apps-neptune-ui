@@ -44,7 +44,7 @@ BaseBoard {
         anchors.fill: parent
         FolderListModel {
             id: folderModel
-            folder: Qt.resolvedUrl("../../assets/drawable-ldpi")
+            folder: Qt.resolvedUrl(Style.assetPath + "drawable-ldpi")
         }
         GridView {
             anchors.fill: parent

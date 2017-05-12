@@ -36,6 +36,7 @@ import QtIvi 1.0
 
 import controls 1.0
 import utils 1.0
+import "models"
 import "."
 
 Control {
@@ -48,7 +49,7 @@ Control {
     property SearchAndBrowseModel model: SearchAndBrowseModel {
         contentType: ""
         onContentTypeChanged: print("CONTENT TYPE CHANGE: ", contentType)
-        serviceObject: MusicProvider.player.serviceObject
+        serviceObject: MusicModel.player.serviceObject
     }
 
     onTypeChanged: {
@@ -68,12 +69,12 @@ Control {
     ListView {
         id: listView
         anchors.fill: parent
-        model: root.nowPlaying ? MusicProvider.nowPlaying : root.model
+        model: root.nowPlaying ? MusicModel.nowPlaying : root.model
         clip: true
         highlightMoveDuration: 300
         highlightFollowsCurrentItem: false
         snapMode: ListView.SnapOneItem
-        currentIndex: nowPlaying ? MusicProvider.currentIndex : -1
+        currentIndex: nowPlaying ? MusicModel.currentIndex : -1
 
         header: UIElement {
             width: root.width
@@ -115,12 +116,12 @@ Control {
                 anchors.fill: parent
                 onClicked: {
                     if (root.nowPlaying) {
-                        MusicProvider.currentIndex = index
-                        MusicProvider.player.play()
+                        MusicModel.currentIndex = index
+                        MusicModel.player.play()
                     } else {
                         if (item.type === "audiotrack") {
-                            MusicProvider.nowPlaying.insert(MusicProvider.nowPlaying.count, model.item)
-                            MusicProvider.player.play()
+                            MusicModel.nowPlaying.insert(MusicModel.nowPlaying.count, model.item)
+                            MusicModel.player.play()
                         } else {
                             root.model.goForward(model.index, SearchAndBrowseModel.InModelNavigation)
                         }
@@ -164,7 +165,7 @@ Control {
                     size: Style.symbolSizeS
                     symbol: "close"
                     visible: root.nowPlaying
-                    onClicked: MusicProvider.nowPlaying.remove(index)
+                    onClicked: MusicModel.nowPlaying.remove(index)
                 }
             }
         }

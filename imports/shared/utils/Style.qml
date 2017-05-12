@@ -84,10 +84,11 @@ QtObject {
     property int symbolSizeXL: configValue("symbolSizeXL", 114)
     property int symbolSizeXXL: configValue("symbolSizeXXL", 192)
 
-    property url drawableUrl: Qt.resolvedUrl('../assets/drawable-ldpi')
-    property url symbolUrl: Qt.resolvedUrl('../assets/icons')
-    property url gfxUrl: Qt.resolvedUrl('../assets/gfx/')
-    property url fonts: Qt.resolvedUrl('../assets/fonts/')
+    property string assetPath: Qt.resolvedUrl("../../assets/")
+    property url drawableUrl: Qt.resolvedUrl(root.assetPath + 'drawable-ldpi')
+    property url symbolUrl: Qt.resolvedUrl(root.assetPath + 'icons')
+    property url gfxUrl: Qt.resolvedUrl(root.assetPath + 'gfx/')
+    property url fonts: Qt.resolvedUrl(root.assetPath + 'fonts/')
 
     property bool isClient: typeof ApplicationInterface !== 'undefined'
     property string styleConfig: isClient ? ApplicationInterface.systemProperties.styleConfig : ApplicationManager.systemProperties.styleConfig
@@ -162,10 +163,10 @@ QtObject {
     }
 
     function asset(name) {
-        return Qt.resolvedUrl('../assets/' + name)
+        return Qt.resolvedUrl(root.assetPath +  + name)
     }
 
     function font(name) {
-        return Qt.resolvedUrl('../assets/fonts/' + name + '.ttf')
+        return Qt.resolvedUrl(root.assetPath + '/fonts/' + name + '.ttf')
     }
 }

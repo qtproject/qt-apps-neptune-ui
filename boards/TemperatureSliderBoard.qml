@@ -34,7 +34,7 @@ import QtQuick.Layouts 1.0
 
 import controls 1.0
 import utils 1.0
-import "../sysui/Climate"
+import climate 1.0
 
 BaseBoard {
     id: root

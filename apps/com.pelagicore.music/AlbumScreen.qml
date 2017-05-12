@@ -34,6 +34,7 @@ import QtQuick.Layouts 1.0
 
 import controls 1.0
 import utils 1.0
+import "models"
 import "."
 
 UIScreen {
@@ -48,9 +49,9 @@ UIScreen {
         anchors.left: parent.left
         anchors.right: parent.right
         height: Style.vspan(12)
-        model: MusicProvider.nowPlaying
+        model: MusicModel.nowPlaying
         pathItemCount: 5
-        currentIndex: MusicProvider.currentIndex
+        currentIndex: MusicModel.currentIndex
         path: Path {
             startX: -Style.hspan(3)
             startY: view.height/2
@@ -68,7 +69,7 @@ UIScreen {
             title: model.item.title
             subTitle: model.item.artist
             onClicked: {
-                MusicProvider.currentIndex = index
+                MusicModel.currentIndex = index
                 root.backScreen()
             }
         }

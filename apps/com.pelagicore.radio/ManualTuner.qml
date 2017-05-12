@@ -35,6 +35,7 @@ import QtQuick.Controls 2.0
 
 import controls 1.0
 import utils 1.0
+import "models"
 import "."
 
 Control {
@@ -42,9 +43,9 @@ Control {
     width: Style.hspan(6)
     height: Style.vspan(3)
 
-    readonly property real minFrequency: RadioProvider.minimumFrequency * 0.000001
-    readonly property real maxFrequency: RadioProvider.maximumFrequency * 0.000001
-    readonly property real currentFrequency: (RadioProvider.currentFrequency * 0.00001) * 0.1 // To get the one decimal we use two steps
+    readonly property real minFrequency: RadioModel.minimumFrequency * 0.000001
+    readonly property real maxFrequency: RadioModel.maximumFrequency * 0.000001
+    readonly property real currentFrequency: (RadioModel.currentFrequency * 0.00001) * 0.1 // To get the one decimal we use two steps
 
     Item {
         id: content

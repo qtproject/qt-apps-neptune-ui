@@ -33,7 +33,7 @@ import QtQuick 2.0
 import utils 1.0
 import controls 1.0
 import QtApplicationManager 1.0
-import models 1.0
+import models.application 1.0
 
 UIScreen {
     id: root
@@ -46,7 +46,7 @@ UIScreen {
         SystemMonitor.cpuLoadReportingEnabled = false
         SystemMonitor.fpsReportingEnabled = false
         SystemMonitor.memoryReportingEnabled = false
-        ApplicationManagerInterface.releaseApplicationSurface(root)
+        ApplicationManagerModel.releaseApplicationSurface(root)
     }
 
     function checkReporting() {

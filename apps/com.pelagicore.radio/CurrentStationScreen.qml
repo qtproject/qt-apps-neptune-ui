@@ -35,7 +35,7 @@ import QtQuick.Controls 2.1
 
 import controls 1.0
 import utils 1.0
-import service.tuner 1.0
+import "models"
 import "."
 
 UIScreen {
@@ -46,12 +46,12 @@ UIScreen {
     title: 'Radio'
 
     Connections {
-        target: RadioProvider
+        target: RadioModel
 
         onCurrentFrequencyChanged: {
             if (!slider.dragging) {
                 radioStationInformation.tuningMode = false
-                slider.value = RadioProvider.currentFrequency
+                slider.value = RadioModel.currentFrequency
             }
         }
     }
@@ -76,9 +76,9 @@ UIScreen {
 
             StationInfo {
                 id: stationInfo
-                title: RadioProvider.currentStation.stationName
-                radioText: RadioProvider.currentStation.radioText
-                frequency: radioStationInformation.tuningMode ? slider.value : RadioProvider.currentFrequency
+                title: RadioModel.currentStation.stationName
+                radioText: RadioModel.currentStation.radioText
+                frequency: radioStationInformation.tuningMode ? slider.value : RadioModel.currentFrequency
             }
         }
 
@@ -93,7 +93,7 @@ UIScreen {
                 anchors.verticalCenter: parent.verticalCenter
                 size: Style.symbolSizeS
                 onClicked: {
-                    RadioProvider.scanBack()
+                    RadioModel.scanBack()
                 }
             }
 
@@ -105,11 +105,11 @@ UIScreen {
 
                 useAnimation: true
 
-                readonly property real minFrequency: RadioProvider.minimumFrequency
-                readonly property real maxFrequency: RadioProvider.maximumFrequency
+                readonly property real minFrequency: RadioModel.minimumFrequency
+                readonly property real maxFrequency: RadioModel.maximumFrequency
 
 
-                value: RadioProvider.currentFrequency
+                value: RadioModel.currentFrequency
                 minimum: minFrequency
                 maximum: maxFrequency
 
@@ -126,7 +126,7 @@ UIScreen {
                         radioStationInformation.tuningMode = true
                     } else {
                         // radioStationInformation.tuningMode = false
-                        RadioProvider.setFrequency(value)
+                        RadioModel.setFrequency(value)
                     }
                 }
             }
@@ -138,7 +138,7 @@ UIScreen {
                 anchors.verticalCenter: parent.verticalCenter
                 size: Style.symbolSizeS
                 onClicked: {
-                    RadioProvider.scanForward()
+                    RadioModel.scanForward()
                 }
             }
         }
@@ -148,8 +148,8 @@ UIScreen {
             Spacer { Layout.preferredWidth: Style.hspan(2) }
             Tool {
                 Layout.preferredWidth: Style.hspan(2)
-                symbol: RadioService.playing?'pause':'play'
-                onClicked: RadioService.togglePlay()
+                symbol: RadioModel.playing?'pause':'play'
+                onClicked: RadioModel.togglePlay()
             }
             Spacer { Layout.preferredWidth: Style.hspan(2) }
         }
@@ -166,15 +166,15 @@ UIScreen {
                 Layout.preferredWidth: Style.hspan(8)
                 Layout.preferredHeight: Style.vspan(2)
                 anchors.horizontalCenter: parent.horizontalCenter
-                value: RadioService.volume
+                value: RadioModel.volume
                 onValueChanged: {
-                    RadioService.volume = value
+                    RadioModel.volume = value
                 }
             }
             Label {
                 Layout.preferredWidth: Style.hspan(1)
                 Layout.preferredHeight: Style.vspan(2)
-                text: Math.floor(RadioService.volume*100)
+                text: Math.floor(RadioModel.volume*100)
                 horizontalAlignment: Text.AlignHCenter
             }
         }

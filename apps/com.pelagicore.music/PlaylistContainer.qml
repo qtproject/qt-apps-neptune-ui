@@ -35,6 +35,7 @@ import QtQuick.Controls 2.0
 
 import utils 1.0
 import controls 1.0
+import "models"
 import "."
 
 RowLayout {
@@ -82,8 +83,8 @@ RowLayout {
             id: playListView
             anchors.fill: parent
             clip: true
-            model: MusicProvider.model
-            currentIndex: MusicProvider.currentIndex
+            model: MusicModel.model
+            currentIndex: MusicModel.currentIndex
             highlight: Rectangle {
                 color: Style.colorWhite; opacity: 0.25
                 border.color: Qt.lighter(color, 1.2)
@@ -114,7 +115,7 @@ RowLayout {
                                 anchors.centerIn: parent
                                 height: parent.height
                                 width: parent.height
-                                source: MusicProvider.coverPath(model.cover)
+                                source: MusicModel.coverPath(model.cover)
                                 fillMode: Image.PreserveAspectCrop
                                 asynchronous: true
                             }

@@ -34,6 +34,7 @@ import QtQuick.Layouts 1.0
 import QtQuick.Controls 2.1
 import controls 1.0
 import utils 1.0
+import "models"
 import "."
 
 UIScreen {
@@ -42,7 +43,7 @@ UIScreen {
     width: Style.hspan(24)
     height: Style.vspan(24)
 
-    property var track: MusicProvider.currentEntry
+    property var track: MusicModel.currentEntry
     property bool libraryVisible: false
 
     signal showAlbums()
@@ -60,7 +61,7 @@ UIScreen {
             Tool {
                 Layout.preferredWidth: Style.hspan(2)
                 symbol: 'prev'
-                onClicked: { MusicProvider.previous() }
+                onClicked: { MusicModel.previous() }
             }
 
             TrackSwipeView {
@@ -68,9 +69,9 @@ UIScreen {
 
                 Layout.preferredWidth: Style.hspan(6)
                 Layout.preferredHeight: Style.vspan(12)
-                model: MusicProvider.nowPlaying
+                model: MusicModel.nowPlaying
 
-                currentIndex: MusicProvider.currentIndex
+                currentIndex: MusicModel.currentIndex
 
                 delegate: CoverItem {
                     z: PathView.z
@@ -88,7 +89,7 @@ UIScreen {
             Tool {
                 Layout.preferredWidth: Style.hspan(2)
                 symbol: 'next'
-                onClicked: { MusicProvider.next() }
+                onClicked: { MusicModel.next() }
             }
         }
 
@@ -98,27 +99,27 @@ UIScreen {
 
             Label {
                 Layout.preferredWidth: Style.hspan(1)
-                text: MusicProvider.currentTime
+                text: MusicModel.currentTime
             }
 
             Slider {
                 id: slider
                 Layout.preferredWidth: Style.hspan(9)
-                value: MusicProvider.position
+                value: MusicModel.position
                 from: 0.00
-                to: MusicProvider.duration
+                to: MusicModel.duration
                 Layout.preferredHeight: Style.vspan(1)
                 function valueToString() {
                     return Math.floor(value/60000) + ':' + Math.floor((value/1000)%60)
                 }
                 onValueChanged: {
-                    MusicProvider.position = value
+                    MusicModel.position = value
                 }
             }
 
             Label {
                 Layout.preferredWidth: Style.hspan(1)
-                text: MusicProvider.durationTime
+                text: MusicModel.durationTime
                 font.pixelSize: Style.fontSizeS
             }
         }
@@ -129,22 +130,22 @@ UIScreen {
             Tool {
                 Layout.preferredWidth: Style.hspan(2)
                 symbol: 'shuffle'
-                checked: MusicProvider.shuffleOn
-                onClicked: MusicProvider.toggleShuffle()
+                checked: MusicModel.shuffleOn
+                onClicked: MusicModel.toggleShuffle()
                 size: Style.symbolSizeXS
             }
             Spacer { Layout.preferredWidth: Style.hspan(2) }
             Tool {
                 Layout.preferredWidth: Style.hspan(2)
-                symbol: MusicProvider.playing?'pause':'play'
-                onClicked: MusicProvider.togglePlay()
+                symbol: MusicModel.playing?'pause':'play'
+                onClicked: MusicModel.togglePlay()
             }
             Spacer { Layout.preferredWidth: Style.hspan(2) }
             Tool {
                 Layout.preferredWidth: Style.hspan(2)
                 symbol: 'loop'
-                checked: MusicProvider.repeatOn
-                onClicked: MusicProvider.toggleRepeat()
+                checked: MusicModel.repeatOn
+                onClicked: MusicModel.toggleRepeat()
                 size: Style.symbolSizeXS
             }
         }
@@ -161,9 +162,9 @@ UIScreen {
                 Layout.preferredWidth: Style.hspan(8)
                 Layout.preferredHeight: Style.vspan(2)
                 anchors.horizontalCenter: parent.horizontalCenter
-                value: 1 //MusicService.volume
+                value: 1 //MusicModel.volume
 //                onValueChanged: {
-//                    MusicService.volume = value
+//                    MusicModel.volume = value
 //                }
             }
             Label {

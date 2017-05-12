@@ -37,6 +37,7 @@ import QtGraphicalEffects 1.0
 
 import controls 1.0
 import utils 1.0
+import "models"
 import "."
 
 UIScreen {
@@ -49,13 +50,13 @@ UIScreen {
     property bool active: false
     property bool hideControls: false
 
-    property var track: MovieProvider.currentEntry
+    property var track: MovieModel.currentEntry
 
 
     Video {
         id: video
         anchors.fill: parent
-        source: MovieProvider.sourcePath(root.track.source)
+        source: MovieModel.sourcePath(root.track.source)
         autoPlay: true
 
         property bool running: playbackState === MediaPlayer.PlayingState
@@ -91,7 +92,7 @@ UIScreen {
             spacing: Style.hspan(2)
             Tool {
                 symbol: 'prev'
-                onClicked: MovieService.previous()
+                onClicked: MovieModel.previousTrack()
             }
             Tool {
                 symbol: video.running?'pause':'play'
@@ -99,7 +100,7 @@ UIScreen {
             }
             Tool {
                 symbol: 'next'
-                onClicked: MovieProvider.next()
+                onClicked: MovieModel.next()
             }
         }
         Slider {

@@ -52,7 +52,7 @@ import QtQuick.Layouts 1.3
 import utils 1.0
 
 import service.notification 1.0
-import service.phone 1.0
+import models.phone 1.0
 
 AppUIScreen {
     id: root
@@ -62,7 +62,7 @@ AppUIScreen {
     property QtObject popupItem : NotificationInterface { }
 
     onRaiseApp: {
-        if (PhoneService.isAnyDevicePaired) {
+        if (PhoneModel.isAnyDevicePaired) {
             bar.currentIndex = 2;
         } else {
             popupItem.sticky = true;
@@ -87,14 +87,14 @@ AppUIScreen {
         header: TabBar {
             id: bar
             TabButton {
-                enabled: PhoneService.isAnyDevicePaired
+                enabled: PhoneModel.isAnyDevicePaired
                 text: qsTr("Dialer")
             }
             TabButton {
                 text: qsTr("Devices")
             }
             TabButton {
-                enabled: PhoneService.isAnyDevicePaired
+                enabled: PhoneModel.isAnyDevicePaired
                 text: qsTr("Contacts List")
             }
         }

@@ -35,6 +35,7 @@ import QtQuick.Controls 2.0
 
 import controls 1.0
 import utils 1.0
+import "models"
 import "."
 
 Control {
@@ -46,7 +47,7 @@ Control {
 
     onTypeChanged: {
         if (type === "favorites")
-            listView.model = RadioProvider.radioFavorites
+            listView.model = RadioModel.radioFavorites
     }
 
     Rectangle {
@@ -58,11 +59,11 @@ Control {
         id: listView
         anchors.fill: parent
         anchors.topMargin: 10
-        model: RadioProvider.stationList
+        model: RadioModel.stationList
         clip: true
         highlightMoveDuration: 300
         highlightFollowsCurrentItem: false
-        currentIndex: RadioProvider.currentIndex
+        currentIndex: RadioModel.currentIndex
 
         delegate: Control {
             width: root.width
@@ -103,8 +104,8 @@ Control {
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-                    RadioProvider.setStationFromStationList(index)
-                    // RadioProvider.currentIndex = index
+                    RadioModel.setStationFromStationList(index)
+                    // RadioModel.currentIndex = index
                 }
             }
         }

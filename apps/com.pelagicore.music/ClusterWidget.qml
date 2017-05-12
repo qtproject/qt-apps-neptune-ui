@@ -34,6 +34,7 @@ import QtQuick.Layouts 1.0
 import QtQuick.Controls 2.0
 import utils 1.0
 import controls 1.0
+import "models"
 import "."
 
 Item {
@@ -47,8 +48,8 @@ Item {
         height: parent.height
         anchors.centerIn: parent
         clip: true
-        model: MusicProvider.nowPlaying
-        currentIndex: MusicProvider.currentIndex
+        model: MusicModel.nowPlaying
+        currentIndex: MusicModel.currentIndex
         highlight: Rectangle {
             color: Style.colorWhite; opacity: 0.25
             border.color: Qt.lighter(color, 1.2)
@@ -109,7 +110,7 @@ Item {
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-                    MusicProvider.currentIndex = index
+                    MusicModel.currentIndex = index
                 }
             }
         }

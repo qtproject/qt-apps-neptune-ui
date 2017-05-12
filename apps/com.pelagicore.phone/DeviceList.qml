@@ -33,7 +33,7 @@ import QtQuick 2.2
 import QtQuick.Controls 2.0
 import utils 1.0
 import service.notification 1.0
-import service.phone 1.0
+import models.phone 1.0
 import com.pelagicore.styles.neptune 1.0
 
 UIScreen {
@@ -48,21 +48,21 @@ UIScreen {
             id: deviceListView
             anchors.centerIn: parent
             anchors.fill: parent
-            model: PhoneService.availableDevices
+            model: PhoneModel.availableDevices
             delegate: SwitchDelegate {
                 width: ListView.view.width
                 height: Style.vspan(2)
                 text: model.name
-                checked: PhoneService.isAnyDevicePaired && PhoneService.currentPairedDeviceName === name
+                checked: PhoneModel.isAnyDevicePaired && PhoneModel.currentPairedDeviceName === name
                 onPressed: {
                     deviceListView.currentIndex = index;
-                    PhoneService.currentPairedDeviceName = PhoneService.availableDevices.get(index).name;
+                    PhoneModel.currentPairedDeviceName = PhoneModel.availableDevices.get(index).name;
                 }
                 onCheckedChanged: {
                     if (checked) {
                         notificationInterface.show();
                     } else {
-                        PhoneService.isAnyDevicePaired = false;
+                        PhoneModel.isAnyDevicePaired = false;
                     }
                 }
             }
@@ -76,10 +76,10 @@ UIScreen {
         timeout: 2000
         progress: -1
         showProgress: true
-        body: PhoneService.currentPairedDeviceName
+        body: PhoneModel.currentPairedDeviceName
         onVisibleChanged: {
             if (!visible) {
-                PhoneService.isAnyDevicePaired = true;
+                PhoneModel.isAnyDevicePaired = true;
                 bar.currentIndex = 2;
             }
         }

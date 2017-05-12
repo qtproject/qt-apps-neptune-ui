@@ -35,6 +35,7 @@ import QtQuick.Controls 2.0
 
 import utils 1.0
 import controls 1.0
+import "models"
 import "."
 
 Item {
@@ -54,14 +55,14 @@ Item {
             spacing: 0
 
             Label {
-                text: ((RadioProvider.currentStation.frequency * 0.00001) * 0.1).toFixed(1)
+                text: ((RadioModel.currentStation.frequency * 0.00001) * 0.1).toFixed(1)
                 font.pixelSize: Style.fontSizeXL
                 Layout.fillWidth: true
                 elide: Text.ElideRight
                 horizontalAlignment: Text.AlignHCenter
             }
             Label {
-                text:RadioProvider.currentStation.stationName
+                text:RadioModel.currentStation.stationName
                 font.pixelSize: Style.fontSizeS
                 opacity: 0.5
                 elide: Text.ElideRight

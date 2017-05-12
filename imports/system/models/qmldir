@@ -1,3 +1,0 @@
-singleton ApplicationManagerInterface 1.0 ApplicationManagerInterface.qml
-singleton NotificationModel 1.0 NotificationModel.qml
-singleton VehicleModel 1.0 VehicleModel.qml

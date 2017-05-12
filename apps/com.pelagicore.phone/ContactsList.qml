@@ -32,7 +32,7 @@
 import QtQuick 2.2
 import QtQuick.Controls 2.1
 import utils 1.0
-import service.phone 1.0
+import models.phone 1.0
 import com.pelagicore.styles.neptune 1.0
 
 UIScreen {
@@ -50,7 +50,7 @@ UIScreen {
             id: contactList
             anchors.fill: parent
             anchors.centerIn: parent
-            model: PhoneService.contactsModel
+            model: PhoneModel.contactsModel
 
             delegate: ItemDelegate {
                 width: ListView.view.width

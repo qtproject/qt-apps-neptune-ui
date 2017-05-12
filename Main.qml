@@ -34,10 +34,10 @@ import QtQuick.Window 2.2
 import QtApplicationManager 1.0
 import com.pelagicore.ScreenManager 1.0
 import QtQuick.Controls 2.0
-import "sysui/Cluster"
-import "sysui"
 import controls 1.0
 import utils 1.0
+import display 1.0
+import cluster 1.0
 import QtQuick.Window 2.2
 import com.pelagicore.styles.neptune 1.0
 

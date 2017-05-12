@@ -32,6 +32,7 @@
 import QtQuick 2.6
 import controls 1.0
 import utils 1.0
+import "models"
 import "."
 
 AppUIScreen {
@@ -40,10 +41,10 @@ AppUIScreen {
 
     onClusterKeyPressed: {
         if (key === Qt.Key_Down) {
-            RadioProvider.next()
+            RadioModel.next()
         }
         else if (key === Qt.Key_Up) {
-            RadioProvider.previous()
+            RadioModel.previous()
         }
     }
 
