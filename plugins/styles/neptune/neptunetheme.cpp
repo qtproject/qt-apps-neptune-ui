@@ -37,6 +37,7 @@
 
 NeptuneTheme::NeptuneTheme(QPlatformTheme *theme)
 {
+    Q_UNUSED(theme)
     qDebug() << "NeptuneTheme::NeptuneTheme()";
     const QFont font(QLatin1String("Source Sans Pro"));
     if (QFontInfo(font).family() == QLatin1String("Source Sans Pro")) {
