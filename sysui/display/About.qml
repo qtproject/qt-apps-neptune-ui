@@ -34,11 +34,18 @@ import QtQuick.Controls 2.0
 import controls 1.0
 import utils 1.0
 import models.settings 1.0
+import models.system 1.0
 
 Control {
     id: root
 
-    signal clicked()
+    y: SystemModel.statusBarExpanded ? 0 : -height
+    anchors.left: parent.left; anchors.right: parent.right
+    height: Style.vspan(20)
+
+    Behavior on y {
+        NumberAnimation { duration: 500; easing.type: Easing.OutCubic }
+    }
 
     Image {
         id: logo
@@ -82,7 +89,13 @@ Control {
 
     MouseArea {
         anchors.fill: parent
-        onClicked: root.clicked()
+        onClicked: {
+            if (SystemModel.climateExpanded) {
+                SystemModel.climateExpanded.expanded = false
+            } else {
+                SystemModel.statusBarExpanded = false
+            }
+        }
     }
 
 //    Button {

@@ -30,32 +30,72 @@
 ****************************************************************************/
 
 import QtQuick 2.5
+import QtGraphicalEffects 1.0
+
 import QtQuick.Controls 2.1
 import controls 1.0
 import utils 1.0
 import models.application 1.0
+import models.system 1.0
 
-StackView {
+Item {
     id: root
-    width: Style.hspan(24)
-    height: Style.vspan(20)
-    focus: true
+    width: Style.screenWidth
+    height: Style.launcherHeight
 
-    pushEnter: Transition {
-        ScaleAnimator {
-            from: 0
-            to: 1
-            duration: 150
-        }
-        OpacityAnimator {
-            from: 0
-            to: 1
-            duration: 150
-        }
-    }
+    StackView {
+        id: stackView
+        width: Style.hspan(24)
+        height: Style.vspan(20)
+        focus: true
 
-    pushExit: Transition {
-        ParallelAnimation {
+        visible: fastBlur.radius === 0
+
+        initialItem: MenuScreen { }
+
+        pushEnter: Transition {
+            ScaleAnimator {
+                from: 0
+                to: 1
+                duration: 150
+            }
+            OpacityAnimator {
+                from: 0
+                to: 1
+                duration: 150
+            }
+        }
+
+        pushExit: Transition {
+            ParallelAnimation {
+                ScaleAnimator {
+                    from: 1
+                    to: 0
+                    duration: 150
+                }
+                OpacityAnimator {
+                    from: 1
+                    to: 0
+                    duration: 50
+                }
+            }
+        }
+
+
+        popEnter: Transition {
+            ScaleAnimator {
+                from: 0
+                to: 1
+                duration: 150
+            }
+            OpacityAnimator {
+                from: 0
+                to: 1
+                duration: 150
+            }
+        }
+
+        popExit: Transition {
             ScaleAnimator {
                 from: 1
                 to: 0
@@ -64,79 +104,65 @@ StackView {
             OpacityAnimator {
                 from: 1
                 to: 0
-                duration: 50
+                duration: 100
+            }
+            ScriptAction {
+                script: {
+                    ApplicationManagerModel.releasingApplicationSurfaceDone(currentItem)
+                }
             }
         }
-    }
 
-
-    popEnter: Transition {
-        ScaleAnimator {
-            from: 0
-            to: 1
-            duration: 150
+        Item {
+            id: dummyitem
+            anchors.fill: parent
+            //visible: false
         }
-        OpacityAnimator {
-            from: 0
-            to: 1
-            duration: 150
+
+        Shortcut {
+            context: Qt.ApplicationShortcut
+            sequence: StandardKey.Cancel
+            onActivated: { stackView.pop(); }
         }
-    }
 
-    popExit: Transition {
-        ScaleAnimator {
-            from: 1
-            to: 0
-            duration: 150
-        }
-        OpacityAnimator {
-            from: 1
-            to: 0
-            duration: 100
-        }
-        ScriptAction {
-            script: {
-                ApplicationManagerModel.releasingApplicationSurfaceDone(currentItem)
-            }
-        }
-    }
+        Connections {
+            target: ApplicationManagerModel
 
-    Item {
-        id: dummyitem
-        anchors.fill: parent
-        //visible: false
-    }
+            onApplicationSurfaceReady: {
+                //Make sure to push the items only once
+                for (var i = 1; i < stackView.depth; ++i) {
+                    if (stackView.get(i) === item)
+                        return
+                }
 
-    Shortcut {
-        context: Qt.ApplicationShortcut
-        sequence: StandardKey.Cancel
-        onActivated: { root.pop(); }
-    }
-
-    Connections {
-        target: ApplicationManagerModel
-
-        onApplicationSurfaceReady: {
-            //Make sure to push the items only once
-            for (var i = 1; i < root.depth; ++i) {
-                if (root.get(i) === item)
-                    return
+                if (isMinimized) {
+                    item.parent = dummyitem
+                } else {
+                    stackView.push(item, {"width": Style.hspan(24), "height": Style.vspan(24)})
+                }
             }
 
-            if (isMinimized) {
+            onReleaseApplicationSurface: {
+                stackView.pop()
+            }
+
+            onUnhandledSurfaceReceived: {
+                item.visible = false
                 item.parent = dummyitem
-            } else {
-                root.push(item, {"width": Style.hspan(24), "height": Style.vspan(24)})
             }
         }
+    }
 
-        onReleaseApplicationSurface: {
-             root.pop()
-        }
+    FastBlur {
+        id: fastBlur
+        anchors.fill: stackView
+        source: stackView
+        radius: SystemModel.statusBarExpanded ? 100 : 0
+        visible: !stackView.visible
+        enabled: visible
 
-        onUnhandledSurfaceReceived: {
-            item.visible = false
-            item.parent = dummyitem
+        Behavior on radius {
+            NumberAnimation { duration: 200 }
         }
     }
 }

@@ -37,20 +37,13 @@ import QtQuick.Controls 2.1
 import utils 1.0
 import controls 1.0
 import models.application 1.0
+import models.system 1.0
 
 Item {
     id: root
 
-    opacity: 0
+    opacity: SystemModel.windowOverviewVisible ? 1 : 0
     visible: opacity != 0
-
-    function show() {
-        opacity = 1
-    }
-
-    function close() {
-        root.opacity = 0;
-    }
 
     Behavior on opacity {
         NumberAnimation { duration: 500; easing.type: Easing.OutCubic }
@@ -75,7 +68,7 @@ Item {
         width: Style.hspan(2)
         height: Style.vspan(2)
         symbol: 'back'
-        onClicked: root.close()
+        onClicked: SystemModel.windowOverviewVisible = false
     }
 
     Label {
@@ -117,7 +110,7 @@ Item {
                 anchors.fill: parent
                 onClicked: {
                     ApplicationManager.startApplication(ApplicationManagerModel.appIdFromWindow(model.item))
-                    root.close()
+                    SystemModel.windowOverviewVisible = false
                     //Hide all other windows, otherwise the will be in the stack and switching doens't work
                     for (var i = 0; i < gridView.model.count; ++i) {
                         var window = gridView.model.get(i).item

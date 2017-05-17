@@ -29,69 +29,16 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.6
+pragma Singleton
+import QtQuick 2.0
 
-import controls 1.0
-import utils 1.0
-import climate 1.0
-import statusbar 1.0
-import notification 1.0
-import windowoverview 1.0
-
-import models.system 1.0
-
-Item {
+QtObject {
     id: root
 
-    width: 1280
-    height: 800
+    property bool statusBarExpanded: false
+    property bool climateExpanded: false
+    property bool windowOverviewVisible: false
+    property bool toolBarMonitorVisible: false
 
-    // Background Elements
-
-    // Content Elements
-    StatusBar {
-        id: statusBar
-    }
-
-    LaunchController {
-        id: launcher
-        anchors.top: statusBar.bottom
-    }
-
-    About {
-        id: about
-    }
-
-    // Foreground Elements
-
-    ClimateBar {
-    }
-
-    Loader {
-        id: toolBarMonitorLoader
-        width: parent.width
-        height: 200
-        anchors.bottom: parent.bottom
-        active: SystemModel.toolBarMonitorVisible
-        source: "dev/ToolBarMonitor.qml"
-    }
-
-    WindowOverview {
-        id: windowOverview
-        anchors.fill: parent
-    }
-
-    NotificationContainer {
-        id: notificationContainer
-
-        anchors.centerIn: parent
-    }
-
-    Loader {
-        id: keyboardLoader
-        anchors.left: parent.left
-        anchors.right: parent.right
-        anchors.bottom: parent.bottom
-        source: "Keyboard.qml"
-    }
 }
+

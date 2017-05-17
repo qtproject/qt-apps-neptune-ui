@@ -31,188 +31,87 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.0
-import QtQuick.Layouts 1.0
 import controls 1.0
 import utils 1.0
 import models.climate 1.0
+import models.system 1.0
 
 Control {
     id: root
 
-    property bool expanded: false
-    property int collapsedVspan: 3
+    width: Style.screenWidth
+    height: Style.vspan(24) - Style.statusBarHeight
+    y: SystemModel.climateExpanded ? Style.statusBarHeight : Style.screenHeight - Style.climateCollapsedVspan
 
-    width: Style.hspan(24)
-    height: Style.vspan(24)
-
-
-
-    BackgroundPane {
-        anchors.fill: parent
-        visible: climatePanelBackground.opacity !== 1
+    Behavior on y {
+        NumberAnimation { duration: 450; easing.type: Easing.OutCubic }
     }
 
     Pane {
         id: climatePanelBackground
-        height: Style.vspan(root.collapsedVspan)
+        height: Style.climateCollapsedVspan
         anchors.left: parent.left
         anchors.right: parent.right
-        opacity: !expanded
+        opacity: !SystemModel.climateExpanded
         visible: opacity !== 0
         Behavior on opacity { NumberAnimation { duration: 450 } }
     }
 
-    MouseArea {
-        anchors.fill: parent
-        onClicked: root.expanded = !root.expanded
-    }
-
-    ColumnLayout {
-        id: mainLayout
-
-        spacing: 0
-        anchors.horizontalCenter: parent.horizontalCenter
+    Item {
+        id: climateBarContent
+        height: Style.climateCollapsedVspan
         width: Style.hspan(23)
+        anchors.horizontalCenter: parent.horizontalCenter
 
-        Item { // This is the actual climate bar
-            height: Style.vspan(root.collapsedVspan)
-            Layout.preferredWidth: mainLayout.width
-
-            TemperatureLevel {
-                id: tempLevelLeft
-                value: ClimateModel.leftSeat.value
-                anchors.left: parent.left
-                anchors.verticalCenter: parent.verticalCenter
-            }
-
-            Tool {
-                id: leftSeatHeat
-                width: Style.hspan(2)
-                height: Style.vspan(root.collapsedVspan)
-                symbol: "seat_left"
-                checked: ClimateModel.leftSeat.heat
-                onClicked: ClimateModel.leftSeat.heat = !ClimateModel.leftSeat.heat
-                anchors.left: tempLevelLeft.right
-                anchors.verticalCenter: parent.verticalCenter
-            }
-
-            AirFlow {
-                width: Style.hspan(6)
-                height: Style.vspan(root.collapsedVspan)
-                anchors.left: leftSeatHeat.right
-                anchors.right: rightSeatHeat.left
-                anchors.centerIn: parent
-                anchors.verticalCenter: parent.verticalCenter
-            }
-
-            Tool {
-                id: rightSeatHeat
-                width: Style.hspan(2)
-                height: Style.vspan(root.collapsedVspan)
-                symbol: "seat_right"
-                checked: ClimateModel.rightSeat.heat
-                onClicked: ClimateModel.rightSeat.heat = !ClimateModel.rightSeat.heat
-                anchors.right: tempLevelRight.left
-                anchors.verticalCenter: parent.verticalCenter
-            }
-
-            TemperatureLevel {
-                id: tempLevelRight
-                horizontalAlignment: Qt.AlignRight
-                value: ClimateModel.rightSeat.value
-                anchors.right: parent.right
-                anchors.verticalCenter: parent.verticalCenter
-            }
-        } // end of climate bar
-
-        RowLayout { // climate control
-            spacing: 0
-            Layout.preferredHeight: Style.vspan(19)
-            visible: climatePanelBackground.opacity !== 1
-
-            TemperatureSlider {
-                id: leftTempSlider
-                width: Style.hspan(3)
-                Layout.fillHeight: true
-                from: ClimateModel.leftSeat.minValue
-                to: ClimateModel.leftSeat.maxValue
-                value: ClimateModel.leftSeat.value
-                stepSize: ClimateModel.leftSeat.stepValue
-                onValueChanged: ClimateModel.leftSeat.value = value
-            }
-
-            Spacer {
-                Layout.fillWidth: true
-                Layout.fillHeight: true
-            }
-
-            ColumnLayout { // inner controls
-                spacing: 20
-                Layout.alignment: Qt.AlignTop
-                Layout.fillWidth: true
-
-                Spacer {
-                    Layout.fillWidth: true
-                    Layout.preferredHeight: Style.vspan(2)
-                }
-
-                Ventilation {
-                    id: ventilation
-
-                    Layout.alignment: Qt.AlignHCenter
-                    Layout.preferredWidth: Style.hspan(10)
-                    Layout.preferredHeight: Style.vspan(2)
-                    levels: ClimateModel.ventilationLevels
-                    currentLevel: ClimateModel.ventilation
-                    onNewLevelRequested: ClimateModel.setVentilation(newLevel)
-                }
-
-                Spacer {
-                    Layout.fillWidth: true
-                    Layout.preferredHeight: Style.vspan(2)
-                }
-
-                ClimateOptionsGrid { // tool grid
-                    Layout.alignment: Qt.AlignHCenter
-                    Layout.preferredWidth: Style.hspan(9)
-                    Layout.preferredHeight: Style.vspan(10)
-                    model: ClimateModel.climateOptions
-                    delegate: Button {
-                        width: Style.hspan(3)
-                        height: Style.vspan(5)
-                        indicator: Image {
-                            anchors.centerIn: parent
-                            source: Style.symbol(modelData.symbol)
-                        }
-                        checked: modelData.enabled
-                        onClicked: modelData.setEnabled(!modelData.enabled)
-                    }
-                }
-            }
-
-            Spacer {
-                Layout.fillWidth: true
-                Layout.fillHeight: true
-            }
-
-            TemperatureSlider {
-                id: rightTempSlider
-                Layout.fillHeight: true
-                width: Style.hspan(3)
-                mirrorSlider: true
-                from: ClimateModel.rightSeat.minValue
-                to: ClimateModel.rightSeat.maxValue
-                value: ClimateModel.rightSeat.value
-                stepSize: ClimateModel.rightSeat.stepValue
-                onValueChanged: ClimateModel.rightSeat.value = value
-            }
-
+        TemperatureLevel {
+            id: tempLevelLeft
+            value: ClimateModel.leftSeat.value
+            anchors.left: parent.left
+            anchors.verticalCenter: parent.verticalCenter
         }
 
-        Spacer {
-            Layout.fillHeight: true
-            Layout.fillWidth: true
+        Tool {
+            id: leftSeatHeat
+            width: Style.hspan(2)
+            height: Style.climateCollapsedVspan
+            symbol: "seat_left"
+            checked: ClimateModel.leftSeat.heat
+            onClicked: ClimateModel.leftSeat.heat = !ClimateModel.leftSeat.heat
+            anchors.left: tempLevelLeft.right
+            anchors.verticalCenter: parent.verticalCenter
+        }
+
+        AirFlow {
+            width: Style.hspan(6)
+            height: Style.climateCollapsedVspan
+            anchors.left: leftSeatHeat.right
+            anchors.right: rightSeatHeat.left
+            anchors.centerIn: parent
+            anchors.verticalCenter: parent.verticalCenter
+        }
+
+        Tool {
+            id: rightSeatHeat
+            width: Style.hspan(2)
+            height: Style.climateCollapsedVspan
+            symbol: "seat_right"
+            checked: ClimateModel.rightSeat.heat
+            onClicked: ClimateModel.rightSeat.heat = !ClimateModel.rightSeat.heat
+            anchors.right: tempLevelRight.left
+            anchors.verticalCenter: parent.verticalCenter
+        }
+
+        TemperatureLevel {
+            id: tempLevelRight
+            horizontalAlignment: Qt.AlignRight
+            value: ClimateModel.rightSeat.value
+            anchors.right: parent.right
+            anchors.verticalCenter: parent.verticalCenter
         }
     }
 
+    ClimatePane {
+        climateBarItem: climateBarContent
+        backgroundPaneVisible: climatePanelBackground.opacity !== 1
+    }
 }

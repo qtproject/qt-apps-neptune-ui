@@ -90,6 +90,10 @@ QtObject {
     property url gfxUrl: Qt.resolvedUrl(root.assetPath + 'gfx/')
     property url fonts: Qt.resolvedUrl(root.assetPath + 'fonts/')
 
+    property real climateCollapsedVspan: vspan(3)
+
+    property real statusBarHeight: vspan(2)
+
     property bool isClient: typeof ApplicationInterface !== 'undefined'
     property string styleConfig: isClient ? ApplicationInterface.systemProperties.styleConfig : ApplicationManager.systemProperties.styleConfig
     property bool showClusterIfPossible: isClient ? ApplicationInterface.systemProperties.showCluster :ApplicationManager.systemProperties.showCluster

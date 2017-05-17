@@ -37,19 +37,25 @@ import utils 1.0
 import controls 1.0
 import models.statusbar 1.0
 import models.settings 1.0
+import models.system 1.0
 
 Pane {
     id: root
+
+    anchors.top: parent.top
     width: Style.hspan(24)
-    height: Style.vspan(2)
-    signal clicked()
-    signal timePressAndHold();
-    signal overviewClicked();
+    height: Style.statusBarHeight
 
     MouseArea {
         anchors.fill: parent
-        onClicked: root.clicked()
-        onPressAndHold: root.timePressAndHold()
+        onClicked: {
+            if (SystemModel.climateExpanded) {
+                SystemModel.climateExpanded.expanded = false
+            } else {
+                SystemModel.statusBarExpanded = true
+            }
+        }
+        onPressAndHold: SystemModel.toolBarMonitorVisible = !SystemModel.toolBarMonitorVisible
     }
 
     RowLayout {
@@ -87,7 +93,7 @@ Pane {
         Tool {
             Layout.fillHeight: true
             symbol: "fullscreen"
-            onClicked: root.overviewClicked()
+            onClicked: SystemModel.windowOverviewVisible = true
         }
 
         Weather {
