@@ -31,6 +31,7 @@
 
 import QtQuick 2.0
 import QtQuick.Window 2.2
+import QtApplicationManager 1.0
 import com.pelagicore.ScreenManager 1.0
 
 QtObject {
@@ -55,13 +56,35 @@ QtObject {
     property int symbolSizeXL: 114
     property int symbolSizeXXL: 192
 
-    property string displayBackground: "background_1920x1080"
+    property int paddingXS: 2
+    property int paddingS: 4
+    property int padding: 8
+    property int paddingL: 12
+    property int paddingXL: 16
+    property int cellFactor: 24
 
+    property string displayBackground: "background_1920x1080"
+    property real disabledIconOpacity: 0.6
+    property bool fakeBackground: false
+    property bool debugMode: false
+    property bool gridMode: false
+    property int displayHMargin: 11
+    property int displayVMargin: 0
+
+    property int statusBarSpan: 2
+    property int climateCollapsedSpan: 3
+    property int launcherSpan: 19
 
     property int screenWidth: Screen.width
     property int screenHeight: Math.min(screenWidth * 0.62, Screen.height)
     property int clusterWidth: 1920
     property int clusterHeight: 720
+
+    property string assetPath: Qt.resolvedUrl("../../../assets/")
+    property url drawableUrl: Qt.resolvedUrl(root.assetPath + 'drawable-ldpi')
+    property url symbolUrl: Qt.resolvedUrl(root.assetPath + 'icons')
+    property url gfxUrl: Qt.resolvedUrl(root.assetPath + 'gfx/')
+    property url fonts: Qt.resolvedUrl(root.assetPath + 'fonts/')
 
     onScreenWidthChanged: cellWidth = Math.floor(screenWidth/24)
     onScreenHeightChanged: cellHeight = Math.floor(screenHeight/24)
@@ -73,8 +96,8 @@ QtObject {
         print("resolution: " + screenWidth + "x" + screenHeight)
         print("scalFactor: ", scalFactor)
 
-        cellWidth = Math.floor(screenWidth/24)
-        cellHeight = Math.floor(screenHeight/24)
+        cellWidth = Math.floor(screenWidth/cellFactor)
+        cellHeight = Math.floor(screenHeight/cellFactor)
 
         var symbolSize = symbolSizeS
         var gfxSize = 1
@@ -109,11 +132,15 @@ QtObject {
 
         fontWeight = Font.Light
 
-        if (showClusterIfPossible) {
+        var canDisplayCluster = Screen.desktopAvailableWidth > Screen.width || WindowManager.runningOnDesktop || ScreenManager.screenCount() > 1
+
+        if (canDisplayCluster) {
             print("Instrument Cluster enabled")
             withCluster = true
-            clusterWidth = ScreenManager.availableScreens[1].size.width
-            clusterHeight = Math.min(ScreenManager.availableScreens[1].size.width * 0.375, ScreenManager.availableScreens[1].size.height)
+            if (ScreenManager.availableScreens[1]) {
+                clusterWidth = ScreenManager.availableScreens[1].size.width
+                clusterHeight = Math.min(ScreenManager.availableScreens[1].size.width * 0.375, ScreenManager.availableScreens[1].size.height)
+            }
             print("cluster resolution: " + clusterWidth + "x" + clusterHeight)
         }
     }

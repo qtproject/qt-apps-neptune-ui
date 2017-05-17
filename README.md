@@ -61,16 +61,13 @@ In QtCreator you can use the following line:
 
 # Style Configuration
 
-Neptune UI supports different styleConfigs which can be used to adapt the style to the needs of the Hardware the UI should be running on.
+Neptune UI supports different style configurations which can be used to adapt the style to the needs of the Hardware the UI should be running on.
 The following configurations are available:
 
-* no config: The UI will use the original graphics and fonts and uses a resolution of 1280x800
-* Config1920x1080: Same as no config but 1920x1080 will be used as the screen resolution and the UI elements will be scaled
-* auto: The UI will use the current Screen resolution and tries to adapt the UI as much as possible
+* Config1920x1080: Same as no config but 1920x1080 will be used as the screen resolution and the UI elements will be scaled/ This is the default version.
+* auto: The UI will use the current screen resolution and tries to adapt the UI as much as possible
 
-Which configuration should be used can be controlled using the styleConfig parameter in am-config.yaml. By default the "auto" configuration is used.
-If the "auto" configuration doesn't work for a specific device a own configuration can be created by copying one of the existing configurations from modules/utils and place it somehwere on the filesystem.
-The styleConfig parameter in am-config.yaml will be intepreted as file path to a QML file and if available this StyleConfig will be loaded.
+Which configuration should be used can be controlled using the import path property 'importPaths' set in the am-config.yaml file. In the 'imports/shared/ui_config' folder different configuration can be found. For any other, custom UI configuration, corresponding folder inside ui_config folder should be created, with the same content.
 
 # Common Terms Used In The Project
 

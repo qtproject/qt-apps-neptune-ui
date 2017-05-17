@@ -46,7 +46,7 @@ Item {
     StackView {
         id: stackView
         width: Style.hspan(24)
-        height: Style.vspan(20)
+        height: parent.height
         focus: true
 
         visible: fastBlur.radius === 0

@@ -14,7 +14,7 @@ applications:
 
 runtimes:
   qml:
-    importPaths: [ "${CONFIG_PWD}/imports/shared", "${CONFIG_PWD}/imports/system", "${CONFIG_PWD}/sysui" ]
+    importPaths: [ "${CONFIG_PWD}/imports/ui_config/default", "${CONFIG_PWD}/imports/shared", "${CONFIG_PWD}/sysui" ]
 
 # ... as well as the SystemUI
 
@@ -22,12 +22,11 @@ ui:
   fullscreen: yes
   style: "styles/neptune"
   mainQml: "${CONFIG_PWD}/Main.qml"
-  importPaths: [ "${CONFIG_PWD}/imports/shared", "${CONFIG_PWD}/imports/system", "${CONFIG_PWD}/sysui" ]
+  importPaths: [ "${CONFIG_PWD}/imports/ui_config/default", "${CONFIG_PWD}/imports/shared", "${CONFIG_PWD}/imports/system", "${CONFIG_PWD}/sysui" ]
   windowIcon: "${CONFIG_PWD}/imports/assets/icons/active/apps@96.png"
 
 systemProperties:
     public:
-      styleConfig: "Config1920x1080.qml"
       showCluster: yes
     private:
       appStoreServerUrl: 'http://chaos.pelagicore.net:8080'

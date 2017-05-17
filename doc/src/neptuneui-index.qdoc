@@ -184,7 +184,6 @@
 
     systemProperties:
       public:
-        styleConfig: "Config1920x1080.qml"
         showCluster: yes
       private:
         appStoreServerUrl: 'http://chaos.pelagicore.net:8080'

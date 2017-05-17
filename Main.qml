@@ -38,18 +38,15 @@ import controls 1.0
 import utils 1.0
 import display 1.0
 import cluster 1.0
-import QtQuick.Window 2.2
-import com.pelagicore.styles.neptune 1.0
 
 BackgroundPane {
     id: root
 
-    property bool showClusterIfPossible: ApplicationManager.systemProperties.showCluster
+    property bool showClusterIfPossible: ApplicationManager.systemProperties.showCluster && Style.withCluster
     property var cluster
 
-
-    width: NeptuneStyle.windowWidth
-    height: NeptuneStyle.windowHeight
+    width: Style.screenWidth
+    height: Style.screenHeight
     padding: 0
 
     //Forwards the keys to the cluster to handle it without being the active window
@@ -86,18 +83,11 @@ BackgroundPane {
     }
 
     Component.onCompleted: {
-        var canDisplayCluster = Screen.desktopAvailableWidth > Screen.width || WindowManager.runningOnDesktop || ScreenManager.screenCount() > 1
-
         if (!showClusterIfPossible) {
             console.log("Showing Instrument Cluster was disabled");
             return
         }
 
-        if (canDisplayCluster) {
-            console.log("Showing Instrument Cluster");
-            cluster = clusterComponent.createObject(root);
-        } else {
-            console.log("Showing the Instrument Cluster is not possible on this platform");
-        }
+        cluster = clusterComponent.createObject(root);
     }
 }

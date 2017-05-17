@@ -31,30 +31,32 @@
 
 pragma Singleton
 import QtQuick 2.6
-import QtApplicationManager 1.0
-import QtQuick.Window 2.0
+
 import com.pelagicore.styles.neptune 1.0
+import uiconfig 1.0
 
 // TODO: Remove dependency to AppMan. Otherwise all controls will depend on AppMan
 QtObject {
     id: root
 
-    property bool withCluster: configValue("withCluster", false)
+    property QtObject configInfo: ConfigInfo {}
 
-    property int paddingXS: configValue("paddingXS", 2)
-    property int paddingS: configValue("paddingS", 4)
-    property int padding: configValue("padding", 8)
-    property int paddingL: configValue("paddingL", 12)
-    property int paddingXL: configValue("paddingXL", 16)
+    property bool withCluster: configInfo.withCluster
+
+    property int paddingXS: configInfo.paddingXS
+    property int paddingS: configInfo.paddingS
+    property int padding: configInfo.padding
+    property int paddingL: configInfo.paddingL
+    property int paddingXL: configInfo.paddingXL
 
     property int screenWidth: NeptuneStyle.windowWidth
     property int screenHeight: NeptuneStyle.windowHeight
-    property int clusterWidth: configValue("clusterWidth", 1920)
-    property int clusterHeight: configValue("clusterHeight", 720)
-    property int displayHMargin: configValue("displayHMargin", 11)
-    property int displayVMargin: configValue("displayVMargin", 0)
-    property int cellWidth: configValue("cellWidth", screenWidth/24) // 1280/24
-    property int cellHeight: configValue("cellHeight", screenHeight/24) // 800/24
+    property int clusterWidth: configInfo.clusterWidth
+    property int clusterHeight: configInfo.clusterHeight
+    property int displayHMargin: configInfo.displayHMargin
+    property int displayVMargin: configInfo.displayVMargin
+    property int cellWidth: screenWidth/configInfo.cellFactor //1280/24
+    property int cellHeight: screenHeight/configInfo.cellFactor // 800/24
     property string fontFamily: NeptuneStyle.fontFamily
     property real fontWeight: Font.Light
     property real fontFactor: NeptuneStyle.fontFactor
@@ -69,48 +71,30 @@ QtObject {
     property color colorOrange: NeptuneStyle.accentColor
     property color colorGrey: NeptuneStyle.lighter25(NeptuneStyle.darkColor)
     property color colorBlack: NeptuneStyle.darkColor
-    property bool debugMode: configValue("debugMode", false)
-    property bool gridMode: configValue("gridMode", false)
-    property bool fakeBackground: configValue("fakeBackground", false)
+    property bool debugMode: configInfo.debugMode
+    property bool gridMode: configInfo.gridMode
+    property bool fakeBackground: configInfo.fakeBackground
     property string displayBackground: NeptuneStyle.backgroundImage
-    property real disabledIconOpacity: configValue("disabledIconOpacity", 0.6)
+    property real disabledIconOpacity: configInfo.disabledIconOpacity
 
-    property int defaultSymbolSize: configValue("defaultSymbolSize", symbolSizeM)
-    property int defaultGfxSize: configValue("defaultGfxSize", 1)
-    property int symbolSizeXS: configValue("symbolSizeXS", 32)
-    property int symbolSizeS: configValue("symbolSizeS", 48)
-    property int symbolSizeM: configValue("symbolSizeM", 72)
-    property int symbolSizeL: configValue("symbolSizeL", 96)
-    property int symbolSizeXL: configValue("symbolSizeXL", 114)
-    property int symbolSizeXXL: configValue("symbolSizeXXL", 192)
+    property int defaultSymbolSize: configInfo.defaultSymbolSize
+    property int defaultGfxSize: configInfo.defaultGfxSize
+    property int symbolSizeXS: configInfo.symbolSizeXS
+    property int symbolSizeS: configInfo.symbolSizeS
+    property int symbolSizeM: configInfo.symbolSizeM
+    property int symbolSizeL: configInfo.symbolSizeL
+    property int symbolSizeXL: configInfo.symbolSizeXL
+    property int symbolSizeXXL: configInfo.symbolSizeXXL
 
-    property string assetPath: Qt.resolvedUrl("../../assets/")
-    property url drawableUrl: Qt.resolvedUrl(root.assetPath + 'drawable-ldpi')
-    property url symbolUrl: Qt.resolvedUrl(root.assetPath + 'icons')
-    property url gfxUrl: Qt.resolvedUrl(root.assetPath + 'gfx/')
-    property url fonts: Qt.resolvedUrl(root.assetPath + 'fonts/')
+    property real statusBarHeight: vspan(configInfo.statusBarSpan)
+    property real climateCollapsedVspan: vspan(configInfo.climateCollapsedSpan)
+    property real launcherHeight: vspan(configInfo.launcherSpan)
 
-    property real climateCollapsedVspan: vspan(3)
-
-    property real statusBarHeight: vspan(2)
-
-    property bool isClient: typeof ApplicationInterface !== 'undefined'
-    property string styleConfig: isClient ? ApplicationInterface.systemProperties.styleConfig : ApplicationManager.systemProperties.styleConfig
-    property bool showClusterIfPossible: isClient ? ApplicationInterface.systemProperties.showCluster :ApplicationManager.systemProperties.showCluster
-
-    property Loader styleLoader: Loader {
-        property bool showClusterIfPossible: root.showClusterIfPossible
-        source: styleConfig === "auto" ? Qt.resolvedUrl("AutoConfig.qml") : styleConfig
-
-        onLoaded: {
-            print("StyleConfig loaded: ", source)
-        }
-    }
-
-    function configValue(key, defaultValue) {
-        return (styleLoader.item && styleLoader.item[key] )? styleLoader.item[key]: defaultValue
-    }
-
+    property string assetPath: configInfo.assetPath
+    property url drawableUrl: configInfo.drawableUrl
+    property url symbolUrl: configInfo.symbolUrl
+    property url gfxUrl: configInfo.gfxUrl
+    property url fonts: configInfo.fonts
 
     function symbol(name, size, active) {
         size = size || defaultSymbolSize;
