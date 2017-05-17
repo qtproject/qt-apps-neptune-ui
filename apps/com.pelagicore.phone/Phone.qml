@@ -52,7 +52,7 @@ import QtQuick.Layouts 1.3
 import utils 1.0
 
 import service.notification 1.0
-import models.phone 1.0
+import "models"
 
 AppUIScreen {
     id: root

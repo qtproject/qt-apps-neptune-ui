@@ -32,7 +32,7 @@
 import QtQuick 2.2
 import QtQuick.Controls 2.1
 import utils 1.0
-import models.phone 1.0
+import "models"
 import com.pelagicore.styles.neptune 1.0
 
 UIScreen {

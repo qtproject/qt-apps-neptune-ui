@@ -37,19 +37,35 @@ import QtApplicationManager 1.0
 QtObject {
     id: root
 
-    property QtObject phoneControl: ApplicationIPCInterface {
-
-        readonly property var _decltype_sendCurrentPairedDeviceName: { "void" : "string" }
-
-        Component.onCompleted: {
-            ApplicationIPCManager.registerInterface(phoneControl, "com.pelagicore.phone.control", {})
-        }
-
-        function sendCurrentPairedDeviceName(deviceName) {
-            root.currentPairedDeviceName = deviceName;
+    readonly property Item phoneControl: Item {
+        ApplicationInterfaceExtension {
+            id: phoneRemoteControl
+            name: "com.pelagicore.phone.control"
         }
     }
 
     /*! Provides the name of the current paired device. */
-    property string currentPairedDeviceName: ""
+    property string currentPairedDeviceName: ''
+    /*! Provides information about if any device is currently paired. */
+    property bool isAnyDevicePaired: false
+
+    /*! Provides contacts list model of the currently paired devices'. */
+    property ListModel contactsModel: ListModel {
+        ListElement { name: "Andreas N." ; number: "01555222" }
+        ListElement { name: "Alexandra F." ; number: "02524446" }
+        ListElement { name: "Alvaro R." ; number: "0369885" }
+        ListElement { name: "Bill T." ; number: "0784795" }
+    }
+
+    /*! Provides the currently available devices list model. */
+    property ListModel availableDevices: ListModel {
+        ListElement { name: "BlackBerry Z30" ; code: "0123" }
+        ListElement { name: "Samsung-123" ; number: "0000" }
+        ListElement { name: "i-Phone 6S" ; number: "1111" }
+        ListElement { name: "Nexus" ; number: "8524" }
+    }
+
+    onCurrentPairedDeviceNameChanged:  {
+        phoneRemoteControl.object.sendCurrentPairedDeviceName(root.currentPairedDeviceName);
+    }
 }
