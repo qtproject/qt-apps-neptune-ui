@@ -40,7 +40,7 @@ Control {
     id: root
 
     y: SystemModel.statusBarExpanded ? 0 : -height
-    anchors.left: parent.left; anchors.right: parent.right
+    width: Style.screenWidth
     height: Style.vspan(20)
 
     Behavior on y {

@@ -35,6 +35,7 @@ import controls 1.0
 import utils 1.0
 import models.climate 1.0
 import models.system 1.0
+import models.startup 1.0
 
 Control {
     id: root
@@ -110,8 +111,22 @@ Control {
         }
     }
 
-    ClimatePane {
-        climateBarItem: climateBarContent
-        backgroundPaneVisible: climatePanelBackground.opacity !== 1
+    StageLoader {
+        id: climatePaneLoader
+        width: Style.screenWidth
+        height: Style.vspan(24) - Style.statusBarHeight
+        active: StagedStartupModel.loadBackgroundElemens
+        source: "ClimatePane.qml"
+        // QtBUG: https://bugreports.qt.io/browse/QTBUG-50992 otherwise it should be asynchronous
+        asynchronous: false
+        onLoaded: {
+            climatePaneLoader.item.climateBarItem = climateBarContent
+            climatePaneLoader.item.backgroundPaneVisible = Qt.binding(function () { return climatePanelBackground.opacity !== 1 })
+        }
+    }
+
+    Component.onCompleted: {
+        StartupTimer.checkpoint("Climate bar created!");
+        StartupTimer.createReport();
     }
 }

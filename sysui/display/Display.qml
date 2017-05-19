@@ -40,6 +40,7 @@ import popup 1.0
 import windowoverview 1.0
 
 import models.system 1.0
+import models.startup 1.0
 
 Item {
     id: root
@@ -47,28 +48,57 @@ Item {
     width: 1280
     height: 800
 
-    // Background Elements
-
     // Content Elements
     StatusBar {
         id: statusBar
     }
 
-    LaunchController {
-        id: launcher
+    StageLoader {
+        id: launcherControllerLoader
+        width: Style.screenWidth
+        height: Style.vspan(20)
         anchors.top: statusBar.bottom
+        active: StagedStartupModel.loadRest
+        source: "LaunchController.qml"
+        onLoaded: menuScreenLoader.active = true
     }
 
-    About {
-        id: about
+    StageLoader {
+        id: menuScreenLoader
+        anchors.top: statusBar.bottom
+        width: Style.hspan(24)
+        height: Style.vspan(19)
+        asynchronous: false
+        source: "MenuScreen.qml"
+        onLoaded: {
+            homePage.anchors.topMargin = 0
+            menuScreenLoader.item.homePage = homePage
+            launcherControllerLoader.item.stackView.push(menuScreenLoader.item)
+            StagedStartupModel.enterFinalState()
+        }
+    }
+
+    HomePage {
+        id: homePage
+        anchors.top: parent.top
+        anchors.topMargin: statusBar.height
     }
 
     // Foreground Elements
 
+    // Background Elements
+    StageLoader {
+        id: aboutLoader
+        width: Style.screenWidth
+        height: Style.vspan(20)
+        active: StagedStartupModel.loadBackgroundElemens
+        source: "About.qml"
+    }
+
     ClimateBar {
     }
 
-    Loader {
+    StageLoader {
         id: toolBarMonitorLoader
         width: parent.width
         height: 200
@@ -77,26 +107,39 @@ Item {
         source: "dev/ToolBarMonitor.qml"
     }
 
-    WindowOverview {
-        id: windowOverview
+    StageLoader {
+        id: windowOverviewLoader
         anchors.fill: parent
+        active: StagedStartupModel.loadBackgroundElemens
+        source: "../windowoverview/WindowOverview.qml"
     }
 
-    PopupContainer {
-        id: popupContainer
+    StageLoader {
+        id: popupContainerLoader
+        width: Style.hspan(8)
+        height: Style.vspan(6)
         anchors.centerIn: parent
+        active: StagedStartupModel.loadBackgroundElemens
+        source: "../popup/PopupContainer.qml"
     }
 
-    NotificationContainer {
-        id: notificationContainer
+    StageLoader {
+        id: notificationContainerLoader
+        width: Style.screenWidth
+        height: Style.vspan(2)
         anchors.horizontalCenter: parent.horizontalCenter
+        active: StagedStartupModel.loadBackgroundElemens
+        source: "../notification/NotificationContainer.qml"
     }
 
-    Loader {
+    StageLoader {
         id: keyboardLoader
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: parent.bottom
-        source: "Keyboard.qml"
+        active: StagedStartupModel.loadBackgroundElemens
+        source: "../keyboard/Keyboard.qml"
     }
+
+    Component.onCompleted: StagedStartupModel.enterMenuState()
 }

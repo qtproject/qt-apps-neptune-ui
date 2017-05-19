@@ -41,7 +41,9 @@ import models.system 1.0
 Item {
     id: root
     width: Style.screenWidth
-    height: Style.launcherHeight
+    height: Style.vspan(20)
+
+    property alias stackView: stackView
 
     StackView {
         id: stackView
@@ -50,8 +52,6 @@ Item {
         focus: true
 
         visible: fastBlur.radius === 0
-
-        initialItem: MenuScreen { }
 
         pushEnter: Transition {
             ScaleAnimator {

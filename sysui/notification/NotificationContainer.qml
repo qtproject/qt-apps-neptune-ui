@@ -42,6 +42,7 @@ Control {
     height: Style.vspan(2)
 
     y: NotificationModel.notificationVisible ? 0 : -height
+    visible: y > -height
     Behavior on y { NumberAnimation { duration: 200 } }
 
     Rectangle {

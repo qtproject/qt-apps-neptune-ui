@@ -32,12 +32,10 @@
 import QtQuick 2.5
 import QtQuick.Window 2.2
 import QtApplicationManager 1.0
-import com.pelagicore.ScreenManager 1.0
 import QtQuick.Controls 2.0
 import controls 1.0
 import utils 1.0
-import display 1.0
-import cluster 1.0
+import models.startup 1.0
 
 BackgroundPane {
     id: root
@@ -50,44 +48,19 @@ BackgroundPane {
     padding: 0
 
     //Forwards the keys to the cluster to handle it without being the active window
-    Keys.forwardTo: cluster ? cluster.clusterItem : null
+    Keys.forwardTo: clusterLoader.item ? clusterLoader.item.clusterItem : null
 
-    Display {
-        id: display
+    StageLoader {
         anchors.fill: parent
+        source: "sysui/display/Display.qml"
+        active: StagedStartupModel.loadDisplay
     }
 
-    Component {
-        id: clusterComponent
-        Window {
-            id: cluster
-            title: "Neptune Cluster Display"
-            height: Style.clusterHeight
-            width: Style.clusterWidth
-            visible: false
-
-            property Item clusterItem: clusterItem
-
-            color: "black"
-
-            Cluster {
-                id: clusterItem
-            }
-
-            Component.onCompleted: {
-                WindowManager.registerCompositorView(cluster)
-                ScreenManager.setScreen(cluster, 1)
-                cluster.show()
-            }
-        }
-    }
-
-    Component.onCompleted: {
-        if (!showClusterIfPossible) {
-            console.log("Showing Instrument Cluster was disabled");
-            return
-        }
-
-        cluster = clusterComponent.createObject(root);
+    StageLoader {
+        id: clusterLoader
+        height: Style.clusterHeight
+        width: Style.clusterWidth
+        source: "sysui/cluster/ClusterMain.qml"
+        active: root.showClusterIfPossible
     }
 }

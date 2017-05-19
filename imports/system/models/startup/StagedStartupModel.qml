@@ -36,9 +36,45 @@ import QtQml.StateMachine 1.0 as DSM
 Item {
     id: root
 
+    property bool loadDisplay: false
+    property bool loadRest: false
+    property bool loadBackgroundElemens: false
+
+    signal enterMenuState()
+    signal enterFinalState()
+
     DSM.StateMachine {
         id: stateMachine
-        running: false
+        initialState: homePage
+        running: true
+
+        DSM.State {
+            id: homePage
+
+            DSM.SignalTransition {
+                targetState: menuState
+                signal: root.enterMenuState
+            }
+
+            onEntered: root.loadDisplay = true
+        }
+
+        DSM.State {
+            id: menuState
+
+            DSM.SignalTransition {
+                targetState: finalState
+                signal: root.enterFinalState
+            }
+
+            onEntered: root.loadRest = true
+        }
+
+        DSM.FinalState {
+            id: finalState
+
+            onEntered: root.loadBackgroundElemens = true
+        }
     }
 
 }

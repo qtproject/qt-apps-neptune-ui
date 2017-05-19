@@ -42,7 +42,11 @@ import models.statusbar 1.0
 UIScreen {
     id: root
 
+    height: Style.vspan(20)
+
     hideBack: true
+
+    property alias homePage: homePageContainer.children
 
     SwipeView {
         id: view
@@ -54,16 +58,23 @@ UIScreen {
 
         MyCarPage {
         }
+
         FunctionsPage {
         }
-        HomePage {
+
+        Item {
+            id: homePageContainer
+            implicitWidth: Style.hspan(24)
+            implicitHeight: Style.vspan(24)
         }
+
         LauncherPage {
             id: launcher
             onUpdateApp: {
                 view.currentIndex = index;
             }
         }
+
         CloudPage {
         }
 

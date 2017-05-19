@@ -29,22 +29,39 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.0
-
+import QtQuick 2.6
+import QtQuick.Window 2.2
+import QtApplicationManager 1.0
+import com.pelagicore.ScreenManager 1.0
 import utils 1.0
 
-Loader {
-    id: root
-    width: Style.screenWidth
-    height: Style.screenHeight
+Window {
+    id: cluster
+    title: "Neptune Cluster Display"
+    height: Style.clusterHeight
+    width: Style.clusterWidth
+    visible: true
 
-    active: false
+    property Item clusterItem: clusterItem
 
-    asynchronous: true
+    color: "black"
 
-    onStatusChanged: {
-        if (root.status === Loader.Error) {
-            console.warn("Error loading component", root.source, root.sourceComponent.errorString());
+    Cluster {
+        id: clusterItem
+    }
+
+    Component.onCompleted: {
+        var canDisplayCluster = Screen.desktopAvailableWidth > Screen.width || WindowManager.runningOnDesktop || ScreenManager.screenCount() > 1
+
+        if (!canDisplayCluster) {
+            cluster.visible = false
+            return
         }
+
+        WindowManager.registerCompositorView(cluster)
+        ScreenManager.setScreen(cluster, 1)
+        cluster.show()
+        StartupTimer.checkpoint("Cluster window created!");
+        StartupTimer.createReport();
     }
 }
