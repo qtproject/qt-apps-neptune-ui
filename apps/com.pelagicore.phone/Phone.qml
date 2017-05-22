@@ -51,7 +51,7 @@ import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.3
 import utils 1.0
 
-import service.notification 1.0
+import service.popup 1.0
 import "models"
 
 AppUIScreen {
@@ -59,16 +59,18 @@ AppUIScreen {
     title: "Neptune Phone App"
 
     /*! Internal */
-    property QtObject popupItem : NotificationInterface { }
+    property QtObject popupItem : PopupInterface {
+        actions: [ { text: "OK" } ]
+    }
 
     onRaiseApp: {
         if (PhoneModel.isAnyDevicePaired) {
             bar.currentIndex = 2;
         } else {
             popupItem.sticky = true;
-            popupItem.summary = "No Device Paired";
-            popupItem.body = "Please pair a device";
-            popupItem.actions =  ["OK"];
+            popupItem.title = "No Device Paired";
+            popupItem.summary = "Please pair a device";
+            popupItem.actions =  [ { text: "OK" } ];
             popupItem.show();
             bar.currentIndex = 1;
         }
@@ -106,9 +108,9 @@ AppUIScreen {
             Dialer {
                 id: phoneTab
                 onDial: {
-                    popupItem.summary = "Calling...";
-                    popupItem.body = number;
-                    popupItem.actions =  ["Hang up"];
+                    popupItem.title = "Calling...";
+                    popupItem.summary = number;
+                    popupItem.actions =  [ { text: "Hang Up" } ];
                     popupItem.show();
                 }
                 onBackScreen: {
@@ -123,9 +125,9 @@ AppUIScreen {
 
             ContactsList {
                 onDial: {
-                    popupItem.summary = "Calling...";
-                    popupItem.body = name + " " +  number;
-                    popupItem.actions =  ["Hang up"];
+                    popupItem.title = "Calling...";
+                    popupItem.summary = name + " " +  number;
+                    popupItem.actions =  [ { text: "Hang Up" } ];
                     popupItem.show();
                 }
                 onBackScreen: {

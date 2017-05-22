@@ -64,6 +64,14 @@ QtObject {
                 root.updatePopup(receivedContent);
             }
         }
+
+        onNotificationAboutToBeRemoved: {
+            var receivedContent = NotificationManager.notification(id);
+
+            if (receivedContent.category === "popup") {
+                hideCurrentPopup();
+            }
+        }
     }
 
     signal showPopup(var contentData, var buttons)
@@ -84,13 +92,16 @@ QtObject {
         var receivedBody = receivedPopup.extended;
         var receivedSummary = receivedPopup.summary;
         var receivedButtons = [];
+        var receivedProgress = receivedPopup.progress
+
         for (var i in receivedPopup.actions) {
             receivedButtons.push(receivedPopup.actions[i])
         }
 
         var popupData = {
             body: receivedBody,
-            summary: receivedSummary
+            summary: receivedSummary,
+            progressValue: receivedProgress
         };
 
         root.buttonModel = receivedButtons;

@@ -35,10 +35,8 @@ import com.pelagicore.styles.neptune 1.0
 
 T.Button {
     id: control
-    implicitWidth: Math.max(background ? background.implicitWidth : 0,
-                            contentItem.implicitWidth + leftPadding + rightPadding)
-    implicitHeight: Math.max(background ? background.implicitHeight : 0,
-                             contentItem.implicitHeight + topPadding + bottomPadding)
+    implicitWidth: NeptuneStyle.cellWidth + leftPadding + rightPadding
+    implicitHeight: NeptuneStyle.cellHeight + leftPadding + rightPadding
     baselineOffset: contentItem.y + contentItem.baselineOffset
 
     padding: 6
@@ -57,8 +55,6 @@ T.Button {
     }
 
     background: Rectangle {
-        implicitWidth: control.NeptuneStyle.cellWidth
-        implicitHeight: control.NeptuneStyle.cellHeight
         visible: !control.flat || control.down || control.checked || control.highlighted
         color: control.checked ? control.NeptuneStyle.lighter25(control.NeptuneStyle.darkColor) : control.NeptuneStyle.darkColor
         border.color: control.NeptuneStyle.lighter25(color)

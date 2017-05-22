@@ -54,6 +54,7 @@ MouseArea {
 
     property var popupContent
     property var popupBody
+    property real progressValue: 0.0
     property var buttonsModel
 
     Connections {
@@ -62,6 +63,7 @@ MouseArea {
         onShowPopup: {
             root.popupContent = contentData.summary;
             root.popupBody = contentData.body;
+            root.progressValue = contentData.progressValue
 
             if (buttons) {
                 root.buttonsModel = buttons;
@@ -89,12 +91,34 @@ MouseArea {
         id: body
 
         width: parent.width
-        anchors.bottom: buttonsRow.top
+        height: paintedHeight
         anchors.top: popupHeader.bottom
-        anchors.topMargin: 5
+        anchors.topMargin: 10
         font.pixelSize: Style.fontSizeM
         text: root.contentAvailable && root.popupContent !== undefined ? root.popupContent : ""
         horizontalAlignment: Text.AlignHCenter
+    }
+
+    ProgressBar {
+        id: progressBar
+
+        width: parent.width - Style.screenMargin
+        height: 50
+        anchors.top: body.bottom
+        anchors.topMargin: 5
+        anchors.horizontalCenter: parent.horizontalCenter
+        visible: root.progressValue > 0.0
+
+        opacity: visible ? 1.0 : 0.0
+        Behavior on opacity {
+            NumberAnimation {
+                duration: 200
+            }
+        }
+
+        from: 0
+        to: 100
+        value: root.contentAvailable && root.popupContent !== undefined ? root.progressValue : ""
     }
 
     PopupFooter {

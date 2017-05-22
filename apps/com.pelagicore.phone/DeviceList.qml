@@ -32,7 +32,7 @@
 import QtQuick 2.2
 import QtQuick.Controls 2.0
 import utils 1.0
-import service.notification 1.0
+import service.popup 1.0
 import "models"
 import com.pelagicore.styles.neptune 1.0
 
@@ -60,7 +60,9 @@ UIScreen {
                 }
                 onCheckedChanged: {
                     if (checked) {
-                        notificationInterface.show();
+                        popupInterface.progress = 0
+                        popupInterface.show();
+                        simulate.start()
                     } else {
                         PhoneModel.isAnyDevicePaired = false;
                     }
@@ -69,18 +71,37 @@ UIScreen {
         }
     }
 
-    NotificationInterface {
-        id: notificationInterface
-        summary: "Pairing Device"
-        actions:  ["Cancel"]
-        timeout: 2000
+    PopupInterface {
+        id: popupInterface
+        title: "Pairing Device"
+        actions: [ { text: "Cancel" } ]
+        timeout: 500
         progress: -1
+        Behavior on progress {
+            NumberAnimation {
+                duration: 200
+            }
+        }
+
         showProgress: true
-        body: PhoneModel.currentPairedDeviceName
+        summary: PhoneModel.currentPairedDeviceName
         onVisibleChanged: {
-            if (!visible) {
+            if (!popupInterface.visible) {
                 PhoneModel.isAnyDevicePaired = true;
                 bar.currentIndex = 2;
+                simulate.stop();
+            }
+        }
+    }
+
+    Timer {
+        id: simulate
+        interval: 500; repeat: true
+        onTriggered: {
+            if (popupInterface.progress === 100) {
+                simulate.stop();
+            } else {
+                popupInterface.progress += 10;
             }
         }
     }
