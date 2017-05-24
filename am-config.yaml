@@ -14,7 +14,7 @@ applications:
 
 runtimes:
   qml:
-    importPaths: [ "${CONFIG_PWD}/imports/ui_config/default", "${CONFIG_PWD}/imports/shared", "${CONFIG_PWD}/sysui" ]
+    importPaths: [ "${CONFIG_PWD}/imports/ui_config/default", "${CONFIG_PWD}/imports/shared" ]
 
 # ... as well as the SystemUI
 
