@@ -39,6 +39,7 @@ QtObject {
     property bool climateExpanded: false
     property bool windowOverviewVisible: false
     property bool toolBarMonitorVisible: false
-
+    property int currentPageIndex: 2
+    property int pageCount: 5
 }
 

@@ -78,8 +78,8 @@ Pane {
         anchors.topMargin: Style.padding
         anchors.bottomMargin: Style.padding
 
-        currentIndex: StatusBarModel.currentPage
-        count: StatusBarModel.pageIndicatorSize
+        currentIndex: SystemModel.currentPageIndex
+        count: SystemModel.pageCount
     }
 
     RowLayout {

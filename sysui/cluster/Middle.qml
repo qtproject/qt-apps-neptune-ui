@@ -32,7 +32,7 @@
 import QtQuick 2.6
 import QtGraphicalEffects 1.0
 import utils 1.0
-import models.statusbar 1.0
+import models.cluster 1.0
 import models.application 1.0
 
 Item {
@@ -83,9 +83,9 @@ Item {
         }
 
         Component.onCompleted: {
-            StatusBarModel.pageIndicatorSize = stack.count
-            StatusBarModel.currentPage = Qt.binding(function() { return stack.currentIndex})
-            StatusBarModel.clusterTitle = Qt.binding(function() { return currentItem.title})
+            StatusModel.pageIndicatorCount = stack.count;
+            StatusModel.currentPage = Qt.binding(function() { return stack.currentIndex});
+            StatusModel.clusterTitle = Qt.binding(function() { return currentItem.title});
         }
     }
 

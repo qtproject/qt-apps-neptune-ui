@@ -33,25 +33,7 @@ pragma Singleton
 import QtQuick 2.0
 
 QtObject {
-    id: root
-
-    property string clusterTitle: ""
-
-    property var indicators: [
-        { name: "battery", active: true },
-        { name: "wifi",  active: true },
-        { name: "break", active: false },
-        { name: "bluetooth", active: false }
-    ]
-
-    property var currentDate: new Date();
-
-    property QtObject timer: Timer {
-        interval: 1000
-        repeat: true
-        running: true
-        onTriggered: {
-            currentDate = new Date();
-        }
-    }
+    property int pageIndicatorCount: 0
+    property int currentPage: 0
+    property string clusterTitle
 }

@@ -37,7 +37,7 @@ import controls 1.0
 import utils 1.0
 import cloud 1.0
 
-import models.statusbar 1.0
+import models.system 1.0
 
 UIScreen {
     id: root
@@ -51,10 +51,10 @@ UIScreen {
     SwipeView {
         id: view
         anchors.fill: parent
-        currentIndex: 2
-        onCurrentIndexChanged: {
-            StatusBarModel.updatePageIndicator(currentIndex, count);
-        }
+        currentIndex: SystemModel.currentPageIndex
+        onCurrentIndexChanged: SystemModel.currentPageIndex = currentIndex
+
+        onCountChanged: SystemModel.pageCount = view.count
 
         MyCarPage {
         }
@@ -76,10 +76,6 @@ UIScreen {
         }
 
         CloudPage {
-        }
-
-        Component.onCompleted: {
-            StatusBarModel.updatePageIndicator(currentIndex, count);
         }
     }
 }

@@ -36,10 +36,15 @@ import controls 1.0
 import models.climate 1.0
 import models.settings 1.0
 import models.statusbar 1.0
+import models.cluster 1.0
 
 Item {
+    id: root
     width: 0.37 * Style.clusterWidth
     height: 0.12 * Style.clusterHeight
+
+    // Used only in cluster. Should be added to ClusterStyle
+    property color inactiveWhite: "#4d4d4d"
 
     Behavior on y {
         NumberAnimation { duration: 200}
@@ -81,12 +86,12 @@ Item {
             spacing: 8
 
             Repeater {
-                model: StatusBarModel.pageIndicatorSize
+                model: StatusModel.pageIndicatorCount
                 delegate: Rectangle {
                     height: row.radius * 2
                     width: row.radius * 2
                     radius: row.radius
-                    color: StatusBarModel.currentPage === index ? Style.colorWhite : "#4d4d4d"
+                    color: StatusModel.currentPage === index ? Style.colorWhite : root.inactiveWhite
                 }
             }
         }
@@ -98,7 +103,7 @@ Item {
             height: parent.height - row.height
             anchors.top: row.bottom
             horizontalAlignment: Text.AlignHCenter
-            text: StatusBarModel.clusterTitle
+            text: StatusModel.clusterTitle
             font.pixelSize: 0.32 * background.height
         }
     }
