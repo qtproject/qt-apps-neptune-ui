@@ -91,7 +91,7 @@ Item {
         id: aboutLoader
         width: Style.screenWidth
         height: Style.vspan(20)
-        active: StagedStartupModel.loadBackgroundElemens
+        active: StagedStartupModel.loadBackgroundElements
         source: "About.qml"
     }
 
@@ -110,7 +110,7 @@ Item {
     StageLoader {
         id: windowOverviewLoader
         anchors.fill: parent
-        active: StagedStartupModel.loadBackgroundElemens
+        active: StagedStartupModel.loadBackgroundElements
         source: "../windowoverview/WindowOverview.qml"
     }
 
@@ -119,7 +119,7 @@ Item {
         width: Style.hspan(8)
         height: Style.vspan(6)
         anchors.centerIn: parent
-        active: StagedStartupModel.loadBackgroundElemens
+        active: StagedStartupModel.loadBackgroundElements
         source: "../popup/PopupContainer.qml"
     }
 
@@ -127,17 +127,25 @@ Item {
         id: notificationContainerLoader
         width: Style.screenWidth
         height: Style.vspan(2)
-        anchors.horizontalCenter: parent.horizontalCenter
-        active: StagedStartupModel.loadBackgroundElemens
+        active: StagedStartupModel.loadBackgroundElements
         source: "../notification/NotificationContainer.qml"
     }
 
     StageLoader {
+        id: notificationCenterLoader
+        width: Style.notificationCenterWidth
+        height: Style.screenHeight - Style.statusBarHeight
+        anchors.top: statusBar.bottom
+        active: StagedStartupModel.loadBackgroundElements
+        source: "../notification/NotificationCenter.qml"
+    }
+
+    Loader {
         id: keyboardLoader
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: parent.bottom
-        active: StagedStartupModel.loadBackgroundElemens
+        active: StagedStartupModel.loadBackgroundElements
         source: "../keyboard/Keyboard.qml"
     }
 

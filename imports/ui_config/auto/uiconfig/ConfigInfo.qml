@@ -74,6 +74,7 @@ QtObject {
     property int statusBarSpan: 2
     property int climateCollapsedSpan: 3
     property int launcherSpan: 19
+    property int notificationCenterWidth: 800
 
     property int screenWidth: Screen.width
     property int screenHeight: Math.min(screenWidth * 0.62, Screen.height)

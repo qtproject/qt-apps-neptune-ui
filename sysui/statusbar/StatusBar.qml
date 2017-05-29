@@ -108,5 +108,11 @@ Pane {
             timeFormat: SettingsModel.clockOption.format
             currentDate: StatusBarModel.currentDate
         }
+
+        Tool {
+            Layout.fillHeight: true
+            symbol: "slider_marker" // TODO: Replace with notification icon when available
+            onClicked: SystemModel.notificationCenterVisible = !SystemModel.notificationCenterVisible
+        }
     }
 }

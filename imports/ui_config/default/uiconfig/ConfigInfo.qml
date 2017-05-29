@@ -65,6 +65,7 @@ QtObject {
     property int statusBarSpan: 2
     property int climateCollapsedSpan: 3
     property int launcherSpan: 19
+    property int notificationCenterWidth: 800
 
     property string assetPath: Qt.resolvedUrl("../../../assets/")
     property url drawableUrl: Qt.resolvedUrl(root.assetPath + 'drawable-ldpi')

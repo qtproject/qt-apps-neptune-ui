@@ -47,6 +47,7 @@ QtObject {
     property string description
     property string icon
 
+    property var notificationModel: []
     property var buttonModel: []
 
     property Connections notificationManagerConnection: Connections {
@@ -91,6 +92,15 @@ QtObject {
         root.description = notification.body;
         root.icon = notification.icon;
         root.notificationVisible = true;
+
+        var storedModel = root.notificationModel;
+        // Push to Notification Center
+        storedModel.push({ title: notification.summary,
+                                  description: notification.body,
+                                  icon: notification.icon,
+                                  actions: root.buttonModel = actions });
+
+        root.notificationModel = storedModel;
     }
 
     function updateNotification(notification) {
@@ -113,7 +123,7 @@ QtObject {
         root.notificationVisible = false;
     }
 
-    function removeNotification(index) {
+    function removeCurrentNotification(index) {
         NotificationManager.dismissNotification(index);
         closeNotification();
     }
@@ -121,6 +131,12 @@ QtObject {
     function buttonClicked(index) {
         NotificationManager.triggerNotificationAction(root.notificationIndex, root.buttonModel[index]);
         closeNotification();
+    }
+
+    function removeNotification(index) {
+        var storedModel = root.notificationModel;
+        storedModel.splice(index, 1);
+        root.notificationModel = storedModel;
     }
 }
 

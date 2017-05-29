@@ -41,5 +41,6 @@ QtObject {
     property bool toolBarMonitorVisible: false
     property int currentPageIndex: 2
     property int pageCount: 5
+    property bool notificationCenterVisible: false
 }
 

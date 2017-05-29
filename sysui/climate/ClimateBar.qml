@@ -115,7 +115,7 @@ Control {
         id: climatePaneLoader
         width: Style.screenWidth
         height: Style.vspan(24) - Style.statusBarHeight
-        active: StagedStartupModel.loadBackgroundElemens
+        active: StagedStartupModel.loadBackgroundElements
         source: "ClimatePane.qml"
         // QtBUG: https://bugreports.qt.io/browse/QTBUG-50992 otherwise it should be asynchronous
         asynchronous: false

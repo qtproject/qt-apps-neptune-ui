@@ -29,53 +29,73 @@
 **
 ****************************************************************************/
 
-pragma Singleton
 import QtQuick 2.0
-import QtQml.StateMachine 1.0 as DSM
+import QtQuick.Controls 2.0
+import utils 1.0
+import controls 1.0
 
-Item {
+Control {
     id: root
 
-    property bool loadDisplay: false
-    property bool loadRest: false
-    property bool loadBackgroundElements: false
+    width: Style.notificationCenterWidth
+    height: Style.vspan(2)
 
-    signal enterMenuState()
-    signal enterFinalState()
+    property string iconSource
+    property string title
+    property string description
 
-    DSM.StateMachine {
-        id: stateMachine
-        initialState: homePage
-        running: true
+    signal removeNotification()
 
-        DSM.State {
-            id: homePage
+    Rectangle {
+        anchors.fill: parent
+        color: '#000'
+        opacity: 0.85
+    }
 
-            DSM.SignalTransition {
-                targetState: menuState
-                signal: root.enterMenuState
-            }
+    Row {
+        id: contentRow
+        height: icon.paintedHeight + notificationContent.height
+        anchors.top: parent.top
+        anchors.topMargin: 8
+        anchors.left: root.left
+        anchors.leftMargin: 20
+        spacing: 20
 
-            onEntered: root.loadDisplay = true
+        Image {
+            id: icon
+            source: root.iconSource
         }
 
-        DSM.State {
-            id: menuState
-
-            DSM.SignalTransition {
-                targetState: finalState
-                signal: root.enterFinalState
+        Column {
+            id: notificationContent
+            spacing: 5
+            Label {
+                id: title
+                text: root.title
             }
 
-            onEntered: root.loadRest = true
-        }
-
-        DSM.FinalState {
-            id: finalState
-
-            onEntered: root.loadBackgroundElements = true
+            Label {
+                id: body
+                width: parent.width
+                font.pixelSize: Style.fontSizeM
+                text: root.description
+            }
         }
     }
 
-}
+    Tool {
+        anchors.right: parent.right
+        anchors.top: parent.top
+        width: Style.symbolSizeS
+        symbol: "close"
+        size: Style.symbolSizeXS
+        onClicked: root.removeNotification()
+    }
 
+    Rectangle {
+        width: parent.width
+        height: 1
+        color: "grey"
+        anchors.bottom: parent.bottom
+    }
+}

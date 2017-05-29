@@ -87,6 +87,7 @@ QtObject {
     property int symbolSizeXXL: configInfo.symbolSizeXXL
 
     property real statusBarHeight: vspan(configInfo.statusBarSpan)
+    property int notificationCenterWidth: configInfo.notificationCenterWidth
     property real climateCollapsedVspan: vspan(configInfo.climateCollapsedSpan)
     property real launcherHeight: vspan(configInfo.launcherSpan)
 

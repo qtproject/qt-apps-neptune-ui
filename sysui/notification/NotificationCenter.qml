@@ -29,53 +29,53 @@
 **
 ****************************************************************************/
 
-pragma Singleton
 import QtQuick 2.0
-import QtQml.StateMachine 1.0 as DSM
+import QtQuick.Controls 2.0
+import utils 1.0
+import controls 1.0
+import models.notification 1.0
+import models.system 1.0
 
-Item {
+Control {
     id: root
 
-    property bool loadDisplay: false
-    property bool loadRest: false
-    property bool loadBackgroundElements: false
+    x: SystemModel.notificationCenterVisible ? Style.screenWidth - width : Style.screenWidth
+    Behavior on x { NumberAnimation { duration: 200 } }
 
-    signal enterMenuState()
-    signal enterFinalState()
+    MouseArea {
+        id: notificationContent
+        anchors.fill: parent
 
-    DSM.StateMachine {
-        id: stateMachine
-        initialState: homePage
-        running: true
-
-        DSM.State {
-            id: homePage
-
-            DSM.SignalTransition {
-                targetState: menuState
-                signal: root.enterMenuState
-            }
-
-            onEntered: root.loadDisplay = true
+        Rectangle {
+            id: screenFadingBG
+            anchors.fill: parent
+            color: "black"
+            opacity: 0.8
+            visible: opacity > 0.0
         }
 
-        DSM.State {
-            id: menuState
+        Column {
+            Repeater {
+                id: notificationRepeater
+                model: NotificationModel.notificationModel
 
-            DSM.SignalTransition {
-                targetState: finalState
-                signal: root.enterFinalState
+                delegate: NotificationCenterItem {
+                    iconSource: modelData.icon
+                    title: modelData.title
+                    description: modelData.description
+
+                    onRemoveNotification: NotificationModel.removeNotification(index)
+                }
             }
-
-            onEntered: root.loadRest = true
         }
 
-        DSM.FinalState {
-            id: finalState
-
-            onEntered: root.loadBackgroundElements = true
+        Label {
+            id: noNotificationLabel
+            anchors.fill: parent
+            anchors.centerIn: parent
+            horizontalAlignment: Text.AlignHCenter
+            visible: notificationRepeater.count < 1
+            text: "No New Notifications"
         }
     }
-
 }
-
