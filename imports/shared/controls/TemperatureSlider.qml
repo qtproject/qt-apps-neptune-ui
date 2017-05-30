@@ -47,11 +47,16 @@ Control {
 
     property bool mirrorSlider: false
 
-    property alias from: slider.from
-    property alias to: slider.to
-    property alias value: slider.value
+    property real from: 0
+    property real to: 1
+    property real value: 0.2
     property int roundingMode: roundingModeWhole
-    property alias stepSize: slider.stepSize
+    property real stepSize: 0.1
+
+    onValueChanged: {
+        if ((root.value >= root.from) && (root.value <= root.to) && !touchArea.isTouchPressed)
+            slider.handlerPosition = (root.value - root.from) / (root.to - root.from)
+    }
 
     transform: Rotation {
         angle: mirrorSlider ? 180 : 0
@@ -84,75 +89,84 @@ Control {
             }
         }
 
-        Slider {
+        Item {
             id: slider
             Layout.fillHeight: true
             Layout.fillWidth: true
-            orientation: Qt.Vertical
-            snapMode: Slider.SnapAlways
 
-            background: ListView {
-                id: view
-                implicitWidth: Style.hspan(3)
-                implicitHeight: Style.vspan(8)
-                x: slider.leftPadding + slider.availableWidth/2 - width/2
-                y: slider.topPadding + slider.handle.height/2
-                width: slider.availableWidth
-                height: slider.availableHeight - slider.handle.height
+            property real handlerPosition: (root.value >= root.from && root.value <= root.to) ?
+                                               (root.value - root.from) / (root.to - root.from) : 0
 
+            function increase() {
+                if (root.value < root.to)
+                    root.value = root.value + root.stepSize
+            }
 
-                property int itemHeight: 7
-                currentIndex: slider.position * count
-                property real deltaRed: (0xa6 - 0xf0) / view.count
-                property real deltaGreen: (0xd5 - 0x7d) / view.count
-                property real deltaBlue: (0xda - 0x0) / view.count
+            function decrease() {
+                if (root.value > root.from)
+                    root.value = root.value - root.stepSize
+            }
 
-                function calcRed(index) { return (deltaRed * (view.count-index) + 0xf0) / 255 }
-                function calcGreen(index) { return (deltaGreen * (view.count-index) + 0x7d) / 255 }
-                function calcBlue(index) { return (deltaBlue * (view.count-index) + 0x0) / 255 }
+            Column {
+                id: viewContainer
 
-                Behavior on currentIndex { SmoothedAnimation { velocity: view.count*2} }
+                Repeater {
+                    id: view
 
+                    model: modelCount
+                    property int modelCount: (slider.height - Style.vspan(1))/itemHeight
+                    property int itemHeight: 7
+                    property real deltaRed: (0xa6 - 0xf0) / modelCount
+                    property real deltaGreen: (0xd5 - 0x7d) / modelCount
+                    property real deltaBlue: (0xda - 0x0) / modelCount
+                    property int currentIndex: slider.handlerPosition * modelCount //- 2
 
-                // NOTE: verticalLayoutDirection: ListView.BottomToTop doesn't seem to play well with the mouse area
-                rotation: 180
-                orientation: Qt.Vertical
-                interactive: false
-                model: height/itemHeight
+                    function calcRed(index) { return (deltaRed * (modelCount-index) + 0xf0) / 255 }
+                    function calcGreen(index) { return (deltaGreen * (modelCount-index) + 0x7d) / 255 }
+                    function calcBlue(index) { return (deltaBlue * (modelCount-index) + 0x0) / 255 }
 
-                delegate: Item {
-                    width: view.width
-                    height: view.itemHeight
-                    property int entry: index
+                    delegate: Item {
+                        width: slider.width
+                        height: view.itemHeight
+                        property int entry: index
 
-                    Rectangle {
-                        id: stripe
+                        Rectangle {
+                            id: stripe
 
-                        property bool bottomPart: view.currentIndex >= index
+                            property bool bottomPart: index >= (view.modelCount - view.currentIndex)
 
-                        antialiasing: true
-                        anchors.right: parent.right
-                        width: parent.width - Style.hspan(1)
-                        height: parent.height - 3
-                        border.color: Qt.darker(color, 1.5)
-                        border.width: 1
-                        color: Qt.rgba(view.calcRed(index), view.calcGreen(index), view.calcBlue(index))
-                        scale: bottomPart ? 1.0 : 0.96
-                        transformOrigin: Item.Left
-                        Behavior on scale { NumberAnimation { easing.type: Easing.OutQuad } }
-                        opacity: bottomPart ? 1.0 : 0.6
-                        Behavior on opacity { NumberAnimation {} }
+                            antialiasing: true
+                            anchors.right: parent.right
+                            width: parent.width - Style.hspan(1)
+                            height: parent.height - 3
+                            border.color: Qt.darker(color, 1.5)
+                            border.width: 1
+                            color: Qt.rgba(view.calcRed(index), view.calcGreen(index), view.calcBlue(index))
+                            scale: bottomPart ? 1.0 : 0.96
+                            transformOrigin: Item.Left
+                            Behavior on scale { NumberAnimation { easing.type: Easing.OutQuad } }
+                            opacity: bottomPart ? 1.0 : 0.6
+                            Behavior on opacity { NumberAnimation {} }
+                        }
                     }
                 }
             }
-            handle: Symbol {
-                x: slider.leftPadding
-                y: slider.topPadding + slider.visualPosition * (slider.availableHeight - height)
+
+            Symbol {
+                id: handler
+                y: (1 - slider.handlerPosition)*viewContainer.height - height/2
                 implicitWidth: Style.hspan(1)
                 implicitHeight: Style.vspan(1)
-                width: slider.availableWidth
+                width: slider.width
                 height: implicitHeight
 
+                property real position: 1 - y/viewContainer.height
+
+                transform: Rotation {
+                    angle: 180
+                    axis { x: 0; y: 1; z: 0 }
+                    origin { x: width/2; y: height/2 }
+                }
 
                 Symbol {
                     anchors.right: parent.right
@@ -161,6 +175,38 @@ Control {
                     name: "slider_marker"
                     height: Style.vspan(1)
                 }
+            }
+
+            MultiPointTouchArea {
+                id: touchArea
+
+                anchors.fill: parent
+
+                property alias isTouchPressed: mainTouchPoint.pressed
+
+                touchPoints: [
+                    TouchPoint {
+                        id: mainTouchPoint
+
+                        onYChanged: {
+                            if (y >= viewContainer.height) {
+                                root.value = root.from
+                            } else if (y <= 0) {
+                                root.value = root.to
+                            } else {
+                                slider.handlerPosition = 1 - y/viewContainer.height
+                                var tempValue = slider.handlerPosition * (root.to - root.from)
+                                tempValue = tempValue + root.from
+
+                                var difference = tempValue - root.value
+                                if (Math.abs(difference) > root.stepSize) {
+                                    var increaseTimes = Math.floor(difference/root.stepSize)
+                                    root.value = root.value + increaseTimes * root.stepSize
+                                }
+                            }
+                        }
+                    }
+                ]
             }
         }
 
