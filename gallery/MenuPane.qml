@@ -49,6 +49,7 @@ Item {
         ListElement { title: 'Colors' ; source: 'gallery/pages/ColorPage.qml' }
         ListElement { title: 'Item Delegate' ; source: 'gallery/pages/ItemDelegatePage.qml' }
         ListElement { title: 'Switch Delegate' ; source: 'gallery/pages/SwitchDelegatePage.qml' }
+        ListElement { title: 'Image Buttons' ; source: 'gallery/pages/ImageButtonPage.qml' }
         ListElement { title: 'Frame' ; source: 'gallery/pages/FramePage.qml' }
         ListElement { title: 'Pane' ; source: 'gallery/pages/PanePage.qml' }
     }

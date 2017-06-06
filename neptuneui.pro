@@ -4,7 +4,8 @@ TEMPLATE = subdirs
 
 SUBDIRS = \
     plugins \
-    doc
+    doc \
+    imports/shared/controls
 
 isEmpty(INSTALL_PREFIX) {
 INSTALL_PREFIX=/opt

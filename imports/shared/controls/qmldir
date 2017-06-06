@@ -23,3 +23,4 @@ AppInfoPanel 1.0 AppInfoPanel.qml
 AppButton 1.0 AppButton.qml
 BackgroundPane 1.0 BackgroundPane.qml
 TemperatureSlider 1.0 TemperatureSlider.qml
+ImageButton 1.0 ImageButton.qml
