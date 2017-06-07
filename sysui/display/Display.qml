@@ -140,7 +140,7 @@ Item {
         source: "../notification/NotificationCenter.qml"
     }
 
-    Loader {
+    StageLoader {
         id: keyboardLoader
         anchors.left: parent.left
         anchors.right: parent.right
