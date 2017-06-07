@@ -82,9 +82,16 @@ Item {
         id: homePage
         anchors.top: parent.top
         anchors.topMargin: statusBar.height
-    }
+        opacity: 0
 
-    // Foreground Elements
+        OpacityAnimator {
+            target: homePage;
+            from: 0;
+            to: 1;
+            duration: 1000
+            running: true
+        }
+    }
 
     // Background Elements
     StageLoader {

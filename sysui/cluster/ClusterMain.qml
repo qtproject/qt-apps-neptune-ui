@@ -42,8 +42,6 @@ Window {
     width: Style.clusterWidth
     visible: true
 
-    property Item clusterItem: clusterItem
-
     color: "black"
 
     Cluster {
@@ -51,16 +49,8 @@ Window {
     }
 
     Component.onCompleted: {
-        var canDisplayCluster = Screen.desktopAvailableWidth > Screen.width || WindowManager.runningOnDesktop || ScreenManager.screenCount() > 1
-
-        if (!canDisplayCluster) {
-            cluster.visible = false
-            return
-        }
-
         WindowManager.registerCompositorView(cluster)
         ScreenManager.setScreen(cluster, 1)
-        cluster.show()
         StartupTimer.checkpoint("Cluster window created!");
         StartupTimer.createReport();
     }

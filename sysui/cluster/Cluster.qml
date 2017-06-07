@@ -32,62 +32,113 @@
 import QtQuick 2.6
 import utils 1.0
 
+import models.startup 1.0
+
 Item {
     id: root
 
     width: Style.clusterWidth
     height: Style.clusterHeight
 
-//    Image {
-//        anchors.fill: parent
-//        source: Style.gfx("cluster/background")
-//    }
+    property int animationDuration: 500
+    property bool dialAnimationActive: false
+    property int dialsLoaded: 0
+
+    function checkDialAnimation() {
+        root.dialsLoaded++
+        if (root.dialsLoaded === 2) {
+            root.dialAnimationActive = true
+        }
+    }
+
     Rectangle {
         anchors.fill: parent
         color: "#0c0c0c"
     }
 
-    Middle {
-        id: widgetBase
+    StageLoader {
+        id: middleLoader
+        width: 0.67 * Style.clusterWidth
+        height: Style.clusterHeight
         anchors.centerIn: parent
+        active: StagedStartupModel.loadBackgroundElements
+        source: "Middle.qml"
     }
 
-    LeftDial {
-        id: leftDial
+    StageLoader {
+        id: leftDialLoader
+        width: 0.72 * Style.clusterHeight
+        height: Style.clusterHeight
+        active: StagedStartupModel.loadRest
+        source: "LeftDial.qml"
+        scale: 0
+
+        onLoaded: root.checkDialAnimation()
+
+        ScaleAnimator {
+            id: leftDialAnimator
+            target: leftDialLoader
+            from: 0
+            to: 1
+            duration: root.animationDuration
+            running: root.dialAnimationActive
+        }
     }
 
-    RightDial {
-        id: rightDial
+    StageLoader {
+        id: rightDialLoader
+        width: 0.8 * Style.clusterHeight
+        height: Style.clusterHeight
         x: (root.width - (width + 0.1 * width))
+        active: StagedStartupModel.loadRest
+        source: "RightDial.qml"
+        scale: 0
+
+        onLoaded: root.checkDialAnimation()
+
+        ScaleAnimator {
+            id: rightDialAnimator
+            target: rightDialLoader
+            from: 0
+            to: 1
+            duration: root.animationDuration
+            running: root.dialAnimationActive
+        }
     }
 
-    Top {
-        id: topbar
-        y: 7
+    StageLoader {
+        id: topLoader
+        width: 0.37 * Style.clusterWidth
+        height: 0.12 * Style.clusterHeight
+        y: -height
         anchors.horizontalCenter: parent.horizontalCenter
-    }
+        active: StagedStartupModel.loadBackgroundElements
+        source: "Top.qml"
 
-//    Notifications {
-//        id: notifications
-//        y: root.zoom ? root.height : root.height - notifications.height - 15
-//        anchors.horizontalCenter: parent.horizontalCenter
-//    }
+        onLoaded: yAnimator.running = true
+
+        YAnimator {
+            id: yAnimator
+            target: topLoader;
+            from: -height;
+            to: 7;
+            duration: root.animationDuration
+            running: false
+        }
+    }
 
     Image {
         anchors.fill: parent
         source: Style.gfx("cluster/mask_overlay")
     }
 
+    Keys.forwardTo: middleLoader.item
+
+    // Only for development purpose.
+    /*
     focus: Style.debugMode
 
-    Keys.onPressed: {
-        if (event.key === Qt.Key_Space) {
-            if (overlay.opacity < 0.5) overlay.opacity = 0.5
-            else overlay.opacity = 0
-        }
-    }
-
-    Keys.forwardTo: Style.debugMode ? [layouter] : widgetBase
+    Keys.forwardTo: Style.debugMode ? [layouter] : middleLoader.item
 
     property var layoutTarget//: notifications
 
@@ -95,4 +146,5 @@ Item {
         id: layouter
         target: layoutTarget
     }
+    */
 }
