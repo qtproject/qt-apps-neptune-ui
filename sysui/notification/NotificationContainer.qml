@@ -60,21 +60,21 @@ Control {
 
         Image {
             id: icon
-            source: NotificationModel.icon
+            source: NotificationModel.currentNotification.icon
         }
 
         Column {
             spacing: 5
             Label {
                 id: title
-                text: NotificationModel.title
+                text: NotificationModel.currentNotification.title
             }
 
             Label {
                 id: body
                 width: parent.width
                 font.pixelSize: Style.fontSizeM
-                text: NotificationModel.description
+                text: NotificationModel.currentNotification.description
             }
         }
     }

@@ -52,9 +52,27 @@ UIPage {
     }
 
     NotificationInterface {
-        id: notificationInterface
-        actions: [ "Cancel" ]
+        id: notificationInterfaceHighPrio
         summary: "Car Settings"
+        priority: 2
+    }
+
+    NotificationInterface {
+        id: notificationInterfaceHighPrio2
+        summary: "Car Settings"
+        priority: 2
+    }
+
+    NotificationInterface {
+        id: notificationInterfaceLowPrio
+        summary: "Car Settings"
+        priority: 8
+    }
+
+    NotificationInterface {
+        id: notificationInterfaceLowPrio2
+        summary: "Car Settings"
+        priority: 8
     }
 
     header : AppInfoPanel {
@@ -91,9 +109,23 @@ UIPage {
                 onClicked: {
                     model.active = !model.active
                     if (index % 2) {
-                        notificationInterface.icon = Style.symbolM(model.icon)
-                        notificationInterface.body = model.description + (model.active ? " activated" : " deactivated");
-                        notificationInterface.show();
+                        if (index === 1) {
+                            notificationInterfaceHighPrio.icon = Style.symbolM(model.icon)
+                            notificationInterfaceHighPrio.body = model.description + (model.active ? " activated" : " deactivated");
+                            notificationInterfaceHighPrio.show();
+                        } else if (index === 3){
+                            notificationInterfaceHighPrio2.icon = Style.symbolM(model.icon)
+                            notificationInterfaceHighPrio2.body = model.description + (model.active ? " activated" : " deactivated");
+                            notificationInterfaceHighPrio2.show();
+                        } else if (index === 5){
+                            notificationInterfaceLowPrio.icon = Style.symbolM(model.icon)
+                            notificationInterfaceLowPrio.body = model.description + (model.active ? " activated" : " deactivated");
+                            notificationInterfaceLowPrio.show();
+                        } else if (index === 7){
+                            notificationInterfaceLowPrio2.icon = Style.symbolM(model.icon)
+                            notificationInterfaceLowPrio2.body = model.description + (model.active ? " activated" : " deactivated");
+                            notificationInterfaceLowPrio2.show();
+                        }
                     } else {
                         popupInterface.summary = model.description + (model.active ? " activated" : " deactivated");
                         popupInterface.show();

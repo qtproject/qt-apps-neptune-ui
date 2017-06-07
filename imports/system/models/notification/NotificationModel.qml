@@ -38,17 +38,26 @@ import QtApplicationManager 1.0
 QtObject {
     id: root
 
-    readonly property int maxNotifications: 20
+    property ListModel model: ListModel { }
+    property QtObject currentNotification: QtObject {
+        property int id: -1
+        property string title: ""
+        property string description: ""
+        property int priority: 15
+        property string icon: ""
+    }
 
     property bool notificationVisible: false
-    property int notificationIndex: -1
-
-    property string title
-    property string description
-    property string icon
-
-    property var notificationModel: []
+    property var notificationQueue:[]
     property var buttonModel: []
+
+    property Timer notificationTimer: Timer {
+        interval: 2000;
+        onTriggered: {
+            root.closeNotification();
+            root.showNotificationOnQueue();
+        }
+    }
 
     property Connections notificationManagerConnection: Connections {
         target: NotificationManager
@@ -58,7 +67,18 @@ QtObject {
 
             if (receivedContent.category === "notification") {
                 console.log("::: Notification received :::", id);
-                addNotification(receivedContent);
+
+                if (!root.notificationVisible && root.notificationQueue.length === 0) {
+                    root.addNotification(id);
+                }
+                else {
+                    if (root.currentNotification.priority < receivedContent.priority || root.currentNotification.priority === receivedContent.priority) {
+                        root.notificationQueue.push(id);
+                    } else {
+                        root.closeNotification();
+                        root.addNotification(id);
+                    }
+                }
             }
         }
 
@@ -67,7 +87,27 @@ QtObject {
 
             if (receivedContent.category === "notification") {
                 console.log("::: Notification changed :::", id);
-                updateNotification(receivedContent);
+                var notificationExisted = false;
+
+                for (var x = 0; x < root.model.count; ++x) {
+                    if (id === root.model.get(x).id) {
+                        notificationExisted = true;
+                    }
+                }
+
+                if (notificationExisted) {
+                    if (!root.notificationVisible && root.notificationQueue.length === 0) {
+                        updateNotification(id);
+                    } else {
+                        if (receivedContent.priority < 5 && root.currentNotification.priority < receivedContent.priority) {
+                            root.notificationQueue.unshift(id);
+                        } else if (root.currentNotification.priority < receivedContent.priority || root.currentNotification.priority === receivedContent.priority) {
+                            root.notificationQueue.push(id);
+                        } else {
+                            root.updateNotification(id);
+                        }
+                    }
+                }
             }
         }
 
@@ -75,68 +115,76 @@ QtObject {
             var receivedContent = NotificationManager.notification(id);
 
             if (receivedContent.category === "notification") {
-                closeNotification();
+                root.closeNotification();
             }
         }
     }
 
-    function addNotification(notification) {
-        var notificationId = notification.id;
-        var actions = [];
-        for (var i in notification.actions) {
-            actions.push(i);
-        }
-        root.buttonModel = actions;
-        root.notificationIndex = notificationId;
-        root.title = notification.summary;
-        root.description = notification.body;
-        root.icon = notification.icon;
-        root.notificationVisible = true;
-
-        var storedModel = root.notificationModel;
-        // Push to Notification Center
-        storedModel.push({ title: notification.summary,
-                                  description: notification.body,
-                                  icon: notification.icon,
-                                  actions: root.buttonModel = actions });
-
-        root.notificationModel = storedModel;
+    function addNotification(id) {
+        var contentToShow = NotificationManager.notification(id);
+        root.model.append(parseNotification(contentToShow))
+        root.showNotification();
     }
 
-    function updateNotification(notification) {
-        root.notificationIndex = notification.id;
-        root.title = notification.summary;
-        root.description = notification.body;
-        root.icon = notification.icon;
-        var actions = [];
-        for (var i in notification.actions) {
-            actions.push(i);
+    function updateNotification(id) {
+        var contentToUpdate = NotificationManager.notification(id);
+        for (var x = 0; x < root.model.count; ++x) {
+            if (id === root.model.get(x).id) {
+                root.model.set(x, parseNotification(contentToUpdate))
+            }
         }
-        root.buttonModel = actions;
+        root.showNotification();
+    }
+
+    function parseNotification(contentToShow) {
+        root.currentNotification.title = contentToShow.summary
+        root.currentNotification.description = contentToShow.body
+        root.currentNotification.priority = contentToShow.priority
+        root.currentNotification.icon = contentToShow.icon
+        root.currentNotification.id = contentToShow.id
+
+        return root.currentNotification
+    }
+
+    function showNotification() {
         root.notificationVisible = true;
+        root.notificationTimer.restart();
+    }
+
+    function showNotificationOnQueue() {
+        if (root.notificationQueue.length > 0) {
+            for (var x = 0; x < root.model.count; ++x) {
+                if (root.notificationQueue[0] === root.model.get(x).id) {
+                    var contentOnQueue = NotificationManager.notification(root.notificationQueue[0]);
+                    root.model.set(x, parseNotification(contentOnQueue))
+                    root.notificationQueue.splice(0,1);
+                    root.showNotification();
+                    return
+                }
+            }
+
+            root.addNotification(root.notificationQueue[0]);
+            root.notificationQueue.splice(0,1);
+        }
     }
 
     function closeNotification() {
-        root.title = root.description = "";
-        root.buttonModel = [];
-        root.notificationIndex = -1;
         root.notificationVisible = false;
-    }
-
-    function removeCurrentNotification(index) {
-        NotificationManager.dismissNotification(index);
-        closeNotification();
+        root.currentNotification.title = ""
+        root.currentNotification.description = ""
+        root.currentNotification.priority = 15
+        root.currentNotification.icon = ""
+        root.currentNotification.id = -1
     }
 
     function buttonClicked(index) {
         NotificationManager.triggerNotificationAction(root.notificationIndex, root.buttonModel[index]);
-        closeNotification();
+        root.closeNotification();
     }
 
     function removeNotification(index) {
-        var storedModel = root.notificationModel;
-        storedModel.splice(index, 1);
-        root.notificationModel = storedModel;
+        NotificationManager.dismissNotification(root.model.get(index).id);
+        root.model.remove(index);
     }
 }
 

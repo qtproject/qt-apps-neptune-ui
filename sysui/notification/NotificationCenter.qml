@@ -57,13 +57,12 @@ Control {
         Column {
             Repeater {
                 id: notificationRepeater
-                model: NotificationModel.notificationModel
+                model: NotificationModel.model
 
                 delegate: NotificationCenterItem {
-                    iconSource: modelData.icon
-                    title: modelData.title
-                    description: modelData.description
-
+                    iconSource: icon
+                    notificationTitle: title
+                    notificationDescription: description
                     onRemoveNotification: NotificationModel.removeNotification(index)
                 }
             }

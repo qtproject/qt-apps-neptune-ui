@@ -41,8 +41,8 @@ Control {
     height: Style.vspan(2)
 
     property string iconSource
-    property string title
-    property string description
+    property string notificationTitle
+    property string notificationDescription
 
     signal removeNotification()
 
@@ -71,14 +71,14 @@ Control {
             spacing: 5
             Label {
                 id: title
-                text: root.title
+                text: root.notificationTitle
             }
 
             Label {
                 id: body
                 width: parent.width
                 font.pixelSize: Style.fontSizeM
-                text: root.description
+                text: root.notificationDescription
             }
         }
     }

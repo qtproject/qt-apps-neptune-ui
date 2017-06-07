@@ -35,6 +35,6 @@ import QtApplicationManager 1.0
 Notification {
     id: root
 
+    timeout: 0
     category: "notification"
-    timeout: 2000
 }
