@@ -40,7 +40,8 @@ Loader {
 
     active: false
 
-    asynchronous: true
+    // QtBUG: https://bugreports.qt.io/browse/QTBUG-50992 otherwise it should be asynchronous
+    asynchronous: false
 
     onStatusChanged: {
         if (root.status === Loader.Error) {
