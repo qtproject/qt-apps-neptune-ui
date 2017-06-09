@@ -35,7 +35,6 @@ import QtQuick 2.6
 import com.pelagicore.styles.neptune 1.0
 import uiconfig 1.0
 
-// TODO: Remove dependency to AppMan. Otherwise all controls will depend on AppMan
 QtObject {
     id: root
 

@@ -40,6 +40,8 @@ import QtApplicationManager 1.0
 UIPage {
     id: root
 
+    height: Style.launcherHeight
+
     // Left widget side
     MapWidget {
         id: mapWidget
