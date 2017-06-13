@@ -51,6 +51,27 @@ UIPage {
         title: "Car Settings"
     }
 
+    PopupInterface {
+        id: popupInterfaceLowPrio
+        actions: [ { text: "Cancel" } ]
+        title: "Car Settings"
+        priority: 8
+    }
+
+    PopupInterface {
+        id: popupInterfaceLowPrio2
+        actions: [ { text: "Cancel" } ]
+        title: "Car Settings"
+        priority: 9
+    }
+
+    PopupInterface {
+        id: popupInterfaceHighPrio
+        actions: [ { text: "Cancel" } ]
+        title: "Car Settings"
+        priority: 3
+    }
+
     NotificationInterface {
         id: notificationInterfaceHighPrio
         summary: "Car Settings"
@@ -127,8 +148,19 @@ UIPage {
                             notificationInterfaceLowPrio2.show();
                         }
                     } else {
-                        popupInterface.summary = model.description + (model.active ? " activated" : " deactivated");
-                        popupInterface.show();
+                        if (index === 0) {
+                            popupInterfaceLowPrio.summary = model.description + (model.active ? " activated" : " deactivated");
+                            popupInterfaceLowPrio.show();
+                        } else if (index === 2) {
+                            popupInterfaceLowPrio2.summary = model.description + (model.active ? " activated" : " deactivated");
+                            popupInterfaceLowPrio2.show();
+                        } else if (index === 4) {
+                            popupInterfaceHighPrio.summary = model.description + (model.active ? " activated" : " deactivated");
+                            popupInterfaceHighPrio.show();
+                        } else {
+                            popupInterface.summary = model.description + (model.active ? " activated" : " deactivated");
+                            popupInterfaceLowPrio.show();
+                        }
                     }
                 }
             }

@@ -116,6 +116,11 @@ QtObject {
 
             if (receivedContent.category === "notification") {
                 root.closeNotification();
+                for (var x = 0; x < root.model.count; ++x) {
+                    if (id === root.model.get(x).id) {
+                        root.model.remove(x);
+                    }
+                }
             }
         }
     }

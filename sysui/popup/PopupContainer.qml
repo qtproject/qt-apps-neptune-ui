@@ -52,24 +52,10 @@ MouseArea {
     property int timeout: 0
     property bool contentAvailable: root.popupContent !== undefined
 
-    property var popupContent
-    property var popupBody
-    property real progressValue: 0.0
-    property var buttonsModel
-
-    Connections {
-        target: PopupModel
-
-        onShowPopup: {
-            root.popupContent = contentData.summary;
-            root.popupBody = contentData.body;
-            root.progressValue = contentData.progressValue
-
-            if (buttons) {
-                root.buttonsModel = buttons;
-            }
-        }
-    }
+    property var popupContent: PopupModel.currentPopup.summary
+    property var popupBody: PopupModel.currentPopup.body
+    property real progressValue: PopupModel.currentPopup.progressValue
+    property var buttonsModel: PopupModel.buttonModel
 
     Rectangle {
         anchors.fill: parent
@@ -83,8 +69,8 @@ MouseArea {
         height: 100
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: parent.top
-        title: root.contentAvailable && root.popupBody !== undefined ? root.popupBody.title : ""
-        subtitle: root.contentAvailable && root.popupBody !== undefined ? root.popupBody.subtitle : ""
+        title: root.contentAvailable && root.popupBody !== undefined && root.popupBody.title !== undefined ? root.popupBody.title : ""
+        subtitle: root.contentAvailable && root.popupBody !== undefined && root.popupBody.subtitle !== undefined ? root.popupBody.subtitle : ""
     }
 
     Label {
@@ -95,7 +81,7 @@ MouseArea {
         anchors.top: popupHeader.bottom
         anchors.topMargin: 10
         font.pixelSize: Style.fontSizeM
-        text: root.contentAvailable && root.popupContent !== undefined ? root.popupContent : ""
+        text: root.contentAvailable && root.popupContent !== undefined ? root.popupContent.toString() : ""
         horizontalAlignment: Text.AlignHCenter
     }
 

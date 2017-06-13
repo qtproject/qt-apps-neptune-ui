@@ -39,8 +39,17 @@ QtObject {
     property bool popupVisible: false
     property int popupIndex: -1
     property int currentVisiblePopupId: 0
+    property QtObject currentPopup: QtObject {
+        property int id: -1
+        property var body
+        property var summary
+        property real progressValue: 0.0
+        property int priority: 15
+
+    }
     property var buttonModel: []
 
+    property var popupQueue: []
     property var popupContentData
     property var popupButtonData
 
@@ -52,7 +61,18 @@ QtObject {
 
             if (receivedContent.category === "popup") {
                 console.log("::: Popup received :::", id);
-                root.requestPopup(receivedContent);
+                if (!root.popupVisible && root.popupQueue.length === 0) {
+                    root.requestPopup(id);
+                }
+                else {
+                    if (root.currentPopup.priority < receivedContent.priority || root.currentPopup.priority === receivedContent.priority) {
+                        root.popupQueue.push(id);
+                    } else {
+                        root.popupQueue.push(root.currentPopup.id);
+                        root.hideCurrentPopup();
+                        root.requestPopup(id);
+                    }
+                }
             }
         }
 
@@ -61,7 +81,12 @@ QtObject {
 
             if (receivedContent.category === "popup") {
                 console.log("::: Popup changed :::", id);
-                root.updatePopup(receivedContent);
+                if (root.currentPopup.id === id || root.currentPopup.priority > receivedContent.priority) {
+                    root.hideCurrentPopup();
+                    root.requestPopup(id);
+                } else {
+                    root.popupQueue.push(id);
+                }
             }
         }
 
@@ -74,17 +99,10 @@ QtObject {
         }
     }
 
-    signal showPopup(var contentData, var buttons)
-
-    function requestPopup(popupData) {
-        root.popupIndex = popupData.id;
-        root.processPopup(popupData);
-        root.popupVisible = true;
-    }
-
-    function updatePopup(popupData) {
-        root.popupIndex = popupData.id;
-        root.processPopup(popupData);
+    function requestPopup(id) {
+        var contentToShow = NotificationManager.notification(id);
+        root.popupIndex = contentToShow.id;
+        root.processPopup(contentToShow);
         root.popupVisible = true;
     }
 
@@ -92,31 +110,48 @@ QtObject {
         var receivedBody = receivedPopup.extended;
         var receivedSummary = receivedPopup.summary;
         var receivedButtons = [];
-        var receivedProgress = receivedPopup.progress
+        var receivedProgress = receivedPopup.progress;
 
         for (var i in receivedPopup.actions) {
-            receivedButtons.push(receivedPopup.actions[i])
+            receivedButtons.push(receivedPopup.actions[i]);
         }
 
-        var popupData = {
-            body: receivedBody,
-            summary: receivedSummary,
-            progressValue: receivedProgress
-        };
-
+        root.currentPopup.id = receivedPopup.id;
+        root.currentPopup.summary = receivedSummary;
+        root.currentPopup.body = receivedBody;
+        root.currentPopup.priority = receivedPopup.priority;
+        root.currentPopup.progressValue = receivedProgress;
         root.buttonModel = receivedButtons;
-        root.showPopup(popupData, root.buttonModel);
+    }
+
+    function showPopupOnQueue() {
+        if (root.popupQueue.length > 0) {
+            root.requestPopup(root.popupQueue[0]);
+            root.popupQueue.splice(0,1);
+        }
     }
 
     function buttonPressed(buttonIndex) {
         NotificationManager.triggerNotificationAction(root.popupIndex, root.buttonModel[buttonIndex]);
         NotificationManager.dismissNotification(root.popupIndex);
         root.hideCurrentPopup();
+        if (root.popupQueue.length > 0) {
+            root.showPopupOnQueue();
+        }
+    }
+
+    function resetContent() {
+        root.currentPopup.id = -1;
+        root.currentPopup.summary = {};
+        root.currentPopup.body = {};
+        root.currentPopup.priority = 15;
+        root.currentPopup.progressValue = 0.0;
+        root.buttonModel = [];
+        root.popupIndex = -1;
     }
 
     function hideCurrentPopup() {
-        root.buttonModel = [];
-        root.popupIndex = -1;
+        root.resetContent();
         root.popupVisible = false;
     }
 }
