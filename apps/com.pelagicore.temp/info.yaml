@@ -1,12 +1,13 @@
 formatVersion: 1
 formatType: am-application
 ---
-id:      'com.pelagicore.gallery'
+id:      'com.pelagicore.temp'
 icon:    'icon.png'
-code:    'Gallery.qml'
+code:    'Main.qml'
 runtime: 'qml'
 name:
-  en: 'Widgets Gallery'
-  de: '---'
+  en: 'Template'
 
 categories: [ 'app' ]
+
+built-in: yes

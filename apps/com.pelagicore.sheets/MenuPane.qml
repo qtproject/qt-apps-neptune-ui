@@ -34,24 +34,22 @@ import QtQuick.Controls 2.1
 
 Item {
     id: root
-    width: 1920
-    height: 1080
 
     ListModel {
         id: listEntries
-        ListElement { title: 'Welcome!' ; source: 'gallery/pages/WelcomePage.qml' }
-        ListElement { title: 'Buttons' ; source: 'gallery/pages/ButtonPage.qml' }
-        ListElement { title: 'Tool Buttons' ; source: 'gallery/pages/ToolButtonPage.qml' }
-        ListElement { title: 'TextField' ; source: 'gallery/pages/TextFieldPage.qml' }
-        ListElement { title: 'Label' ; source: 'gallery/pages/LabelPage.qml' }
-        ListElement { title: 'Slider' ; source: 'gallery/pages/SliderPage.qml' }
-        ListElement { title: 'Switch' ; source: 'gallery/pages/SwitchPage.qml' }
-        ListElement { title: 'Colors' ; source: 'gallery/pages/ColorPage.qml' }
-        ListElement { title: 'Item Delegate' ; source: 'gallery/pages/ItemDelegatePage.qml' }
-        ListElement { title: 'Switch Delegate' ; source: 'gallery/pages/SwitchDelegatePage.qml' }
-        ListElement { title: 'Image Buttons' ; source: 'gallery/pages/ImageButtonPage.qml' }
-        ListElement { title: 'Frame' ; source: 'gallery/pages/FramePage.qml' }
-        ListElement { title: 'Pane' ; source: 'gallery/pages/PanePage.qml' }
+        ListElement { title: 'Welcome!' ; source: 'pages/WelcomePage.qml' }
+        ListElement { title: 'Buttons' ; source: 'pages/ButtonPage.qml' }
+        ListElement { title: 'Tool Buttons' ; source: 'pages/ToolButtonPage.qml' }
+        ListElement { title: 'TextField' ; source: 'pages/TextFieldPage.qml' }
+        ListElement { title: 'Label' ; source: 'pages/LabelPage.qml' }
+        ListElement { title: 'Slider' ; source: 'pages/SliderPage.qml' }
+        ListElement { title: 'Switch' ; source: 'pages/SwitchPage.qml' }
+        ListElement { title: 'Colors' ; source: 'pages/ColorPage.qml' }
+        ListElement { title: 'Item Delegate' ; source: 'pages/ItemDelegatePage.qml' }
+        ListElement { title: 'Switch Delegate' ; source: 'pages/SwitchDelegatePage.qml' }
+        ListElement { title: 'Image Buttons' ; source: 'pages/ImageButtonPage.qml' }
+        ListElement { title: 'Frame' ; source: 'pages/FramePage.qml' }
+        ListElement { title: 'Pane' ; source: 'pages/PanePage.qml' }
     }
 
     Frame {
@@ -74,7 +72,7 @@ Item {
                     view.currentIndex = index;
                     //make sure there is nothing else on the stack
                     stackView.clear();
-                    stackView.replace(model.source);
+                    stackView.replace(Qt.resolvedUrl(model.source));
                 }
             }
         }

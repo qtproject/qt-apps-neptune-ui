@@ -29,21 +29,18 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.2
-import QtQuick.Controls 2.0
-import utils 1.0
-import "../../"
+import QtQuick 2.6
 
-AppUIScreen {
+import controls 1.0
+import utils 1.0
+
+
+Item {
     id: root
-    title: "Neptune Widgets Gallery App"
-    UIScreen {
-        anchors.fill: parent
-        onBackScreen: { root.back(); }
-        MenuPane {
-            anchors.centerIn: parent
-            width: Style.hspan(13)
-            height: Style.vspan(24)
-        }
+
+    Text {
+        anchors.centerIn: parent
+        text: "Further implementation will be added in separate commit"
+        color: "white"
     }
 }
