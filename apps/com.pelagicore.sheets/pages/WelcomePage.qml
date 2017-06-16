@@ -29,18 +29,8 @@
 **
 ****************************************************************************/
 
-import QtQuick.Controls 2.1
-import QtQuick.Layouts 1.1
-
 BasePage {
     id: root
 
     description: "Welcome to the widgets gallery of NEPTUNE UI!"
-
-    Button {
-        text: 'Welcome'
-        anchors.top: parent.top
-        anchors.topMargin: 50
-        anchors.horizontalCenter: parent.horizontalCenter
-    }
 }

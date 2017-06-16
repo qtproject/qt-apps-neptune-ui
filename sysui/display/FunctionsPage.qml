@@ -51,51 +51,6 @@ UIPage {
         title: "Car Settings"
     }
 
-    PopupInterface {
-        id: popupInterfaceLowPrio
-        actions: [ { text: "Cancel" } ]
-        title: "Car Settings"
-        priority: 8
-    }
-
-    PopupInterface {
-        id: popupInterfaceLowPrio2
-        actions: [ { text: "Cancel" } ]
-        title: "Car Settings"
-        priority: 9
-    }
-
-    PopupInterface {
-        id: popupInterfaceHighPrio
-        actions: [ { text: "Cancel" } ]
-        title: "Car Settings"
-        priority: 3
-    }
-
-    NotificationInterface {
-        id: notificationInterfaceHighPrio
-        summary: "Car Settings"
-        priority: 2
-    }
-
-    NotificationInterface {
-        id: notificationInterfaceHighPrio2
-        summary: "Car Settings"
-        priority: 2
-    }
-
-    NotificationInterface {
-        id: notificationInterfaceLowPrio
-        summary: "Car Settings"
-        priority: 8
-    }
-
-    NotificationInterface {
-        id: notificationInterfaceLowPrio2
-        summary: "Car Settings"
-        priority: 8
-    }
-
     header : AppInfoPanel {
         Layout.fillWidth: true
         Layout.preferredHeight: Style.vspan(2)
@@ -129,39 +84,8 @@ UIPage {
 
                 onClicked: {
                     model.active = !model.active
-                    if (index % 2) {
-                        if (index === 1) {
-                            notificationInterfaceHighPrio.icon = Style.symbolM(model.icon)
-                            notificationInterfaceHighPrio.body = model.description + (model.active ? " activated" : " deactivated");
-                            notificationInterfaceHighPrio.show();
-                        } else if (index === 3){
-                            notificationInterfaceHighPrio2.icon = Style.symbolM(model.icon)
-                            notificationInterfaceHighPrio2.body = model.description + (model.active ? " activated" : " deactivated");
-                            notificationInterfaceHighPrio2.show();
-                        } else if (index === 5){
-                            notificationInterfaceLowPrio.icon = Style.symbolM(model.icon)
-                            notificationInterfaceLowPrio.body = model.description + (model.active ? " activated" : " deactivated");
-                            notificationInterfaceLowPrio.show();
-                        } else if (index === 7){
-                            notificationInterfaceLowPrio2.icon = Style.symbolM(model.icon)
-                            notificationInterfaceLowPrio2.body = model.description + (model.active ? " activated" : " deactivated");
-                            notificationInterfaceLowPrio2.show();
-                        }
-                    } else {
-                        if (index === 0) {
-                            popupInterfaceLowPrio.summary = model.description + (model.active ? " activated" : " deactivated");
-                            popupInterfaceLowPrio.show();
-                        } else if (index === 2) {
-                            popupInterfaceLowPrio2.summary = model.description + (model.active ? " activated" : " deactivated");
-                            popupInterfaceLowPrio2.show();
-                        } else if (index === 4) {
-                            popupInterfaceHighPrio.summary = model.description + (model.active ? " activated" : " deactivated");
-                            popupInterfaceHighPrio.show();
-                        } else {
-                            popupInterface.summary = model.description + (model.active ? " activated" : " deactivated");
-                            popupInterfaceLowPrio.show();
-                        }
-                    }
+                    popupInterface.summary = model.description + (model.active ? " activated" : " deactivated");
+                    popupInterface.show();
                 }
             }
         }

@@ -31,14 +31,11 @@
 
 import QtQuick 2.8
 import QtQuick.Controls 2.1
-import QtQuick.Layouts 1.1
 
 BasePage {
     id: root
 
     description: "A Switch is a toggle button that can be switched on (checked) or off (unchecked)."
-
-
 
     ListView {
         id: listView

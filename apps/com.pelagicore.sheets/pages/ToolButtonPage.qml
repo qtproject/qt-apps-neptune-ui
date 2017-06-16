@@ -39,37 +39,32 @@ BasePage {
     description: "Provides a button type that is typically used within a ToolBar."
 
     ToolBar {
-        id: toolBar
+        id: control
         anchors.top: parent.top
-        anchors.topMargin: 50
+        anchors.topMargin: 70
         anchors.horizontalCenter: parent.horizontalCenter
 
-        RowLayout {
-            ToolButton {
-                font.pixelSize: 20
-                text: 'Orange Button'
-                onClicked: bgColor.color = 'orange';
-            }
-            ToolButton {
-                font.pixelSize: 20
-                text: 'Yellow Button'
-                onClicked: bgColor.color = 'yellow';
-            }
-            ToolButton {
-                font.pixelSize: 20
-                text: 'Pink Button'
-                onClicked: bgColor.color = 'pink';
+        background: Rectangle {
+            implicitHeight: 40
+            color: "grey"
+
+            Rectangle {
+                width: parent.width
+                height: 1
+                anchors.bottom: parent.bottom
+                color: "transparent"
+                border.color: "#db9432"
             }
         }
-    }
 
-    Rectangle {
-        id: bgColor
-        width: 200
-        height: 200
-        anchors.top: toolBar.bottom
-        anchors.topMargin: 100
-        anchors.horizontalCenter: parent.horizontalCenter
-        color: 'pink'
+        RowLayout {
+            anchors.fill: parent
+            ToolButton {
+                text: qsTr("Undo")
+            }
+            ToolButton {
+                text: qsTr("Redo")
+            }
+        }
     }
 }

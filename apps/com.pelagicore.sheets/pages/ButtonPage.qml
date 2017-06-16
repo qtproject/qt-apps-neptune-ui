@@ -29,24 +29,35 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.8
 import QtQuick.Controls 2.1
 import QtQuick.Layouts 1.1
 
 BasePage {
     id: root
 
-    description: "The push button is perhaps the most commonly used widget in any" +
+    description: " The push button is perhaps the most commonly used widget in any" +
                  " graphical user interface. Pushing (or clicking) a button commands the computer" +
                  " to perform some action or answer a question. Common examples of buttons are OK," +
                  " Apply, Cancel, Close, Yes, No, and Help buttons."
 
-    RowLayout {
+    Button {
+        id: buttonControl
+        text: qsTr("Button")
+        width: 100
         anchors.top: parent.top
-        anchors.topMargin: 50
+        anchors.topMargin: 150
         anchors.horizontalCenter: parent.horizontalCenter
-        Button {
-            text: 'Click Me!'
+
+        onClicked: console.log("Button Clicked!");
+
+        contentItem: Label {
+            text: buttonControl.text
+            font: buttonControl.font
+            opacity: enabled ? 1.0 : 0.3
+            color: buttonControl.down ? "#db9432" : "#ffffff"
+            horizontalAlignment: Label.AlignHCenter
+            verticalAlignment: Label.AlignVCenter
+            elide: Label.ElideRight
         }
     }
 }

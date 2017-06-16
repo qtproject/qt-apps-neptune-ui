@@ -39,13 +39,54 @@ BasePage {
 
     Frame {
         anchors.top: parent.top
-        anchors.topMargin: 50
+        anchors.topMargin: 150
         anchors.horizontalCenter: parent.horizontalCenter
         ColumnLayout {
             anchors.fill: parent
-            CheckBox { text: qsTr("E-mail") ; font.pixelSize: 20 }
-            CheckBox { text: qsTr("Calendar") ; font.pixelSize: 20 }
-            CheckBox { text: qsTr("Contacts") ; font.pixelSize: 20 }
+            CheckBox {
+                id: checkBox1
+                text: qsTr("E-mail");
+                font.pixelSize: 20;
+                contentItem: Label {
+                    text: checkBox1.text
+                    font: checkBox1.font
+                    opacity: enabled ? 1.0 : 0.3
+                    color: checkBox1.down ? "#9e6a22" : "#db9432"
+                    horizontalAlignment: Label.AlignHCenter
+                    verticalAlignment: Label.AlignVCenter
+                    leftPadding: checkBox1.indicator.width + checkBox1.spacing
+                }
+            }
+
+            CheckBox {
+                id: checkBox2
+                text: qsTr("Calendar");
+                font.pixelSize: 20;
+                contentItem: Label {
+                    text: checkBox2.text
+                    font: checkBox2.font
+                    opacity: enabled ? 1.0 : 0.3
+                    color: checkBox2.down ? "#9e6a22" : "#db9432"
+                    horizontalAlignment: Label.AlignHCenter
+                    verticalAlignment: Label.AlignVCenter
+                    leftPadding: checkBox2.indicator.width + checkBox2.spacing
+                }
+            }
+
+            CheckBox {
+                id: checkBox3
+                text: qsTr("Contacts");
+                font.pixelSize: 20;
+                contentItem: Label {
+                    text: checkBox3.text
+                    font: checkBox3.font
+                    opacity: enabled ? 1.0 : 0.3
+                    color: checkBox3.down ? "#9e6a22" : "#db9432"
+                    horizontalAlignment: Label.AlignHCenter
+                    verticalAlignment: Label.AlignVCenter
+                    leftPadding: checkBox3.indicator.width + checkBox3.spacing
+                }
+            }
         }
     }
 }

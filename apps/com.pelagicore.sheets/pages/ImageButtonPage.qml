@@ -30,7 +30,6 @@
 ****************************************************************************/
 
 import QtQuick 2.8
-import QtQuick.Layouts 1.1
 import controls 1.0
 import utils 1.0
 
@@ -40,7 +39,7 @@ BasePage {
 
     Column {
         anchors.top: parent.top
-        anchors.topMargin: 50
+        anchors.topMargin: 150
         anchors.horizontalCenter: parent.horizontalCenter
         spacing: 15
         Repeater {

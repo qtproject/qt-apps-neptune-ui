@@ -84,6 +84,6 @@ Item {
         anchors.top: parent.top
         anchors.bottom: parent.bottom
         anchors.right: parent.right
-        initialItem: listEntries.get(0).source
+        initialItem: Qt.resolvedUrl(listEntries.get(0).source)
     }
 }
