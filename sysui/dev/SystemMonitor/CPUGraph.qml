@@ -30,6 +30,7 @@
 ****************************************************************************/
 
 import QtQuick 2.0
+import QtQuick.Controls 2.2
 import utils 1.0
 import controls 1.0
 import QtApplicationManager 1.0

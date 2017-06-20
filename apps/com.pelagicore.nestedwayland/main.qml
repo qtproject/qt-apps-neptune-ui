@@ -30,6 +30,7 @@
 ****************************************************************************/
 
 import QtQuick 2.5
+import QtQuick.Controls 2.2
 import QtWayland.Compositor 1.0
 
 import controls 1.0

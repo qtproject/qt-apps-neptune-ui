@@ -60,19 +60,16 @@ UIScreen {
         height: root.height - Style.vspan(3)
         anchors.centerIn: parent
         horizontalAlignment: true
-        tabWidth: 5
         tabs: [
             { title : "Info", url : infoPanel, properties : {} },
             { title : "CPU/FPS", url : systemPanel, properties : {} },
             { title : "RAM", url : appPanel, properties : {} },
         ]
-
     }
 
     InfoPanel {
         id: infoPanel
         visible: false
-
     }
 
     SystemPanel {

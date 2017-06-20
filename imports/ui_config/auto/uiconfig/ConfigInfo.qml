@@ -38,7 +38,7 @@ QtObject {
     property bool withCluster: false
     property int cellWidth: 53 // 1280/24
     property int cellHeight: 33 // 800/24
-    property var fontWeight: Font.Light
+    property int fontWeight: Font.Light
     property int fontSizeXXS: 14
     property int fontSizeXS: 16
     property int fontSizeS: 18
@@ -87,8 +87,8 @@ QtObject {
     property url gfxUrl: Qt.resolvedUrl(root.assetPath + 'gfx/')
     property url fonts: Qt.resolvedUrl(root.assetPath + 'fonts/')
 
-    onScreenWidthChanged: cellWidth = Math.floor(screenWidth/24)
-    onScreenHeightChanged: cellHeight = Math.floor(screenHeight/24)
+    onScreenWidthChanged: cellWidth = Math.floor(screenWidth/cellFactor)
+    onScreenHeightChanged: cellHeight = Math.floor(screenHeight/cellFactor)
 
 
     Component.onCompleted: {

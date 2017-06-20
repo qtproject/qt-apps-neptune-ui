@@ -108,7 +108,7 @@ Item {
             }
             ScriptAction {
                 script: {
-                    ApplicationManagerModel.releasingApplicationSurfaceDone(currentItem)
+                    ApplicationManagerModel.releasingApplicationSurfaceDone(stackView.currentItem)
                 }
             }
         }

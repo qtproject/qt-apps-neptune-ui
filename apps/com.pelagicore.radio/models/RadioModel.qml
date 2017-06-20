@@ -37,6 +37,8 @@ import QtIvi.Media 1.0
 QtObject {
     id: root
 
+    property real volume: 0.5
+
     property AmFmTuner tunerControl: AmFmTuner {
         discoveryMode: AmFmTuner.AutoDiscovery
 

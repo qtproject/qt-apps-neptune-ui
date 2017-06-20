@@ -30,6 +30,7 @@
 ****************************************************************************/
 
 import QtQuick 2.0
+import QtQuick.Controls 2.2
 import utils 1.0
 import controls 1.0
 import QtApplicationManager 1.0
@@ -59,7 +60,7 @@ UIPage {
         }
 
         onMemoryReportingChanged: {
-            greyLegend.text = "RAM load:" + (used/total * 100).toFixed(2) + "%"
+            greyLegend.text = "RAM load:" + (used/SystemMonitor.totalMemory * 100).toFixed(2) + "%"
         }
     }
 
@@ -327,5 +328,4 @@ UIPage {
         text: "Merge Report"
         onClicked: root.mergeReport = !root.mergeReport
     }
-
 }

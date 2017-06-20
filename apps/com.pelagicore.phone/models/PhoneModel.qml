@@ -60,9 +60,9 @@ QtObject {
     /*! Provides the currently available devices list model. */
     property ListModel availableDevices: ListModel {
         ListElement { name: "BlackBerry Z30" ; code: "0123" }
-        ListElement { name: "Samsung-123" ; number: "0000" }
-        ListElement { name: "i-Phone 6S" ; number: "1111" }
-        ListElement { name: "Nexus" ; number: "8524" }
+        ListElement { name: "Samsung-123" ; code: "0000" }
+        ListElement { name: "i-Phone 6S" ; code: "1111" }
+        ListElement { name: "Nexus" ; code: "8524" }
     }
 
     onCurrentPairedDeviceNameChanged:  {

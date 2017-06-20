@@ -30,6 +30,7 @@
 ****************************************************************************/
 
 import QtQuick 2.0
+import QtQuick.Controls 2.2
 import utils 1.0
 import controls 1.0
 import QtApplicationManager 1.0
@@ -102,7 +103,7 @@ Item {
 
             Rectangle {
                 width: parent.width
-                height: (model.memoryUsed/model.memoryTotal)*parent.height
+                height: (model.memoryUsed/SystemMonitor.totalMemory)*parent.height
                 anchors.bottom: parent.bottom
                 color: graphContainer.barColor
             }

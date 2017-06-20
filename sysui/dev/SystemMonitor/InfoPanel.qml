@@ -48,6 +48,7 @@ UIPage {
             checkable: false
             icon: "information"
             text: "Number of cores: " + SystemMonitor.cpuCores
+            hasChildren: false
         }
 
         SettingsItemDelegate {
@@ -56,6 +57,7 @@ UIPage {
             checkable: false
             icon: "information"
             text: "Total RAM: " + (SystemMonitor.totalMemory/1024/1024).toFixed(2) + "MB"
+            hasChildren: false
         }
 
         SettingsItemDelegate {
@@ -64,6 +66,7 @@ UIPage {
             checkable: false
             icon: "information"
             text: "Idle: " + SystemMonitor.idle
+            hasChildren: false
         }
         SettingsItemDelegate {
             width: Style.hspan(10)
@@ -71,13 +74,7 @@ UIPage {
             checkable: false
             icon: "information"
             text: "Idle load threshold: " + SystemMonitor.idleLoadThreshold
-        }
-        SettingsItemDelegate {
-            width: Style.hspan(10)
-            height: Style.vspan(2)
-            checkable: false
-            icon: "information"
-            text: "Idle load average: " + SystemMonitor.idleLoadAverage
+            hasChildren: false
         }
     }
 }

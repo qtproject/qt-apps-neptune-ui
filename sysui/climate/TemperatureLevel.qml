@@ -45,6 +45,13 @@ Control {
     width: Style.hspan(2)
     height: Style.vspan(3)
 
+    signal clicked()
+
+    MouseArea {
+        anchors.fill: parent
+        onClicked: root.clicked()
+    }
+
     Item {
         id: content
 

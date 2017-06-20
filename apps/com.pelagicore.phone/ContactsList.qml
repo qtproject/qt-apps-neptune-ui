@@ -42,14 +42,11 @@ UIScreen {
     signal dial(string name, string number)
 
     Frame {
-        width: Style.hspan(10)
-        height:  Style.vspan(17)
-        anchors.centerIn: parent
+        anchors.fill: parent
 
         ListView {
             id: contactList
             anchors.fill: parent
-            anchors.centerIn: parent
             model: PhoneModel.contactsModel
 
             delegate: ItemDelegate {
@@ -57,8 +54,8 @@ UIScreen {
                 height: Style.vspan(2)
                 text: model.name + " " + model.number
                 RoundButton {
-                    width: 80
-                    height: 80
+                    width: height
+                    height: parent.height * 0.7
                     anchors.right: parent.right
                     font.pixelSize: 40
                     anchors.rightMargin: 10

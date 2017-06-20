@@ -46,7 +46,6 @@ UIScreen {
 
         ListView {
             id: deviceListView
-            anchors.centerIn: parent
             anchors.fill: parent
             model: PhoneModel.availableDevices
             delegate: SwitchDelegate {

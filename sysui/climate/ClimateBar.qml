@@ -69,6 +69,7 @@ Control {
             value: ClimateModel.leftSeat.value
             anchors.left: parent.left
             anchors.verticalCenter: parent.verticalCenter
+            onClicked: SystemModel.climateExpanded = !SystemModel.climateExpanded
         }
 
         Tool {
@@ -108,6 +109,7 @@ Control {
             value: ClimateModel.rightSeat.value
             anchors.right: parent.right
             anchors.verticalCenter: parent.verticalCenter
+            onClicked: SystemModel.climateExpanded = !SystemModel.climateExpanded
         }
     }
 
