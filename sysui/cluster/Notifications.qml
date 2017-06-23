@@ -32,7 +32,6 @@
 import QtQuick 2.6
 import controls 1.0
 import utils 1.0
-import models.navigation 1.0
 
 Item {
     width: background.width
@@ -48,7 +47,7 @@ Item {
     }
 
     Image {
-        source: Style.symbol(NavigationModel.nextTurnImage, 0, false)
+        source: Style.symbol("arrow", 0, false)
         anchors.horizontalCenter: distanceText.horizontalCenter
         anchors.top: background.top
         height: 50

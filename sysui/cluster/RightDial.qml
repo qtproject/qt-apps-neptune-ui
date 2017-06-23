@@ -34,7 +34,6 @@ import utils 1.0
 import QtQuick.Controls 2.1
 import controls 1.0
 import models.vehicle 1.0
-import models.navigation 1.0
 
 Item {
     id: root

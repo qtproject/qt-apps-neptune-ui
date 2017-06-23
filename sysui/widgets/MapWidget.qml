@@ -35,7 +35,6 @@ import QtQuick.Controls 2.1
 import controls 1.0
 import utils 1.0
 
-import models.navigation 1.0
 import models.application 1.0
 
 UIPanel {
@@ -49,14 +48,6 @@ UIPanel {
             id: dummyBase
             anchors.fill: parent
             source: "heremap.png"
-            visible: NavigationModel.defaultNavApp ? false : true
-        }
-
-        Label {
-            id: loadingLabel
-            anchors.centerIn: parent
-            text: "Loading Map Widget ..."
-            visible: NavigationModel.defaultNavApp ? true : false
         }
 
     }
