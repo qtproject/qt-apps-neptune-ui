@@ -30,7 +30,7 @@
 ****************************************************************************/
 
 import QtQuick 2.0
-import QtQuick.Controls 2.2
+import QtQuick.Controls 2.0
 import utils 1.0
 import controls 1.0
 
@@ -46,6 +46,8 @@ Item {
     property int graphHeight: 0.65 * root.height
     property alias middleText: middleLineText.text
     default property alias content: graphContent.children
+    property alias model: graph.model
+    property alias delegate: graph.delegate
 
     Row {
         anchors.top: parent.top
@@ -114,7 +116,13 @@ Item {
             id: graphContent
             anchors.fill: parent
             clip: true
+
+            ListView {
+                id: graph
+                anchors.fill: parent
+                orientation: ListView.Horizontal
+                interactive: false
+            }
         }
     }
-
 }

@@ -36,29 +36,23 @@ import QtApplicationManager 1.0
 MonitorPanel {
     id: root
 
-    descriptionText: "RAM: "
+    descriptionText: "CPU: "
     middleText: "50%"
     middleLine: 0.5
 
-    ListView {
-        id: graph
-        anchors.fill: parent
+    model: SystemMonitor
 
-        model: SystemMonitor
-        orientation: ListView.Horizontal
-        interactive: false
+    delegate: Item {
+        width: parent.width / root.model.count
+        height: parent.height
 
-        delegate: Item {
-            width: graph.width / graph.model.count
-            height: graph.height
-
-            Rectangle {
-                width: parent.width
-                height: 3
-                y: parent.height - (model.memoryUsed/model.memoryTotal)*parent.height
-            }
+        Rectangle {
+            width: parent.width
+            height: 3
+            y: parent.height - height - model.cpuLoad * parent.height
         }
     }
+
 }
 
 

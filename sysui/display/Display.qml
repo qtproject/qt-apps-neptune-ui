@@ -111,7 +111,7 @@ Item {
         height: 200
         anchors.bottom: parent.bottom
         active: SystemModel.toolBarMonitorVisible
-        source: "dev/ToolBarMonitor.qml"
+        source: "../dev/ProcessMonitor/ToolBarMonitor.qml"
     }
 
     StageLoader {

@@ -29,72 +29,27 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.0
-import controls 1.0
-import utils 1.0
+import QtQuick 2.6
 import QtApplicationManager 1.0
-import "SystemMonitor"
 
-Rectangle {
+
+MonitorPanel {
     id: root
 
-    anchors.fill: parent
-    clip: true
-    color: "#273033"
-    opacity: 0.95
+    descriptionText: "RAM: "
+    middleText: "50%"
+    middleLine: 0.5
 
-    property int currentFps: 0
-    property int ram: 0
-    property real ramUsed: 0
-    property int cpu: 0
-
-    onVisibleChanged: initialize()
-
-    Component.onCompleted: initialize()
-
-    function initialize() {
-        SystemMonitor.reportingInterval = 200
-        SystemMonitor.count = 10
-        SystemMonitor.fpsReportingEnabled = root.visible
-        SystemMonitor.cpuLoadReportingEnabled = root.visible
-        SystemMonitor.memoryReportingEnabled = root.visible
-    }
-
-    Connections {
-        target: SystemMonitor
-        onFpsReportingChanged: root.currentFps = Math.floor(average)
-        onCpuLoadReportingChanged: root.cpu = (load * 100).toFixed(0)
-
-        onMemoryReportingChanged: {
-            root.ramUsed = (used/1000/1000).toFixed(1)
-            root.ram = (used/total * 100).toFixed(0)
-        }
-    }
-
-    Row {
-        FpsMonitor {
-            valueText: root.currentFps
-        }
+    delegate: Item {
+        width: parent.width / root.model.count
+        height: parent.height
 
         Rectangle {
-            width: 2
-            height: root.height
-            color: "#4d4d4d"
-        }
-
-        CpuMonitor {
-            valueText: root.cpu + "%"
-        }
-
-        Rectangle {
-            width: 2
-            height: root.height
-            color: "#4d4d4d"
-        }
-
-        RamMonitor {
-            valueText: root.ram + "% " + root.ramUsed + "MB"
+            width: parent.width
+            height: 3
+            y: parent.height - height - (model.memoryPss.total/SystemMonitor.totalMemory)*parent.height
         }
     }
-
 }
+
+

@@ -36,26 +36,25 @@ import QtApplicationManager 1.0
 MonitorPanel {
     id: root
 
-    descriptionText: "CPU: "
-    middleText: "50%"
-    middleLine: 0.5
+    descriptionText: "FPS: "
+    middleText: "60"
+    middleLine: 0.6
 
-    ListView {
-        id: graph
-        anchors.fill: parent
+    delegate: Item {
+        id: rectContainer
+        width: parent.width / root.model.count
+        height: parent.height
 
-        model: SystemMonitor
-        orientation: ListView.Horizontal
-        interactive: false
+        Repeater {
+            model: frameRate
 
-        delegate: Item {
-            width: graph.width / graph.model.count
-            height: graph.height
-
-            Rectangle {
-                width: parent.width
+            delegate: Rectangle {
+                width: rectContainer.width
                 height: 3
-                y: parent.height - model.cpuLoad * parent.height
+                color: Qt.darker("white", (1 + index/10))
+                y: frameRate[index]
+                     ? rectContainer.height - height - (frameRate[index].average/100)*rectContainer.height
+                     : rectContainer.height
             }
         }
     }

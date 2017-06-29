@@ -125,7 +125,6 @@ QtObject {
 
         if (acceptWindow) {
             WindowManager.setWindowProperty(item, "visibility", !isMinimized)
-
             root.applicationSurfaceReady(item, isMinimized)
         } else {
             root.unhandledSurfaceReceived(item)
@@ -136,6 +135,7 @@ QtObject {
     function windowPropertyChanged(window, name, value) {
         if (name === "visibility" && value === false ) {
             root.releaseApplicationSurface(window)
+            root.activeAppId = ""
         }
     }
 
@@ -178,7 +178,7 @@ QtObject {
 
     function applicationActivated(appId, appAliasId) {
         print("AMI.applicationActivated: appId:" + appId + ", appAliasId:" + appAliasId)
-        root.activeAppId = appId
+
         for (var i = 0; i < WindowManager.count; i++) {
             if (!WindowManager.get(i).isClosing && WindowManager.get(i).applicationId === appId) {
                 var item = WindowManager.get(i).windowItem
@@ -193,6 +193,7 @@ QtObject {
                         windowTypes[item] = "ivi"
                     WindowManager.setWindowProperty(item, "visibility", true)
                     root.applicationSurfaceReady(item, false)
+                    root.activeAppId = appId
                     break
                 }
             }
