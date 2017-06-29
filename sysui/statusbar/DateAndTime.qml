@@ -40,23 +40,19 @@ Control {
     property string timeFormat: "hh:mm"
     property var currentDate: new Date()
 
-    width: Style.hspan(3)
+    width: Style.hspan(1.5)
     height: Style.vspan(2)
 
-    RowLayout {
-        anchors.top: parent.top
+    Label {
+        id: clock
+
+        anchors.left: parent.left
         anchors.right: parent.right
-        spacing: Style.padding
+        anchors.verticalCenter: parent.verticalCenter
 
-        Label {
-            id: clock
-            Layout.preferredHeight: root.height
-            verticalAlignment: Text.AlignVCenter
-
-            font.pixelSize: Style.fontSizeXL
-
-            text: Qt.formatTime(root.currentDate, root.timeFormat)
-        }
+        horizontalAlignment: Text.AlignHCenter
+        font.pixelSize: Style.fontSizeXL
+        font.weight: Style.fontWeight
+        text: Qt.formatTime(root.currentDate, root.timeFormat)
     }
-
 }

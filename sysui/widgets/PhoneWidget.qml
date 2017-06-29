@@ -49,7 +49,7 @@ UIPanel {
         source: Style.icon("widgets_phone")
     }
 
-    RowLayout {
+    ColumnLayout {
         id: nameLayout
 
         anchors.top: phoneIcon.top
@@ -63,22 +63,14 @@ UIPanel {
             text: qsTr("%1   | %2").arg("John Doe").arg("02:55")
             font.pixelSize: Style.fontSizeXL
             font.capitalization: Font.AllUppercase
-            Component.onCompleted: {
-                console.log('101: ' + font.pixelSize);
-                console.log('102: ' + font.family);
-            }
+        }
+
+        Label {
+            text: "555-55 55 55"
+            font.pixelSize: Style.fontSizeXL
         }
     }
 
-    Label {
-        anchors.bottom: phoneIcon.bottom
-        anchors.bottomMargin: Style.vspan(0.75)
-        anchors.left: nameLayout.left
-        anchors.right: nameLayout.right
-
-        text: "555-55 55 55"
-        font.pixelSize: Style.fontSizeXL
-    }
     MouseArea {
         anchors.fill: parent
         onClicked: {

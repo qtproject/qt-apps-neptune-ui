@@ -32,7 +32,6 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.0
 import QtGraphicalEffects 1.0
-import QtIvi.VehicleFunctions 1.0
 import models.climate 1.0
 import utils 1.0
 

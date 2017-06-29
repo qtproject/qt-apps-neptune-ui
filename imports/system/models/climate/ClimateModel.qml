@@ -37,6 +37,8 @@ import models.settings 1.0
 QtObject {
     id: root
 
+    property string weatherIcon: "topbar_icon_rain"
+
     property ClimateControl climateControl: ClimateControl {
         discoveryMode: ClimateControl.AutoDiscovery
     }

@@ -58,17 +58,13 @@ Pane {
         onPressAndHold: SystemModel.toolBarMonitorVisible = !SystemModel.toolBarMonitorVisible
     }
 
-    RowLayout {
+    IndicatorTray {
+        model: StatusBarModel.indicators
         anchors.left: parent.left
         anchors.top: parent.top
         anchors.bottom: parent.bottom
         anchors.topMargin: Style.padding
         anchors.bottomMargin: Style.padding
-        spacing: Style.padding
-        IndicatorTray {
-            Layout.fillHeight: true
-            model: StatusBarModel.indicators
-        }
     }
 
     PageIndicator {
@@ -90,23 +86,20 @@ Pane {
         anchors.topMargin: Style.padding
         anchors.bottomMargin: Style.padding
 
+        Weather {
+            Layout.fillHeight: true
+        }
+
+        DateAndTime {
+            Layout.fillHeight: true
+            timeFormat: SettingsModel.clockOption.format
+            currentDate: StatusBarModel.currentDate
+        }
+
         Tool {
             Layout.fillHeight: true
             symbol: "fullscreen"
             onClicked: SystemModel.windowOverviewVisible = true
-        }
-
-        Weather {
-            Layout.fillHeight: true
-            currentTemperature: 15
-            weatherIcon: "topbar_icon_rain"
-        }
-
-        DateAndTime {
-            Layout.preferredWidth: Style.hspan(2)
-            Layout.fillHeight: true
-            timeFormat: SettingsModel.clockOption.format
-            currentDate: StatusBarModel.currentDate
         }
 
         Tool {

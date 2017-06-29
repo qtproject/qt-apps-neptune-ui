@@ -38,18 +38,15 @@ import models.climate 1.0
 Control {
     id: root
 
-    property int currentTemperature: 0
-    property string weatherIcon
-
-    width: Style.hspan(2)
+    width: Style.hspan(1.5)
     height: Style.vspan(2)
 
     RowLayout {
-        spacing: Style.paddingL
+        spacing: Style.padding
         anchors.centerIn: parent
 
         Image {
-            source: Style.icon(weatherIcon)
+            source: Style.icon(ClimateModel.weatherIcon)
             asynchronous: true
         }
 
