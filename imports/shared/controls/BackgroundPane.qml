@@ -37,8 +37,4 @@ import utils 1.0
 
 Pane {
     id: control
-
-    background: Image {
-        source: Style.gfx2(control.NeptuneStyle.backgroundImage)
-    }
 }

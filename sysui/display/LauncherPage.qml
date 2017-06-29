@@ -58,8 +58,8 @@ UIPage {
         property int columns: root.width/cellWidth
 
         clip: true
-        cellWidth: width/4
-        cellHeight: height/3
+        cellWidth: Style.isPotrait ? width/3 : width/4
+        cellHeight: Style.isPotrait ? height/4 : height/3
 
         model: ApplicationManager
 

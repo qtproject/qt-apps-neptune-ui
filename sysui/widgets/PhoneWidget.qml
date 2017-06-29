@@ -42,18 +42,24 @@ UIPanel {
 
     height: Style.vspan(4)
 
+    Rectangle {
+        anchors.fill: parent
+        color: Style.colorBlack
+        opacity: 0.8
+    }
+
     C.Icon {
         id: phoneIcon
         width: Style.hspan(2);
         height: Style.vspan(4)
+        anchors.verticalCenter: parent.verticalCenter
         source: Style.icon("widgets_phone")
     }
 
     ColumnLayout {
         id: nameLayout
 
-        anchors.top: phoneIcon.top
-        anchors.topMargin: Style.vspan(0.75)
+        anchors.verticalCenter: parent.verticalCenter
         anchors.left: phoneIcon.right
         anchors.leftMargin: Style.padding
         anchors.right: parent.right

@@ -39,7 +39,7 @@ import controls 1.0
 Control {
     id: root
     width: Style.hspan(6)
-    height: Style.vspan(12)
+    height: Style.isPotrait ? Style.vspan(5) : Style.vspan(10)
     signal clicked()
     property alias source: image.source
     property alias title: title.text

@@ -68,11 +68,7 @@ Pane {
     }
 
     PageIndicator {
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.top: parent.top
-        anchors.bottom: parent.bottom
-        anchors.topMargin: Style.padding
-        anchors.bottomMargin: Style.padding
+        anchors.centerIn: parent
 
         currentIndex: SystemModel.currentPageIndex
         count: SystemModel.pageCount
@@ -80,6 +76,7 @@ Pane {
 
     RowLayout {
         spacing: Style.padding
+        Layout.maximumWidth: Style.hspan(12)
         anchors.right: parent.right
         anchors.top: parent.top
         anchors.bottom: parent.bottom
@@ -88,6 +85,7 @@ Pane {
 
         Weather {
             Layout.fillHeight: true
+            visible: !Style.isPotrait
         }
 
         DateAndTime {

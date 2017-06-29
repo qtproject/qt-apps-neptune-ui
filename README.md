@@ -62,12 +62,14 @@ In QtCreator you can use the following line:
 # Style Configuration
 
 Neptune UI supports different style configurations which can be used to adapt the style to the needs of the Hardware the UI should be running on.
-The following configurations are available:
+The following resolutions are available:
 
-* Config1920x1080: Same as no config but 1920x1080 will be used as the screen resolution and the UI elements will be scaled/ This is the default version.
-* auto: The UI will use the current screen resolution and tries to adapt the UI as much as possible
+* 1920x1080 - default
+* 1280x800
+* 1080x1920
+* 768x1024
 
-Which configuration should be used can be controlled using the import path property 'importPaths' set in the am-config.yaml file. In the 'imports/shared/ui_config' folder different configuration can be found. For any other, custom UI configuration, corresponding folder inside ui_config folder should be created, with the same content.
+To set the UI for wanted (other than default one) resolution, set the 'QT_QUICK_CONTROLS_CONF' to the location of QtQuickControls 2 configuration file. Configuration files are within 'styles' folder (https://doc.qt.io/qt-5/qtquickcontrols2-environment.html).
 
 # Common Terms Used In The Project
 

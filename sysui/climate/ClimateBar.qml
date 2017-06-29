@@ -80,6 +80,7 @@ Control {
             checked: ClimateModel.leftSeat.heat
             onClicked: ClimateModel.leftSeat.heat = !ClimateModel.leftSeat.heat
             anchors.left: tempLevelLeft.right
+            anchors.leftMargin: Style.hspan(1)
             anchors.verticalCenter: parent.verticalCenter
         }
 
@@ -100,6 +101,7 @@ Control {
             checked: ClimateModel.rightSeat.heat
             onClicked: ClimateModel.rightSeat.heat = !ClimateModel.rightSeat.heat
             anchors.right: tempLevelRight.left
+            anchors.rightMargin: Style.hspan(1)
             anchors.verticalCenter: parent.verticalCenter
         }
 

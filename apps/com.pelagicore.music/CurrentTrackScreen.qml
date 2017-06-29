@@ -52,9 +52,9 @@ UIScreen {
     ColumnLayout {
         id: musicControl
         width: Style.hspan(12)
-        height: parent.height - Style.vspan(2)
+        height: Style.vspan(16)
         anchors.centerIn: parent
-        spacing: 0
+        spacing: Style.isPotrait ? Style.vspan(1) : 0
         RowLayout {
             anchors.horizontalCenter: parent.horizontalCenter
             spacing: 0
@@ -68,7 +68,7 @@ UIScreen {
                 contentWidth: Style.hspan(6)
 
                 Layout.preferredWidth: Style.hspan(6)
-                Layout.preferredHeight: Style.vspan(12)
+                Layout.preferredHeight: Style.isPotrait ? Style.vspan(5) : Style.vspan(10)
                 model: MusicModel.nowPlaying
 
                 currentIndex: MusicModel.currentIndex
@@ -83,7 +83,6 @@ UIScreen {
                         root.showAlbums()
                     }
                 }
-
             }
 
             Tool {
@@ -95,7 +94,7 @@ UIScreen {
 
         RowLayout {
             anchors.horizontalCenter: parent.horizontalCenter
-            spacing: 0
+            spacing: Style.hspan(0.5)
 
             Label {
                 Layout.preferredWidth: Style.hspan(1)
@@ -238,7 +237,6 @@ UIScreen {
         size: Style.symbolSizeM
 
         symbol: "music"
-        text: "LIBRARY"
 
         onClicked: root.libraryVisible = true
     }

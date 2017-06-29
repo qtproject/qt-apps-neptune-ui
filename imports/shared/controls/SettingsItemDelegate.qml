@@ -37,7 +37,7 @@ import utils 1.0
 
 ItemDelegate {
     id: root
-    implicitWidth: Style.hspan(14)
+    implicitWidth: Style.hspan(16)
     implicitHeight: Style.vspan(2)
 
     property alias icon: icon.name
@@ -45,12 +45,12 @@ ItemDelegate {
     checkable: true
 
     background: Item {
-        implicitWidth: Style.hspan(14)
+        implicitWidth: Style.hspan(16)
         implicitHeight: Style.vspan(2)
     }
 
     contentItem: Control {
-        implicitWidth: Style.hspan(14)
+        implicitWidth: Style.hspan(16)
         implicitHeight: Style.vspan(2)
         RowLayout {
             height: parent.height
@@ -68,7 +68,7 @@ ItemDelegate {
                 Layout.preferredWidth: Style.hspan(8)
                 Layout.fillHeight: true
                 text: root.text
-                Tracer {}
+                elide: Text.ElideRight
             }
 
             Switch {
@@ -90,7 +90,7 @@ ItemDelegate {
 
             Icon {
                 id: childIndicator
-                Layout.preferredWidth: Style.hspan(1)
+                Layout.preferredWidth: Style.hspan(2)
                 Layout.fillHeight: true
                 source: Style.icon("cloud_arrow")
             }

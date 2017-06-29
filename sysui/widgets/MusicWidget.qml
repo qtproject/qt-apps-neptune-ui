@@ -46,6 +46,12 @@ UIPanel {
 
     scale: area.pressed?0.85:1.0
 
+    Rectangle {
+        anchors.fill: parent
+        color: Style.colorBlack
+        opacity: 0.8
+    }
+
     ApplicationIPCInterface {
         id: musicControl
 

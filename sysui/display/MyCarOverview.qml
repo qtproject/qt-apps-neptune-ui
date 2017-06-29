@@ -50,7 +50,7 @@ UIPage {
 
         ListViewManager {
             id: view
-            Layout.preferredWidth: Style.hspan(5)
+            Layout.preferredWidth: Style.isPotrait ? Style.hspan(3) : Style.hspan(6)
             Layout.fillHeight: true
             interactive: false
 
@@ -66,7 +66,7 @@ UIPage {
                 width: ListView.view.width
                 height: Style.vspan(3)
 
-                text: model.name.toUpperCase()
+                text: Style.isPotrait ? "" : model.name.toUpperCase()
                 indicator: Image {
                     anchors.right: parent.right
                     anchors.rightMargin: parent.rightPadding
@@ -82,7 +82,7 @@ UIPage {
 
         Control {
             id: composerParent
-            Layout.preferredWidth: Style.hspan(11)
+            Layout.preferredWidth: Style.isPotrait ? Style.hspan(14) : Style.hspan(11)
             Layout.fillHeight: true
 
             Loader {

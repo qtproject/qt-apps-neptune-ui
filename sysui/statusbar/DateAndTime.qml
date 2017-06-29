@@ -40,7 +40,7 @@ Control {
     property string timeFormat: "hh:mm"
     property var currentDate: new Date()
 
-    width: Style.hspan(1.5)
+    width: Style.isPotrait ? Style.hspan(2) : Style.hspan(1.5)
     height: Style.vspan(2)
 
     Label {

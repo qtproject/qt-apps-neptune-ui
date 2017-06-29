@@ -123,8 +123,8 @@ Item {
                     Layout.preferredHeight: Style.vspan(10)
                     model: ClimateModel.climateOptions
                     delegate: Button {
-                        width: Style.hspan(3)
-                        height: Style.vspan(5)
+                        width: Style.isPotrait ? Style.hspan(4) : Style.hspan(3)
+                        height: Style.isPotrait ? Style.vspan(3) : Style.vspan(5)
                         indicator: Image {
                             anchors.centerIn: parent
                             source: Style.symbol(modelData.symbol)

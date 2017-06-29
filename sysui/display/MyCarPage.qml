@@ -47,6 +47,7 @@ UIPage {
 
     TabView {
         anchors.fill: parent
+        tabWidth: Style.hspan(3)
         tabs: [
             {
                 title : "OVERVIEW",

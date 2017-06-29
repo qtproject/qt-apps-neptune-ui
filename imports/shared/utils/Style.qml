@@ -33,29 +33,26 @@ pragma Singleton
 import QtQuick 2.6
 
 import com.pelagicore.styles.neptune 1.0
-import uiconfig 1.0
 
 QtObject {
     id: root
 
-    property QtObject configInfo: ConfigInfo {}
+    property bool withCluster: true
 
-    property bool withCluster: configInfo.withCluster
-
-    property int paddingXS: configInfo.paddingXS
-    property int paddingS: configInfo.paddingS
-    property int padding: configInfo.padding
-    property int paddingL: configInfo.paddingL
-    property int paddingXL: configInfo.paddingXL
+    property int paddingXS: 2
+    property int paddingS: 4
+    property int padding: 8
+    property int paddingL: 12
+    property int paddingXL: 16
 
     property int screenWidth: NeptuneStyle.windowWidth
     property int screenHeight: NeptuneStyle.windowHeight
-    property int clusterWidth: configInfo.clusterWidth
-    property int clusterHeight: configInfo.clusterHeight
-    property int displayHMargin: configInfo.displayHMargin
-    property int displayVMargin: configInfo.displayVMargin
-    property int cellWidth: screenWidth/configInfo.cellFactor //1280/24
-    property int cellHeight: screenHeight/configInfo.cellFactor // 800/24
+    property int clusterWidth: 1920
+    property int clusterHeight: 720
+    property int displayHMargin: 11
+    property int displayVMargin: 0
+    property int cellWidth: NeptuneStyle.cellWidth //1280/24
+    property int cellHeight: NeptuneStyle.cellHeight // 800/24
     property string fontFamily: NeptuneStyle.fontFamily
     property real fontWeight: Font.Light
     property real fontFactor: NeptuneStyle.fontFactor
@@ -70,31 +67,38 @@ QtObject {
     property color colorOrange: NeptuneStyle.accentColor
     property color colorGrey: NeptuneStyle.lighter25(NeptuneStyle.darkColor)
     property color colorBlack: NeptuneStyle.darkColor
-    property bool debugMode: configInfo.debugMode
-    property bool gridMode: configInfo.gridMode
-    property bool fakeBackground: configInfo.fakeBackground
+    property bool debugMode: false
+    property bool gridMode: false
+    property bool fakeBackground: false
     property string displayBackground: NeptuneStyle.backgroundImage
-    property real disabledIconOpacity: configInfo.disabledIconOpacity
+    property real disabledIconOpacity: 0.6
 
-    property int defaultSymbolSize: configInfo.defaultSymbolSize
-    property int defaultGfxSize: configInfo.defaultGfxSize
-    property int symbolSizeXS: configInfo.symbolSizeXS
-    property int symbolSizeS: configInfo.symbolSizeS
-    property int symbolSizeM: configInfo.symbolSizeM
-    property int symbolSizeL: configInfo.symbolSizeL
-    property int symbolSizeXL: configInfo.symbolSizeXL
-    property int symbolSizeXXL: configInfo.symbolSizeXXL
+    property bool isPotrait: screenWidth < screenHeight
 
-    property real statusBarHeight: vspan(configInfo.statusBarSpan)
-    property int notificationCenterWidth: configInfo.notificationCenterWidth
-    property real climateCollapsedVspan: vspan(configInfo.climateCollapsedSpan)
-    property real launcherHeight: vspan(configInfo.launcherSpan)
+    property int defaultSymbolSize: symbolSizeM
+    property int defaultGfxSize: 1
+    property int symbolSizeXS: 32
+    property int symbolSizeS: 48
+    property int symbolSizeM: 72
+    property int symbolSizeL: 96
+    property int symbolSizeXL: 114
+    property int symbolSizeXXL: 192
 
-    property string assetPath: configInfo.assetPath
-    property url drawableUrl: configInfo.drawableUrl
-    property url symbolUrl: configInfo.symbolUrl
-    property url gfxUrl: configInfo.gfxUrl
-    property url fonts: configInfo.fonts
+    property int statusBarSpan: 2
+    property int climateCollapsedSpan: 3
+    property int launcherSpan: 19
+    property int notificationCenterSpan: 8
+
+    property real statusBarHeight: vspan(statusBarSpan)
+    property int notificationCenterWidth: hspan(notificationCenterSpan)
+    property real climateCollapsedVspan: vspan(climateCollapsedSpan)
+    property real launcherHeight: vspan(launcherSpan)
+
+    property string assetPath: Qt.resolvedUrl("../../assets/")
+    property url drawableUrl: Qt.resolvedUrl(root.assetPath + 'drawable-ldpi')
+    property url symbolUrl: Qt.resolvedUrl(root.assetPath + 'icons')
+    property url gfxUrl: Qt.resolvedUrl(root.assetPath + 'gfx/')
+    property url fonts: Qt.resolvedUrl(root.assetPath + 'fonts/')
 
     function symbol(name, size, active) {
         size = size || defaultSymbolSize;

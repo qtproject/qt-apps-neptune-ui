@@ -39,7 +39,7 @@ import "."
 import QtIvi.Media 1.0
 
 Rectangle {
-    width: Style.vspan(20)
+    width: Style.vspan(10)
     height: Style.hspan(1)
 
     color: "black"
@@ -63,7 +63,7 @@ Rectangle {
 
         Item {
             anchors.horizontalCenter: parent.horizontalCenter
-            width: Style.vspan(18)
+            width: Style.vspan(8)
             height: 4
 
             Rectangle {

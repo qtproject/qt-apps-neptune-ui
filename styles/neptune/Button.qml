@@ -52,6 +52,7 @@ T.Button {
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
         elide: Text.ElideRight
+        wrapMode: Text.WordWrap
     }
 
     background: Rectangle {

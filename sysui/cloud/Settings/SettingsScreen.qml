@@ -53,7 +53,7 @@ Control {
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: parent.top;
         anchors.bottom: parent.bottom
-        width: Style.hspan(14)
+        width: Style.hspan(16)
 
         model: ObjectModel {
             SettingsItemDelegate {
