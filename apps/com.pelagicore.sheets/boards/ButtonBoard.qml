@@ -39,7 +39,10 @@ import utils 1.0
 BaseBoard {
     id: root
 
-    title: "Button Board"
+    description: " The push button is perhaps the most commonly used widget in any" +
+                 " graphical user interface. Pushing (or clicking) a button commands the computer" +
+                 " to perform some action or answer a question. Common examples of buttons are OK," +
+                 " Apply, Cancel, Close, Yes, No, and Help buttons."
 
     Flickable {
         id: scrollView
@@ -83,7 +86,6 @@ BaseBoard {
                 Layout.preferredWidth: Style.hspan(1)
                 Layout.preferredHeight: Style.vspan(2)
                 width: Style.hspan(1); height: Style.vspan(2)
-                symbol: "widgets_play_track"
 
                 Marker { anchors.fill: parent; visible: parent.pressed }
             }
@@ -94,10 +96,28 @@ BaseBoard {
                 Layout.preferredHeight: Style.vspan(3)
 
                 width: Style.hspan(3); height: Style.vspan(3)
-                symbol: "widgets_play_track"
                 text: "Hello World"
 
                 Marker { anchors.fill: parent; visible: parent.pressed }
+            }
+
+            Label { width: Style.hspan(8);  text: "Regular Button" }
+            Button {
+                id: buttonControl
+                text: qsTr("Button")
+                width: Style.hspan(3)
+
+                onClicked: console.log("Button Clicked!");
+
+                contentItem: Label {
+                    text: buttonControl.text
+                    font: buttonControl.font
+                    opacity: enabled ? 1.0 : 0.3
+                    color: buttonControl.down ? "#db9432" : "#ffffff"
+                    horizontalAlignment: Label.AlignHCenter
+                    verticalAlignment: Label.AlignVCenter
+                    elide: Label.ElideRight
+                }
             }
         }
     }

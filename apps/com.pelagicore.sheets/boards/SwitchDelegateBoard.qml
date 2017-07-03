@@ -29,51 +29,27 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.6
-import QtQuick.Layouts 1.0
-
-import controls 1.0
-import utils 1.0
-import QtQuick.Controls 2.0
-
+import QtQuick 2.8
+import QtQuick.Controls 2.1
 
 BaseBoard {
     id: root
 
-    title: "Tab Board"
+    description: "A Switch is a toggle button that can be switched on (checked) or off (unchecked)."
 
-    DisplayBackground {
-        anchors.fill: parent
-    }
-
-    TabView {
-        id: tabView
-        anchors.fill: parent
-        tabs: [
-            { title : "ICON BOARD", url : rectTest, properties : {} },
-            { title : "LABEL BOARD", url : rectTest1, properties : {} },
-        ]
-    }
-
-    Item {
-        id: rectTest
-        width: 400
-        height: 800
-        visible: false
-        Label {
-            anchors.centerIn: parent
-            text: "TAB 1"
-        }
-    }
-
-    Item {
-        id: rectTest1
-        width: 400
-        height: 800
-        visible: false
-        Label {
-            anchors.centerIn: parent
-            text: "TAB 2"
+    ListView {
+        id: listView
+        anchors.centerIn: parent
+        anchors.margins: 24
+        width: parent.width/2
+        height: parent.height * .75
+        model: 10
+        delegate: SwitchDelegate {
+            width: ListView.view.width
+            font.pixelSize: 20
+            text: 'Switch #' + index
+            highlighted: ListView.isCurrentItem
+            onClicked: listView.currentIndex = index
         }
     }
 }

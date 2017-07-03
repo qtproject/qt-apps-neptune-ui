@@ -32,58 +32,92 @@
 import QtQuick 2.0
 import QtQuick.Layouts 1.0
 import QtQuick.Controls 2.0
+import controls 1.0
 import utils 1.0
 
 BaseBoard {
     id: root
-
-    title: 'Switch Board'
-    color: "#666"
+    description: 'Style Board'
 
     GridLayout {
-        anchors.fill: parent; anchors.margins: Style.padding
+        anchors.fill: parent
+        anchors.margins: Style.padding
         columns: 2
-
         Label {
-            text: qsTr('Switch 1 - %1').arg(switch1.checked ? 'On' : 'Off')
+            text: 'Style.colorWhite'
             font.pixelSize: Style.fontSizeXS
         }
-
-        Switch {
-            id: switch1
-            checked: true
+        Marker {
+            color: Style.colorWhite
+            solid: true
         }
-
         Label {
-            text: qsTr('Switch 2 - %1').arg(switch2.checked ? 'On' : 'Off')
+            text: 'Style.colorOrange'
             font.pixelSize: Style.fontSizeXS
         }
-
-        Switch {
-            id: switch2
-            checked: false
+        Marker {
+            color: Style.colorOrange
+            solid: true
         }
-
         Label {
-            text: "hspan(4), vspan(4)"
+            id: label
+            text: 'Style.colorGrey'
             font.pixelSize: Style.fontSizeXS
         }
-
-        Control {
-            width: Style.hspan(4); height: Style.vspan(4)
-
-            Switch {
-                id: switch3
-                width: Style.hspan(4); height: Style.vspan(4)
-                checked: true
-
-            }
+        Marker {
+            color: Style.colorGrey
+            solid: true
         }
-
+        Label {
+            text: 'Style.colorBlack'
+            font.pixelSize: Style.fontSizeXS
+        }
+        Marker {
+            color: Style.colorBlack
+            solid: true
+        }
+        Label {
+            text: 'Size XS'
+            font.pixelSize: Style.fontSizeXS
+        }
+        Label {
+            text: 'Lorem Ipsum'
+            font.pixelSize: Style.fontSizeXS
+        }
+        Label {
+            text: 'Size S'
+            font.pixelSize: Style.fontSizeXS
+        }
+        Label {
+            text: 'Lorem Ipsum'
+            font.pixelSize: Style.fontSizeS
+        }
+        Label {
+            text: 'Size M'
+            font.pixelSize: Style.fontSizeXS
+        }
+        Label {
+            text: 'Lorem Ipsum'
+            font.pixelSize: Style.fontSizeM
+        }
+        Label {
+            text: 'Size L'
+            font.pixelSize: Style.fontSizeXS
+        }
+        Label {
+            text: 'Lorem Ipsum'
+            font.pixelSize: Style.fontSizeL
+        }
+        Label {
+            text: 'Size XL'
+            font.pixelSize: Style.fontSizeXS
+        }
+        Label {
+            text: 'Lorem Ipsum'
+            font.pixelSize: Style.fontSizeXL
+        }
         Spacer {
             Layout.fillHeight: true
-            Layout.fillWidth: true
-            Layout.columnSpan: 2
         }
     }
 }

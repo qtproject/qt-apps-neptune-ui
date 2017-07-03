@@ -30,6 +30,7 @@
 ****************************************************************************/
 
 import QtQuick 2.6
+import QtQuick.Controls 2.0 as QControls
 import QtQuick.Layouts 1.0
 
 import controls 1.0
@@ -38,32 +39,33 @@ import utils 1.0
 BaseBoard {
     id: root
 
-    title: "Label Board"
+    description: "App Launcher Grid Delegate Board"
 
     Component.onCompleted: Style.debugMode = true
-
     ColumnLayout {
-        anchors.fill: parent; anchors.margins: Style.padding
-        anchors.topMargin: 50
 
-        Label {
-            text: "Hello World"
+        AppButton {
+            icon: Style.icon("widgets_phone")
+            name: "Hello World"
+            onClicked: print("Clicked")
         }
 
-        Label {
+        AppButton {
+            icon: Style.icon("widgets_phone")
+            name: "Downloading"
+            installProgress: slider.valueAt(slider.position)
+        }
+
+        QControls.Slider {
+            id: slider
             Layout.fillWidth: true
-            text: "HorizontalAlignment = Text.AlignCenter"
-            horizontalAlignment: Text.AlignHCenter
         }
 
-        Label {
-            height: Style.vspan(3)
-            width: Style.hspan(5)
-            text: "vspan=3, hspan=5"
-        }
-
-        Spacer {
-            Layout.fillHeight: true
+        AppButton {
+            icon: Style.icon("widgets_phone")
+            name: "Edit Mode"
+            editMode: true
+            onRemoveClicked: print("Remove clicked")
         }
     }
 }

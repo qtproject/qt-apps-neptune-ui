@@ -32,7 +32,7 @@
 import QtQuick.Controls 2.1
 import QtQuick.Layouts 1.1
 
-BasePage {
+BaseBoard {
     id: root
 
     description: "Frame is used to layout a logical group of controls together within a visual frame."

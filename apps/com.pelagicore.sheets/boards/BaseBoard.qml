@@ -29,31 +29,32 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.8
+import QtQuick 2.0
+import QtQuick.Controls 2.0
 import controls 1.0
 import utils 1.0
 
-BasePage {
+Page {
     id: root
-    description: "The image button is a custom widget made as an example. It supports plain text plus and image on the left side."
 
-    Column {
+    default property alias content: content.children
+
+    property alias description: label.text
+
+    header: Label {
+        id: label
+        padding: 20
+        wrapMode: Label.Wrap
+        font.pixelSize: 20
+    }
+
+    Item {
+        id: content
         anchors.top: parent.top
-        anchors.topMargin: 150
-        anchors.horizontalCenter: parent.horizontalCenter
-        spacing: 15
-        Repeater {
-            model: 5
-            delegate: ImageButton {
-                id: testButton
-                width: 220
-                height: 80
-                text: modelData
-                imageSource: Style.icon("widgets_spotify_logo")
-                onClicked: {
-                    console.log('Button Nr: '+ text + ' is pressed');
-                }
-            }
-        }
+        anchors.topMargin: Style.vspan(2)
+        anchors.margins: Style.padding
+        anchors.bottom: parent.bottom
+        anchors.left: parent.left
+        anchors.right: parent.right
     }
 }

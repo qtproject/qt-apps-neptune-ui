@@ -29,25 +29,42 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.0
-import QtQuick.Layouts 1.0
-import controls 1.0
+import QtQuick 2.8
+import QtQuick.Controls 2.1
+import QtQuick.Layouts 1.1
 
 BaseBoard {
-    title: 'Volume Board'
-    color: "#333"
+    id: root
 
-    ColumnLayout {
+    description: "Provides a button type that is typically used within a ToolBar."
+
+    ToolBar {
+        id: control
+        anchors.top: parent.top
+        anchors.topMargin: 70
         anchors.horizontalCenter: parent.horizontalCenter
-        VolumeSlider {
-            value: 0.0
-            Layout.fillWidth: true
-        }
-        VolumeSlider {
-            value: 0.5
-            Layout.fillWidth: true
-        }
-        VolumeSlider { value: 1.0 }
-    }
 
+        background: Rectangle {
+            implicitHeight: 40
+            color: "grey"
+
+            Rectangle {
+                width: parent.width
+                height: 1
+                anchors.bottom: parent.bottom
+                color: "transparent"
+                border.color: "#db9432"
+            }
+        }
+
+        RowLayout {
+            anchors.fill: parent
+            ToolButton {
+                text: qsTr("Undo")
+            }
+            ToolButton {
+                text: qsTr("Redo")
+            }
+        }
+    }
 }

@@ -29,42 +29,7 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.8
-import QtQuick.Controls 2.1
-import QtQuick.Layouts 1.1
+BaseBoard {
 
-BasePage {
-    id: root
-
-    description: "Provides a button type that is typically used within a ToolBar."
-
-    ToolBar {
-        id: control
-        anchors.top: parent.top
-        anchors.topMargin: 70
-        anchors.horizontalCenter: parent.horizontalCenter
-
-        background: Rectangle {
-            implicitHeight: 40
-            color: "grey"
-
-            Rectangle {
-                width: parent.width
-                height: 1
-                anchors.bottom: parent.bottom
-                color: "transparent"
-                border.color: "#db9432"
-            }
-        }
-
-        RowLayout {
-            anchors.fill: parent
-            ToolButton {
-                text: qsTr("Undo")
-            }
-            ToolButton {
-                text: qsTr("Redo")
-            }
-        }
-    }
+    description: "Welcome to the widgets gallery of NEPTUNE UI!"
 }

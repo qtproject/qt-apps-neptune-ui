@@ -31,48 +31,42 @@
 
 import QtQuick 2.8
 import QtQuick.Controls 2.1
+import utils 1.0
+import controls 1.0
+import Qt.labs.folderlistmodel 2.0
 
-Item {
+UIScreen {
     id: root
 
-    ListModel {
-        id: listEntries
-        ListElement { title: 'Welcome!' ; source: 'pages/WelcomePage.qml' }
-        ListElement { title: 'Buttons' ; source: 'pages/ButtonPage.qml' }
-        ListElement { title: 'Tool Buttons' ; source: 'pages/ToolButtonPage.qml' }
-        ListElement { title: 'TextField' ; source: 'pages/TextFieldPage.qml' }
-        ListElement { title: 'Label' ; source: 'pages/LabelPage.qml' }
-        ListElement { title: 'Slider' ; source: 'pages/SliderPage.qml' }
-        ListElement { title: 'Switch' ; source: 'pages/SwitchPage.qml' }
-        ListElement { title: 'Colors' ; source: 'pages/ColorPage.qml' }
-        ListElement { title: 'Item Delegate' ; source: 'pages/ItemDelegatePage.qml' }
-        ListElement { title: 'Switch Delegate' ; source: 'pages/SwitchDelegatePage.qml' }
-        ListElement { title: 'Image Buttons' ; source: 'pages/ImageButtonPage.qml' }
-        ListElement { title: 'Frame' ; source: 'pages/FramePage.qml' }
-        ListElement { title: 'Pane' ; source: 'pages/PanePage.qml' }
+    FolderListModel {
+        id: folderModel
+        folder: "boards"
+        nameFilters: ["*.qml"]
     }
 
     Frame {
         id: navigationPane
         width: root.width / 4
+        height: Style.vspan(20)
+        anchors.left: parent.left
+        anchors.leftMargin: Style.hspan(3)
         anchors.top: parent.top
-        anchors.bottom: parent.bottom
         ListView {
             id: view
             anchors.topMargin: 20
             anchors.fill: parent
-            model: listEntries
+            model: folderModel
             clip: true
             delegate: ItemDelegate {
                 width: ListView.view.width
-                text: model.title
+                text: fileName
                 highlighted: ListView.isCurrentItem
                 font.pixelSize: 20
                 onClicked: {
                     view.currentIndex = index;
                     //make sure there is nothing else on the stack
                     stackView.clear();
-                    stackView.replace(Qt.resolvedUrl(model.source));
+                    stackView.replace(Qt.resolvedUrl(model.filePath));
                 }
             }
         }
@@ -80,10 +74,11 @@ Item {
 
     StackView {
         id: stackView
-        width: root.width - navigationPane.width
+        width: root.width - navigationPane.width - Style.hspan(3)
+        anchors.left: navigationPane.right
         anchors.top: parent.top
         anchors.bottom: parent.bottom
         anchors.right: parent.right
-        initialItem: Qt.resolvedUrl(listEntries.get(0).source)
+        initialItem: Qt.resolvedUrl(folderModel.get(0).filePath)
     }
 }

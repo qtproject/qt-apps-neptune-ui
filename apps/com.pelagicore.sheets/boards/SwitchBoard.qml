@@ -30,37 +30,59 @@
 ****************************************************************************/
 
 import QtQuick 2.0
+import QtQuick.Layouts 1.0
 import QtQuick.Controls 2.0
-import controls 1.0
 import utils 1.0
 
-Item {
+BaseBoard {
     id: root
-    width: Style.hspan(12)
-    height: Style.vspan(24)
-    property alias title: label.text
 
-    default property alias content: content.children
-    property alias color: background.color
+    description: 'Switch Board'
 
-    Rectangle {
-        id: background
-        anchors.fill: parent
-        color: '#000000'
-    }
+    GridLayout {
+        anchors.fill: parent; anchors.margins: Style.padding
+        columns: 2
 
-    Label {
-        id: label
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.top: parent.top
-    }
+        Label {
+            text: qsTr('Switch 1 - %1').arg(switch1.checked ? 'On' : 'Off')
+            font.pixelSize: Style.fontSizeXS
+        }
 
-    Item {
-        id: content
-        anchors.top: label.bottom
-        anchors.margins: Style.padding
-        anchors.bottom: parent.bottom
-        anchors.left: parent.left
-        anchors.right: parent.right
+        Switch {
+            id: switch1
+            checked: true
+        }
+
+        Label {
+            text: qsTr('Switch 2 - %1').arg(switch2.checked ? 'On' : 'Off')
+            font.pixelSize: Style.fontSizeXS
+        }
+
+        Switch {
+            id: switch2
+            checked: false
+        }
+
+        Label {
+            text: "hspan(4), vspan(4)"
+            font.pixelSize: Style.fontSizeXS
+        }
+
+        Control {
+            width: Style.hspan(4); height: Style.vspan(4)
+
+            Switch {
+                id: switch3
+                width: Style.hspan(4); height: Style.vspan(4)
+                checked: true
+
+            }
+        }
+
+        Spacer {
+            Layout.fillHeight: true
+            Layout.fillWidth: true
+            Layout.columnSpan: 2
+        }
     }
 }

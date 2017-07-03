@@ -29,29 +29,41 @@
 **
 ****************************************************************************/
 
-import QtQuick.Controls 2.1
-import QtQuick.Layouts 1.1
+import QtQuick 2.6
+import QtQuick.Layouts 1.0
+import QtQuick.Controls 2.0
+import controls 1.0
+import utils 1.0
 
-BasePage {
+BaseBoard {
     id: root
 
-    description: "In addition to the normal Text type, Label follows the font and color" +
-                 " scheme of the system. "
+    description: "Label Board"
 
-    Frame {
-        anchors.top: parent.top
+    Component.onCompleted: Style.debugMode = true
+
+    ColumnLayout {
+        anchors.fill: parent; anchors.margins: Style.padding
         anchors.topMargin: 50
-        anchors.horizontalCenter: parent.horizontalCenter
-        ColumnLayout {
-            Label {
-                text: "Hello world"
-            }
-            Label {
-                text: "Hello world"
-                font.pixelSize: 22
-                font.italic: true
-                color: "steelblue"
-            }
+
+        Label {
+            text: "Hello World"
+        }
+
+        Label {
+            Layout.fillWidth: true
+            text: "HorizontalAlignment = Text.AlignCenter"
+            horizontalAlignment: Text.AlignHCenter
+        }
+
+        Label {
+            height: Style.vspan(3)
+            width: Style.hspan(5)
+            text: "vspan=3, hspan=5"
+        }
+
+        Spacer {
+            Layout.fillHeight: true
         }
     }
 }

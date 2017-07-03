@@ -31,22 +31,48 @@
 
 import QtQuick 2.6
 import QtQuick.Layouts 1.0
-
+import QtQuick.Controls 2.0
 import controls 1.0
 import utils 1.0
+
 
 BaseBoard {
     id: root
 
-    width: Style.hspan(20)
-    height: Style.vspan(12)
+    description: "Tab Board"
 
-    title: "WebBrowser Board"
-
-    color: "darkgray"
-
-    WebBrowser {
+    DisplayBackground {
         anchors.fill: parent
-        url: ""
+    }
+
+    TabView {
+        id: tabView
+        anchors.fill: parent
+        tabs: [
+            { title : "ICON BOARD", url : rectTest, properties : {} },
+            { title : "LABEL BOARD", url : rectTest1, properties : {} },
+        ]
+    }
+
+    Item {
+        id: rectTest
+        width: 400
+        height: 800
+        visible: false
+        Label {
+            anchors.centerIn: parent
+            text: "TAB 1"
+        }
+    }
+
+    Item {
+        id: rectTest1
+        width: 400
+        height: 800
+        visible: false
+        Label {
+            anchors.centerIn: parent
+            text: "TAB 2"
+        }
     }
 }

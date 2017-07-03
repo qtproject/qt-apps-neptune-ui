@@ -32,7 +32,7 @@
 import QtQuick.Controls 2.1
 import QtQuick.Layouts 1.1
 
-BasePage {
+BaseBoard {
     id: root
 
     description: "Pane provides a background color that matches with the application style" +

@@ -36,13 +36,10 @@ import utils 1.0
 AppUIScreen {
     id: root
     title: "Neptune Sheets App"
-    UIScreen {
-        anchors.fill: parent
+
+    MenuPane {
+        anchors.centerIn: parent
+
         onBackScreen: { root.back(); }
-        MenuPane {
-            anchors.centerIn: parent
-            width: Style.hspan(13)
-            height: Style.vspan(24)
-        }
     }
 }

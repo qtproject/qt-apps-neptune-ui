@@ -29,28 +29,31 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.0
+import QtQuick 2.8
 import controls 1.0
 import utils 1.0
 
 BaseBoard {
-
-    title: "Text Field Board"
+    id: root
+    description: "The image button is a custom widget made as an example. It supports plain text plus and image on the left side."
 
     Column {
-        anchors.centerIn: parent
-
-        TextField {
-            hintText: "Hint Text"
-        }
-
-        TextField {
-            text: "Real Text"
-        }
-
-        TextTool {
-            text: "Text Tool"
-            name: "music"
+        anchors.top: parent.top
+        anchors.topMargin: 150
+        anchors.horizontalCenter: parent.horizontalCenter
+        spacing: 15
+        Repeater {
+            model: 5
+            delegate: ImageButton {
+                id: testButton
+                width: 220
+                height: 80
+                text: modelData
+                imageSource: Style.icon("widgets_spotify_logo")
+                onClicked: {
+                    console.log('Button Nr: '+ text + ' is pressed');
+                }
+            }
         }
     }
 }

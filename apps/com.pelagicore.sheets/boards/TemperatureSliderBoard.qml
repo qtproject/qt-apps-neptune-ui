@@ -29,27 +29,60 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.8
-import QtQuick.Controls 2.1
+import QtQuick 2.6
+import QtQuick.Layouts 1.0
+import QtQuick.Controls 2.0
 
-BasePage {
+import controls 1.0
+import utils 1.0
+
+BaseBoard {
     id: root
 
-    description: "Item delegate with a switch indicator that can be toggled on or off."
+    description: "Label Board"
 
-    ListView {
-        id: listView
-        model: 10
-        width: 120
-        height: 900
-        anchors.top: parent.top
-        anchors.topMargin: 50
-        anchors.horizontalCenter: parent.horizontalCenter
-        delegate: ItemDelegate {
-            font.pixelSize: 20
-            text: modelData
-            highlighted: ListView.isCurrentItem
-            onClicked: listView.currentIndex = index
+    Row {
+
+        spacing: 100
+        anchors.centerIn: parent
+
+        Column {
+            Label {
+                width: Style.hspan(3)
+                height: Style.vspan(1)
+                text: qsTr("Value: %1").arg(temp.value.toFixed(1))
+                horizontalAlignment: Qt.AlignHCenter
+            }
+
+            TemperatureSlider {
+                id: temp
+                width: Style.hspan(3)
+                height: Style.vspan(14)
+            }
         }
+
+        Column {
+            Label {
+                width: Style.hspan(3)
+                height: Style.vspan(1)
+                text: qsTr("Value: %1").arg(temp2.value.toFixed(1))
+                horizontalAlignment: Qt.AlignHCenter
+            }
+
+            TemperatureSlider {
+                id: temp2
+                width: Style.hspan(3)
+                height: Style.vspan(20)
+                mirrorSlider: true
+                roundingMode: roundingModeWhole
+                from: 0
+                to: 20
+                stepSize: 2
+                value: 10
+
+            }
+        }
+
     }
+
 }

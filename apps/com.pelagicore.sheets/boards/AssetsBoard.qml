@@ -29,27 +29,32 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.8
-import QtQuick.Controls 2.1
+import QtQuick 2.0
+import QtQuick.Controls 2.0
+import QtQuick.Layouts 1.0
+import Qt.labs.folderlistmodel 2.0
+import utils 1.0
 
-BasePage {
-    id: root
+BaseBoard {
 
-    description: "A Switch is a toggle button that can be switched on (checked) or off (unchecked)."
-
-    ListView {
-        id: listView
-        anchors.centerIn: parent
-        anchors.margins: 24
-        width: parent.width/2
-        height: parent.height * .75
-        model: 10
-        delegate: SwitchDelegate {
-            width: ListView.view.width
-            font.pixelSize: 20
-            text: 'Switch #' + index
-            highlighted: ListView.isCurrentItem
-            onClicked: listView.currentIndex = index
+    Item {
+        id: content
+        anchors.fill: parent
+        FolderListModel {
+            id: folderModel
+            folder: Qt.resolvedUrl(Style.assetPath + "drawable-ldpi")
+        }
+        GridView {
+            anchors.fill: parent
+            anchors.margins: 32
+            clip: true
+            cellWidth: 72; cellHeight: 72
+            model: folderModel
+            delegate: Image {
+                width: 64; height: 64; source: Style.icon(model.fileBaseName)
+                fillMode: Image.PreserveAspectFit
+                asynchronous: true
+            }
         }
     }
 }

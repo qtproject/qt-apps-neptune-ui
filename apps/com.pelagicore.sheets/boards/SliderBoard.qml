@@ -29,8 +29,32 @@
 **
 ****************************************************************************/
 
-BasePage {
-    id: root
+import QtQuick 2.0
+import QtQuick.Controls 2.0
+import utils 1.0
+import controls 1.0
 
-    description: "Welcome to the widgets gallery of NEPTUNE UI!"
+BaseBoard {
+
+    Label {
+        anchors.horizontalCenter: parent.horizontalCenter
+        text: "Slider Component"
+    }
+
+    Column {
+        anchors.centerIn: parent
+        Slider {
+
+        }
+
+        Slider {
+            value: 0.5
+        }
+
+        Slider {
+            value: 1
+        }
+    }
+
+
 }

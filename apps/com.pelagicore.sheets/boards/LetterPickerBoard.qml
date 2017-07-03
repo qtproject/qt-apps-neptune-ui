@@ -35,7 +35,7 @@ import controls 1.0
 
 BaseBoard {
 
-    title: "Letter Picker"
+    description: "Letter Picker"
 
     LetterPicker {
 

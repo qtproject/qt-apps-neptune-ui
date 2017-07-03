@@ -31,12 +31,12 @@
 
 import QtQuick.Controls 2.1
 
-BasePage {
+BaseBoard {
     id: root
 
-    description: "Provides a vertical or horizontal slider control."
+    description: "Displays a single line of editable plain text."
 
-    Slider {
+    TextField {
         width: 300
         height: 50
         anchors.top: parent.top

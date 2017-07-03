@@ -30,30 +30,24 @@
 ****************************************************************************/
 
 import QtQuick 2.0
-import utils 1.0
+import QtQuick.Controls 2.0
+import QtQuick.Layouts 1.0
 import controls 1.0
+import utils 1.0
 
 BaseBoard {
 
-    Label {
-        anchors.horizontalCenter: parent.horizontalCenter
-        text: "Slider Component"
-    }
+    description: 'Volume Board'
 
-    Column {
-        anchors.centerIn: parent
-        Slider {
-
+    ColumnLayout {
+        VolumeSlider {
+            value: 0.0
         }
-
-        Slider {
+        VolumeSlider {
             value: 0.5
         }
-
-        Slider {
-            value: 1
+        VolumeSlider {
+            value: 1.0
         }
     }
-
-
 }

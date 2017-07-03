@@ -31,14 +31,14 @@
 
 import QtQuick 2.6
 import QtQuick.Layouts 1.0
-
+import QtQuick.Controls 2.0
 import controls 1.0
 import utils 1.0
 
 BaseBoard {
     id: root
 
-    title: "Icon Board"
+    description: "Icon Board"
 
     Grid {
         anchors.fill: parent; anchors.margins: Style.padding

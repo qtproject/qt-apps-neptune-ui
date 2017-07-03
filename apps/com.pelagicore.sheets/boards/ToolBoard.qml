@@ -29,34 +29,47 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.0
+import QtQuick 2.6
 import QtQuick.Controls 2.0
-import QtQuick.Layouts 1.0
-import Qt.labs.folderlistmodel 2.0
+import controls 1.0
 import utils 1.0
 
 BaseBoard {
-    color: '#333'
 
+    description: "Tool Board"
 
-    Item {
-        id: content
-        anchors.fill: parent
-        FolderListModel {
-            id: folderModel
-            folder: Qt.resolvedUrl(Style.assetPath + "drawable-ldpi")
+    Column {
+        anchors.horizontalCenter: parent.horizontalCenter
+        spacing: 30
+
+        Tool {
+            symbol: "music"
+            size: 32
         }
-        GridView {
-            anchors.fill: parent
-            anchors.margins: 32
-            clip: true
-            cellWidth: 72; cellHeight: 72
-            model: folderModel
-            delegate: Image {
-                width: 64; height: 64; source: Style.icon(model.fileBaseName)
-                fillMode: Image.PreserveAspectFit
-                asynchronous: true
-            }
+
+        Tool {
+            symbol: "music"
+            size: 48
+        }
+
+        Tool {
+            symbol: "music"
+            size: 72
+        }
+
+        Tool {
+            symbol: "music"
+            size: 96
+        }
+
+        Tool {
+            symbol: "music"
+            size: 144
+        }
+
+        Tool {
+            symbol: "music"
+            size: 192
         }
     }
 }

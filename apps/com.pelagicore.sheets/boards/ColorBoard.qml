@@ -34,8 +34,7 @@ import QtQuick.Controls 2.1
 import QtQuick.Layouts 1.1
 import QtQuick.Controls.impl 2.1
 
-
-BasePage {
+BaseBoard {
     id: root
 
     description: "Colors used in UI"
