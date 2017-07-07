@@ -55,7 +55,6 @@ UIPanel {
     Connections {
         target: ApplicationManagerModel
         onMapWidgetChanged: {
-            loadingLabel.visible = false
             ApplicationManagerModel.mapWidget.width = Qt.binding(function () { return loader.width})
             ApplicationManagerModel.mapWidget.height = loader.height
             loader.children = ApplicationManagerModel.mapWidget
