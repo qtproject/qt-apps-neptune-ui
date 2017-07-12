@@ -54,7 +54,7 @@ ItemDelegate {
         implicitHeight: Style.vspan(2)
         RowLayout {
             height: parent.height
-            spacing: 0
+            spacing: 5
 
             Symbol {
                 id: icon

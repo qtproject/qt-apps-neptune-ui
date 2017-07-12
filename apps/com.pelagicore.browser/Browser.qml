@@ -43,7 +43,7 @@ AppUIScreen {
         WebBrowser {
             id: browser
             anchors.fill: parent
-            anchors.leftMargin: Style.vspan(4)
+            anchors.leftMargin: Style.hspan(3)
             url: "http://www.qt.io/qt-automotive-suite"
         }
 

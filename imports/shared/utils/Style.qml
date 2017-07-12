@@ -84,14 +84,18 @@ QtObject {
     property int symbolSizeXL: 114
     property int symbolSizeXXL: 192
 
-    property int statusBarSpan: 2
-    property int climateCollapsedSpan: 3
     property int launcherSpan: 19
     property int notificationCenterSpan: 8
 
-    property real statusBarHeight: vspan(statusBarSpan)
-    property int notificationCenterWidth: hspan(notificationCenterSpan)
+    // Cimate config
+    property int climateCollapsedSpan: 3
     property real climateCollapsedVspan: vspan(climateCollapsedSpan)
+
+    //StatusBar config
+    property int statusBarSpan: 2
+    property real statusBarHeight: vspan(statusBarSpan)
+
+    property int notificationCenterWidth: hspan(notificationCenterSpan)
     property real launcherHeight: vspan(launcherSpan)
 
     property string assetPath: Qt.resolvedUrl("../../assets/")

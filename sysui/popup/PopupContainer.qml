@@ -83,6 +83,8 @@ MouseArea {
         font.pixelSize: Style.fontSizeM
         text: root.contentAvailable && root.popupContent !== undefined ? root.popupContent.toString() : ""
         horizontalAlignment: Text.AlignHCenter
+        elide: Text.ElideRight
+        wrapMode: Text.WordWrap
     }
 
     ProgressBar {

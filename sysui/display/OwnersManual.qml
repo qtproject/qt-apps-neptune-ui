@@ -37,16 +37,13 @@ import utils 1.0
 UIPage {
     id: root
 
-//    width: Style.hspan(24)
-//    height: Style.vspan(24)
-
     ListViewManager {
         id: settingsListView
 
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: parent.top
         anchors.topMargin: Style.vspan(1)
-        width: Style.hspan(12)
+        width: Style.hspan(14)
         height: parent.height
 
         model: ListModel {

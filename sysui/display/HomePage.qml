@@ -45,19 +45,17 @@ UIPage {
     // Left widget side
     MapWidget {
         id: mapWidget
-        anchors.top: parent.top
-        anchors.left: parent.left
-        anchors.right: Style.isPotrait ? parent.right : parent.horizontalCenter
-        anchors.bottom: parent.bottom
+        width: Style.isPotrait ? Style.screenWidth : Style.screenWidth/2
+        height: Style.launcherHeight
     }
 
     // Right widget side upper widget
     MusicWidget {
         id: musicWidget
         width: Style.screenWidth/2
-        height: Style.isPotrait ? root.height/3 : root.height/2
+        height: Style.isPotrait ? Style.launcherHeight/3 : Style.launcherHeight/2
         x: Style.isPotrait ? 0 : width
-        y: Style.isPotrait ? (root.height - height) : 0
+        y: Style.isPotrait ? (Style.launcherHeight - height) : 0
 
         onShowFullscreen: {
             ApplicationManager.startApplication("com.pelagicore.music")
@@ -67,7 +65,7 @@ UIPage {
     // Right side lower widget
     PhoneWidget {
         width: Style.screenWidth/2
-        height: Style.isPotrait ? root.height/3 : root.height/2
+        height: Style.isPotrait ? Style.launcherHeight/3 : Style.launcherHeight/2
 
         anchors.right: parent.right
         anchors.bottom: parent.bottom
