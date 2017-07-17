@@ -32,6 +32,7 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.0
 import controls 1.0
+import utils 1.0
 
 Row {
     id: root
@@ -49,7 +50,7 @@ Row {
 
         delegate: Button {
             width: buttonModel.buttonWidth
-            height: 80
+            height: Style.vspan(1)
             text: modelData.text
             onClicked: root.buttonClicked(index)
         }

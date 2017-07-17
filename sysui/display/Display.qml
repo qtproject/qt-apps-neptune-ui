@@ -123,8 +123,8 @@ Item {
 
     StageLoader {
         id: popupContainerLoader
-        width: Style.hspan(8)
-        height: Style.vspan(6)
+        width: Style.popupWidth
+        height: Style.popupHeight
         anchors.centerIn: parent
         active: StagedStartupModel.loadBackgroundElements
         source: "../popup/PopupContainer.qml"

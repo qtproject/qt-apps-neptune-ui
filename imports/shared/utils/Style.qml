@@ -95,6 +95,10 @@ QtObject {
     property int statusBarSpan: 2
     property real statusBarHeight: vspan(statusBarSpan)
 
+    //Popup config
+    property real popupWidth: isPotrait ? hspan(12) : hspan(8)
+    property real popupHeight: vspan(6)
+
     property int notificationCenterWidth: hspan(notificationCenterSpan)
     property real launcherHeight: vspan(launcherSpan)
 

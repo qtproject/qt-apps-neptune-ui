@@ -38,8 +38,8 @@ import models.popup 1.0
 MouseArea {
     id: root
 
-    width: Style.hspan(8)
-    height: Style.vspan(6)
+    width: Style.popupWidth
+    height: Style.popupHeight
 
     visible: opacity > 0
 
@@ -66,7 +66,7 @@ MouseArea {
     PopupHeader {
         id: popupHeader
         width: root.width
-        height: 100
+        height: Style.vspan(2)
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: parent.top
         title: root.contentAvailable && root.popupBody !== undefined && root.popupBody.title !== undefined ? root.popupBody.title : ""
@@ -91,7 +91,7 @@ MouseArea {
         id: progressBar
 
         width: parent.width - Style.screenMargin
-        height: 50
+        height: Style.vspan(0.5)
         anchors.top: body.bottom
         anchors.topMargin: 5
         anchors.horizontalCenter: parent.horizontalCenter
