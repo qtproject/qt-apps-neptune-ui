@@ -1,0 +1,148 @@
+/****************************************************************************
+**
+** Copyright (C) 2017 Pelagicore AG
+** Contact: https://www.qt.io/licensing/
+**
+** This file is part of the Neptune IVI UI.
+**
+** $QT_BEGIN_LICENSE:GPL-QTAS$
+** Commercial License Usage
+** Licensees holding valid commercial Qt Automotive Suite licenses may use
+** this file in accordance with the commercial license agreement provided
+** with the Software or, alternatively, in accordance with the terms
+** contained in a written agreement between you and The Qt Company.  For
+** licensing terms and conditions see https://www.qt.io/terms-conditions.
+** For further information use the contact form at https://www.qt.io/contact-us.
+**
+** GNU General Public License Usage
+** Alternatively, this file may be used under the terms of the GNU
+** General Public License version 3 or (at your option) any later version
+** approved by the KDE Free Qt Foundation. The licenses are as published by
+** the Free Software Foundation and appearing in the file LICENSE.GPL3
+** included in the packaging of this file. Please review the following
+** information to ensure the GNU General Public License requirements will
+** be met: https://www.gnu.org/licenses/gpl-3.0.html.
+**
+** $QT_END_LICENSE$
+**
+** SPDX-License-Identifier: GPL-3.0
+**
+****************************************************************************/
+
+/*!
+    \page neptune-app-development.html
+    \title Neptune Application Development
+    \brief Introduction to application development and best practices for Neptune UI
+
+    In order to develop the application for the Neptune UI following rules should
+    be applied:
+    \list
+      \li the info.yaml manifest file needs to be within the root folder of the application
+      \li the folder name of the application where info.yaml is placed needs to be same
+      as the id property written in the info.yaml file
+      \li the \l { AppUIScreen }, \l { NavigationUIScreen }
+      element (based on the type of the application) must be the root QML element
+      of the application.
+      \endlist
+
+It is important to fulfil all mentioned conditions in order for application to get
+available in the system.
+
+\section1 Manifest file
+
+The manifest file must be named with info.yaml file and should look like this:
+
+\code
+formatVersion: 1
+formatType: am-application
+---
+id:      'com.pelagicore.temp'
+icon:    'icon.png'
+code:    'Main.qml'
+runtime: 'qml'
+name:
+  en: 'Template'
+
+categories: [ 'app' ]
+
+\endcode
+
+For any additional information about the manifest file, please refer to official
+ApplicationManager manifest documentation \l {https://doc.qt.io/QtApplicationManager/manifest.html}
+{Manifest Documentation}.
+
+\section1 Example
+
+Small example of application root QML element is shown below. The root element should
+be one of the two options: \l { AppUIScreen } (used for any type of the application),
+\l { NavigationUIScreen } (special  for navigation application) element.
+
+    Example usage:
+
+    \qml
+
+import QtQuick 2.6
+
+import controls 1.0
+import utils 1.0
+
+
+AppUIScreen {
+    id: root
+    title: "Neptune Template"
+
+    UIScreen {
+        Content {
+            anchors.centerIn: parent
+            width: Style.hspan(13)
+            height: Style.vspan(24)
+        }
+
+        onBackScreen: root.back()
+    }
+}
+
+     \endqml
+
+It is important to use \l { UIScreen } component as base since it adds visual back
+arrow, which enables to exit the app.
+
+\section1 Best Practices
+
+    \list
+        \li Each visual part of the application (app screen, part of the screen, etc)
+        separate in different and independent component.
+        \li Load parts of the UI and backend, which are not visible or not needed at the startup, on demand.
+        \li Separate logic from visual part of the application. Use models to store methods, properties and backend connection.
+    \endlist
+
+To monitor application startup performance read the log output.
+Output should look like this (in the title should be application ID):
+
+\code
+== STARTUP TIMING REPORT: com.pelagicore.temp ==
+0'020.000 entered main
+0'115.359 after logging and qml register initialization
+0'120.385 after application config initialization
+0'127.403 after quick launch qml initialization
+0'176.884 after application interface initialization
+0'176.889 after dbus initialization
+0'191.890 starting application
+0'192.046 after loading plugins and import paths
+0'974.908 after engine loading main qml file
+0'974.914 after creating and setting application window
+0'974.949 after showing application window
+0'974.996 component loading and creating complete.
+\endcode
+
+NOTE: this is available only in multi-process mode when setting AM_STARTUP_TIMER to 1.
+
+For additional checkpoints in the list measurement above, from your QML code
+(e.g. loading specific plugin in the applciation QML model) add these lines:
+
+\qml
+    StartupTimer.checkpoint("plugin xxx loaded");
+    StartupTimer.createReport("Plugin xxx report");
+\endqml
+
+*/

@@ -204,8 +204,10 @@
    \section1 Related Information
 
    \list
-    \li \l{Manifest Definition}{Application manifest file}
+    \li \l {https://doc.qt.io/QtApplicationManager/manifest.html}
+{Manifest Documentation}
     \li \l{Main Configuration}{appman options}
+    \li \l{Neptune Application Development} {Neptune Application Development}
     \li \l{Building eLinux Image}
     \li \l{Qt Application Manager Git Repository}
     \li \l{Neptune-UI Git Repository}

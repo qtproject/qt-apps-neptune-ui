@@ -2,8 +2,7 @@ project = NeptuneUI
 version = $QT_VERSION
 url     = http://doc.qt.io/NeptuneUI
 
-sourcedirs += src
-
+sourcedirs += src ../
 imagedirs += src/images
 
 depends += qtquick qtqml applicationmanager

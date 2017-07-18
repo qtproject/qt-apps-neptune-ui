@@ -35,17 +35,116 @@ import QtApplicationManager 1.0
 import controls 1.0
 import utils 1.0
 
+/*!
+    \qmltype AppUIScreen
+    \inqmlmodule utils
+    \inherits ApplicationManagerWindow
+    \brief AppUIScreen provides base item for developing the applciations.
+
+    AppUIScreen is a QML item which  should be a root element for every
+    Neptune application. It provides APIs to interact with the system UI and
+    to position application visual elements.
+
+    Check { Neptune Application Development }  { Neptune Application Development }
+    for best practices on how to use the APIs.
+
+    Example usage:
+
+    \qml
+
+    AppUIScreen {
+        id: root
+        title: "Neptune Template"
+
+        UIScreen {
+            Content {
+                anchors.centerIn: parent
+                width: Style.hspan(13)
+                height: Style.vspan(24)
+            }
+
+            onBackScreen: root.back()
+        }
+    }
+    \endqml
+
+*/
+
 ApplicationManagerWindow {
     id: pelagicoreWindow
     width: Style.hspan(24)
     height: Style.vspan(24)
 
+    /*!
+         \qmlproperty Item AppUIScreen::content
+
+         This default property specifies the content area for application visual content.
+    */
+
     default property alias content: content.children
+
+    /*!
+         \qmlproperty Item AppUIScreen::cluster
+
+         This property assigns visual content for the cluster window, if cluster
+         is available.
+    */
+
     property alias cluster: clusterContainer.children
 
     signal clusterKeyPressed(int key)
+
+    /*!
+         \qmlsignal AppUIScreen::raiseApp()
+
+         The signal which is emitted every time application starts.
+
+    */
+
     signal raiseApp()
+
+    /*!
+         \qmlsignal AppUIScreen::closeApp()
+
+         The signal is emitted every time application closes (back button clicked).
+
+    */
+
     signal closeApp()
+
+    /*!
+        \qmlmethod AppUIScreen::back()
+
+        This method is called when an application needs to exit.
+
+        When user clicks on back button of the application, this method
+        makes sure system UI screen is shown.
+
+        \qml
+        AppUIScreen {
+            id: root
+            title: "Neptune Template"
+
+            UIScreen {
+                Content {
+                    anchors.centerIn: parent
+                    width: Style.hspan(13)
+                    height: Style.vspan(24)
+                }
+
+                onBackScreen: root.back()
+            }
+        }
+        \endqml
+
+        \sa fullScreenContent
+    */
+
+
+    function back() {
+        pelagicoreWindow.setWindowProperty("visibility", false)
+        closeApp();
+    }
 
     onWindowPropertyChanged: {
         if (name === "visibility" && value === true) {
@@ -55,11 +154,6 @@ ApplicationManagerWindow {
 
     BackgroundPane {
         anchors.fill: parent
-    }
-
-    function back() {
-        pelagicoreWindow.setWindowProperty("visibility", false)
-        closeApp();
     }
 
     ApplicationManagerWindow {
