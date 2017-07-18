@@ -178,6 +178,7 @@
 
     ui:
       fullscreen: yes
+      style: "${CONFIG_PWD}/styles/neptune"
       mainQml: "Main.qml"
       importPaths: [ "imports/shared", "imports/system" ]
       windowIcon: "imports/shared/assets/icons/active/apps@96.png"
@@ -200,6 +201,36 @@
 
    \note You must regenerate the yocto image for the desired target after
    changing these \c yaml files.
+
+   Neptune UI supports different style configurations which can be used to adapt the style to the needs of the Hardware the UI should be running on.
+   The following resolutions are available:
+
+   * 1920x1080 - default
+   * 1280x800
+   * 1080x1920
+   * 768x1024
+
+   To set the UI for wanted (other than default one) resolution, set the 'QT_QUICK_CONTROLS_CONF' to the location of QtQuickControls 2 configuration file. Configuration files are within 'styles' folder (\l {https://doc.qt.io/qt-5/qtquickcontrols2-environment.html} {QtQuickControls 2 Environment}).
+
+   Example of 1080x1920 potrait resolution configuration file.
+
+   \badcode
+    [Controls]
+    Style=Material
+    [Material]
+    Theme=Dark
+
+    [Neptune]
+    Theme=Dark
+    FontSize=28
+    FontFactor=1.0
+    FontFamily="Source Sans Pro"
+    WindowWidth=1080
+    WindowHeight=1920
+    Dark/BrightColor=#FEFEFE
+    Light/BrightColor=#3E3E3E
+
+   \endcode
 
    \section1 Related Information
 
