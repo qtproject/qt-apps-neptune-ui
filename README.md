@@ -41,6 +41,10 @@ This will install all qml files and plugins into the neptune subfolder of $$PWD/
 
         $ appman --recreate-database -c am-config.yaml
 
+# Run entire UI with the Application Manager including example applications
+and debug wrappers
+        $ appman --recreate-database -c am-config-dev.yaml
+
 # Run the UI without QtIvi installed
 
 It is possible to run the UI also without having QtIvi build and installed. For bugreports please make sure to have QtIvi installed.
