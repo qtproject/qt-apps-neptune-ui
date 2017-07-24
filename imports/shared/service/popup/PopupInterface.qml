@@ -32,13 +32,56 @@
 import QtQuick 2.0
 import QtApplicationManager 1.0
 
+/*!
+    \qmltype PopupInterface
+    \inqmlmodule service
+    \inherits Notification
+    \brief PopupInterface provides an interface for requesting popups.
+
+    PopupInterface inherits \l {https://doc.qt.io/QtApplicationManager/qml-qtapplicationmanager-notification.html}
+    {Notification} component and acts like an adapter for Neptune UI popups. Some properties are adopted
+    to match Neptune UI popup requirements. Properties \c timeout and \c category are modified and adopted for Neptune UI and
+    should not be used. By Neptune interaction design, popups should be dissmissed by user and
+    not by the timeout.
+
+    Example usage:
+
+    \qml
+
+    PopupInterface {
+        id: popupInterfaceLowPrio
+        actions: [ { text: "Cancel" } ]
+        title: "Popup Prio 9"
+        summary: "Popup Sample"
+        priority: 9
+    }
+
+    \endqml
+
+    Based on the \c priority popups will be queued. The \c actions property defines an array
+    of buttons for popup.
+*/
+
 Notification {
     id: root
 
     category: "popup"
     timeout: 0
 
+    /*!
+         \qmlproperty string AppUIScreen::title
+
+         This property assigns title of the popup.
+    */
+
     property string title: ""
+
+    /*!
+         \qmlproperty string AppUIScreen::subtitle
+
+         This property assigns subtitle of the popup.
+    */
+
     property string subtitle: ""
 
     onTitleChanged: {

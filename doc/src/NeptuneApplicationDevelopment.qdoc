@@ -107,6 +107,18 @@ AppUIScreen {
 It is important to use \l { UIScreen } component as base since it adds visual back
 arrow, which enables to exit the app.
 
+\section1 Interfaces
+
+\list
+  \li \l {NotificationInterface} - used to request the notification. It uses
+  \l {https://doc.qt.io/QtApplicationManager/qml-qtapplicationmanager-notification.html}
+  {Notification} component and it is based on
+  \l {https://developer.gnome.org/notification-spec/} {org.freedesktop.Notifications}
+  D-Bus interface.
+  \li \l {PopupInterface} - used to request the popup. It uses the same D-Bus protocol
+  as \l {NotificationInterface}.
+\endlist
+
 \section1 Best Practices
 
     \list

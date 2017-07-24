@@ -32,6 +32,36 @@
 import QtQuick 2.0
 import QtApplicationManager 1.0
 
+/*!
+    \qmltype NotificationInterface
+    \inqmlmodule service
+    \inherits Notification
+    \brief NotificationInterface provides an interface for requesting notifications.
+
+    NotificationInterface inherits \l {https://doc.qt.io/QtApplicationManager/qml-qtapplicationmanager-notification.html}
+    {Notification} component and acts like an adapter for Neptune UI. Some properties are adopted
+    to match Neptune UI requirements. Properties \c timeout and \c category are modified and adopted for Neptune UI and
+    should not be used. By Neptune interaction design, notification should be dissmissed by user and
+    not by the timeout.
+
+    Example usage:
+
+    \qml
+
+    NotificationInterface {
+        summary: "Notification Prio 9"
+        body: "Notification sample"
+        priority: 9
+        icon: Style.symbolM("maps")
+    }
+    \endqml
+
+    As shown in example \c summary property will act like a title of the notification, while
+    \c body as notification description. Based on the \c priority notification will be queued.
+    It is important to set an absolute path for the \c icon property. Otherwise, an icon will
+    not be shown.
+*/
+
 Notification {
     id: root
 

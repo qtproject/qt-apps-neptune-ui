@@ -5,19 +5,6 @@ QtIvi
 Unix system
 Application Manager
 
-# Folder Structure
-
-* imports - QML modules and assets to be imported (e.g. import controls 1.0)
-* separated into 'shared' (availabe to apps and the system UI) and 'system'
-* (available only to system UI) boards - visual ui tests for easier development
-* apps - container for the different applications used within the system UI
-* plugins - QML and other plugins needed for fully functional UI (e.g. reading
-* the media from database)
-
-Please note that am-dummyimports - the Application Manager dummy imports for running within
-qmlscene/qmllive - have been moved to the application-manager repository.
-
-
 # Preparation
 
 * You need to have Source Sans Pro font installed (see assets folder within the modules)
@@ -74,17 +61,3 @@ The following resolutions are available:
 * 768x1024
 
 To set the UI for wanted (other than default one) resolution, set the 'QT_QUICK_CONTROLS_CONF' to the location of QtQuickControls 2 configuration file. Configuration files are within 'styles' folder (https://doc.qt.io/qt-5/qtquickcontrols2-environment.html).
-
-# Common Terms Used In The Project
-
-Common terms and their meaning is enumerated below:
-
-* Display - The physical display's real estate
-
-* Screen - A Screen is a part of the main navigation. For example the HomeScreen, CloudScreen and MusicScreen
-
-* Control(s) - Controls are elements such as Button, Icon, Label and other _primitives_
-
-* Twisted panel - A _twisted panel_ is the indicater for swipe navigation which are found to the left and right hand side of the _display_
-
-* Board - A _Board_ is typically a self-hosted QML file which test a signel UI element. For example a ButtonBoard tests and shows the usage for a Button control

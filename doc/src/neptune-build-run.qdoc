@@ -1,0 +1,223 @@
+/****************************************************************************
+**
+** Copyright (C) 2017 Pelagicore AG
+** Contact: https://www.qt.io/licensing/
+**
+** This file is part of the Neptune IVI UI.
+**
+** $QT_BEGIN_LICENSE:GPL-QTAS$
+** Commercial License Usage
+** Licensees holding valid commercial Qt Automotive Suite licenses may use
+** this file in accordance with the commercial license agreement provided
+** with the Software or, alternatively, in accordance with the terms
+** contained in a written agreement between you and The Qt Company.  For
+** licensing terms and conditions see https://www.qt.io/terms-conditions.
+** For further information use the contact form at https://www.qt.io/contact-us.
+**
+** GNU General Public License Usage
+** Alternatively, this file may be used under the terms of the GNU
+** General Public License version 3 or (at your option) any later version
+** approved by the KDE Free Qt Foundation. The licenses are as published by
+** the Free Software Foundation and appearing in the file LICENSE.GPL3
+** included in the packaging of this file. Please review the following
+** information to ensure the GNU General Public License requirements will
+** be met: https://www.gnu.org/licenses/gpl-3.0.html.
+**
+** $QT_END_LICENSE$
+**
+** SPDX-License-Identifier: GPL-3.0
+**
+****************************************************************************/
+
+/*!
+    \page neptune-build-run.html
+    \title How to run Neptune
+    \brief Building and running Neptune
+
+   Typically the UI works out-of-the-box using Qt Creator, provided you choose
+   to run your application on Qt Automotive emulator, iMX6, or DriveCX targets.
+   You can also run only the HMI without your application. The following
+   sections provide instructions on how to run the HMI alone.
+
+   \section1 Emulator Image
+
+   The Qt online installer automatically creates a virtual machine setup for the
+   emulator image that comes with the \QAS installation, provided you have
+   VirtualBox installed before running the Qt installer.
+
+   Use the following command to run the virtual machine setup:
+
+   \badcode
+    emulator --vbox QtAutomotive-10
+   \endcode
+
+   Where, \c emulator is a tool that is shipped with \QAS, and
+   \e "QtAutomotive-10" is the name of the virtual machine setup.
+
+   \image emulator-automotive.png
+
+   \section1 Linux Desktop
+
+   If you are interested in exploring the reference HMI without installing
+   \QAS, follow these instructions to run the HMI on your Linux desktop:
+
+   \list 1
+    \li Clone the Qt Application Manager and Neptune-UI git repositories.
+
+    \li Build Qt Application Manager against Qt 5.6 or later that is
+    installed on your desktop. See the Qt Application Manager
+    \l[ApplicationManager]{Installation}{installation} page for more details
+    on building.
+
+    \li Build Neptune UI and install it by using the following command:
+    \badcode
+    qmake -r INSTALL_PREFIX=<choose a loation> neptuneui.pro
+    make && make install
+    \endcode
+
+    \li Run the following command from the directory where \e neptune-ui is installed:
+    \badcode
+    appman -r -c am-config.yaml
+    \endcode
+
+    \note You can edit the \c am-config.yaml to comment out parts that
+    are not relevant. For example, the SD card install location under the
+    \c "installationLocations:" section.
+
+   \endlist
+
+   Where, \c appman is a utility that is installed when you built
+   Qt Application Manager, \c AM_CONFIG_FILE points to the Application
+   Manager's \c config.yaml.
+
+   \note Add \c {-I <neptune-ui git clone>/dummyimport} to the appman command-line in case
+   you don't have Qt IVI installed.
+
+
+   \section2 Neptune-UI Development
+
+   As it is inconvenient to always run "make install" when working directly on the neptune-ui,
+   qmake is generating a plugins.yaml file which contains all the settings you need to run the
+   UI also without installation.
+
+   \badcode
+   appman -r -c am-config.yaml -c <build-folder>/plugins.yaml
+   \endcode
+
+   In QtCreator you can use the following line:
+
+   \badcode
+   appman --recreate-database -c am-config.yaml -c %{buildDir}/plugins.yaml
+   \endcode
+
+
+   \section2 UI Configuration
+
+   The UI configuration is split into several \c yaml files for the ease of
+   maintenance. The following is a list of those configuration files and their
+   purpose:
+
+   \list
+    \li \c config.yaml - Defines the generic parameters such as the
+    install location for applications installed from the APP STORE, database,
+    and so on.
+
+    \li \c am-config.yaml - Defines the Head Unit and Cluster-specific
+    configuration such as the built-in applications, their runtime (native or
+    qml), import paths, UI-specific configuration such as full-screen mode,
+    main QML file (if runtime is qml), and so on.
+
+    \li \c info.yaml - Defines application-specific configuration such as the
+    main QML file, its imports, and so on.
+   \endlist
+
+   The following is a sample \c am-config.yaml:
+
+   \badcode
+    formatVersion: 1
+    formatType: am-configuration
+
+    # basic AM functionality - the built-in apps are in 'apps'.
+
+    applications:
+      builtinAppsManifestDir: "apps"
+
+    # QML apps will be able to import from modules...
+
+    runtimes:
+      qml:
+        importPaths: [ "imports/shared" ]
+
+    # ... as well as the SystemUI
+
+    ui:
+      fullscreen: yes
+      style: "${CONFIG_PWD}/styles/neptune"
+      mainQml: "Main.qml"
+      importPaths: [ "imports/shared", "imports/system" ]
+      windowIcon: "imports/shared/assets/icons/active/apps@96.png"
+
+    systemProperties:
+      public:
+        showCluster: yes
+      private:
+        appStoreServerUrl: 'http://chaos.pelagicore.net:8080'
+
+    # development setup: no security
+
+    flags:
+      noSecurity: yes
+      noUiWatchdog: yes
+   \endcode
+
+   These options are also configurable from the command line as a
+   parameter to the \e appman utility.
+
+   \note You must regenerate the yocto image for the desired target after
+   changing these \c yaml files.
+
+   Neptune UI supports different style configurations which can be used to adapt the style to the needs of the Hardware the UI should be running on.
+   The following resolutions are available:
+
+   * 1920x1080 - default
+   * 1280x800
+   * 1080x1920
+   * 768x1024
+
+   To set the UI for wanted (other than default one) resolution, set the 'QT_QUICK_CONTROLS_CONF' to the location of QtQuickControls 2 configuration file. Configuration files are within 'styles' folder (\l {https://doc.qt.io/qt-5/qtquickcontrols2-environment.html} {QtQuickControls 2 Environment}).
+
+   Example of 1080x1920 potrait resolution configuration file.
+
+   \badcode
+    [Controls]
+    Style=Material
+    [Material]
+    Theme=Dark
+
+    [Neptune]
+    Theme=Dark
+    FontSize=28
+    FontFactor=1.0
+    FontFamily="Source Sans Pro"
+    WindowWidth=1080
+    WindowHeight=1920
+    Dark/BrightColor=#FEFEFE
+    Light/BrightColor=#3E3E3E
+
+   \endcode
+
+   \section1 Related Information
+
+   \list
+    \li \l {https://doc.qt.io/QtApplicationManager/manifest.html}
+{Manifest Documentation}
+    \li \l{https://doc.qt.io/QtApplicationManager/configuration.html}
+    {appman options}
+    \li \l{Neptune Application Development} {Neptune Application Development}
+    \li \l{Building eLinux Image}
+    \li \l{Qt Application Manager Git Repository}
+    \li \l{Neptune-UI Git Repository}
+   \endlist
+
+
+*/
