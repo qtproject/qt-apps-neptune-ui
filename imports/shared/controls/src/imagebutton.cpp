@@ -34,7 +34,6 @@
 /*!
     \qmltype ImageButton
     \inherits Item
-    \instantiates ImageButton
     \inqmlmodule com.pelagicore.widgets
     \brief ImageButton base type provides functionality common to buttons with images.
 
