@@ -52,4 +52,8 @@ QtObject {
 
     /*! Provides the name of the current paired device. */
     property string currentPairedDeviceName: ""
+
+    function startPhoneApp() {
+        ApplicationManager.startApplication('com.pelagicore.phone');
+    }
 }

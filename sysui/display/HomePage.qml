@@ -35,7 +35,6 @@ import QtQuick.Controls 2.1
 import controls 1.0
 import utils 1.0
 import widgets 1.0
-import QtApplicationManager 1.0
 
 UIPage {
     id: root
@@ -56,10 +55,6 @@ UIPage {
         height: Style.isPotrait ? Style.launcherHeight/3 : Style.launcherHeight/2
         x: Style.isPotrait ? 0 : width
         y: Style.isPotrait ? (Style.launcherHeight - height) : 0
-
-        onShowFullscreen: {
-            ApplicationManager.startApplication("com.pelagicore.music")
-        }
     }
 
     // Right side lower widget

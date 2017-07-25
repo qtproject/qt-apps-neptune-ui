@@ -32,8 +32,8 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.1
 import QtQuick.Layouts 1.0
-import QtApplicationManager 1.0
 
+import models.media 1.0
 import controls 1.0
 import utils 1.0
 
@@ -44,30 +44,12 @@ UIPanel {
 
     signal showFullscreen()
 
-    scale: area.pressed?0.85:1.0
+    scale: area.pressed ? 0.85 : 1.0
 
     Rectangle {
         anchors.fill: parent
         color: Style.colorBlack
         opacity: 0.8
-    }
-
-    ApplicationIPCInterface {
-        id: musicControl
-
-        property var currentTrack: {}
-        property string currentTime: "00:00"
-        property string durationTime: "00:00"
-        property bool playing: false
-
-        signal previousTrack()
-        signal nextTrack()
-        signal play()
-        signal pause()
-
-        Component.onCompleted: {
-            ApplicationIPCManager.registerInterface(musicControl, "com.pelagicore.music.control", {})
-        }
     }
 
     Behavior on scale {
@@ -77,7 +59,10 @@ UIPanel {
     MouseArea {
         id: area
         anchors.fill: parent
-        onClicked: root.showFullscreen()
+        onClicked: {
+            MediaModel.startMusicApp()
+            root.showFullscreen()
+        }
     }
 
     ColumnLayout {
@@ -103,7 +88,7 @@ UIPanel {
                 Label {
                     height: Style.vspan(1)
                     Layout.fillWidth: true
-                    text: musicControl.currentTrack ? qsTr('%1 / %2').arg(musicControl.currentTrack.artist).arg(musicControl.currentTrack.album) : ""
+                    text: MediaModel.currentTrack ? qsTr('%1 / %2').arg(MediaModel.currentTrack.artist).arg(MediaModel.currentTrack.album) : ""
                     font.pixelSize: Style.fontSizeS
                     font.capitalization: Font.AllUppercase
                     horizontalAlignment: Text.AlignLeft
@@ -113,7 +98,7 @@ UIPanel {
                 Label {
                     Layout.fillWidth: true
                     height: Style.vspan(1)
-                    text: musicControl.currentTrack ? musicControl.currentTrack.title : ""
+                    text: MediaModel.currentTrack ? MediaModel.currentTrack.title : ""
                     font.pixelSize: Style.fontSizeL
                     font.capitalization: Font.AllUppercase
                     horizontalAlignment: Text.AlignLeft
@@ -123,7 +108,7 @@ UIPanel {
                 Label {
                     Layout.fillWidth: true
                     height: Style.vspan(1)
-                    text: qsTr('%1 / %2').arg(musicControl.currentTime).arg(musicControl.durationTime)
+                    text: qsTr('%1 / %2').arg(MediaModel.currentTime).arg(MediaModel.durationTime)
                     font.pixelSize: Style.fontSizeL
                     horizontalAlignment: Text.AlignLeft
                     elide: Text.ElideRight
@@ -144,27 +129,27 @@ UIPanel {
                 symbol: "prev"
                 Layout.preferredHeight: Style.vspan(2)
                 Layout.fillWidth: true
-                onClicked: musicControl.previousTrack()
+                onClicked: MediaModel.previousTrack()
             }
             Tool {
                 Layout.preferredHeight: Style.vspan(2)
                 Layout.fillWidth: true
                 symbol: "play"
-                onClicked: musicControl.play()
-                checked: musicControl.playing
+                onClicked: MediaModel.play()
+                checked: MediaModel.playing
             }
             Tool {
                 Layout.preferredHeight: Style.vspan(2)
                 Layout.fillWidth: true
                 symbol: "pause"
-                onClicked: musicControl.pause()
-                checked: !musicControl.playing
+                onClicked: MediaModel.pause()
+                checked: !MediaModel.playing
             }
             Tool {
                 Layout.preferredHeight: Style.vspan(2)
                 Layout.fillWidth: true
                 symbol: "next"
-                onClicked: musicControl.nextTrack()
+                onClicked: MediaModel.nextTrack()
             }
         }
     }

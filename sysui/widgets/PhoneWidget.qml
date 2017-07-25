@@ -36,6 +36,7 @@ import controls 1.0 as C
 import utils 1.0
 import QtQuick.Controls 2.1
 import QtApplicationManager 1.0
+import models.phone 1.0
 
 UIPanel {
     id: root
@@ -79,8 +80,6 @@ UIPanel {
 
     MouseArea {
         anchors.fill: parent
-        onClicked: {
-            ApplicationManager.startApplication('com.pelagicore.phone');
-        }
+        onClicked: PhoneModel.startPhoneApp()
     }
 }

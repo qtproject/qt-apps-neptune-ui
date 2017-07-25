@@ -31,56 +31,43 @@
 
 pragma Singleton
 import QtQuick 2.0
-import QtMultimedia 5.0
-import "." 1.0
+import QtApplicationManager 1.0
 
 QtObject {
     id: root
 
     property string defaultMusicApp: "com.pelagicore.music"
-    property var musicProvider
-    property Audio player: Audio {
-        id: player
-        source: currentTrack ? root.url : ""
-        onVolumeChanged: {
-            print('volume: ' + volume)
-        }
-        onStatusChanged: {
-            if (status == Audio.EndOfMedia)
-            nextTrack()
-        }
-    }
+    property var musicProvider: musicControl
 
-    property alias volume: player.volume
-
-    property int currentIndex
-    property int trackCount
-    property var currentTrack
-    property string coverPath
-    property bool playing: player.playbackState === Audio.PlayingState
-    property alias duration: player.duration
-    property alias position: player.position
-    property string currentTime: Qt.formatTime(new Date(position), 'mm:ss')
-    property string durationTime: Qt.formatTime(new Date(duration), 'mm:ss')
-    property int remaining: player.duration - player.position
+    property var currentTrack: musicProvider.currentTrack
+    property bool playing: musicProvider.playing
+    property string currentTime: musicProvider.currentTime
+    property string durationTime: musicProvider.durationTime
     property string remainingTime: Qt.formatTime(new Date(remaining), 'mm:ss')
-    property string url
 
-    function musicPlay() {
-        player.source = Qt.binding(function() { return currentTrack ? root.url : ""})
-        play()
+    property QtObject musicControl: ApplicationIPCInterface {
+
+        property var currentTrack: {}
+        property string currentTime: "00:00"
+        property string durationTime: "00:00"
+        property bool playing: false
+
+        signal previous()
+        signal next()
+        signal play()
+        signal pause()
+
+        Component.onCompleted: {
+            ApplicationIPCManager.registerInterface(musicControl, "com.pelagicore.music.control", {})
+        }
     }
 
     function play() {
-        print('MusicModel.play: ' + player.source)
-        player.autoPlay = true
-        player.play()
+        musicProvider.play()
     }
 
     function pause() {
-        print('MusicModel.pause: ' + player.source)
-        player.autoPlay = false
-        player.pause()
+        musicProvider.pause()
     }
 
     function togglePlay() {
@@ -101,19 +88,7 @@ QtObject {
             root.musicProvider.previous()
     }
 
-    function selectAllAlbums() {
-        provider.query = 'select distinct album, cover, artist from music'
-    }
-
-    function seek(value) {
-        player.seek(value)
-    }
-
-    Component.onDestruction: {
-        // required to avoid crashing qmllive
-        player.autoLoad = false
-        player.autoPlay = false
-        player.stop()
-        player.source = ''
+    function startMusicApp() {
+        ApplicationManager.startApplication(root.defaultMusicApp)
     }
 }
