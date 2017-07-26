@@ -37,7 +37,7 @@ import controls 1.0
 Control {
     id: root
 
-    width: Style.notificationCenterWidth
+    width: Style.isPotrait ? Style.hspan(Style.notificationCenterSpan + 5) : Style.hspan(Style.notificationCenterSpan)
     height: Style.vspan(2)
 
     property string iconSource

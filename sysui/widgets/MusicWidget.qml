@@ -123,7 +123,7 @@ UIPanel {
 
         RowLayout {
             spacing: Style.hspan(1)
-            Layout.preferredHeight: Style.vspan(4)
+            Layout.preferredHeight: Style.vspan(3)
 
             Tool {
                 symbol: "prev"

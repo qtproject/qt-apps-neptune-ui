@@ -73,7 +73,7 @@ ItemDelegate {
 
             Switch {
                 id: switchControl
-                Layout.preferredWidth: Style.hspan(3)
+                Layout.preferredWidth: Style.hspan(5)
                 Layout.fillHeight: true
                 visible: root.checkable
                 checked: root.checked

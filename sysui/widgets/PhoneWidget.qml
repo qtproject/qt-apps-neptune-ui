@@ -51,16 +51,17 @@ UIPanel {
 
     C.Icon {
         id: phoneIcon
-        width: Style.hspan(2);
-        height: Style.vspan(4)
-        anchors.verticalCenter: parent.verticalCenter
+        width: Style.hspan(2)
+        height: Style.vspan(3)
+        anchors.bottom: parent.bottom
         source: Style.icon("widgets_phone")
     }
 
     ColumnLayout {
         id: nameLayout
 
-        anchors.verticalCenter: parent.verticalCenter
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: Style.isPotrait ? Style.paddingXL * 2 : Style.paddingXL * 4
         anchors.left: phoneIcon.right
         anchors.leftMargin: Style.padding
         anchors.right: parent.right
