@@ -92,7 +92,7 @@ UIScreen {
             spacing: Style.hspan(2)
             Tool {
                 symbol: 'prev'
-                onClicked: MovieModel.previousTrack()
+                onClicked: MovieModel.previous()
             }
             Tool {
                 symbol: video.running?'pause':'play'
