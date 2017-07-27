@@ -91,30 +91,30 @@
 
    In this section, Neptune interaction and visual concept will be presented.
 
-   \borderedimage neptune-ui-structure.png
+   \image neptune-ui-structure.png
    \caption Neptune interaction flow
 
-   \borderedimage instrument-cluster.png
+   \image instrument-cluster.png
    \caption QtQuick-based digital instrument cluster
 
-   \borderedimage infotainment-cluster.png
+   \image infotainment-cluster.png
    \caption QtQuick-based Head Unit
 
    The Head Unit interface provides additional pages that are accessible
    by swiping from right-to-left or left-to-right:
 
-   \borderedimage infotainment-cluster-apps.png
+   \image infotainment-cluster-apps.png
    \caption Available applications on the Head Unit
 
-   \borderedimage infotainment-cluster-settings.png
+   \image infotainment-cluster-settings.png
    \caption \uicontrol Settings that provides more control on the HEAD Unit and
    Cluster. The \uicontrol{APP STORE} tab in the \uicontrol Settings page lets
    you install/uninstall applications from the Head Unit.
 
-   \borderedimage infotainment-cluster-carsettings.png
+   \image infotainment-cluster-carsettings.png
    \caption Provides options to enable or disable features on the car.
 
-   \borderedimage infotainment-cluster-mycar.png
+   \image infotainment-cluster-mycar.png
    \caption Provides an overview about the car itself.
 
    \section1 Common Terms Used In The Project
