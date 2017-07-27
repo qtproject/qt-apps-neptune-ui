@@ -43,7 +43,6 @@ QtObject {
     property bool playing: musicProvider.playing
     property string currentTime: musicProvider.currentTime
     property string durationTime: musicProvider.durationTime
-    property string remainingTime: Qt.formatTime(new Date(remaining), 'mm:ss')
 
     property QtObject musicControl: ApplicationIPCInterface {
 
