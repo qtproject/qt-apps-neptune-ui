@@ -11,7 +11,7 @@ isEmpty(INSTALL_PREFIX) {
 INSTALL_PREFIX=/opt
 }
 
-qml.files = apps imports sysui am-config.yaml Main.qml
+qml.files = apps imports sysui examples styles am-config.yaml am-config-dev.yaml Main.qml
 qml.path = $$INSTALL_PREFIX/neptune
 INSTALLS += qml
 

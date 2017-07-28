@@ -5,50 +5,37 @@ QtIvi
 Unix system
 Application Manager
 
-# Preparation
-
-* You need to have Source Sans Pro font installed (see assets folder within the modules)
-
 # Build
 
 * Build and install neptune-ui
 
-        $ qmake && make && make install
-
-This will build all neptune-ui plugins and installs the complete neptune-ui to /opt/neptune
-To define the install location of neptune you can use the INSTALL_PREFIX config variable:
-
         $ qmake INSTALL_PREFIX=$$PWD/install && make && make install
 
-This will install all qml files and plugins into the neptune subfolder of $$PWD/install
+This will install all qml files and plugins into the neptune subfolder of $$PWD/install. If INSTALL_PREFIX is not defined, then this will build all neptune-ui plugins and installs the complete neptune-ui to /opt/neptune folder.
 
-* Run scripts within the plugins/scripts folder to scan the media on the system
+The installation part is optional.
+
+* (Optional) Run scripts within the plugins/scripts folder to scan the media on the system
 
 # Run entire UI with the Application Manager
 
-        $ appman --recreate-database -c am-config.yaml
+        $ appman --recreate-database -c am-config.yaml -c <build-folder>/plugins.yaml -I dummyimports
 
 # Run entire UI with the Application Manager including example applications
-and debug wrappers
-        $ appman --recreate-database -c am-config-dev.yaml
+and support for debug wrappers
 
-# Run the UI without QtIvi installed
+        $ appman --recreate-database -c am-config-dev.yaml <build-folder>/plugins.yaml -I dummyimports
 
-It is possible to run the UI also without having QtIvi build and installed. For bugreports please make sure to have QtIvi installed.
+In QtCreator you can use the following line :
 
-        $ appman --recreate-database -c am-config.yaml -I dummyimports
+        $ appman --recreate-database -c am-config-dev.yaml -c %{buildDir}/plugins.yaml -I dummyimports
 
-# Development
+# Run the UI with QtIVI installed
 
-As it is inconvenient to always run "make install" when working directly on the neptune-ui,
-qmake is generating a plugins.yaml file which contains all the settings you need to run the
-UI also without installation.
+In case QtIVI is build and installed, 'dummyimports' are not needed.
 
         $ appman --recreate-database -c am-config.yaml -c <build-folder>/plugins.yaml
 
-In QtCreator you can use the following line:
-
-        $ appman --recreate-database -c am-config.yaml -c %{buildDir}/plugins.yaml
 
 # Style Configuration
 
@@ -61,3 +48,5 @@ The following resolutions are available:
 * 768x1024
 
 To set the UI for wanted (other than default one) resolution, set the 'QT_QUICK_CONTROLS_CONF' to the location of QtQuickControls 2 configuration file. Configuration files are within 'styles' folder (https://doc.qt.io/qt-5/qtquickcontrols2-environment.html).
+
+NOTE: You need to have Source Sans Pro font installed (see assets folder within the modules)
