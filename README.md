@@ -5,36 +5,31 @@ QtIvi
 Unix system
 Application Manager
 
-# Build
+# Build and install neptune-ui
 
-* Build and install neptune-ui
+        $ qmake INSTALL_PREFIX=/path/to/install/folder && make && make install
 
-        $ qmake INSTALL_PREFIX=$$PWD/install && make && make install
-
-This will install all qml files and plugins into the neptune subfolder of $$PWD/install. If INSTALL_PREFIX is not defined, then this will build all neptune-ui plugins and installs the complete neptune-ui to /opt/neptune folder.
+This will install all qml files and plugins into the neptune subfolder of '/path/to/install/folder'. If INSTALL_PREFIX is not defined, then this will build all neptune-ui plugins and installs the complete neptune-ui to /opt/neptune folder.
 
 The installation part is optional.
 
 * (Optional) Run scripts within the plugins/scripts folder to scan the media on the system
 
-# Run entire UI with the Application Manager
+# Run entire UI
 
-        $ appman --recreate-database -c am-config.yaml -c <build-folder>/plugins.yaml -I dummyimports
+Building Neptune will make 'neptune-ui' executable which will be then run:
 
-# Run entire UI with the Application Manager including example applications
-and support for debug wrappers
+        $ neptune-ui -r
 
-        $ appman --recreate-database -c am-config-dev.yaml <build-folder>/plugins.yaml -I dummyimports
+To get more detailed log output, run:
+        $ neptune-ui -r --verbose
 
-In QtCreator you can use the following line :
 
-        $ appman --recreate-database -c am-config-dev.yaml -c %{buildDir}/plugins.yaml -I dummyimports
+# Run the UI without QtIVI
 
-# Run the UI with QtIVI installed
+In case QtIVI is not installed, 'dummyimports' folder contains QML dummy implementation of QtIVI:
 
-In case QtIVI is build and installed, 'dummyimports' are not needed.
-
-        $ appman --recreate-database -c am-config.yaml -c <build-folder>/plugins.yaml
+        $ QML2_IMPORT_PATH=/path/to/dummyimports neptune-ui -r
 
 
 # Style Configuration

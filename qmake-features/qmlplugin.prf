@@ -3,7 +3,7 @@ QMAKE_RPATHDIR += "$$INSTALL_PREFIX/long_padding/long_padding/long_padding/long_
                    long_padding/long_padding/long_padding/long_padding/long_padding/long_padding/"
 
 TARGET = $$qtLibraryTarget($$TARGET)
-DESTDIR = $$BUILD_DIR/qml/$$replace(uri, \\., /)
+DESTDIR = $$BUILD_DIR/imports/shared/$$replace(uri, \\., /)
 CONFIG += skip_target_version_ext
 
 OTHER_FILES = qmldir
@@ -16,9 +16,7 @@ OTHER_FILES = qmldir
     PRE_TARGETDEPS += $$copy_qmldir.target
 }
 
-isEmpty(INSTALL_PREFIX) {
-    INSTALL_PREFIX=/opt
-}
+include(../config.pri)
 
 qmldir.files = qmldir
 installPath = $$INSTALL_PREFIX/neptune/imports/shared/$$replace(uri, \\., /)
