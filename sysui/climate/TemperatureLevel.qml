@@ -55,8 +55,8 @@ Control {
     Item {
         id: content
 
-        property var values: value.toFixed(1).toString().split(".")
-        property bool showDecimal: values[1] !== '0'
+        readonly property var values: value.toFixed(1).toString().split(".")
+        readonly property bool showDecimal: values[1] !== '0'
 
         anchors.left: horizontalAlignment === Qt.AlignLeft ? parent.left : undefined
         anchors.right: horizontalAlignment === Qt.AlignRight ? parent.right : undefined
@@ -88,7 +88,7 @@ Control {
             anchors.baseline: integerPart.baseline
             height: Style.vspan(1)
 
-            text: "." + content.values[1]
+            text: Qt.locale().decimalPoint + content.values[1]
 
             visible: content.showDecimal
             color: Style.colorWhite
