@@ -33,14 +33,10 @@ import QtQml.Models 2.2
 import QtQuick 2.6
 import QtQuick.Controls 2.0
 
-import utils 1.0
-
 import controls 1.0
 import utils 1.0
 import models.settings 1.0
 import models.application 1.0
-import utils 1.0
-
 
 Control {
     id: root
@@ -68,7 +64,7 @@ Control {
             SettingsItemDelegate {
                 text: "METRIC SYSTEM"; icon: "fees"; checked: true
                 onClicked: {
-                    SettingsModel.unitSystem = checked? "imp_us" : "metric";
+                    SettingsModel.unitSystem = checked ? "metric" : "imp_us";
                 }
             }
             SettingsItemDelegate {

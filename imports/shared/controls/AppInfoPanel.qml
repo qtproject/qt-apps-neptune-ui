@@ -58,11 +58,10 @@ Control {
         }
 
         Label {
-            id: title
             Layout.fillWidth: true
             Layout.fillHeight: true
             verticalAlignment: Text.AlignVCenter
-            text: qsTr(root.title.toUpperCase())
+            text: root.title.toUpperCase()
             font.pixelSize: Style.fontSizeXL
         }
     }

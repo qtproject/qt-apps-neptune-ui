@@ -38,7 +38,6 @@ import controls 1.0
 Control {
     id: root
 
-
     implicitWidth: Style.hspan(2)
     implicitHeight: Style.vspan(8)
 
@@ -227,9 +226,5 @@ Control {
                 onClicked: slider.decrease()
             }
         }
-    }
-
-    function _clamp(value) {
-        return Math.round(Math.min(root.maxValue, Math.max(root.minValue, value))*root.roundingMode)/root.roundingMode
     }
 }

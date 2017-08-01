@@ -37,7 +37,7 @@ QtObject {
 
     property bool clusterVisible: true
     property string unitSystem: "metric"  // "metric" or "imp_us"
-    property bool metric: unitSystem === "metric"
+    readonly property bool metric: unitSystem === "metric"
 
     property ListModel entries: ListModel {
         ListElement { title: "USER PROFILE"; icon: "profile"; checked: true; hasChildren: true; hasCheck: true }

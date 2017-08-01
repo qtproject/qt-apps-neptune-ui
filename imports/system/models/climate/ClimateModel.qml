@@ -44,10 +44,10 @@ QtObject {
     }
 
     property QtObject leftSeat: QtObject {
-        property real minValue: calculateUnitValue(16)
-        property real maxValue: calculateUnitValue(28)
-        property real stepValue: calculateUnitValue(0.5)
-        property real value: calculateUnitValue(climateControl.zoneAt.FrontLeft.targetTemperature.value)
+        readonly property real minValue: 16
+        readonly property real maxValue: 28
+        readonly property real stepValue: 0.5
+        property real value: climateControl.zoneAt.FrontLeft.targetTemperature.value
 
         property bool heat: climateControl.zoneAt.FrontLeft.seatHeater.value
 
@@ -61,10 +61,10 @@ QtObject {
     }
 
     property QtObject rightSeat: QtObject {
-        property real minValue: calculateUnitValue(16)
-        property real maxValue: calculateUnitValue(28)
-        property real stepValue: calculateUnitValue(0.5)
-        property real value: calculateUnitValue(climateControl.zoneAt.FrontRight.targetTemperature.value)
+        readonly property real minValue: 16
+        readonly property real maxValue: 28
+        readonly property real stepValue: 0.5
+        property real value: climateControl.zoneAt.FrontRight.targetTemperature.value
 
         property bool heat: climateControl.zoneAt.FrontRight.seatHeater.value
 
@@ -159,7 +159,7 @@ QtObject {
     }
 
     function calculateUnitValue(value) {
-        // Defualt value is the celsius
-        return (SettingsModel.unitSystem === "metric") ? value : (Math.round(value * 1.8 + 32))
+        // Default value is the celsius
+        return SettingsModel.metric ? value : Math.round(value * 1.8 + 32)
     }
 }

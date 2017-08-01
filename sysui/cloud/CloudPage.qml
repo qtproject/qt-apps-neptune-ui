@@ -38,8 +38,6 @@ import QtQuick.Layouts 1.3
 
 UIPage {
     id: root
-    width: Style.hspan(24)
-    height: Style.vspan(24)
 
     header: AppInfoPanel {
         Layout.fillWidth: true

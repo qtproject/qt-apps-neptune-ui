@@ -39,9 +39,9 @@ import utils 1.0
     \qmltype AppUIScreen
     \inqmlmodule utils
     \inherits ApplicationManagerWindow
-    \brief AppUIScreen provides base item for developing the applciations.
+    \brief AppUIScreen provides base item for developing the applications.
 
-    AppUIScreen is a QML item which  should be a root element for every
+    AppUIScreen is a QML item which should be a root element for every
     Neptune application. It provides APIs to interact with the system UI and
     to position application visual elements.
 

@@ -42,8 +42,6 @@ import service.popup 1.0
 
 UIPage {
     id: root
-    width: Style.hspan(24)
-    height: Style.vspan(24)
 
     PopupInterface {
         id: popupInterface

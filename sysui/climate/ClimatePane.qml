@@ -151,7 +151,6 @@ Item {
                 stepSize: ClimateModel.rightSeat.stepValue
                 onValueChanged: ClimateModel.rightSeat.value = value
             }
-
         }
 
         Spacer {
@@ -159,5 +158,4 @@ Item {
             Layout.fillWidth: true
         }
     }
-
 }

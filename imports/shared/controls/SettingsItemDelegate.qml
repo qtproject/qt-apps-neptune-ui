@@ -78,7 +78,8 @@ ItemDelegate {
                 visible: root.checkable
                 checked: root.checked
                 onClicked: {
-                    root.checked != root.checked
+                    root.checked = !root.checked
+                    root.clicked()
                 }
             }
 

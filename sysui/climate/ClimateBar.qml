@@ -66,7 +66,7 @@ Control {
 
         TemperatureLevel {
             id: tempLevelLeft
-            value: ClimateModel.leftSeat.value
+            value: ClimateModel.calculateUnitValue(ClimateModel.leftSeat.value)
             anchors.left: parent.left
             anchors.verticalCenter: parent.verticalCenter
             onClicked: SystemModel.climateExpanded = !SystemModel.climateExpanded
@@ -108,7 +108,7 @@ Control {
         TemperatureLevel {
             id: tempLevelRight
             horizontalAlignment: Qt.AlignRight
-            value: ClimateModel.rightSeat.value
+            value: ClimateModel.calculateUnitValue(ClimateModel.rightSeat.value)
             anchors.right: parent.right
             anchors.verticalCenter: parent.verticalCenter
             onClicked: SystemModel.climateExpanded = !SystemModel.climateExpanded
