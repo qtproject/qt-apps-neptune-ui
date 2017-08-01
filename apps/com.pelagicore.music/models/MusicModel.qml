@@ -128,11 +128,11 @@ QtObject {
                 player.pause()
             }
 
-            onPreviousTrack: {
+            onPrevious: {
                 root.previous()
             }
 
-            onNextTrack: {
+            onNext: {
                 root.next()
             }
         }
