@@ -38,12 +38,20 @@ import utils 1.0
 import models.application 1.0
 import models.system 1.0
 
+/*
+   A window stack with the home page at the bottom and at most an application window on top of it
+*/
 Item {
     id: root
     width: Style.screenWidth
     height: Style.vspan(20)
 
-    property alias stackView: stackView
+    property Item homePage
+    onHomePageChanged: {
+        if (homePage) {
+            stackView.push(homePage);
+        }
+    }
 
     StackView {
         id: stackView
@@ -113,6 +121,9 @@ Item {
             }
         }
 
+        replaceEnter: popEnter
+        replaceExit: popExit
+
         Item {
             id: dummyitem
             anchors.fill: parent
@@ -129,21 +140,27 @@ Item {
             target: ApplicationManagerModel
 
             onApplicationSurfaceReady: {
-                //Make sure to push the items only once
-                for (var i = 1; i < stackView.depth; ++i) {
-                    if (stackView.get(i) === item)
-                        return
+                if (stackView.currentItem === item) {
+                    // NOOP
+                    return;
                 }
 
                 if (isMinimized) {
                     item.parent = dummyitem
                 } else {
-                    stackView.push(item, {"width": Style.hspan(24), "height": Style.vspan(24)})
+                    var parameters = {"width": Style.hspan(24), "height": Style.vspan(24)};
+                    if (stackView.depth === 1) {
+                        stackView.push(item, parameters)
+                    } else if (stackView.depth > 1) {
+                        stackView.replace(item, parameters)
+                    }
                 }
             }
 
             onReleaseApplicationSurface: {
-                stackView.pop()
+                if (stackView.currentItem === item) {
+                    stackView.pop()
+                }
             }
 
             onUnhandledSurfaceReceived: {

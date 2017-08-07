@@ -73,7 +73,7 @@ Item {
         onLoaded: {
             homePage.anchors.topMargin = 0
             menuScreenLoader.item.homePage = homePage
-            launcherControllerLoader.item.stackView.push(menuScreenLoader.item)
+            launcherControllerLoader.item.homePage = menuScreenLoader.item
             StagedStartupModel.enterFinalState()
         }
     }
