@@ -47,16 +47,21 @@ QtObject {
         readonly property real minValue: 16
         readonly property real maxValue: 28
         readonly property real stepValue: 0.5
-        property real value: climateControl.zoneAt.FrontLeft.targetTemperature.value
+        readonly property real value: climateControl.zoneAt.FrontLeft.targetTemperature
 
-        property bool heat: climateControl.zoneAt.FrontLeft.seatHeater.value
+        readonly property bool heat: climateControl.zoneAt.FrontLeft.seatHeater > 0
 
         function setValue(newValue) {
-            climateControl.zoneAt.FrontLeft.targetTemperature.value = newValue
+            climateControl.zoneAt.FrontLeft.targetTemperature = newValue
         }
 
         function setHeat(newHeat) {
-            climateControl.zoneAt.FrontLeft.seatHeater.value = newHeat
+            climateControl.zoneAt.FrontLeft.seatHeater = newHeat
+        }
+
+        // set some sane default value
+        Component.onCompleted: {
+            setValue(21);
         }
     }
 
@@ -64,52 +69,57 @@ QtObject {
         readonly property real minValue: 16
         readonly property real maxValue: 28
         readonly property real stepValue: 0.5
-        property real value: climateControl.zoneAt.FrontRight.targetTemperature.value
+        readonly property real value: climateControl.zoneAt.FrontRight.targetTemperature
 
-        property bool heat: climateControl.zoneAt.FrontRight.seatHeater.value
+        readonly property bool heat: climateControl.zoneAt.FrontRight.seatHeater > 0
 
         function setValue(newValue) {
-            climateControl.zoneAt.FrontRight.targetTemperature.value = newValue
+            climateControl.zoneAt.FrontRight.targetTemperature = newValue
         }
 
         function setHeat(newHeat) {
-            climateControl.zoneAt.FrontRight.seatHeater.value = newHeat
+            climateControl.zoneAt.FrontRight.seatHeater = newHeat
+        }
+
+        // set some sane default value
+        Component.onCompleted: {
+            setValue(22.5);
         }
     }
 
     property QtObject frontHeat: QtObject {
         property string symbol: "front"
-        property bool enabled: true
+        readonly property bool enabled: climateControl.defrostEnabled
 
         function setEnabled(newEnabled) {
-            enabled = newEnabled;
+            climateControl.defrostEnabled = newEnabled;
         }
     }
 
     property QtObject rearHeat: QtObject {
         property string symbol: "rear"
-        property bool enabled: true
+        readonly property bool enabled: climateControl.heaterEnabled
 
         function setEnabled(newEnabled) {
-            enabled = newEnabled;
+            climateControl.heaterEnabled = newEnabled;
         }
     }
 
     property QtObject airCondition: QtObject {
-        property string symbol: "ac"
-        property bool enabled: climateControl.airConditioning.value
+        readonly property string symbol: "ac"
+        readonly property bool enabled: climateControl.airConditioningEnabled
 
         function setEnabled(newEnabled) {
-            climateControl.airConditioning.value = newEnabled;
+            climateControl.airConditioningEnabled = newEnabled;
         }
     }
 
     property QtObject airQuality: QtObject {
-        property string symbol: "air_quality"
-        property bool enabled: climateControl.recirculationMode.value == ClimateControl.RecirculationOn
+        readonly property string symbol: "air_quality"
+        readonly property bool enabled: climateControl.recirculationMode === ClimateControl.RecirculationOn
 
         function setEnabled(newEnabled) {
-            climateControl.recirculationMode.value = newEnabled ? ClimateControl.RecirculationOn : ClimateControl.RecirculationOff;
+            climateControl.recirculationMode = newEnabled ? ClimateControl.RecirculationOn : ClimateControl.RecirculationOff;
         }
     }
 
@@ -123,34 +133,34 @@ QtObject {
     }
 
     property QtObject steeringWheelHeat: QtObject {
-        property string symbol: "stearing_wheel"
-        property bool enabled: climateControl.steeringWheelHeater.value >= 5
+        readonly property string symbol: "stearing_wheel"
+        readonly property bool enabled: climateControl.steeringWheelHeater >= 5
 
         function setEnabled(newEnabled) {
-            climateControl.steeringWheelHeater.value = newEnabled ? 10 : 0;
+            climateControl.steeringWheelHeater = newEnabled ? 10 : 0;
         }
     }
 
-    property var climateOptions: [frontHeat, rearHeat, airCondition, airQuality, eco, steeringWheelHeat]
+    readonly property var climateOptions: [frontHeat, rearHeat, airCondition, airQuality, eco, steeringWheelHeat]
 
-    property int outsideTemp: calculateUnitValue(15)
+    property int outsideTemp: climateControl.outsideTemperature != 0 ? calculateUnitValue(climateControl.outsideTemperature)
+                                                                     : calculateUnitValue(15)
     property string outsideTempText: qsTr("%1" + tempSuffix).arg(outsideTemp)
-    property int ventilation: climateControl.fanSpeedLevel.value
-    property string tempSuffix: SettingsModel.metric ? "°C" : "°F"
+    property int ventilation: climateControl.fanSpeedLevel
+    readonly property string tempSuffix: SettingsModel.metric ? "°C" : "°F"
     property int ventilationLevels: 7 // 6 + off (0)
 
     function setVentilation(newVentilation) {
-        climateControl.fanSpeedLevel.value = newVentilation;
+        climateControl.fanSpeedLevel = newVentilation;
     }
 
     property QtObject airflowDirections: QtObject {
-        property int directions: climateControl.airflowDirections.value
-        property var availableDirections: climateControl.airflowDirections.availableValues
-        onDirectionsChanged: climateControl.airflowDirections.value = directions
-    }
-    property Connections airflowDirectionsConnections: Connections {
-        target: climateControl.airflowDirections
-        onValueChanged: airflowDirections.directions = climateControl.airflowDirections.value
+        property int directions: climateControl.airflowDirections
+        // FIXME this is stupid, how to get the available list programatically?
+        // TODO ClimateControl.Windshield missing; when added, this will get fun ;)
+        readonly property var availableDirections: [ClimateControl.Dashboard, ClimateControl.Floor,
+            ClimateControl.Dashboard | ClimateControl.Floor]
+        onDirectionsChanged: climateControl.airflowDirections = directions
     }
 
     property QtObject stateMachine: ClimateStateMachine {

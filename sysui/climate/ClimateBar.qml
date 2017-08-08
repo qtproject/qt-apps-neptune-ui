@@ -77,8 +77,16 @@ Control {
             width: Style.hspan(2)
             height: Style.climateCollapsedVspan
             symbol: "seat_left"
+            checkable: true
             checked: ClimateModel.leftSeat.heat
-            onClicked: ClimateModel.leftSeat.heat = !ClimateModel.leftSeat.heat
+            onClicked: {
+                if (ClimateModel.leftSeat.heat) {
+                    ClimateModel.leftSeat.setHeat(0);
+                } else {
+                    ClimateModel.leftSeat.setHeat(1);
+                }
+            }
+
             anchors.left: tempLevelLeft.right
             anchors.leftMargin: Style.hspan(1)
             anchors.verticalCenter: parent.verticalCenter
@@ -98,8 +106,15 @@ Control {
             width: Style.hspan(2)
             height: Style.climateCollapsedVspan
             symbol: "seat_right"
+            checkable: true
             checked: ClimateModel.rightSeat.heat
-            onClicked: ClimateModel.rightSeat.heat = !ClimateModel.rightSeat.heat
+            onClicked: {
+                if (ClimateModel.rightSeat.heat) {
+                    ClimateModel.rightSeat.setHeat(0);
+                } else {
+                    ClimateModel.rightSeat.setHeat(1);
+                }
+            }
             anchors.right: tempLevelRight.left
             anchors.rightMargin: Style.hspan(1)
             anchors.verticalCenter: parent.verticalCenter

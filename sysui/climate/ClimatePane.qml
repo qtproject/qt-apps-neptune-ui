@@ -83,7 +83,7 @@ Item {
                 to: ClimateModel.leftSeat.maxValue
                 value: ClimateModel.leftSeat.value
                 stepSize: ClimateModel.leftSeat.stepValue
-                onValueChanged: ClimateModel.leftSeat.value = value
+                onValueChanged: ClimateModel.leftSeat.setValue(value)
             }
 
             Spacer {
@@ -149,7 +149,7 @@ Item {
                 to: ClimateModel.rightSeat.maxValue
                 value: ClimateModel.rightSeat.value
                 stepSize: ClimateModel.rightSeat.stepValue
-                onValueChanged: ClimateModel.rightSeat.value = value
+                onValueChanged: ClimateModel.rightSeat.setValue(value)
             }
         }
 

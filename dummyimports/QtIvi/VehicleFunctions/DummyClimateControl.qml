@@ -32,11 +32,15 @@
 import QtQuick 2.0
 
 QtObject {
-    property var discoveryMode
-    property bool steeringWheelHeater: false
-    property bool airRecirculation: false
-    property bool airConditioning: true
-    property QtObject zoneAt: QtObject {
-
-    }
+    property int discoveryMode: 0 /* QIviAbstractFeature::NoAutoDiscovery */
+    property int steeringWheelHeater: 0
+    property bool recirculationEnabled: false
+    property int recirculationMode: 0 /* QtIviVehicleFunctionsModule::RecirculationOff */
+    property bool airConditioningEnabled: true
+    property bool defrostEnabled: false
+    property bool heaterEnabled: true
+    property int outsideTemperature: 15
+    property int fanSpeedLevel: 3
+    property int airflowDirections: 0
+    property QtObject zoneAt: QtObject {}
 }

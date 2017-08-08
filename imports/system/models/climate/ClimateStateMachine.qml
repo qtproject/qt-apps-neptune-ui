@@ -57,55 +57,55 @@ QtObject {
 
                     DSM.State {
                         id: airConditionState
-                        initialState: climateControl.airConditioning.value ? airConditionOn : airConditionOff
+                        initialState: climateControl.airConditioningEnabled ? airConditionOn : airConditionOff
 
                         DSM.State {
                             id: airConditionOff
-                            onEntered: climateControl.airConditioning.value = false
+                            onEntered: climateControl.airConditioningEnabled = false
                             DSM.SignalTransition {
                                 targetState: airConditionOn
-                                signal: climateControl.airConditioning.valueChanged
-                                guard: climateControl.airConditioning.value
+                                signal: climateControl.airConditioningEnabledChanged
+                                guard: climateControl.airConditioningEnabled
                             }
                         }
 
                         DSM.State {
                             id: airConditionOn
                             onEntered: {
-                                climateControl.airConditioning.value = true
-                                steeringWheelHeat.setEnabled(false)
+                                climateControl.airConditioningEnabled = true
+                                climateControl.steeringWheelHeater = 0
                             }
                             DSM.SignalTransition {
                                 targetState: airConditionOff
-                                signal: climateControl.airConditioning.valueChanged
-                                guard: !climateControl.airConditioning.value
+                                signal: climateControl.airConditioningEnabledChanged
+                                guard: !climateControl.airConditioningEnabled
                             }
                         }
                     } // airConditionState
 
                     DSM.State {
                         id: airRecirculationState
-                        initialState: climateControl.recirculation.value ? airRecirculationOn : airRecirculationOff
+                        initialState: climateControl.recirculationEnabled ? airRecirculationOn : airRecirculationOff
 
                         DSM.State {
                             id: airRecirculationOff
-                            onEntered: climateControl.recirculationMode.value = ClimateControl.RecirculationOff
+                            onEntered: climateControl.recirculationMode = ClimateControl.RecirculationOff
                             DSM.SignalTransition {
                                 targetState: airRecirculationOn
-                                signal: climateControl.recirculationMode.valueChanged
-                                guard: climateControl.recirculationMode.value == ClimateControl.RecirculationOn
+                                signal: climateControl.recirculationModeChanged
+                                guard: climateControl.recirculationEnabled
                             }
                         }
 
                         DSM.State {
                             id: airRecirculationOn
                             onEntered: {
-                                climateControl.recirculationMode.value = ClimateControl.RecirculationOn
+                                climateControl.recirculationMode = ClimateControl.RecirculationOn
                             }
                             DSM.SignalTransition {
                                 targetState: airRecirculationOff
-                                signal: climateControl.recirculationMode.valueChanged
-                                guard: climateControl.recirculationMode.value == ClimateControl.RecirculationOff
+                                signal: climateControl.recirculationModeChanged
+                                guard: climateControl.recirculationMode === ClimateControl.RecirculationOff
                             }
                         }
                     } // airRecirculationState
@@ -126,8 +126,8 @@ QtObject {
                 DSM.State {
                     id: suspended
                     onEntered: {
-                        climateControl.airConditioning.value = false
-                        climateControl.recirculationMode.value = ClimateControl.RecirculationOff
+                        climateControl.airConditioningEnabled = false
+                        climateControl.recirculationMode = ClimateControl.RecirculationOff
                     }
                     DSM.SignalTransition {
                         targetState: historyState
@@ -140,28 +140,28 @@ QtObject {
 
             DSM.State {
                 id: steeringWheelHeatState
-                initialState: (climateControl.steeringWheelHeater.value >= 5) ? steeringWheelHeatOn : steeringWheelHeatOff
+                initialState: (climateControl.steeringWheelHeater >= 5) ? steeringWheelHeatOn : steeringWheelHeatOff
 
                 DSM.State {
                     id: steeringWheelHeatOff
-                    onEntered: climateControl.steeringWheelHeater.value = 0
+                    onEntered: climateControl.steeringWheelHeater = 0
                     DSM.SignalTransition {
                         targetState: steeringWheelHeatOn
-                        signal: climateControl.steeringWheelHeater.valueChanged
-                        guard: climateControl.steeringWheelHeater.value >= 5
+                        signal: climateControl.steeringWheelHeaterChanged
+                        guard: climateControl.steeringWheelHeater >= 5
                     }
                 }
 
                 DSM.State {
                     id: steeringWheelHeatOn
                     onEntered: {
-                        climateControl.steeringWheelHeater.value = 10
-                        climateControl.airConditioning.value = false
+                        climateControl.steeringWheelHeater = 10
+                        climateControl.airConditioningEnabled = false
                     }
                     DSM.SignalTransition {
                         targetState: steeringWheelHeatOff
-                        signal: climateControl.steeringWheelHeater.valueChanged
-                        guard: climateControl.steeringWheelHeater.value < 5
+                        signal: climateControl.steeringWheelHeaterChanged
+                        guard: climateControl.steeringWheelHeater < 5
                     }
                 }
             }
