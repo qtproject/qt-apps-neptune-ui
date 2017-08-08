@@ -30,29 +30,32 @@
 ****************************************************************************/
 
 /*!
-    \page neptune-app-development.html
-    \title Neptune Application Development
-    \brief Introduction to application development and best practices for Neptune UI
+   \page neptune-app-development.html
+   \title Neptune UI Application Development
+   \previouspage neptune-build-run.html
+   \nextpage neptuneui-components.html
+   \brief Introduction to application development and best practices for Neptune UI
 
-    In order to develop the application for the Neptune UI following rules should
-    be applied:
+    When you are developing an application for Neptune UI, you must follow these rules:
     \list
-      \li the info.yaml manifest file needs to be within the root folder of the application
-      \li the folder name of the application where info.yaml is placed needs to be same
-      as the id property written in the info.yaml file
-      \li the \l { AppUIScreen }, \l { NavigationUIScreen }
-      element (based on the type of the application) must be the root QML element
-      of the application.
-      \endlist
+      \li The info.yaml manifest file needs to be under the application root folder.
+      See \l{Manifest File}.
+      \li The name of the folder that contains \e info.yaml must be the same as
+      the value of the \c id property in the info.yaml file.
+      \li Depending on your application type, either \l{AppUIScreen} or
+      \l{NavigationUIScreen} must be the application root QML element. See
+      \l{Application Root QML Element}.
+    \endlist
 
-It is important to fulfil all mentioned conditions in order for application to get
-available in the system.
+It is important to follow all the defined rules in order for the application to
+become available in the system.
 
-\section1 Manifest file
+\section1 Manifest File
 
-The manifest file must be named with info.yaml file and should look like this:
+The manifest file must have the name \e {info.yaml}. The manifest file content
+should be as follows:
 
-\code
+\badcode
 formatVersion: 1
 formatType: am-application
 ---
@@ -64,28 +67,34 @@ name:
   en: 'Template'
 
 categories: [ 'app' ]
-
 \endcode
 
-For any additional information about the manifest file, please refer to official
-ApplicationManager manifest documentation \l {https://doc.qt.io/QtApplicationManager/manifest.html}
-{Manifest Documentation}.
+For any additional information about the manifest file, please refer to
+\l{Qt Application Manager Manifest File}.
 
-\section1 Example
+\section1 Application Root QML Element
 
-Small example of application root QML element is shown below. The root element should
-be one of the two options: \l { AppUIScreen } (used for any type of the application),
-\l { NavigationUIScreen } (special  for navigation application) element.
+The following table defines the application root QML elements that should be
+used when developing applications:
 
-    Example usage:
+\table
+    \header
+        \li Root element
+        \li Description
+    \row
+        \li \l{AppUIScreen}
+        \li Can be used in all kind of applications.
+    \row
+        \li \l{NavigationUIScreen}
+        \li Used in a navigation application.
+\endtable
 
-    \qml
+The following QML code demonstrates how to use \l{AppUIScreen} as a root element:
 
+\qml
 import QtQuick 2.6
-
 import controls 1.0
 import utils 1.0
-
 
 AppUIScreen {
     id: root
@@ -101,37 +110,50 @@ AppUIScreen {
         onBackScreen: root.back()
     }
 }
+\endqml
 
-     \endqml
-
-It is important to use \l { UIScreen } component as base since it adds visual back
-arrow, which enables to exit the app.
+It is important to use the \l {UIScreen} component as a base. It provides a back
+arrow icon for exiting the application UI.
 
 \section1 Interfaces
 
-\list
-  \li \l {NotificationInterface} - used to request the notification. It uses
-  \l {https://doc.qt.io/QtApplicationManager/qml-qtapplicationmanager-notification.html}
-  {Notification} component and it is based on
-  \l {https://developer.gnome.org/notification-spec/} {org.freedesktop.Notifications}
-  D-Bus interface.
-  \li \l {PopupInterface} - used to request the popup. It uses the same D-Bus protocol
-  as \l {NotificationInterface}.
-\endlist
+You can use the following interfaces in application development:
+
+\table
+    \header
+        \li Interface
+        \li Description
+    \row
+        \li \l {NotificationInterface}
+        \li Provides an interface for requesting notifications. It uses the
+        \l {Notification} component and is based on the
+        \l {GNOME Desktop Notifications Specification} {org.freedesktop.Notifications}
+        D-Bus interface.
+    \row
+        \li \l{PopupInterface}
+        \li Provides an interface for requesting pop-ups. Both \l{PopupInterface}
+        and \l{NotificationInterface} use the same D-Bus protocol.
+\endtable
 
 \section1 Best Practices
 
+When you are developing an automotive UI application with
+\l{Qt Automotive Suite Product} {Qt Automotive Suite}, it is recommended to follow
+the best practices:
+
     \list
-        \li Each visual part of the application (app screen, part of the screen, etc)
-        separate in different and independent component.
-        \li Load parts of the UI and backend, which are not visible or not needed at the startup, on demand.
-        \li Separate logic from visual part of the application. Use models to store methods, properties and backend connection.
+        \li Implement each visual part of the application (for example the application screen)
+        in a separate, independent component.
+        \li Load UI components and a backend on demand when they are not visible
+        or not needed in the device startup.
+        \li Separate the application logic from the visual UI components.
+        Use models to store methods, properties, and a backend connection.
     \endlist
 
-To monitor application startup performance read the log output.
-Output should look like this (in the title should be application ID):
+If you need to monitor an application startup performance, read the log output.
+The log title must have an application ID. The log content should be as follows:
 
-\code
+\badcode
 == STARTUP TIMING REPORT: com.pelagicore.temp ==
 0'020.000 entered main
 0'115.359 after logging and qml register initialization
@@ -147,10 +169,12 @@ Output should look like this (in the title should be application ID):
 0'974.996 component loading and creating complete.
 \endcode
 
-NOTE: this is available only in multi-process mode when setting AM_STARTUP_TIMER to 1.
+\note The log output is available only in a multi-process mode when you have set
+the \e AM_STARTUP_TIMER value to \e 1.
 
-For additional checkpoints in the list measurement above, from your QML code
-(e.g. loading specific plugin in the applciation QML model) add these lines:
+You can add checkpoints to your QML code. The following example
+demonstrates how you can add a checkpoint to the application QML code when a plugin
+is loaded:
 
 \qml
     StartupTimer.checkpoint("plugin xxx loaded");

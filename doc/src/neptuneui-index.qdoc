@@ -1,11 +1,11 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 The Qt Company Ltd.
+** Copyright (C) 2017 Pelagicore AG
 ** Contact: https://www.qt.io/licensing/
 **
-** This file is part of the documentation of the Qt Automotive Suite.
+** This file is part of the Neptune IVI UI.
 **
-** $QT_BEGIN_LICENSE:FDL-QTAS$
+** $QT_BEGIN_LICENSE:GPL-QTAS$
 ** Commercial License Usage
 ** Licensees holding valid commercial Qt Automotive Suite licenses may use
 ** this file in accordance with the commercial license agreement provided
@@ -14,133 +14,205 @@
 ** licensing terms and conditions see https://www.qt.io/terms-conditions.
 ** For further information use the contact form at https://www.qt.io/contact-us.
 **
-** GNU Free Documentation License Usage
-** Alternatively, this file may be used under the terms of the GNU Free
-** Documentation License version 1.3 as published by the Free Software
-** Foundation and appearing in the file included in the packaging of
-** this file. Please review the following information to ensure
-** the GNU Free Documentation License version 1.3 requirements
-** will be met: https://www.gnu.org/licenses/fdl-1.3.html.
+** GNU General Public License Usage
+** Alternatively, this file may be used under the terms of the GNU
+** General Public License version 3 or (at your option) any later version
+** approved by the KDE Free Qt Foundation. The licenses are as published by
+** the Free Software Foundation and appearing in the file LICENSE.GPL3
+** included in the packaging of this file. Please review the following
+** information to ensure the GNU General Public License requirements will
+** be met: https://www.gnu.org/licenses/gpl-3.0.html.
+**
 ** $QT_END_LICENSE$
+**
+** SPDX-License-Identifier: GPL-3.0
 **
 ****************************************************************************/
 
 /*!
    \page neptuneui-index.html
    \title Neptune UI
-   \brief A best practice HMI for the OEMs to test the Qt Automotive Suite.
+   \nextpage neptuneui-gettingstarted.html
+   \brief A best practice UI for the OEMs to test Qt Automotive Suite.
 
-   Neptune provides HMI IVI (infotainment) system. It is a reference
-   of best practices in HMI for the OEMs to test and develop with the
-   \l {https://www.qt.io/qt-automotive-suite/} {Qt Automotive Suite}.
-    Neptune depends on
-   \l {https://doc.qt.io/QtApplicationManager/} {Qt Application Manager}
-   for the necessary infrastructure. It comes with
-   support for a Head Unit and Cluster. The system also provides the
-   infrastructure to develop, maintain, and deploy applications.
+   Neptune UI provides a UI implementation for Qt in IVI (In-Vehichle Infotainment)
+   systems. It demonstrates best practices for developing an automotive UI with
+   \l{Qt Automotive Suite Product} {Qt Automotive Suite}.
 
-   \section1 Quick links
+   Neptune UI depends on \l{Qt Application Manager}. It provides support for
+   a \l{head unit} and a \l{digital instrument cluster}. You can develop, maintain, and
+   deploy applications with Neptune UI.
+
+   See \l{Getting Started} for further information on how you can start
+   working with Neptune UI.
+
+   \section1 Overview
+
+   Neptune UI intends to:
 
    \list
-   \li \l {How to run Neptune} {How to build and run Neptune}
-   \li \l {Neptune Application Development} {Neptune Application Development}
+   \li Provide best practices for developing an automotive UI using
+   \l{Qt Automotive Suite}.
+   \li Get UI designers and software developers to work together.
+   \li Provide UI designers methods for controlling the UI look-and-feel.
+   \li Improve flexibility by allowing integration
+   \l{Qt Automotive Suite Product} {Qt Automotive Suite} with
+   external tools (3D tools, maps, Qt IVI).
+   \li Provide a multi-process UI that forms a base for an IVI system.
    \endlist
 
-   \section1 Story
+   \section1 Features
+
+   Neptune UI key features are:
 
    \list
-   \li Design for Neptune is done and delivered by UX company.
-   \li Implementation done using Qt/QML and based on
-   \l {https://doc.qt.io/QtApplicationManager/}
-   {Qt Application Manager}, which provides application and window
+   \li Neptune UI components are designed and delivered by a UX company.
+   \li Neptune UI is implemented with Qt QML. Implementation is based on
+   \l{Qt Application Manager} that takes care of the application and window
    management.
-   \li Possible to integrate various car 3D model technologies.
-   \li Possible to integrate various navigation solutions.
-   \li Uses \l {https://www.qt.io/qt-automotive-suite/} {QtIVI} module,
-   which provides C++ classes and QML types for accessing vehicle
-   features, as well as a core API for implementing new IVI features.
+   \li You can integrate Neptune UI with various car 3D model technologies.
+   \li You can integrate Neptune UI with various navigation solutions.
+   \li Neptune UI utilizes the \l{Qt IVI} module that provides C++ classes and
+   QML types for accessing vehicle features, as well as core API for
+   implementing new IVI features.
    \endlist
 
-   \section2 Idea
+   \section1 Neptune UI Structure
 
-   \list
-   \li Best practices how automotive UI should be developed using
-   \l {https://www.qt.io/qt-automotive-suite/} {Qt Automotive Suite}.
-   \li Designers and developers working together.
-   \li Designers have the control on how the UI will look like in the end.
-   \li Flexibility, allows integration of external tools (3D tools, maps, QtIVI).
-   \li Multi-process UI, base for the system.
-   \endlist
+   In order to provide support for multi-process architecture, Neptune UI is made
+   up from the following elements:
 
-   \section2 Structure
+   \table
+   \header
+       \li Neptune UI element
+       \li Description
+   \row
+       \li System UI (\c sysui)
+       \li For example a climate panel, a car overview, a home page.
+   \row
+       \li Applications (\c apps)
+       \li A container for the different applications used within the system UI.
+   \row
+       \li Imports, modules (for example \c assets, \c controls, \c utils, \c models)
+       \li Modules, assets, and controls required for visual appearance and
+       functionalities both for a system UI and an application.
+   \row
+       \li Plugins
+       \li QML plugins required for communication with low level services.
+   \row
+       \li Styles
+       \li UI styles and configurations.
+   \endtable
 
-   In order to support multi-process architecture, Neptune is structured
-   as presented below.
-   \list
-   \li System UI (\c sysui) - climate panel, car overview, home page, etc.
-   \li Applications (\c apps) - container for the different applications
-   used within the system UI.
-   \li Imports/Modules (\c assets, \c controls, \c utils, \c models, etc)
-   - modules, assets and controls required for visual appearance and
-   functionalities both for system UI and application.
-   \li Plugins - QML plugins required for communication with low level services.
-   \li Styles - style and UI configurations.
-   \endlist
+   \section2 Interaction Flow
 
-   \section2 Key concepts
+   Neptune UI pages are part of the system UI. The system UI launches applications
+   by using \l{Qt Application Manager}. The applications are run in the target
+   device in a separate process. You can install new applications from a store.
 
-   In this section, Neptune interaction and visual concept will be presented.
+   The following picture illustrates the Neptune UI interaction flow:
 
    \image neptune-ui-structure.png
-   \caption Neptune interaction flow
+
+   \section1 Visual Concept
+
+   The Neptune UI visual concept includes different UI elements.
+
+   \section2 Digital Instrument Cluster
+
+   A digital instrument cluster is implemented with Qt Quick.
 
    \image instrument-cluster.png
-   \caption QtQuick-based digital instrument cluster
+
+   \section2 Head Unit
+
+   A head unit is implemented with Qt Quick.
 
    \image infotainment-cluster.png
-   \caption QtQuick-based Head Unit
 
-   The Head Unit interface provides additional pages that are accessible
-   by swiping from right-to-left or left-to-right:
+   The head unit interface provides additional pages that are accessible
+   by swiping from right-to-left or left-to-right. The head unit may contain many
+   applications as illustrated in the following picture:
 
    \image infotainment-cluster-apps.png
-   \caption Available applications on the Head Unit
+
+   \section2 Infotainment Cluster Settings
+
+   Infotainment cluster \uicontrol Settings provides more control over the
+   \l{head unit} and the \l{digital instrument cluster}. You can install and uninstall
+   applications for the \l{head unit} via the \uicontrol{APP STORE}
+   tab in the \uicontrol Settings page.
 
    \image infotainment-cluster-settings.png
-   \caption \uicontrol Settings that provides more control on the HEAD Unit and
-   Cluster. The \uicontrol{APP STORE} tab in the \uicontrol Settings page lets
-   you install/uninstall applications from the Head Unit.
+
+   \section2 Infotainment Car Settings
+
+   Infotainment \uicontrol {Car settings} provides options to enable or disable
+   features on a car.
 
    \image infotainment-cluster-carsettings.png
-   \caption Provides options to enable or disable features on the car.
 
+   \section2 Infotainment Cluster My Car
+
+   An infotainment cluster \uicontrol {My Car} provides an overview of a car itself.
    \image infotainment-cluster-mycar.png
-   \caption Provides an overview about the car itself.
 
-   \section1 Common Terms Used In The Project
+   \section1 Common Terms
 
-   Common terms and their meaning is enumerated below:
+   Common terms used in the Neptune UI documentation are explained in the
+   following table:
 
+   \table
+   \header
+       \li Term
+       \li Description
+   \row
+       \li Display
+       \li A physical display's real estate.
+   \row
+       \li Screen
+       \li A part of the main navigation. For example HomeScreen,
+       CloudScreen, and MusicScreen.
+   \row
+       \li Control
+       \li An element such as a button, an icon, a label or other primitive.
+   \row
+       \li Dummyimports
+       \li A simple QML implementation that is used to launch Neptune UI without a backend
+       or a C++ implementation. It simulates the behavior of a real backend.
+   \endtable
+*/
+
+/*!
+   \page neptuneui-gettingstarted.html
+   \title Getting Started
+   \previouspage neptuneui-index.html
+   \nextpage neptune-build-run.html
+
+   After you have installed \l{Qt Automotive Suite}, you can test Neptune UI
+   with the emulator. See \l{Running Neptune UI in Emulator}.
+
+   It is also possible to test Neptune UI by cloning the
+   related Git repositories. See \l{Running Neptune UI without Installing Qt}.
+
+   \l{Neptune UI Application Development} provides a set of best practices
+   for developing applications with Neptune UI.
+
+   See \l{Neptune UI Components} for a list of all provided UI components.
+*/
+
+/*!
+   \page neptuneui-components.html
+   \title Neptune UI Components
+   \previouspage neptune-app-development.html
+   \nextpage neptuneui-index.html
+
+   Neptune UI components:
    \list
-    \li Display - The physical display's real estate
-    \li Screen - A Screen is a part of the main navigation. For example the HomeScreen, CloudScreen and MusicScreen
-    \li Control(s) - Controls are elements such as Button, Icon, Label and other
-    primitives
-    \li Dummyimports - Simple QML implementation used to start the UI without
-    backend, C++ implementation. It simulates the behavior of real backend.
+       \li \l{UIScreen}
+       \li \l{AppUIScreen}
+       \li \l{NavigationUIScreen}
+       \li \l{NotificationInterface}
+       \li \l{PopupInterface}
    \endlist
-
-*/
-
-/*!
-    \externalpage http://doc.qt.io/QtForDeviceCreation/qtee-custom-embedded-linux-image.html
-    \title Building eLinux Image
-*/
-/*!
-    \externalpage http://code.qt.io/cgit/qt/qtapplicationmanager.git/
-    \title Qt Application Manager Git Repository
-*/
-/*!
-    \externalpage http://code.qt.io/cgit/qt-apps/neptune-ui.git/
-    \title Neptune-UI Git Repository
 */

@@ -1,0 +1,101 @@
+/****************************************************************************
+**
+** Copyright (C) 2017 Pelagicore AG
+** Contact: https://www.qt.io/licensing/
+**
+** This file is part of the Neptune IVI UI.
+**
+** $QT_BEGIN_LICENSE:GPL-QTAS$
+** Commercial License Usage
+** Licensees holding valid commercial Qt Automotive Suite licenses may use
+** this file in accordance with the commercial license agreement provided
+** with the Software or, alternatively, in accordance with the terms
+** contained in a written agreement between you and The Qt Company.  For
+** licensing terms and conditions see https://www.qt.io/terms-conditions.
+** For further information use the contact form at https://www.qt.io/contact-us.
+**
+** GNU General Public License Usage
+** Alternatively, this file may be used under the terms of the GNU
+** General Public License version 3 or (at your option) any later version
+** approved by the KDE Free Qt Foundation. The licenses are as published by
+** the Free Software Foundation and appearing in the file LICENSE.GPL3
+** included in the packaging of this file. Please review the following
+** information to ensure the GNU General Public License requirements will
+** be met: https://www.gnu.org/licenses/gpl-3.0.html.
+**
+** $QT_END_LICENSE$
+**
+** SPDX-License-Identifier: GPL-3.0
+**
+****************************************************************************/
+
+/*!
+    \externalpage http://www.qt.io/qt-automotive-suite/
+    \title Qt Automotive Suite Product
+*/
+
+/*!
+    \externalpage http://doc.qt.io/QtAutomotiveSuite/
+    \title Qt Automotive Suite
+*/
+
+/*!
+    \externalpage http://doc.qt.io/QtApplicationManager/
+    \title Qt Application Manager
+*/
+
+/*!
+   \externalpage http://doc.qt.io/QtApplicationManager/installation.html
+   \title Qt Applicaton Manager Installation
+*/
+
+/*!
+    \externalpage http://doc.qt.io/QtApplicationManager/manifest.html
+    \title Qt Application Manager Manifest File
+*/
+
+/*!
+    \externalpage http://doc.qt.io/QtApplicationManager/qml-qtapplicationmanager-notification.html
+    \title Notification
+*/
+
+/*!
+    \externalpage http://doc.qt.io/QtIVI/index.html
+    \title Qt IVI
+*/
+
+/*!
+    \externalpage http://doc.qt.io/QtForDeviceCreation/qtee-custom-embedded-linux-image.html
+    \title Building eLinux Image
+*/
+
+/*!
+    \externalpage http://doc.qt.io/QtForDeviceCreation/qtee-requirements-x11.html#requirements-for-boot-to-qt-emulator
+    \title Emulator Requirements for Linux/x11
+*/
+
+/*!
+    \externalpage http://doc.qt.io/QtForDeviceCreation/qtee-requirements-windows.html#requirements-for-boot-to-qt-emulator
+    \title Emulator Requirements for Windows
+*/
+
+/*!
+    \externalpage http://doc.qt.io/qt-5/qtquickcontrols2-environment.html
+    \title Qt QuickControls 2 Environment Variables
+*/
+
+/*!
+    \externalpage http://code.qt.io/cgit/qt/qtapplicationmanager.git/
+    \title Qt Application Manager Git Repository
+*/
+
+/*!
+    \externalpage http://code.qt.io/cgit/qt-apps/neptune-ui.git/
+    \title Neptune-UI Git Repository
+*/
+
+/*!
+    \externalpage http://developer.gnome.org/notification-spec/
+    \title GNOME Desktop Notifications Specification
+*/
+

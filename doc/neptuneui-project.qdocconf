@@ -18,6 +18,11 @@ qhp.NeptuneUI.filterAttributes = NeptuneUI $QT_VERSION
 qhp.NeptuneUI.customFilters.NeptuneUI.name = Neptune UI $QT_VERSION
 qhp.NeptuneUI.customFilters.NeptuneUI.filterAttributes = NeptuneUI $QT_VERSION
 
+qhp.NeptuneUI.subprojects                   = manual
+qhp.NeptuneUI.subprojects.manual.title      = Neptune UI
+qhp.NeptuneUI.subprojects.manual.indexTitle = Neptune UI TOC
+qhp.NeptuneUI.subprojects.manual.selectors  = manual
+
 navigation.landingpage = "Neptune UI"
 navigation.homepage    = "Qt Automotive Suite"
 
