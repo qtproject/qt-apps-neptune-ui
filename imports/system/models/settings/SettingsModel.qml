@@ -39,6 +39,12 @@ QtObject {
     property string unitSystem: "metric"  // "metric" or "imp_us"
     readonly property bool metric: unitSystem === "metric"
 
+    readonly property ListModel windowTransitions: ListModel {
+        ListElement { name: "Zoom" }
+        ListElement { name: "Tumble" }
+    }
+    property int windowTransitionsIndex: 0
+
     property ListModel entries: ListModel {
         ListElement { title: "USER PROFILE"; icon: "profile"; checked: true; hasChildren: true; hasCheck: true }
         ListElement { title: "SERVICE & SUPPORT"; icon: "service"; checked: false; hasChildren: false }

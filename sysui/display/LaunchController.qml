@@ -36,6 +36,7 @@ import QtQuick.Controls 2.1
 import controls 1.0
 import utils 1.0
 import models.application 1.0
+import models.settings 1.0
 import models.system 1.0
 
 /*
@@ -53,6 +54,9 @@ Item {
         }
     }
 
+    readonly property real itemWidth: Style.hspan(24)
+    readonly property real itemHeight: Style.vspan(24)
+
     StackView {
         id: stackView
         width: Style.hspan(24)
@@ -61,68 +65,23 @@ Item {
 
         visible: fastBlur.radius === 0
 
-        pushEnter: Transition {
-            ScaleAnimator {
-                from: 0
-                to: 1
-                duration: 150
-            }
-            OpacityAnimator {
-                from: 0
-                to: 1
-                duration: 150
+        pushEnter: windowTransitions ? windowTransitions.pushEnter : null
+        pushExit: windowTransitions ? windowTransitions.pushExit : null
+        popEnter: windowTransitions ? windowTransitions.popEnter : null
+        popExit: windowTransitions ? windowTransitions.popExit : null
+        replaceEnter: pushEnter
+        replaceExit: pushExit
+
+        Loader {
+            id: windowTransitionsLoader
+            source: "windowtransitions/" + SettingsModel.windowTransitions.get(SettingsModel.windowTransitionsIndex).name + ".qml"
+            Binding {
+                target: windowTransitionsLoader.item
+                property: "itemWidth"
+                value: root.itemWidth
             }
         }
-
-        pushExit: Transition {
-            ParallelAnimation {
-                ScaleAnimator {
-                    from: 1
-                    to: 0
-                    duration: 150
-                }
-                OpacityAnimator {
-                    from: 1
-                    to: 0
-                    duration: 50
-                }
-            }
-        }
-
-
-        popEnter: Transition {
-            ScaleAnimator {
-                from: 0
-                to: 1
-                duration: 150
-            }
-            OpacityAnimator {
-                from: 0
-                to: 1
-                duration: 150
-            }
-        }
-
-        popExit: Transition {
-            ScaleAnimator {
-                from: 1
-                to: 0
-                duration: 150
-            }
-            OpacityAnimator {
-                from: 1
-                to: 0
-                duration: 100
-            }
-            ScriptAction {
-                script: {
-                    ApplicationManagerModel.releasingApplicationSurfaceDone(stackView.currentItem)
-                }
-            }
-        }
-
-        replaceEnter: popEnter
-        replaceExit: popExit
+        property alias windowTransitions: windowTransitionsLoader.item
 
         Item {
             id: dummyitem
@@ -148,7 +107,7 @@ Item {
                 if (isMinimized) {
                     item.parent = dummyitem
                 } else {
-                    var parameters = {"width": Style.hspan(24), "height": Style.vspan(24)};
+                    var parameters = {"width": root.itemWidth, "height": root.itemHeight};
                     if (stackView.depth === 1) {
                         stackView.push(item, parameters)
                     } else if (stackView.depth > 1) {
