@@ -46,10 +46,11 @@ BackgroundPane {
     height: Style.screenHeight
     padding: 0
 
-    //Forwards the keys to the cluster to handle it without being the active window
-    Keys.forwardTo: clusterLoader.item ? clusterLoader.item.clusterItem : null
+    //Forwards the keys to the custer to handle it without being the active window
+    Keys.forwardTo: clusterLoader.item ? clusterLoader.item.cluster : (displayLoader.item ? displayLoader.item : null)
 
     StageLoader {
+        id: displayLoader
         anchors.fill: parent
         source: "sysui/display/Display.qml"
         active: StagedStartupModel.loadDisplay
@@ -61,5 +62,6 @@ BackgroundPane {
         width: Style.clusterWidth
         source: "sysui/cluster/ClusterMain.qml"
         active: root.showClusterIfPossible
+        focus: true
     }
 }

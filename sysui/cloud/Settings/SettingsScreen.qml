@@ -62,7 +62,7 @@ Control {
                 text: "TRAFFIC INFORMATION"; icon: "warning"; checked: true; hasChildren: true
             }
             SettingsItemDelegate {
-                text: "METRIC SYSTEM"; icon: "fees"; checked: true
+                text: "METRIC SYSTEM"; icon: "fees"; checked: true; hasChildren: false
                 onClicked: {
                     SettingsModel.unitSystem = checked ? "metric" : "imp_us";
                 }

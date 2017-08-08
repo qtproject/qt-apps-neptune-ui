@@ -35,12 +35,10 @@ import utils 1.0
 import models.cluster 1.0
 import models.application 1.0
 
-Item {
+FocusScope {
     id: root
     width: 0.67 * Style.clusterWidth
     height: Style.clusterHeight
-
-    focus: true
 
     Behavior on width {
         NumberAnimation { duration: 200}
@@ -113,7 +111,7 @@ Item {
 
     Keys.onPressed: {
         if (event.key === Qt.Key_Right) {
-            if (stack.currentIndex < stack.count)
+            if (stack.currentIndex < stack.count-1)
                 stack.currentIndex++
         }
         else if (event.key === Qt.Key_Left) {

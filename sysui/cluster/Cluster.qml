@@ -34,7 +34,7 @@ import utils 1.0
 
 import models.startup 1.0
 
-Item {
+FocusScope {
     id: root
 
     width: Style.clusterWidth
@@ -63,6 +63,7 @@ Item {
         anchors.centerIn: parent
         active: StagedStartupModel.loadBackgroundElements
         source: "Middle.qml"
+        focus: true
     }
 
     StageLoader {

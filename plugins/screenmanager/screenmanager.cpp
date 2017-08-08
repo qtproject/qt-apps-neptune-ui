@@ -38,7 +38,7 @@ ScreenManager::ScreenManager(QObject *parent)
     : QObject(parent)
 {
     connect(qApp, &QGuiApplication::screenAdded, this, &ScreenManager::availableScreensChanged);
-    connect(qApp, &QGuiApplication::screenAdded, this, &ScreenManager::availableScreensChanged);
+    connect(qApp, &QGuiApplication::screenRemoved, this, &ScreenManager::availableScreensChanged);
 }
 
 int ScreenManager::screenCount() const

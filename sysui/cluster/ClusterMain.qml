@@ -42,10 +42,13 @@ Window {
     width: Style.clusterWidth
     visible: true
 
+    readonly property alias cluster: clusterItem
+
     color: "black"
 
     Cluster {
         id: clusterItem
+        focus: true
     }
 
     Component.onCompleted: {
