@@ -30,26 +30,17 @@
 ****************************************************************************/
 
 import QtQuick 2.6
-import QtQuick.Controls 2.0
+import QtQuick.Controls 2.2
 import utils 1.0
 import controls 1.0
 import models.popup 1.0
 
-MouseArea {
+Dialog {
     id: root
 
     width: Style.popupWidth
     height: Style.popupHeight
 
-    visible: opacity > 0
-
-    scale: PopupModel.popupVisible ? 1 : 0
-    Behavior on scale { NumberAnimation { duration: 200 } }
-
-    opacity: PopupModel.popupVisible ? 1 : 0
-    Behavior on opacity { NumberAnimation { duration: 200 } }
-
-    property int timeout: 0
     property bool contentAvailable: root.popupContent !== undefined
 
     property var popupContent: PopupModel.currentPopup.summary
@@ -57,19 +48,25 @@ MouseArea {
     property real progressValue: PopupModel.currentPopup.progressValue
     property var buttonsModel: PopupModel.buttonModel
 
-    Rectangle {
-        anchors.fill: parent
-        color: '#000'
-        opacity: 0.85
+    Connections {
+        target: PopupModel
+        onPopupVisibleChanged: {
+            if (target.popupVisible) {
+                root.open();
+            } else {
+                root.close();
+            }
+        }
     }
 
-    PopupHeader {
-        id: popupHeader
-        width: root.width
+    closePolicy: Popup.NoAutoClose
+
+    title: root.contentAvailable && root.popupBody !== undefined && root.popupBody.title !== undefined ? root.popupBody.title : ""
+
+    header: PopupHeader {
         height: Style.vspan(2)
         anchors.horizontalCenter: parent.horizontalCenter
-        anchors.top: parent.top
-        title: root.contentAvailable && root.popupBody !== undefined && root.popupBody.title !== undefined ? root.popupBody.title : ""
+        title: root.title
         subtitle: root.contentAvailable && root.popupBody !== undefined && root.popupBody.subtitle !== undefined ? root.popupBody.subtitle : ""
     }
 
@@ -78,7 +75,6 @@ MouseArea {
 
         width: parent.width
         height: paintedHeight
-        anchors.top: popupHeader.bottom
         anchors.topMargin: 10
         font.pixelSize: Style.fontSizeM
         text: root.contentAvailable !== undefined && root.popupContent !== undefined ? root.popupContent.toString() : ""
@@ -110,7 +106,7 @@ MouseArea {
         value: root.contentAvailable && root.popupContent !== undefined ? root.progressValue : ""
     }
 
-    PopupFooter {
+    footer: PopupFooter {
         id: buttonsRow
 
         popupWidth: root.width

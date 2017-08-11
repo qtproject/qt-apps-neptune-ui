@@ -82,6 +82,7 @@ Item {
         id: popupInterfaceHighPrio2
         actions: [ { text: "Cancel" } ]
         title: "Popup Prio 3"
+        subtitle: "The Subtitle"
         summary: "Popup Sample"
         priority: 3
     }
