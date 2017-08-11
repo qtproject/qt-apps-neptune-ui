@@ -81,7 +81,9 @@ QtObject {
 
             if (receivedContent.category === "popup") {
                 console.log("::: Popup changed :::", id);
-                if (root.currentPopup.id === id || root.currentPopup.priority > receivedContent.priority) {
+                if (root.currentPopup.id === id) {
+                    root.processPopup(receivedContent);
+                } else if (root.currentPopup.priority > receivedContent.priority) {
                     root.hideCurrentPopup();
                     root.requestPopup(id);
                 } else {
