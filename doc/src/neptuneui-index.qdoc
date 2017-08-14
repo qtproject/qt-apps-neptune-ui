@@ -198,16 +198,17 @@
    \l{Neptune UI Application Development} provides a set of best practices
    for developing applications with Neptune UI.
 
-   See \l{Neptune UI Components} for a list of all provided UI components.
+   See \l{Neptune UI Components and Interfaces} for a list of all
+   provided UI components and interfaces.
 */
 
 /*!
    \page neptuneui-components.html
-   \title Neptune UI Components
+   \title Neptune UI Components and Interfaces
    \previouspage neptune-app-development.html
    \nextpage neptuneui-index.html
 
-   Neptune UI components:
+   Neptune UI components and interfaces:
    \list
        \li \l{UIScreen}
        \li \l{AppUIScreen}
@@ -216,3 +217,32 @@
        \li \l{PopupInterface}
    \endlist
 */
+
+/*!
+    \qmlmodule utils 1.0
+    \title Neptune UI Components
+    \brief List of Neptune UI Components.
+
+    To import Neptune UI components, add the following import statement to your .qml file:
+
+    \qml
+    import utils 1.0
+    \endqml
+
+    Neptune UI provides the following components:
+*/
+
+/*!
+    \qmlmodule service 1.0
+    \title Neptune UI Interfaces
+    \brief List of Neptune UI Interfaces.
+
+    To import Neptune UI interfaces, add the following import statement to your .qml file:
+
+    \qml
+    import service 1.0
+    \endqml
+
+    Neptune UI provides the following interfaces:
+*/
+

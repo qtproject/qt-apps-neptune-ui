@@ -39,18 +39,17 @@ import utils 1.0
     \qmltype NavigationUIScreen
     \inqmlmodule utils 1.0
     \inherits AppUIScreen
-    \brief NavigationUIScreen provides base item for developing
-    navigation applciations.
+    \brief A base item for developing navigation applications.
 
-    NavigationUIScreen is a QML item which should be a root element for navigation
-    Neptune application. It provides APIs to interact with the system UI and
-    to position application visual elements. Main difference from \l AppUIScreen
-    is additional properties, which provide option to set the home page map widget.
+    NavigationUIScreen is a QML item which should be the root element in
+    Neptune UI navigation applications. It provides APIs for interacting with a system UI and
+    for positioning the application's visual elements. NavigationUIScreen extends
+    \l AppUIScreen with additional properties for setting a home page map widget.
 
-    Check { Neptune Application Development }  { Neptune Application Development }
-    for best practices on how to use the APIs.
+    See \l{Neptune UI Application Development} for best practices on how to use the APIs.
 
-    Example usage:
+    \section2 Example Usage
+
     \qml
 
     NavigationUIScreen {
@@ -82,12 +81,15 @@ AppUIScreen {
     /*!
          \qmlproperty Item AppUIScreen::widget
 
-         This property specifies the content area for map widget, which
-         will be placed on the home page of the system UI.
+         This property specifies a content area for a map widget. The content
+         area will be placed in a system UI home page.
     */
 
     property alias widget: widgetContainer.children
 
+    /*!
+        \internal
+    */
     property var widgetSurface: ApplicationManagerWindow {
         width: Style.hspan(12)
         height: Style.vspan(19)

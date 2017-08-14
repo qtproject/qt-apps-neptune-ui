@@ -38,13 +38,13 @@ import controls 1.0
     \qmltype UIScreen
     \inqmlmodule utils
     \inherits Page
-    \brief UIScreen provides base item for Neptune screens.
+    \brief A base item for all Neptune UI screens.
 
-    UIScreen is a QML item used to provide Neptune application screens. UIScreen
-    provides correct layout with back buttons, which provides getting to the previous
+    UIScreen is a QML item that provides Neptune UI application screens. UIScreen
+    has a layout with back buttons that provides access to a previous
     screen.
 
-    Example usage:
+    \section2 Example Usage
 
     \qml
 
@@ -64,7 +64,7 @@ import controls 1.0
     }
     \endqml
 
-    For each screen an application has, UIScreen should be used as a base.
+    For each screen an application has, UIScreen should be used as a base item.
 
 */
 
@@ -78,8 +78,9 @@ Page {
     /*!
          \qmlproperty bool UIScreen::hideBack
 
-         Defines if back button of the screen should be hidden. Default
-         value is false.
+         This property holds the visibility status of a back button.
+         If hideBack is set to \c true, the back button is hidden. Default
+         value is \c false.
     */
 
     property bool hideBack: false
@@ -87,7 +88,7 @@ Page {
     /*!
          \qmlsignal UIScreen::backScreen()
 
-         The signal is emitted when user clicks on back button.
+         The signal is emitted when a back button is selected.
 
     */
 

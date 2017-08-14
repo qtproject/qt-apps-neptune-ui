@@ -18,12 +18,23 @@ qhp.NeptuneUI.filterAttributes = NeptuneUI $QT_VERSION
 qhp.NeptuneUI.customFilters.NeptuneUI.name = Neptune UI $QT_VERSION
 qhp.NeptuneUI.customFilters.NeptuneUI.filterAttributes = NeptuneUI $QT_VERSION
 
-qhp.NeptuneUI.subprojects                   = manual
+qhp.NeptuneUI.subprojects                   = manual components interfaces
 qhp.NeptuneUI.subprojects.manual.title      = Neptune UI
 qhp.NeptuneUI.subprojects.manual.indexTitle = Neptune UI TOC
 qhp.NeptuneUI.subprojects.manual.selectors  = manual
 
+qhp.NeptuneUI.subprojects.components.title  = Neptune UI Components
+qhp.NeptuneUI.subprojects.components.indexTitle = Neptune UI Components
+qhp.NeptuneUI.subprojects.components.selectors  = qmlmodule:utils
+qhp.NeptuneUI.subprojects.components.sortPages  = true
+
+qhp.NeptuneUI.subprojects.interfaces.title  = Neptune UI Interfaces
+qhp.NeptuneUI.subprojects.interfaces.indexTitle = Neptune UI Interfaces
+qhp.NeptuneUI.subprojects.interfaces.selectors  = qmlmodule:service
+qhp.NeptuneUI.subprojects.interfaces.sortPages  = true
+
 navigation.landingpage = "Neptune UI"
 navigation.homepage    = "Qt Automotive Suite"
+navigation.qmltypespage = "Neptune UI Components and Interfaces"
 
 macro.QAS = "Qt Automotive Suite"

@@ -39,16 +39,17 @@ import utils 1.0
     \qmltype AppUIScreen
     \inqmlmodule utils
     \inherits ApplicationManagerWindow
-    \brief AppUIScreen provides base item for developing the applications.
+    \brief A base QML item for developing applications.
 
-    AppUIScreen is a QML item which should be a root element for every
-    Neptune application. It provides APIs to interact with the system UI and
-    to position application visual elements.
+    AppUIScreen is a QML item which should be a root element in every
+    Neptune UI application. It provides APIs for interacting with a system UI and
+    for positioning the application's visual elements.
 
-    Check { Neptune Application Development }  { Neptune Application Development }
-    for best practices on how to use the APIs.
+    See \l{Neptune UI Application Development} for best practices on how to use the APIs.
 
-    Example usage:
+    \section2 Example Usage
+
+    The following example uses \l{AppUIScreen} as a root element:
 
     \qml
 
@@ -78,7 +79,7 @@ ApplicationManagerWindow {
     /*!
          \qmlproperty Item AppUIScreen::content
 
-         This default property specifies the content area for application visual content.
+         A default property that specifies a content area for the application's visual content.
     */
 
     default property alias content: content.children
@@ -86,18 +87,24 @@ ApplicationManagerWindow {
     /*!
          \qmlproperty Item AppUIScreen::cluster
 
-         This property assigns visual content for the cluster window, if cluster
-         is available.
+         If a cluster is available, this property assigns visual content for the cluster window.
     */
 
     property alias cluster: clusterContainer.children
+
+    /*!
+         \qmlsignal AppUIScreen::clusterKeyPressed(int key)
+
+         This signal is emitted every time a key is pressed in a cluster.
+
+    */
 
     signal clusterKeyPressed(int key)
 
     /*!
          \qmlsignal AppUIScreen::raiseApp()
 
-         The signal which is emitted every time application starts.
+         This signal is emitted every time an application is started.
 
     */
 
@@ -106,7 +113,8 @@ ApplicationManagerWindow {
     /*!
          \qmlsignal AppUIScreen::closeApp()
 
-         The signal is emitted every time application closes (back button clicked).
+         This signal is emitted every time an application is closed by clicking
+         the back button.
 
     */
 
@@ -115,10 +123,8 @@ ApplicationManagerWindow {
     /*!
         \qmlmethod AppUIScreen::back()
 
-        This method is called when an application needs to exit.
-
-        When user clicks on back button of the application, this method
-        makes sure system UI screen is shown.
+        This method is called when an application needs to exit. It ensures the
+        system UI screen visibility when a back button is clicked.
 
         \qml
         AppUIScreen {
@@ -137,7 +143,6 @@ ApplicationManagerWindow {
         }
         \endqml
 
-        \sa fullScreenContent
     */
 
 

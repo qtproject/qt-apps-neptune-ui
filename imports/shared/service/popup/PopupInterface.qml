@@ -36,15 +36,16 @@ import QtApplicationManager 1.0
     \qmltype PopupInterface
     \inqmlmodule service
     \inherits Notification
-    \brief PopupInterface provides an interface for requesting popups.
+    \brief An interface for requesting popups.
 
-    PopupInterface inherits \l {https://doc.qt.io/QtApplicationManager/qml-qtapplicationmanager-notification.html}
-    {Notification} component and acts like an adapter for Neptune UI popups. Some properties are adopted
-    to match Neptune UI popup requirements. Properties \c timeout and \c category are modified and adopted for Neptune UI and
-    should not be used. By Neptune interaction design, popups should be dissmissed by user and
-    not by the timeout.
+    PopupInterface inherits \l{Notification} from \l{Qt Application Manager} and
+    acts like an adapter for Neptune UI popups.
+    The PopupInterface properties \c timeout and \c category are adopted
+    to match Neptune UI requirements and should not be used. In the Neptune UI
+    interaction, pop-ups should always be dismissed by an end user
+    instead of a time-out.
 
-    Example usage:
+    \section2 Example Usage
 
     \qml
 
@@ -58,8 +59,8 @@ import QtApplicationManager 1.0
 
     \endqml
 
-    Based on the \c priority popups will be queued. The \c actions property defines an array
-    of buttons for popup.
+    Pop-up notifications are queued based on a value in \c priority. \c actions
+    defines an array of buttons for a popup.
 */
 
 Notification {
@@ -71,7 +72,7 @@ Notification {
     /*!
          \qmlproperty string AppUIScreen::title
 
-         This property assigns title of the popup.
+         This property assigns a title for the popup.
     */
 
     property string title: ""
@@ -79,7 +80,7 @@ Notification {
     /*!
          \qmlproperty string AppUIScreen::subtitle
 
-         This property assigns subtitle of the popup.
+         This property assigns a subtitle for the popup.
     */
 
     property string subtitle: ""
@@ -92,6 +93,9 @@ Notification {
         root.updatePopup();
     }
 
+    /*!
+        \internal
+    */
     function updatePopup() {
         root.extended = {
             "title": root.title,

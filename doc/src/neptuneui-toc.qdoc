@@ -45,7 +45,7 @@
         \list
             \li \l{Building and Running Neptune UI}
             \li \l{Neptune UI Application Development}
-            \li \l{Neptune UI Components}
+            \li \l{Neptune UI Components and Interfaces}
             \list
                 \li \l{UIScreen}
                 \li \l{AppUIScreen}
