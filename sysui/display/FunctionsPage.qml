@@ -31,25 +31,25 @@
 
 import QtQuick 2.6
 import QtQuick.Layouts 1.0
-import QtGraphicalEffects 1.0
-import controls 1.0
 import QtQuick.Controls 2.0
 
+import controls 1.0
 import utils 1.0
 import models.settings 1.0
 import service.notification 1.0
 import service.popup 1.0
+import com.pelagicore.styles.neptune 1.0
 
 UIPage {
     id: root
 
     PopupInterface {
         id: popupInterface
-        actions: [ { text: "Cancel" } ]
+        actions: [ { text: "OK" } ]
         title: "Car Settings"
     }
 
-    header : AppInfoPanel {
+    header: AppInfoPanel {
         Layout.fillWidth: true
         Layout.preferredHeight: Style.vspan(2)
         title: 'Car Settings'
@@ -69,16 +69,22 @@ UIPage {
         cellWidth: width/3
         cellHeight: height/3
 
-        delegate: Item {
-            id: delegatedItem
+        delegate: Row {
             width: GridView.view.cellWidth
             height: GridView.view.cellHeight
+            spacing: 0
+            Rectangle {
+                id: highlightBar
+                width: 5
+                height: parent.height
+                color: model.active ? NeptuneStyle.accentColor : NeptuneStyle.darkColor
+            }
             Button {
                 checked: model.active
                 text: model.description
-                anchors.fill: parent
-                anchors.margins: padding
                 checkable: true
+                width: parent.width - highlightBar.width
+                height: parent.height
 
                 onClicked: {
                     model.active = !model.active
