@@ -54,6 +54,7 @@ UIPanel {
         width: Style.hspan(2)
         height: Style.vspan(3)
         anchors.bottom: parent.bottom
+        anchors.verticalCenter: nameLayout.verticalCenter
         source: Style.icon("widgets_phone")
     }
 
