@@ -37,11 +37,18 @@
 #include <QtGui/QGuiApplication>
 
 #include <QtQml>
-#include <QtQuickControls2/private/qquickstyleattached_p.h>
 
 class StyleData;
 
+#if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
+#include <QtQuickControls2/private/qquickattachedobject_p.h>
+
+class NeptuneStyle : public QQuickAttachedObject
+#else
+#include <QtQuickControls2/private/qquickstyleattached_p.h>
+
 class NeptuneStyle : public QQuickStyleAttached
+#endif
 {
     Q_OBJECT
     Q_PROPERTY(QColor darkColor READ darkColor NOTIFY neptuneStyleChanged FINAL)
@@ -133,7 +140,11 @@ private:
     qreal m_windowHeight;
 
 protected:
+#if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
+    void attachedParentChange(QQuickAttachedObject *newParent, QQuickAttachedObject *oldParent);
+#else
     void parentStyleChange(QQuickStyleAttached *newParent, QQuickStyleAttached *oldParent);
+#endif
     void inheritStyle(const StyleData &data);
     void propagateStyle(const StyleData &data);
     void resolveGlobalThemeData(const QSharedPointer<QSettings> &settings);

@@ -35,7 +35,9 @@
 #include <QtQuick/QQuickWindow>
 #include <QtGui/QGuiApplication>
 
-
+#if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
+#include <QtQuickControls2/private/qquickstyle_p.h>
+#endif
 
 class ThemeData
 {
@@ -194,7 +196,11 @@ static QByteArray resolveSetting(const QSharedPointer<QSettings> &settings, cons
 }
 
 NeptuneStyle::NeptuneStyle(QObject *parent)
+#if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
+    : QQuickAttachedObject(parent)
+#else
     : QQuickStyleAttached(parent)
+#endif
     , m_data(new StyleData(GlobalStyleData))
 {
     init();
@@ -347,7 +353,11 @@ void NeptuneStyle::init()
 {
     static bool initialized = false;
     if (!initialized) {
+#if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
+        QSharedPointer<QSettings> settings = QQuickStylePrivate::settings(QStringLiteral("Neptune"));
+#else
         QSharedPointer<QSettings> settings = QQuickStyleAttached::settings(QStringLiteral("Neptune"));
+#endif
         QByteArray data;
 
         data = resolveSetting(settings, "Theme");
@@ -376,7 +386,11 @@ void NeptuneStyle::init()
 
     initialized = true;
     m_data.reset(new StyleData(GlobalStyleData));
+#if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
+    QQuickAttachedObject::init();
+#else
     QQuickStyleAttached::init();
+#endif
 }
 
 void NeptuneStyle::resolveGlobalThemeData(const QSharedPointer<QSettings> &settings)
@@ -399,7 +413,11 @@ void NeptuneStyle::resolveGlobalThemeData(const QSharedPointer<QSettings> &setti
     }
 }
 
+#if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
+void NeptuneStyle::attachedParentChange(QQuickAttachedObject *newParent, QQuickAttachedObject *oldParent)
+#else
 void NeptuneStyle::parentStyleChange(QQuickStyleAttached *newParent, QQuickStyleAttached *oldParent)
+#endif
 {
     Q_UNUSED(oldParent);
     NeptuneStyle* neptune = qobject_cast<NeptuneStyle *>(newParent);
@@ -416,8 +434,13 @@ void NeptuneStyle::inheritStyle(const StyleData& data)
 
 void NeptuneStyle::propagateStyle(const StyleData& data)
 {
+#if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
+    const auto styles = attachedChildren();
+    for (QQuickAttachedObject *child: styles) {
+#else
     const auto styles = childStyles();
     for (QQuickStyleAttached *child: styles) {
+#endif
         NeptuneStyle* neptune = qobject_cast<NeptuneStyle *>(child);
         if (neptune)
             neptune->inheritStyle(data);
