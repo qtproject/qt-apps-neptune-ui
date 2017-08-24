@@ -75,7 +75,7 @@ Pane {
     }
 
     RowLayout {
-        spacing: Style.isPotrait ? 15 : 8
+        spacing: Style.paddingXL * 2
         Layout.maximumWidth: Style.hspan(12)
         anchors.right: parent.right
         anchors.top: parent.top
