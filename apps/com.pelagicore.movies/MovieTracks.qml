@@ -108,7 +108,8 @@ UIScreen {
                     }
                     Button {
                         text: 'PLAY NOW'
-                        Layout.alignment: Qt.AlignRight
+                        Layout.preferredWidth: Style.hspan(4)
+                        Layout.alignment: Qt.AlignLeft
                         onClicked: root.playMovie()
                     }
                 }

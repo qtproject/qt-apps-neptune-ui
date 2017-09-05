@@ -161,6 +161,28 @@ Control {
             }
         }
 
+        RowLayout {
+            Layout.alignment: Qt.AlignCenter
+            Label { text: qsTrId("language_id") + ": " }
+            ComboBox {
+                id: languageComboBox
+                width: Style.hspan(5)
+                implicitWidth: width
+                model: SettingsModel.languages
+                textRole: "name"
+                onCurrentIndexChanged: {
+                    SettingsModel.currentLanguageIndex = currentIndex;
+                }
+
+                Connections {
+                    target: SettingsModel
+                    onCurrentLanguageIndexChanged: {
+                        Style.languageLocale = SettingsModel.languages.get(languageComboBox.currentIndex).name
+                    }
+                }
+            }
+        }
+
     }
 
     Symbol {

@@ -39,6 +39,12 @@ QtObject {
     property string unitSystem: "metric"  // "metric" or "imp_us"
     readonly property bool metric: unitSystem === "metric"
 
+    readonly property ListModel languages: ListModel {
+        ListElement { name: "en_GB" }
+        ListElement { name: "de_DE" }
+    }
+    property int currentLanguageIndex: 0
+
     readonly property ListModel windowTransitions: ListModel {
         ListElement { name: "Zoom" }
         ListElement { name: "Tumble" }
@@ -88,42 +94,42 @@ QtObject {
 
     property ListModel functions: ListModel {
         ListElement {
-            description: "Hill descent control"
+            description: "hill_descent_control_id"
             icon: "hill_descent_control"
             active: true
         }
         ListElement {
-            description: "Intelligent speed adaptation"
+            description: "intelligent_speed_adaptation_id"
             icon: "intelligent_speed_adaptation"
             active: false
         }
         ListElement {
-            description: "Automatic beam switching"
+            description: "automatic_beam_switching_id"
             icon: "automatic_beam_switching"
             active: true
         }
         ListElement {
-            description: "Collision avoidance"
+            description: "collision_avoidance_id"
             icon: "collision_avoidance"
             active: false
         }
         ListElement {
-            description: "Lane assist"
+            description: "lane_assist_id"
             icon: "lane_keeping_assist"
             active: false
         }
         ListElement {
-            description: "Traffic jam assist"
+            description: "traffic_jam_assist_id"
             icon: "traffic_jam_assist"
             active: false
         }
         ListElement {
-            description: "Driver drowsiness alert"
+            description: "driver_drowsiness_alert_id"
             icon: "driver_drownsyness_alert"
             active: true
         }
         ListElement {
-            description: "Park assist"
+            description: "park_assist_id"
             icon: "park_assist"
             active: false
         }

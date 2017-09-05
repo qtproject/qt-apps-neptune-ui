@@ -73,6 +73,7 @@ UIPage {
             width: GridView.view.cellWidth
             height: GridView.view.cellHeight
             spacing: 0
+
             Rectangle {
                 id: highlightBar
                 width: 5
@@ -80,11 +81,11 @@ UIPage {
                 color: model.active ? NeptuneStyle.accentColor : NeptuneStyle.darkColor
             }
             Button {
-                checked: model.active
-                text: model.description
-                checkable: true
                 width: parent.width - highlightBar.width
                 height: parent.height
+                text: qsTrId(model.description)
+                checked: model.active
+                checkable: true
 
                 onClicked: {
                     model.active = !model.active
