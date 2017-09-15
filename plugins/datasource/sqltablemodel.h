@@ -39,7 +39,7 @@ class SqlTableModel : public QSqlTableModel
     Q_OBJECT
     Q_PROPERTY(int count READ count NOTIFY countChanged)
 public:
-    explicit SqlTableModel(QObject *parent = 0, QSqlDatabase db = QSqlDatabase());
+    explicit SqlTableModel(QObject *parent = nullptr, QSqlDatabase db = QSqlDatabase());
 
     void updateRoleNames();
     QHash<int, QByteArray> roleNames() const;

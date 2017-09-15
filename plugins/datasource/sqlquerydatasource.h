@@ -32,8 +32,10 @@
 #ifndef SQLQUERYDATASOURCE_H
 #define SQLQUERYDATASOURCE_H
 
-#include <QtCore>
-#include <QtSql>
+#include <QtCore/QObject>
+#include <QtCore/QVariantMap>
+#include <QtSql/QSqlDatabase>
+#include <QtSql/QSqlQuery>
 
 class SqlQueryModel;
 
@@ -50,13 +52,13 @@ class SqlQueryDataSource : public QObject
 
 public:
     enum Status { Null, Loading, Ready, Error };
-    explicit SqlQueryDataSource(QObject *parent = 0);
+    explicit SqlQueryDataSource(QObject *parent = nullptr);
 
-    void setQuery(QString queryString);
+    void setQuery(const QString &queryString);
     QString query() const;
 
     QString database() const;
-    void setDatabase(QString databaseName);
+    void setDatabase(const QString &databaseName);
 
     int count() const;
     Q_INVOKABLE QVariantMap get(int index) const;
@@ -66,7 +68,7 @@ public:
     Status status() const;
 
    QString storageLocation() const;
-   void setStorageLocation(QString path);
+   void setStorageLocation(const QString &path);
 private:
     void updateModel();
     void setStatus(Status arg);
@@ -74,12 +76,12 @@ private:
 
 signals:
     void countChanged();
-    void queryChanged(QString query);
+    void queryChanged(const QString &query);
 
-    void databaseChanged(QString arg);
+    void databaseChanged(const QString &arg);
     void statusChanged(Status arg);
 
-    void modelChanged(QObject* model);
+    void modelChanged(QObject *model);
     void storageLocationChanged();
 
 private:

@@ -45,7 +45,7 @@ class SqlTableDataSource : public QObject, public QQmlParserStatus
     Q_PROPERTY(QString database READ database WRITE setDatabase NOTIFY databaseChanged)
     Q_PROPERTY(QString table READ table WRITE setTable NOTIFY tableChanged)
     Q_PROPERTY(QString filter READ filter WRITE setFilter NOTIFY filterChanged)
-    Q_PROPERTY(QObject* model READ model NOTIFY modelChanged)
+    Q_PROPERTY(QObject *model READ model NOTIFY modelChanged)
     Q_PROPERTY(int count READ count NOTIFY countChanged)
     Q_PROPERTY(QString storageLocation READ storageLocation CONSTANT)
     Q_PROPERTY(Status status READ status NOTIFY statusChanged)
@@ -53,15 +53,15 @@ class SqlTableDataSource : public QObject, public QQmlParserStatus
 
 public:
     enum Status { Null, Loading, Ready, Error };
-    explicit SqlTableDataSource(QObject *parent = 0);
+    explicit SqlTableDataSource(QObject *parent = nullptr);
 
     QString table() const;
-    void setTable(QString tableName);
+    void setTable(const QString &tableName);
 
     QString database() const;
-    void setDatabase(QString databaseName);
+    void setDatabase(const QString &databaseName);
 
-    QAbstractItemModel* model() const;
+    QAbstractItemModel *model() const;
     int count() const;
     Status status() const;
     void setStatus(Status status);
@@ -75,15 +75,15 @@ public:
     QString storageLocation() const;
 
 public slots:
-    void setFilter(QString filter);
+    void setFilter(const QString &filter);
 
 signals:
-    void tableChanged(QString table);
-    void databaseChanged(QString database);
+    void tableChanged(const QString &table);
+    void databaseChanged(const QString &database);
     void countChanged(int count);
     void statusChanged(Status status);
-    void modelChanged(QObject* model);
-    void filterChanged(QString arg);
+    void modelChanged(QObject *model);
+    void filterChanged(const QString &arg);
 
 private:
     void updateModel();
@@ -91,7 +91,7 @@ private:
     QString m_tableName;
     QString m_databaseName;
     QSqlDatabase m_database;
-    SqlTableModel* m_model;
+    SqlTableModel *m_model;
     Status m_status;
     QString m_filter;
     bool m_componentCompleted;

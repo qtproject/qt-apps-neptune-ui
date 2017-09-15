@@ -29,6 +29,10 @@
 **
 ****************************************************************************/
 
+#include <QtCore/QDir>
+#include <QtCore/QDebug>
+#include <QtSql/QSqlError>
+
 #include "sqlquerydatasource.h"
 #include "sqlquerymodel.h"
 
@@ -46,8 +50,7 @@ SqlQueryDataSource::SqlQueryDataSource(QObject *parent)
 
 QVariantMap SqlQueryDataSource::get(int index) const
 {
-    if (!m_model) { return QVariantMap(); }
-    return m_model->get(index);
+    return m_model ? m_model->get(index) : QVariantMap();
 }
 
 QString SqlQueryDataSource::database() const
@@ -60,22 +63,19 @@ SqlQueryDataSource::Status SqlQueryDataSource::status() const
     return m_status;
 }
 
-
 int SqlQueryDataSource::count() const
 {
-    if (!m_model) { return 0; }
-    return m_model->rowCount();
+    return m_model ? m_model->rowCount() : 0;
 }
 
 QString SqlQueryDataSource::query() const
 {
-    if (!m_query.isValid()) {
+    if (!m_query.isValid())
         return QString();
-    }
     return m_query.lastQuery();
 }
 
-void SqlQueryDataSource::setQuery(QString queryString)
+void SqlQueryDataSource::setQuery(const QString &queryString)
 {
     qDebug() << "SqlQueryDataSource::setQuery() " << queryString;
     if (m_queryString != queryString) {
@@ -85,7 +85,7 @@ void SqlQueryDataSource::setQuery(QString queryString)
     }
 }
 
-void SqlQueryDataSource::setDatabase(QString databaseName)
+void SqlQueryDataSource::setDatabase(const QString &databaseName)
 {
     if (m_databaseName != databaseName) {
         m_databaseName = databaseName;
@@ -109,9 +109,8 @@ void SqlQueryDataSource::updateModel()
             m_database.setDatabaseName(databasePath);
             qDebug() << "database path: " << databasePath;
         }
-        if (!m_database.isOpen()) {
+        if (!m_database.isOpen())
             m_database.open();
-        }
     }
     if (m_database.isValid() && !m_queryString.isEmpty()) {
         setStatus(Loading);
@@ -148,8 +147,7 @@ QString SqlQueryDataSource::storageLocation() const
     return m_storageLocation;
 }
 
-void SqlQueryDataSource::setStorageLocation(QString path)
+void SqlQueryDataSource::setStorageLocation(const QString &path)
 {
     m_storageLocation = QDir(path).absolutePath();
 }
-

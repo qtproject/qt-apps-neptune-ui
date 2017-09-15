@@ -39,7 +39,7 @@ class SqlQueryModel : public QSqlQueryModel
 {
     Q_OBJECT
 public:
-    explicit SqlQueryModel(QObject *parent = 0);
+    explicit SqlQueryModel(QObject *parent = nullptr);
     void updateRoleNames();
     QHash<int, QByteArray> roleNames() const;
     QVariantMap get(int row) const;

@@ -34,28 +34,25 @@
 #include <QDebug>
 
 ComTQCi18nDemo::ComTQCi18nDemo(QObject *parent)
-    : QObject(parent),
-      m_languageLocale(""),
-      m_languageFilePath(""),
-      m_languageFilePrefix("")
+    : QObject(parent)
 {
 }
 
-void ComTQCi18nDemo::setPrefix(QString languageFilePrefix)
+void ComTQCi18nDemo::setPrefix(const QString &languageFilePrefix)
 {
     qDebug() << "File prefix: " << languageFilePrefix;
 
     m_languageFilePrefix = languageFilePrefix;
 }
 
-void ComTQCi18nDemo::setPath(QUrl languageFilePath)
+void ComTQCi18nDemo::setPath(const QUrl &languageFilePath)
 {
     qDebug() << "File path: " << languageFilePath.toLocalFile();
 
     m_languageFilePath = languageFilePath.toLocalFile();
 }
 
-void ComTQCi18nDemo::setLanguageLocale(QString languageLocale)
+void ComTQCi18nDemo::setLanguageLocale(const QString &languageLocale)
 {
     qDebug() << "Locale: " << languageLocale;
 
@@ -76,13 +73,13 @@ QString ComTQCi18nDemo::languageLocale() const
 
 QString ComTQCi18nDemo::emptyString() const
 {
-    return "";
+    return QString();
 }
 
-bool ComTQCi18nDemo::loadTranslationFile(QString &langLocale)
+bool ComTQCi18nDemo::loadTranslationFile(const QString &langLocale)
 {
-    QString fileToLoad(m_languageFilePath + m_languageFilePrefix + "_");
-    fileToLoad += langLocale + ".qm";
+    QString fileToLoad(m_languageFilePath + m_languageFilePrefix + QLatin1Char('_'));
+    fileToLoad += langLocale + QStringLiteral(".qm");
 
     qDebug() << "File to load: " << fileToLoad;
 

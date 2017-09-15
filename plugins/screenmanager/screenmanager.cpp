@@ -48,11 +48,10 @@ int ScreenManager::screenCount() const
 
 void ScreenManager::setScreen(QWindow *window, int screen)
 {
-    if (screen >= 0 && screen < QGuiApplication::screens().count()) {
+    if (screen >= 0 && screen < QGuiApplication::screens().count())
         window->setScreen(QGuiApplication::screens().at(screen));
-    } else {
+    else
         qWarning() << "invalid Screen";
-    }
 }
 
 QList<QObject *> ScreenManager::availableScreens() const

@@ -34,6 +34,7 @@
 #include <QtQuick/QQuickItem>
 #include <QtQuick/QQuickWindow>
 #include <QtGui/QGuiApplication>
+#include <QtCore/QSettings>
 
 #if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
 #include <QtQuickControls2/private/qquickstyle_p.h>

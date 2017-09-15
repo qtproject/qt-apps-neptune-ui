@@ -33,8 +33,8 @@
 #define COMTQCI18NDEMO_H
 
 #include <QtCore/QObject>
-#include <QTranslator>
-#include <QUrl>
+#include <QtCore/QTranslator>
+#include <QtCore/QUrl>
 
 class ComTQCi18nDemo : public QObject
 {
@@ -44,12 +44,12 @@ class ComTQCi18nDemo : public QObject
     Q_PROPERTY(QString emptyString READ emptyString NOTIFY languageChanged)
 
 public:
-    explicit ComTQCi18nDemo(QObject *parent = 0);
+    explicit ComTQCi18nDemo(QObject *parent = nullptr);
 
-    Q_INVOKABLE void setPrefix(QString languageFilePrefix);
-    Q_INVOKABLE void setPath(QUrl languageFilePath);
+    Q_INVOKABLE void setPrefix(const QString &languageFilePrefix);
+    Q_INVOKABLE void setPath(const QUrl &languageFilePath);
 
-    Q_INVOKABLE void setLanguageLocale(QString languageLocale);
+    Q_INVOKABLE void setLanguageLocale(const QString &languageLocale);
     QString languageLocale() const;
 
     // Helper method to notify string change
@@ -60,7 +60,7 @@ signals:
     void languageChanged();
 
 protected:
-    bool loadTranslationFile(QString &langLocale);
+    bool loadTranslationFile(const QString &langLocale);
 
     QString m_languageLocale;
     QString m_languageFilePath;

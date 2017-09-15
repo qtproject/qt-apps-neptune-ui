@@ -42,7 +42,7 @@ class ScreenManager : public QObject
     Q_PROPERTY(QList<QObject*> availableScreens READ availableScreens NOTIFY availableScreensChanged)
 
 public:
-    explicit ScreenManager(QObject *parent = 0);
+    explicit ScreenManager(QObject *parent = nullptr);
 
     Q_INVOKABLE int screenCount() const;
     Q_INVOKABLE void setScreen(QWindow * window, int screen);

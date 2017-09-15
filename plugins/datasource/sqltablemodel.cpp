@@ -46,9 +46,8 @@ void SqlTableModel::updateRoleNames()
 {
     qDebug() << "SqlTableModel::updateRoleNames()";
     m_roleNames.clear();
-    for (int i = 0; i < record().count(); i++) {
+    for (int i = 0; i < record().count(); i++)
         m_roleNames[Qt::UserRole + i + 1] = record().fieldName(i).toLatin1();
-    }
     qDebug() << "  role names: " << m_roleNames.values();
 }
 
@@ -63,9 +62,8 @@ QVariantMap SqlTableModel::get(int row) const
 {
     QVariantMap map;
     QModelIndex index = createIndex(row, 0);
-    foreach (int role, m_roleNames.keys()) {
+    foreach (int role, m_roleNames.keys())
         map.insert(m_roleNames.value(role), data(index, role));
-    }
     return map;
 }
 
@@ -91,4 +89,3 @@ void SqlTableModel::notifyCount()
 {
     emit countChanged(rowCount());
 }
-

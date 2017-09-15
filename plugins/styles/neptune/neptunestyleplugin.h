@@ -32,8 +32,9 @@
 #ifndef NEPTUNESTYLEPLUGIN_H
 #define NEPTUNESTYLEPLUGIN_H
 
-#include <QtQml>
 #include <QtQuickControls2/private/qquickstyleplugin_p.h>
+
+QT_FORWARD_DECLARE_CLASS(QQmlEngine)
 
 class NeptuneStylePlugin : public QQuickStylePlugin
 {

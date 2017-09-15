@@ -83,7 +83,7 @@
 
     \li Build Neptune UI and install it by running the following command in a terminal:
     \badcode
-    qmake -r INSTALL_PREFIX=<choose a loation> neptuneui.pro
+    qmake -r INSTALL_PREFIX=<choose a loation> neptune-ui.pro
     make && make install
     \endcode
 

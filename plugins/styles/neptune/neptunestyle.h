@@ -33,10 +33,10 @@
 #define NEPTUNESTYLE_H
 
 #include <QtGui/QColor>
-#include <QtGui/QFont>
-#include <QtGui/QGuiApplication>
+#include <QtCore/QSharedPointer>
+#include <QtCore/QScopedPointer>
 
-#include <QtQml>
+QT_FORWARD_DECLARE_CLASS(QSettings)
 
 class StyleData;
 

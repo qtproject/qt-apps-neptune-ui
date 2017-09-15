@@ -40,7 +40,7 @@
 
 SqlTableDataSource::SqlTableDataSource(QObject *parent)
     : QObject(parent)
-    , m_model(0)
+    , m_model(nullptr)
     , m_status(Null)
     , m_componentCompleted(false)
 {
@@ -63,8 +63,7 @@ QAbstractItemModel *SqlTableDataSource::model() const
 
 int SqlTableDataSource::count() const
 {
-    if (!m_model) { return 0; }
-    return m_model->rowCount();
+    return m_model ? m_model->rowCount() : 0;
 }
 
 SqlTableDataSource::Status SqlTableDataSource::status() const
@@ -82,13 +81,12 @@ void SqlTableDataSource::setStatus(SqlTableDataSource::Status status)
 
 QString SqlTableDataSource::filter() const
 {
-    return m_model->filter();
+    return m_model ? m_model->filter() : QString();
 }
 
 QVariantMap SqlTableDataSource::get(int index) const
 {
-    if (!m_model) { return QVariantMap(); }
-    return m_model->get(index);
+    return m_model ? m_model->get(index) : QVariantMap();
 }
 
 void SqlTableDataSource::classBegin()
@@ -107,17 +105,17 @@ QString SqlTableDataSource::storageLocation() const
     return QDir::homePath();
 }
 
-void SqlTableDataSource::setFilter(QString filter)
+void SqlTableDataSource::setFilter(const QString &filter)
 {
     qDebug() << "SqlTableDataSource::setFilter(): " << filter;
-    if (m_model->filter() != filter) {
+    if (m_model && (m_model->filter() != filter)) {
         m_model->setFilter(filter);
         m_model->select();
         emit filterChanged(filter);
     }
 }
 
-void SqlTableDataSource::setTable(QString tableName)
+void SqlTableDataSource::setTable(const QString &tableName)
 {
     if (m_tableName != tableName) {
         m_tableName = tableName;
@@ -126,7 +124,7 @@ void SqlTableDataSource::setTable(QString tableName)
     }
 }
 
-void SqlTableDataSource::setDatabase(QString databaseName)
+void SqlTableDataSource::setDatabase(const QString &databaseName)
 {
     if (m_databaseName != databaseName) {
         m_databaseName = databaseName;
@@ -138,7 +136,8 @@ void SqlTableDataSource::setDatabase(QString databaseName)
 
 void SqlTableDataSource::updateModel()
 {
-    if (!m_componentCompleted) { return; }
+    if (!m_componentCompleted)
+        return;
     qDebug() << "SqlTableDataSource::updateModel()";
     if (m_databaseName.isEmpty() || m_tableName.isEmpty()) {
         setStatus(Null);
@@ -163,10 +162,10 @@ void SqlTableDataSource::updateModel()
         }
     }
     if (m_database.isValid() && !m_tableName.isEmpty()) {
-        if (!m_model || m_model->tableName() != m_tableName) {
+        if (!m_model || (m_model->tableName() != m_tableName)) {
             if (m_model) {
                 delete m_model;
-                m_model = 0;
+                m_model = nullptr;
                 emit modelChanged(m_model);
             }
             m_model = new SqlTableModel(this, m_database);
@@ -178,12 +177,10 @@ void SqlTableDataSource::updateModel()
         qDebug() << "  update role names";
         m_model->updateRoleNames();
         qDebug() << "  select data";
-        if (!m_model->select()) {
+        if (!m_model->select())
             qDebug() << " error: select data from model";
-        }
-        while (m_model->canFetchMore()) {
+        while (m_model->canFetchMore())
             m_model->fetchMore(QModelIndex());
-        }
         qDebug() << "  finish select data";
         if (m_model->lastError().isValid()) {
             qDebug() << "  error: " << m_model->lastError().text();

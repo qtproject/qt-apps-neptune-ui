@@ -6,23 +6,21 @@ include(config.pri)
 
 SUBDIRS += plugins
 SUBDIRS += doc
-SUBDIRS += imports/shared/controls
+
+copydata.file = copydata.pro
+copydata.depends = plugins
 
 # HACK: CI does not have appman in dependency list, which is why
 # we are not building the executable to avoid failing integration tests.
 qtHaveModule(appman_main-private) {
    message("Module appman_main-private found.")
    SUBDIRS += src
+   copydata.depends += src
 } else {
    message("Module appman_main-private not found. Custom executable won't be build.")
 }
 
-# Copy all QML files during the build time
-copydata.commands = $(COPY_DIR) $$PWD/apps $$PWD/imports $$PWD/sysui $$PWD/styles $$PWD/am-config.yaml $$PWD/Main.qml $$OUT_PWD
-first.depends = $(first) copydata
-export(first.depends)
-export(copydata.commands)
-!equals(PWD, $$OUT_PWD): QMAKE_EXTRA_TARGETS += first copydata
+SUBDIRS += copydata
 
 # Install all required files
 qml.files = apps imports sysui examples styles am-config.yaml Main.qml
