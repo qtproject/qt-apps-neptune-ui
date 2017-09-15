@@ -29,55 +29,39 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.0
+import QtQuick 2.6
+import QtQuick.Layouts 1.0
 import QtQuick.Controls 2.0
-import QtQml.Models 2.1
 
 import controls 1.0
 import utils 1.0
-import cloud 1.0
 
-import models.system 1.0
-import models.settings 1.0
-
-UIScreen {
+ListItem {
     id: root
 
-    height: Style.vspan(20)
+    hasChildren: false
 
-    hideBack: true
+    property bool selected: false
 
-    property alias homePage: homePageContainer.children
+    // Replace this with asset when available
+    Rectangle {
+        width: Style.vspan(0.6)
+        height: width
+        radius: width
+        border.width: Style.vspan(0.08)
+        border.color: Style.colorWhite
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.right: parent.right
+        anchors.rightMargin: Style.vspan(6)
+        color: "transparent"
 
-    SwipeView {
-        id: view
-        anchors.fill: parent
-        interactive: !SettingsModel.settingsPageVisible
-        currentIndex: SystemModel.currentPageIndex
-        onCurrentIndexChanged: SystemModel.currentPageIndex = currentIndex
-
-        onCountChanged: SystemModel.pageCount = view.count
-
-        MyCarPage {
-        }
-
-        FunctionsPage {
-        }
-
-        Item {
-            id: homePageContainer
-            implicitWidth: Style.hspan(24)
-            implicitHeight: Style.vspan(24)
-        }
-
-        LauncherPage {
-            id: launcher
-            onUpdateApp: {
-                view.currentIndex = index;
-            }
-        }
-
-        CloudPage {
+        Rectangle {
+            width: Style.vspan(0.3)
+            height: width
+            radius: width
+            anchors.centerIn: parent
+            color: Style.colorOrange
+            visible: selected
         }
     }
 }

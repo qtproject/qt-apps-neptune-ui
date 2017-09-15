@@ -36,51 +36,59 @@ import QtQuick.Controls 2.0
 import controls 1.0
 import utils 1.0
 
-// TODO: Convert to use QQC2 ItemDelegate
-// TODO: Convert to use RowLayout
-// TODO: Remove this as it is never used
-Control {
+ItemDelegate {
     id: root
 
-    property alias iconName: image.source
-    property alias titleText: titleLabel.text
-    property alias iconFit: image.fit
+    property alias icon: icon.name
+    property alias hasChildren: childIndicator.visible
 
-    signal clicked()
+    background: Item {
+        anchors.fill: root
+    }
 
-    Row {
-        anchors.verticalCenter: parent.verticalCenter
+    contentItem: Control {
+        anchors.fill: root
+        RowLayout {
+            height: parent.height
 
-        Icon {
-            id: image
+            Symbol {
+                id: icon
+                Layout.preferredWidth: Style.hspan(2)
+                Layout.fillHeight: true
+                opacity: 0.4
+            }
 
-            width: Style.hspan(2)
+            Label {
+                id: titleLabel
+                Layout.preferredWidth: Style.hspan(18)
+                Layout.fillHeight: true
+                text: root.text
+                elide: Text.ElideRight
+            }
+
+            Icon {
+                id: childIndicator
+                Layout.preferredWidth: Style.hspan(2)
+                Layout.fillHeight: true
+                source: Style.icon("cloud_arrow")
+            }
+        }
+
+        Control {
+            width: root.width
+            anchors.verticalCenter: parent.bottom
+            anchors.horizontalCenter: parent.horizontalCenter
             height: Style.vspan(2)
-            opacity: 0.6
-        }
-
-        Label {
-            id: titleLabel
-
-            width: Style.hspan(8); height: Style.vspan(2)
-        }
-
-        Icon {
-            id: childIndicator
-
-            width: Style.hspan(1); height: Style.vspan(2)
-            source: Style.icon("cloud_arrow")
+            Image {
+                width: parent.width
+                anchors.centerIn: parent
+                anchors.verticalCenterOffset: 16
+                source: Style.gfx('widgets_hdiv')
+                asynchronous: true
+            }
         }
     }
 
-    Divider {
-        width: parent.width
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: -5
-    }
-
-    MouseArea {
-        anchors.fill: parent
-        onClicked: root.clicked()
+    Tracer {
     }
 }

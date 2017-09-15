@@ -35,6 +35,7 @@ import QtGraphicalEffects 1.0
 import QtQuick.Controls 2.1
 import controls 1.0
 import utils 1.0
+import animations 1.0
 import models.application 1.0
 import models.settings 1.0
 import models.system 1.0
@@ -74,7 +75,8 @@ Item {
 
         Loader {
             id: windowTransitionsLoader
-            source: "windowtransitions/" + SettingsModel.windowTransitions.get(SettingsModel.windowTransitionsIndex).name + ".qml"
+            sourceComponent: SettingsModel.windowTransitionsIndex === 0 ? SettingsModel.zoomTransition : SettingsModel.tumbleTransition
+
             Binding {
                 target: windowTransitionsLoader.item
                 property: "itemWidth"
@@ -82,6 +84,11 @@ Item {
             }
         }
         property alias windowTransitions: windowTransitionsLoader.item
+
+        Connections {
+            target: windowTransitionsLoader.item
+            onExitAction: ApplicationManagerModel.releasingApplicationSurfaceDone(stackView.currentItem)
+        }
 
         Item {
             id: dummyitem

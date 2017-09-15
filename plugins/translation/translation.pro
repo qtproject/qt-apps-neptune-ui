@@ -30,7 +30,9 @@ target.path = $$installPath
 
 supportedLocales = \
     de_DE \
-    en_GB
+    en_GB \
+    en_US \
+    in_ID
 
 TRANSLATIONS = $$prependAll(supportedLocales, $$assetsPath/translations/, .ts)
 

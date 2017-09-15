@@ -31,16 +31,20 @@
 
 pragma Singleton
 import QtQuick 2.6
+import animations 1.0
 
 QtObject {
     id: root
 
+    property bool settingsPageVisible: false
     property bool clusterVisible: true
     property string unitSystem: "metric"  // "metric" or "imp_us"
     readonly property bool metric: unitSystem === "metric"
 
     readonly property ListModel languages: ListModel {
         ListElement { name: "en_GB" }
+        ListElement { name: "en_US" }
+        ListElement { name: "in_ID" }
         ListElement { name: "de_DE" }
     }
     property int currentLanguageIndex: 0
@@ -49,6 +53,10 @@ QtObject {
         ListElement { name: "Zoom" }
         ListElement { name: "Tumble" }
     }
+
+    property Component zoomTransition: Zoom {}
+    property Component tumbleTransition: Tumble {}
+
     property int windowTransitionsIndex: 0
 
     property ListModel entries: ListModel {

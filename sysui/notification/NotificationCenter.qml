@@ -35,6 +35,7 @@ import utils 1.0
 import controls 1.0
 import models.notification 1.0
 import models.system 1.0
+import models.settings 1.0
 
 Control {
     id: root
@@ -54,7 +55,33 @@ Control {
             visible: opacity > 0.0
         }
 
+        Label {
+            id: notificationCenterTitle
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.top: parent.top
+            anchors.topMargin: Style.hspan(0.5)
+            horizontalAlignment: Text.AlignHCenter
+            text: "Notification Center"
+        }
+
+        Symbol {
+            anchors.top: parent.top
+            anchors.right: parent.right
+            anchors.topMargin: Style.hspan(0.1)
+            anchors.rightMargin: Style.hspan(0.5)
+            size: Style.symbolSizeS
+            name: "settings"
+            MouseArea {
+                anchors.fill: parent
+                onClicked: {
+                    SystemModel.notificationCenterVisible = false
+                    SettingsModel.settingsPageVisible = true
+                }
+            }
+        }
+
         Column {
+            anchors.top: notificationCenterTitle.bottom
             Repeater {
                 id: notificationRepeater
                 model: NotificationModel.model

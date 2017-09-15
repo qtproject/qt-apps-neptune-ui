@@ -107,7 +107,7 @@ QtObject {
             PropertyAction { property: "clip"; value: false }
             ScriptAction {
                 script: {
-                    ApplicationManagerModel.releasingApplicationSurfaceDone(stackView.currentItem)
+                    root.exitAction()
                 }
             }
         }
@@ -176,9 +176,11 @@ QtObject {
             PropertyAction { property: "clip"; value: false }
             ScriptAction {
                 script: {
-                    ApplicationManagerModel.releasingApplicationSurfaceDone(stackView.currentItem)
+                    root.exitAction()
                 }
             }
         }
     }
+
+    signal exitAction()
 }

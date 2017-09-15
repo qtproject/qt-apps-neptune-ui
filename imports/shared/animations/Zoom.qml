@@ -116,9 +116,11 @@ QtObject {
             }
             ScriptAction {
                 script: {
-                    ApplicationManagerModel.releasingApplicationSurfaceDone(stackView.currentItem)
+                    root.exitAction()
                 }
             }
         }
     }
+
+    signal exitAction()
 }

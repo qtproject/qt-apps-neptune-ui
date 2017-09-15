@@ -29,55 +29,37 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.0
-import QtQuick.Controls 2.0
-import QtQml.Models 2.1
+import QtQuick 2.6
+import QtQuick.Controls 2.2
 
 import controls 1.0
 import utils 1.0
-import cloud 1.0
-
-import models.system 1.0
 import models.settings 1.0
 
-UIScreen {
+Item {
     id: root
-
+    width: Style.hspan(24)
     height: Style.vspan(20)
 
-    hideBack: true
+    ListModel {
+        id: pageModel
+        ListElement {
+            title: "Language Settings"
+            page: "language/LanguageSettings.qml"
+        }
+    }
 
-    property alias homePage: homePageContainer.children
-
-    SwipeView {
-        id: view
+    ListView {
+        id: settingsListView
+        model: pageModel
         anchors.fill: parent
-        interactive: !SettingsModel.settingsPageVisible
-        currentIndex: SystemModel.currentPageIndex
-        onCurrentIndexChanged: SystemModel.currentPageIndex = currentIndex
-
-        onCountChanged: SystemModel.pageCount = view.count
-
-        MyCarPage {
+        boundsBehavior: Flickable.StopAtBounds
+        delegate: ListItem {
+            width: settingsListView.width
+            height: Style.vspan(2)
+            text: title
+            onClicked: stackView.push(Qt.resolvedUrl(page))
         }
 
-        FunctionsPage {
-        }
-
-        Item {
-            id: homePageContainer
-            implicitWidth: Style.hspan(24)
-            implicitHeight: Style.vspan(24)
-        }
-
-        LauncherPage {
-            id: launcher
-            onUpdateApp: {
-                view.currentIndex = index;
-            }
-        }
-
-        CloudPage {
-        }
     }
 }

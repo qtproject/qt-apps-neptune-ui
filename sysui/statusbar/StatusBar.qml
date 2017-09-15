@@ -49,10 +49,12 @@ Pane {
     MouseArea {
         anchors.fill: parent
         onClicked: {
-            if (SystemModel.climateExpanded) {
-                SystemModel.climateExpanded.expanded = false
-            } else {
-                SystemModel.statusBarExpanded = true
+            if (!SettingsModel.settingsPageVisible) {
+                if (SystemModel.climateExpanded) {
+                    SystemModel.climateExpanded.expanded = false
+                } else {
+                    SystemModel.statusBarExpanded = true
+                }
             }
         }
         onPressAndHold: SystemModel.toolBarMonitorVisible = !SystemModel.toolBarMonitorVisible

@@ -29,55 +29,45 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.0
-import QtQuick.Controls 2.0
-import QtQml.Models 2.1
+import QtQuick 2.6
+import QtQuick.Controls 2.2
 
 import controls 1.0
 import utils 1.0
-import cloud 1.0
-
-import models.system 1.0
 import models.settings 1.0
 
-UIScreen {
+Item {
     id: root
-
+    width: Style.hspan(24)
     height: Style.vspan(20)
 
-    hideBack: true
+    Label {
+        id: title
+        anchors.top: parent.top
+        anchors.topMargin: Style.vspan(1)
+        anchors.left: settingsListView.left
+        text: "System Language:"
+    }
 
-    property alias homePage: homePageContainer.children
-
-    SwipeView {
-        id: view
-        anchors.fill: parent
-        interactive: !SettingsModel.settingsPageVisible
-        currentIndex: SystemModel.currentPageIndex
-        onCurrentIndexChanged: SystemModel.currentPageIndex = currentIndex
-
-        onCountChanged: SystemModel.pageCount = view.count
-
-        MyCarPage {
-        }
-
-        FunctionsPage {
-        }
-
-        Item {
-            id: homePageContainer
-            implicitWidth: Style.hspan(24)
-            implicitHeight: Style.vspan(24)
-        }
-
-        LauncherPage {
-            id: launcher
-            onUpdateApp: {
-                view.currentIndex = index;
+    ListView {
+        id: settingsListView
+        width: Style.hspan(22)
+        height: parent.height
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.top: title.bottom
+        anchors.topMargin: Style.vspan(0.8)
+        model: SettingsModel.languages
+        boundsBehavior: Flickable.StopAtBounds
+        delegate: ListItemRadioButton {
+            width: settingsListView.width
+            height: Style.vspan(2)
+            text: name
+            hasChildren: false
+            selected: SettingsModel.currentLanguageIndex === index
+            onClicked: {
+                SettingsModel.currentLanguageIndex = index
+                Style.languageLocale = SettingsModel.languages.get(index).name
             }
-        }
-
-        CloudPage {
         }
     }
 }

@@ -102,6 +102,13 @@ Item {
         source: "About.qml"
     }
 
+    StageLoader {
+        id: settingsLoader
+        anchors.top: statusBar.bottom
+        active: StagedStartupModel.loadBackgroundElements
+        source: "../settings/Settings.qml"
+    }
+
     ClimateBar {
     }
 

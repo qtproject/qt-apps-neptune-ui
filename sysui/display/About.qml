@@ -45,25 +45,12 @@ Control {
     width: Style.screenWidth
     height: Style.vspan(20)
 
-    readonly property bool _fullyHidden: y === -height
-    on_FullyHiddenChanged: {
-        if (_fullyHidden) {
-            // reset state
-            _showUISettings = false;
-        }
-    }
-    visible: !_fullyHidden // Don't bother QSG rendering when offscreen
-
-    property bool _showUISettings: false
-
     Behavior on y {
         NumberAnimation { duration: 500; easing.type: Easing.OutCubic }
     }
 
     Item {
         anchors.fill: parent
-
-        opacity: root._showUISettings ? 0 : 1
         visible: opacity > 0
         Behavior on opacity {
             NumberAnimation { duration: 250; easing.type: Easing.OutCubic }
@@ -118,83 +105,6 @@ Control {
             } else {
                 SystemModel.statusBarExpanded = false
             }
-        }
-    }
-
-    ColumnLayout {
-        id: settingsUI
-        anchors.fill: parent
-        anchors.topMargin: Style.hspan(2)
-        anchors.leftMargin: Style.hspan(4)
-        anchors.rightMargin: Style.hspan(4)
-
-        opacity: root._showUISettings ? 1 : 0
-        visible: opacity > 0
-        Behavior on opacity {
-            NumberAnimation { duration: 250; easing.type: Easing.OutCubic }
-        }
-
-        RowLayout {
-            Layout.alignment: Qt.AlignCenter
-            Label { text: "Window Transitions:" }
-            ComboBox {
-                id: windowTransitionsComboBox
-                model: SettingsModel.windowTransitions
-                textRole: "name"
-
-                // NB: binding will be broken as soon as the user makes his first selection
-                currentIndex: SettingsModel.windowTransitionsIndex
-
-                // Ensure model and combo box are kept in sync
-                onCurrentIndexChanged: {
-                    SettingsModel.windowTransitionsIndex = currentIndex;
-                }
-                Connections {
-                    target: SettingsModel
-                    onWindowTransitionsIndexChanged: {
-                        windowTransitionsComboBox.currentIndex = SettingsModel.windowTransitionsIndex
-                    }
-                }
-
-                width: Style.hspan(5)
-                implicitWidth: width
-            }
-        }
-
-        RowLayout {
-            Layout.alignment: Qt.AlignCenter
-            Label { text: qsTrId("language_id") + ": " }
-            ComboBox {
-                id: languageComboBox
-                width: Style.hspan(5)
-                implicitWidth: width
-                model: SettingsModel.languages
-                textRole: "name"
-                onCurrentIndexChanged: {
-                    SettingsModel.currentLanguageIndex = currentIndex;
-                }
-
-                Connections {
-                    target: SettingsModel
-                    onCurrentLanguageIndexChanged: {
-                        Style.languageLocale = SettingsModel.languages.get(languageComboBox.currentIndex).name
-                    }
-                }
-            }
-        }
-
-    }
-
-    Symbol {
-        anchors.top: parent.top
-        anchors.right: parent.right
-        anchors.topMargin: Style.hspan(2)
-        anchors.rightMargin: Style.hspan(0.5)
-        size: Style.symbolSizeS
-        name: "settings"
-        MouseArea {
-            anchors.fill: parent
-            onClicked: root._showUISettings = !root._showUISettings
         }
     }
 

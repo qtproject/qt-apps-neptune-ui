@@ -113,7 +113,7 @@ QtObject {
         id: translation
         Component.onCompleted: {
             setPath(root.assetPath + "translations/");
-            languageLocale = "en_GB";
+            languageLocale = "en_US";
         }
     }
 
