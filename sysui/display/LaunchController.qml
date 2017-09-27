@@ -64,7 +64,7 @@ Item {
         height: parent.height
         focus: true
 
-        visible: fastBlur.radius === 0
+        opacity: fastBlur.radius === 0 ? 1 : 0
 
         pushEnter: windowTransitions ? windowTransitions.pushEnter : null
         pushExit: windowTransitions ? windowTransitions.pushExit : null
@@ -141,7 +141,7 @@ Item {
         anchors.fill: stackView
         source: stackView
         radius: SystemModel.statusBarExpanded ? 100 : 0
-        visible: !stackView.visible
+        visible: stackView.opacity == 0
         enabled: visible
 
         Behavior on radius {
