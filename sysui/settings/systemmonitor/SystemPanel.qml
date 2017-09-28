@@ -69,7 +69,7 @@ UIPage {
         width: root.width/2
         height: root.mergeReport ? 0 : root.height/7
         anchors.horizontalCenter: parent.horizontalCenter
-        anchors.top: root.top
+        anchors.top: parent.top
         anchors.topMargin: root.height/12
         opacity: root.mergeReport ? 0: 1
 
@@ -293,31 +293,31 @@ UIPage {
 
     }
 
-    Rectangle {
-        id: rotatingBox
-        width: 60
-        height: 60
-        anchors.top: root.top
-        anchors.topMargin: 50
-        anchors.left: root.left
-        anchors.leftMargin: 150
-        color: "white"
+//    Rectangle {
+//        id: rotatingBox
+//        width: 60
+//        height: 60
+//        anchors.top: root.top
+//        anchors.topMargin: 50
+//        anchors.left: root.left
+//        anchors.leftMargin: 150
+//        color: "white"
 
-        RotationAnimation {
-            id: animator
-            target: rotatingBox;
-            from: 0;
-            to: 360;
-            loops: Animation.Infinite
-            duration: 1000
-            running: true
-        }
+//        RotationAnimation {
+//            id: animator
+//            target: rotatingBox;
+//            from: 0;
+//            to: 360;
+//            loops: Animation.Infinite
+//            duration: 1000
+//            running: true
+//        }
 
-        MouseArea {
-            anchors.fill: parent
-            onClicked: animator.running = !animator.running
-        }
-    }
+//        MouseArea {
+//            anchors.fill: parent
+//            onClicked: animator.running = !animator.running
+//        }
+//    }
 
     Button {
         width: Style.hspan(3)

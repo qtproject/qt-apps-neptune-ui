@@ -68,19 +68,38 @@ Page {
         anchors.topMargin: Style.hspan(0.5)
         horizontalAlignment: Text.AlignHCenter
         visible: root.opacity === 1.0
-        text: "Neptune Settings"
     }
 
     ListModel {
         id: pageModel
         ListElement {
-            title: "General"
-            page: "general/GeneralSettings.qml"
+            title: "Profile Settings"
+            page: "driverprofile/ProfileSettings.qml"
+            iconName: "profile"
         }
 
         ListElement {
-            title: "System"
-            page: "system/SystemSettings.qml"
+            title: "Animation Settings"
+            page: "animation/AnimationsSettings.qml"
+            iconName: "settings"
+        }
+
+        ListElement {
+            title: "System Monitor"
+            page: "systemmonitor/MainScreen.qml"
+            iconName: "insurance"
+        }
+
+        ListElement {
+            title: "Language Settings"
+            page: "language/LanguageSettings.qml"
+            iconName: "information"
+        }
+
+        ListElement {
+            title: "Other Settings"
+            page: "other/OtherSettings.qml"
+            iconName: "settings"
         }
     }
 
@@ -96,19 +115,24 @@ Page {
         initialItem: Item {
             width: stackView.width
             height: stackView.height
-            ListView {
+            ListViewManager {
                 id: settingsListView
                 model: pageModel
                 anchors.fill: parent
-                boundsBehavior: Flickable.StopAtBounds
                 delegate: ListItem {
-                    width: Style.hspan(22)
+                    width: Style.hspan(20)
                     height: Style.vspan(2)
                     text: title
+                    icon: iconName
                     onClicked: stackView.push(Qt.resolvedUrl(page))
                 }
-
             }
+        }
+
+        onCurrentItemChanged: {
+            settingsTitle.text = "Neptune Settings"
+            if (stackView.depth > 0 && currentItem.title !== undefined)
+                settingsTitle.text = currentItem.title
         }
     }
 

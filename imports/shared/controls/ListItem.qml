@@ -39,42 +39,50 @@ import utils 1.0
 ItemDelegate {
     id: root
 
+    anchors.left: parent.left
+    anchors.leftMargin: Style.hspan(2)
+
     property alias icon: icon.name
     property alias hasChildren: childIndicator.visible
 
-    background: Item {
-        anchors.fill: root
-    }
-
-    contentItem: Control {
+    contentItem: Item {
         anchors.fill: root
         RowLayout {
             height: parent.height
 
             Symbol {
                 id: icon
-                Layout.preferredWidth: Style.hspan(2)
+                Layout.preferredWidth: Style.hspan(1)
                 Layout.fillHeight: true
                 opacity: 0.4
+                visible: name !== ""
+            }
+
+            Item {
+                id: placeHolder
+                width: Style.hspan(0.2)
+                height: parent.height
+                visible: !icon.visible
             }
 
             Label {
                 id: titleLabel
                 Layout.preferredWidth: Style.hspan(18)
                 Layout.fillHeight: true
-                text: root.text
                 elide: Text.ElideRight
-            }
-
-            Icon {
-                id: childIndicator
-                Layout.preferredWidth: Style.hspan(2)
-                Layout.fillHeight: true
-                source: Style.icon("cloud_arrow")
+                text: root.text
             }
         }
 
-        Control {
+        Icon {
+            id: childIndicator
+            anchors.right: parent.right
+            width: Style.hspan(1)
+            Layout.fillHeight: true
+            source: Style.icon("cloud_arrow")
+        }
+
+        Item {
             width: root.width
             anchors.verticalCenter: parent.bottom
             anchors.horizontalCenter: parent.horizontalCenter

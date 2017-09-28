@@ -29,15 +29,50 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.6
-import QtQuick.Controls 2.0
-
+import QtQuick 2.0
 import utils 1.0
+import controls 1.0
+import QtApplicationManager 1.0
+import models.application 1.0
 
-ListView {
+Item {
     id: root
-    clip: true
-    boundsBehavior: Flickable.StopAtBounds
-    ScrollBar.vertical: ScrollBar { }
-}
 
+    property string title: "System Monitor"
+    property int timeInterval: 200
+
+    Component.onCompleted: checkReporting()
+
+    function checkReporting() {
+        SystemMonitor.reportingInterval = root.timeInterval
+        SystemMonitor.count = 50
+    }
+
+    TabView {
+        id: tabView
+        width: root.width
+        height: root.height - Style.vspan(3)
+        anchors.centerIn: parent
+        horizontalAlignment: true
+        tabs: [
+            { title : "Info", url : infoPanel, properties : {} },
+            { title : "CPU/FPS", url : systemPanel, properties : {} },
+            { title : "RAM", url : appPanel, properties : {} },
+        ]
+    }
+
+    InfoPanel {
+        id: infoPanel
+        visible: false
+    }
+
+    SystemPanel {
+        id: systemPanel
+        visible: false
+    }
+
+    AppPanel {
+        id: appPanel
+        visible: false
+    }
+}

@@ -30,36 +30,22 @@
 ****************************************************************************/
 
 import QtQuick 2.6
+import QtQuick.Layouts 1.0
 import QtQuick.Controls 2.2
 
 import controls 1.0
 import utils 1.0
-import models.settings 1.0
 
-Item {
+ListItem {
     id: root
-    width: Style.hspan(24)
-    height: Style.vspan(20)
 
-    ListModel {
-        id: pageModel
-        ListElement {
-            title: "Animation Settings"
-            page: "animation/AnimationsSettings.qml"
-        }
-    }
-
-    ListView {
-        id: settingsListView
-        model: pageModel
-        anchors.fill: parent
-        boundsBehavior: Flickable.StopAtBounds
-        delegate: ListItem {
-            width: settingsListView.width
-            height: Style.vspan(2)
-            text: title
-            onClicked: stackView.push(Qt.resolvedUrl(page))
-        }
-
+    Switch {
+        id: switchControl
+        Layout.preferredWidth: Style.hspan(5)
+        Layout.fillHeight: true
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.right: parent.right
+        checked: root.checked
+        onClicked: root.clicked()
     }
 }

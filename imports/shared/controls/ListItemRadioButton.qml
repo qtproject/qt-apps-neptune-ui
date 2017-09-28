@@ -45,18 +45,18 @@ ListItem {
 
     // Replace this with asset when available
     Rectangle {
-        width: Style.vspan(0.6)
+        width: Style.hspan(0.4)
         height: width
         radius: width
-        border.width: Style.vspan(0.08)
+        border.width: Style.hspan(0.04)
         border.color: Style.colorWhite
         anchors.verticalCenter: parent.verticalCenter
         anchors.right: parent.right
-        anchors.rightMargin: Style.vspan(6)
+        anchors.rightMargin: Style.vspan(4)
         color: "transparent"
 
         Rectangle {
-            width: Style.vspan(0.3)
+            width: Style.hspan(0.3)
             height: width
             radius: width
             anchors.centerIn: parent

@@ -29,56 +29,45 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.0
-import utils 1.0
+import QtQuick 2.6
+import QtQuick.Controls 2.2
+
 import controls 1.0
-import QtApplicationManager 1.0
-import models.application 1.0
+import utils 1.0
+import models.settings 1.0
 
-UIScreen {
+Item {
     id: root
+    width: Style.hspan(24)
+    height: Style.vspan(20)
 
-    property int timeInterval: 200
+    property string title: "Animation Settings"
 
-    Component.onCompleted: checkReporting()
-
-    onBackScreen: {
-        SystemMonitor.cpuLoadReportingEnabled = false
-        SystemMonitor.fpsReportingEnabled = false
-        SystemMonitor.memoryReportingEnabled = false
-        ApplicationManagerModel.releaseApplicationSurface(root)
+    Label {
+        id: settingsTitle
+        anchors.top: parent.top
+        anchors.topMargin: Style.vspan(1)
+        anchors.left: settingsListView.left
+        text: "Window Transitions:"
     }
 
-    function checkReporting() {
-        SystemMonitor.reportingInterval = root.timeInterval
-        SystemMonitor.count = 50
-    }
-
-    TabView {
-        id: tabView
-        width: root.width
-        height: root.height - Style.vspan(3)
-        anchors.centerIn: parent
-        horizontalAlignment: true
-        tabs: [
-            { title : "Info", url : infoPanel, properties : {} },
-            { title : "CPU/FPS", url : systemPanel, properties : {} },
-            { title : "RAM", url : appPanel, properties : {} },
-        ]
-    }
-
-    InfoPanel {
-        id: infoPanel
-        visible: false
-    }
-
-    SystemPanel {
-        id: systemPanel
-        visible: false
-    }
-
-    AppPanel {
-        id: appPanel
-        visible: false
+    ListViewManager {
+        id: settingsListView
+        width: Style.hspan(20)
+        height: parent.height
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.top: title.bottom
+        anchors.topMargin: Style.vspan(0.8)
+        model: SettingsModel.windowTransitions
+        delegate: ListItemRadioButton {
+            width: settingsListView.width
+            height: Style.vspan(2)
+            text: name
+            hasChildren: false
+            selected: SettingsModel.windowTransitionsIndex === index
+            onClicked: {
+                SettingsModel.windowTransitionsIndex = index
+            }
+        }
     }
 }

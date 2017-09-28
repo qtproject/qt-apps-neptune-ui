@@ -41,31 +41,32 @@ Item {
     width: Style.hspan(24)
     height: Style.vspan(20)
 
+    property string title: "Profile Settings"
+
     Label {
-        id: title
+        id: settingsTitle
         anchors.top: parent.top
         anchors.topMargin: Style.vspan(1)
         anchors.left: settingsListView.left
-        text: "Window Transitions:"
+        text: "Driver Profile:"
     }
 
-    ListView {
+    ListViewManager {
         id: settingsListView
-        width: Style.hspan(22)
+        width: Style.hspan(20)
         height: parent.height
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: title.bottom
         anchors.topMargin: Style.vspan(0.8)
-        model: SettingsModel.windowTransitions
-        boundsBehavior: Flickable.StopAtBounds
+        model: SettingsModel.profiles
         delegate: ListItemRadioButton {
             width: settingsListView.width
             height: Style.vspan(2)
             text: name
             hasChildren: false
-            selected: SettingsModel.windowTransitionsIndex === index
+            selected: SettingsModel.currentProfileIndex === index
             onClicked: {
-                SettingsModel.windowTransitionsIndex = index
+                SettingsModel.currentProfileIndex = index
             }
         }
     }

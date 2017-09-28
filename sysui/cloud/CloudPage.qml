@@ -46,20 +46,7 @@ UIPage {
         symbolName: 'my_cloud'
     }
 
-    TabView {
+    StoreScreen {
         anchors.fill: parent
-        tabWidth: Style.hspan(3)
-        tabs: [
-            {
-                title : "SETTINGS",
-                url : Qt.resolvedUrl("Settings/SettingsScreen.qml"),
-                properties : {}
-            },
-            {
-                title : "APP STORE",
-                url : Qt.resolvedUrl("Store/StoreScreen.qml"),
-                properties : {}
-            },
-        ]
     }
 }

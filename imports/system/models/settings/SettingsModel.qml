@@ -41,6 +41,14 @@ QtObject {
     property string unitSystem: "metric"  // "metric" or "imp_us"
     readonly property bool metric: unitSystem === "metric"
 
+    readonly property ListModel profiles: ListModel {
+        ListElement { name: "Driver 1" }
+        ListElement { name: "Driver 2" }
+        ListElement { name: "Driver 3" }
+        ListElement { name: "Driver 4" }
+    }
+    property int currentProfileIndex: 0
+
     readonly property ListModel languages: ListModel {
         ListElement { name: "en_GB" }
         ListElement { name: "en_US" }
@@ -56,6 +64,10 @@ QtObject {
 
     property Component zoomTransition: Zoom {}
     property Component tumbleTransition: Tumble {}
+
+    property bool appUpdatesEnabled: false
+    property bool liveTrafficEnabled: false
+    property bool satelliteViewEnabled: false
 
     property int windowTransitionsIndex: 0
 

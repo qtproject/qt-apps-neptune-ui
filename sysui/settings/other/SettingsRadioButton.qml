@@ -32,34 +32,34 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.2
 
-import controls 1.0
 import utils 1.0
-import models.settings 1.0
 
-Item {
+RadioButton {
     id: root
-    width: Style.hspan(24)
-    height: Style.vspan(20)
 
-    ListModel {
-        id: pageModel
-        ListElement {
-            title: "Language Settings"
-            page: "language/LanguageSettings.qml"
-        }
+    property alias buttonText: buttonLabel.text
+    contentItem: Label {
+        id: buttonLabel
+        width: Style.hspan(10)
     }
 
-    ListView {
-        id: settingsListView
-        model: pageModel
-        anchors.fill: parent
-        boundsBehavior: Flickable.StopAtBounds
-        delegate: ListItem {
-            width: settingsListView.width
-            height: Style.vspan(2)
-            text: title
-            onClicked: stackView.push(Qt.resolvedUrl(page))
-        }
+    indicator: Rectangle {
+        implicitWidth: Style.hspan(0.4)
+        implicitHeight: implicitWidth
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.right: parent.left
+        radius: implicitWidth
+        border.width: Style.vspan(0.08)
+        border.color: Style.colorWhite
+        color: "transparent"
 
+        Rectangle {
+            implicitWidth: Style.hspan(0.3)
+            implicitHeight: implicitWidth
+            radius: implicitWidth
+            anchors.centerIn: parent
+            color: Style.colorOrange
+            visible: root.checked
+        }
     }
 }
