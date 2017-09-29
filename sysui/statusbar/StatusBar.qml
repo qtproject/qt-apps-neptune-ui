@@ -79,6 +79,7 @@ Pane {
     RowLayout {
         spacing: Style.paddingXL * 2
         Layout.maximumWidth: Style.hspan(12)
+        Layout.maximumHeight: Style.statusBarHeight
         anchors.right: parent.right
         anchors.top: parent.top
         anchors.bottom: parent.bottom
@@ -86,24 +87,24 @@ Pane {
         anchors.bottomMargin: Style.padding
 
         Weather {
-            Layout.fillHeight: true
             visible: !Style.isPotrait
         }
 
         DateAndTime {
-            Layout.fillHeight: true
             timeFormat: SettingsModel.clockOption.format
             currentDate: StatusBarModel.currentDate
         }
 
         Tool {
-            Layout.fillHeight: true
+            width: Style.hspan(0.85)
+            height: Style.vspan(1.05)
             symbol: "fullscreen"
             onClicked: SystemModel.windowOverviewVisible = true
         }
 
         Tool {
-            Layout.fillHeight: true
+            width: Style.hspan(0.85)
+            height: Style.vspan(1.05)
             symbol: "slider_marker" // TODO: Replace with notification icon when available
             onClicked: SystemModel.notificationCenterVisible = !SystemModel.notificationCenterVisible
         }

@@ -39,7 +39,7 @@ Control {
     id: root
 
     width: Style.hspan(1.5)
-    height: Style.vspan(2)
+    height: Style.vspan(0.9)
 
     RowLayout {
         spacing: Style.padding
