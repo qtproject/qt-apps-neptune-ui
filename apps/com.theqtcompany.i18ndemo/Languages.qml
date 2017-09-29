@@ -119,7 +119,7 @@ UIPage {
                     onClicked: langSelectView.currentIndex = index
                 }
                 onCurrentIndexChanged: {
-                    console.log("Index changed " + currentIndex)
+                    console.log(Logging.apps, "Index changed " + currentIndex)
                     ctd.languageLocale = langList.get(currentIndex)?langList.get(currentIndex).language:""
                     VirtualKeyboardSettings.locale = ctd.languageLocale
                 }
@@ -274,6 +274,6 @@ UIPage {
         }
     }
     Component.onCompleted: {
-        console.log("RowLayout completed " + ctd.languageLocale)
+        console.log(Logging.apps, "RowLayout completed " + ctd.languageLocale)
     }
 }

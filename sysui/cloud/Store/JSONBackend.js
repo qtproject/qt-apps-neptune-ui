@@ -57,21 +57,20 @@ function serverCall(url, data, dataReadyFunction, xhr) {
         xhr = new XMLHttpRequest()
     }
 
-    console.log("HTTP GET to " + url);
+    console.log(Logging.sysui, "HTTP GET to " + url);
     if (xhr.readyState != 0) {
         xhr.abort();
     }
     xhr.open("GET", url);
     xhr.onreadystatechange = function() {
         if (xhr.readyState == XMLHttpRequest.DONE) {
-            //print(xhr.responseText);
 
             if (xhr.responseText !== "") {
                 errorCounter = 0
                 var data = JSON.parse(xhr.responseText);
                 return dataReadyFunction(data)
             } else {
-                print("JSONBackend: " + xhr.status + xhr.statusText)
+                console.log(Logging.sysui, "JSONBackend: " + xhr.status + xhr.statusText)
                 errorCounter++
                 if (errorCounter >= 3 && errorFunc) {
                     errorFunc()

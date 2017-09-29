@@ -35,35 +35,37 @@
 #include "neptunestyle.h"
 #include "neptunetheme.h"
 
+Q_LOGGING_CATEGORY(neptuneStyle, "neptune.style")
+
 
 NeptuneStylePlugin::NeptuneStylePlugin(QObject *parent)
     : QQuickStylePlugin(parent)
 {
-    qDebug() << "NeptuneStylePlugin()";
+    qCDebug(neptuneStyle) << "constructor";
 }
 
 void NeptuneStylePlugin::registerTypes(const char *uri)
 {
-    qDebug() << "NeptuneStylePlugin::registerTypes(): " << uri;
+    qCDebug(neptuneStyle) << "registerTypes():" << uri;
     // @uri com.pelagicore.styles.neptune
     qmlRegisterUncreatableType<NeptuneStyle>(uri, 1, 0, "NeptuneStyle", "NeptuneStyle is an attached property");
 }
 
 void NeptuneStylePlugin::initializeEngine(QQmlEngine *engine, const char *uri)
 {
-    qDebug() << "NeptuneStylePlugin::initializeEngine()";
+    qCDebug(neptuneStyle) << "initializeEngine()";
     QQuickStylePlugin::initializeEngine(engine, uri);
 }
 
 QString NeptuneStylePlugin::name() const
 {
-    qDebug() << "NeptuneStylePlugin::name()";
+    qCDebug(neptuneStyle) << "name()";
     return QStringLiteral("neptune");
 }
 
 QQuickProxyTheme *NeptuneStylePlugin::createTheme() const
 {
-    qDebug() << "NeptuneStylePlugin::createTheme()";
+    qCDebug(neptuneStyle) << "createTheme()";
     return new NeptuneTheme;
 }
 

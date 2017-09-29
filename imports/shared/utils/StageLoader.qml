@@ -45,7 +45,7 @@ Loader {
 
     onStatusChanged: {
         if (root.status === Loader.Error) {
-            console.warn("Error loading component", root.source, root.sourceComponent.errorString());
+            console.warn(Logging.sysui, "Error loading component", root.source, root.sourceComponent.errorString());
         }
     }
 }

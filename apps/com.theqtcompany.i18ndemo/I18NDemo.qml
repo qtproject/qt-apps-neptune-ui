@@ -44,7 +44,7 @@ AppUIScreen {
         ComTQCi18nDemo {
             id: ctd
             onLanguageLocaleChanged: {
-                console.log("Locale changed " + languageLocale)
+                console.log(Logging.apps, "Locale changed " + languageLocale)
             }
         }
 

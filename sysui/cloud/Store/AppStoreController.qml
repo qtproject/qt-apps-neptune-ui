@@ -55,14 +55,14 @@ Item {
         JSONBackend.serverCall(url, data, function(data) {
             if (data !== 0) {
                 if (data.status === "ok") {
-                    print("start downloading")
+                    console.log(Logging.sysui, "start downloading")
                     var icon = appstore.server + "/app/icon?id=" + id
                     var installID = ApplicationInstaller.startPackageInstallation("internal-0", data.url);
                     ApplicationInstaller.acknowledgePackageInstallation(installID);
                 } else if (data.status === "fail" && data.error === "not-logged-in"){
-                    print(":::AppStoreController::: not logged in")
+                    console.log(Logging.sysui, ":::AppStoreController::: not logged in")
                 } else {
-                    print(":::AppStoreController::: download failed: " + data.error)
+                    console.log(Logging.sysui, ":::AppStoreController::: download failed: " + data.error)
                 }
             }
         })

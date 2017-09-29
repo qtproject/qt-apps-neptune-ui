@@ -30,7 +30,7 @@
 ****************************************************************************/
 
 pragma Singleton
-import QtQuick 2.0
+import QtQuick 2.8
 import QtApplicationManager 1.0
 import utils 1.0
 
@@ -52,6 +52,11 @@ QtObject {
 
     // Cluster signals
     signal clusterWidgetReady(string category, Item item)
+
+    property var logggingCategory: LoggingCategory {
+        id: logCategory
+        name: "neptune.applicationmanagermodel"
+    }
 
     Component.onCompleted: {
         // Maintain a set of applications which are autostarted(preloaded)
@@ -78,7 +83,7 @@ QtObject {
         var isMapWidget = (WindowManager.windowProperty(item, "windowType") === "widgetMap")
         var isClusterWidget = (WindowManager.windowProperty(item, "windowType") === "clusterWidget")
 
-        print("AMI.windowReadyHandler: index:" + index + ", item:" + item + ", map:"
+        console.log(logCategory, "AMI.windowReadyHandler: index:" + index + ", item:" + item + ", map:"
               + (isMapWidget ? "yes" : "no") + ", cluster:" + (isClusterWidget ? "yes" : "no"))
 
         var acceptWindow = true;
@@ -128,7 +133,7 @@ QtObject {
             root.applicationSurfaceReady(item, isMinimized)
         } else {
             root.unhandledSurfaceReceived(item)
-            console.error("AMI.windowReadyHandler: window was not accepted: ", item)
+            console.error(logCategory, "AMI.windowReadyHandler: window was not accepted: ", item)
         }
     }
 
@@ -177,7 +182,7 @@ QtObject {
     }
 
     function applicationActivated(appId, appAliasId) {
-        print("AMI.applicationActivated: appId:" + appId + ", appAliasId:" + appAliasId)
+        console.log(logCategory, "AMI.applicationActivated: appId:" + appId + ", appAliasId:" + appAliasId)
 
         for (var i = 0; i < WindowManager.count; i++) {
             if (!WindowManager.get(i).isClosing && WindowManager.get(i).applicationId === appId) {
@@ -185,7 +190,7 @@ QtObject {
                 var isMapWidget = (WindowManager.windowProperty(item, "windowType") === "widgetMap")
                 var isClusterWidget = (WindowManager.windowProperty(item, "windowType") === "clusterWidget")
 
-                print("AMI.applicationActivated: appId:" + appId + " found item:" + item + ", map:"
+                console.log(logCategory, "AMI.applicationActivated: appId:" + appId + " found item:" + item + ", map:"
                       + (isMapWidget ? "yes" : "no") + ", cluster:" + (isClusterWidget ? "yes" : "no"))
 
                 if (!isMapWidget && !isClusterWidget) {

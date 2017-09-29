@@ -47,7 +47,7 @@ BaseBoard {
         AppButton {
             icon: Style.icon("widgets_phone")
             name: "Hello World"
-            onClicked: print("Clicked")
+            onClicked: console.log(Logging.apps,"Clicked")
         }
 
         AppButton {
@@ -65,7 +65,7 @@ BaseBoard {
             icon: Style.icon("widgets_phone")
             name: "Edit Mode"
             editMode: true
-            onRemoveClicked: print("Remove clicked")
+            onRemoveClicked: console.log(Logging.apps,"Remove clicked")
         }
     }
 }

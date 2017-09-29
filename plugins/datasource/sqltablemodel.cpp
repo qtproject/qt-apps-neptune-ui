@@ -30,6 +30,7 @@
 ****************************************************************************/
 
 #include "sqltablemodel.h"
+#include "logging.h"
 
 #include <QtCore/QtDebug>
 #include <QtSql/QSqlRecord>
@@ -44,11 +45,11 @@ SqlTableModel::SqlTableModel(QObject *parent, QSqlDatabase db) :
 
 void SqlTableModel::updateRoleNames()
 {
-    qDebug() << "SqlTableModel::updateRoleNames()";
+    qCDebug(dataSource) << "SqlTableModel::updateRoleNames()";
     m_roleNames.clear();
     for (int i = 0; i < record().count(); i++)
         m_roleNames[Qt::UserRole + i + 1] = record().fieldName(i).toLatin1();
-    qDebug() << "  role names: " << m_roleNames.values();
+    qCDebug(dataSource) << "role names:" << m_roleNames.values();
 }
 
 

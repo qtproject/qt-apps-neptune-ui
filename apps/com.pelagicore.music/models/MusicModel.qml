@@ -35,6 +35,7 @@ import QtApplicationManager 1.0
 import com.pelagicore.datasource 1.0
 import QtIvi 1.0
 import QtIvi.Media 1.0
+import utils 1.0
 
 QtObject {
     id: root
@@ -57,7 +58,7 @@ QtObject {
         }
 
         onRowsInserted: {
-            print("ROW INSERTED: NEW INDEX: ", first)
+            console.log(Logging.apps, "ROW INSERTED: NEW INDEX: ", first)
             player.playQueue.currentIndex = first;
         }
     }
@@ -73,12 +74,12 @@ QtObject {
     property bool repeatOn: player.playMode === MediaPlayer.RepeatTrack
 
     function next() {
-        print('MusicModel.nextTrack()')
+        console.log(Logging.apps, 'MusicModel.nextTrack()')
         player.next()
     }
 
     function previous() {
-        print('MusicModel.previousTrack()')
+        console.log(Logging.apps, 'MusicModel.previousTrack()')
         player.previous()
     }
 

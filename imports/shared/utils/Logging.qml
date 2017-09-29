@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 The Qt Company
+** Copyright (C) 2017 Pelagicore AG
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Neptune IVI UI.
@@ -29,47 +29,17 @@
 **
 ****************************************************************************/
 
-#ifndef COMTQCI18NDEMO_H
-#define COMTQCI18NDEMO_H
+pragma Singleton
+import QtQuick 2.8
 
-#include <QtCore/QObject>
-#include <QtCore/QTranslator>
-#include <QtCore/QUrl>
-#include <QLoggingCategory>
+QtObject {
+    property bool foo: true
 
-Q_DECLARE_LOGGING_CATEGORY(comTQCi18nDemo)
+    property var sysui: LoggingCategory {
+        name: "neptune.sysui"
+    }
 
-class ComTQCi18nDemo : public QObject
-{
-    Q_OBJECT
-
-    Q_PROPERTY(QString languageLocale READ languageLocale WRITE setLanguageLocale NOTIFY languageLocaleChanged)
-    Q_PROPERTY(QString emptyString READ emptyString NOTIFY languageChanged)
-
-public:
-    explicit ComTQCi18nDemo(QObject *parent = nullptr);
-
-    Q_INVOKABLE void setPrefix(const QString &languageFilePrefix);
-    Q_INVOKABLE void setPath(const QUrl &languageFilePath);
-
-    Q_INVOKABLE void setLanguageLocale(const QString &languageLocale);
-    QString languageLocale() const;
-
-    // Helper method to notify string change
-    QString emptyString() const;
-
-signals:
-    void languageLocaleChanged();
-    void languageChanged();
-
-protected:
-    bool loadTranslationFile(const QString &langLocale);
-
-    QString m_languageLocale;
-    QString m_languageFilePath;
-    QString m_languageFilePrefix;
-
-    QTranslator m_translator;
-};
-
-#endif // COMTQCI18NDEMO_H
+    property var apps: LoggingCategory {
+        name: "neptune.apps"
+    }
+}

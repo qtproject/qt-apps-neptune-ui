@@ -107,7 +107,7 @@ BaseBoard {
                 text: qsTr("Button")
                 width: Style.hspan(3)
 
-                onClicked: console.log("Button Clicked!");
+                onClicked: console.log(Logging.apps, "Button Clicked!");
 
                 contentItem: Label {
                     text: buttonControl.text

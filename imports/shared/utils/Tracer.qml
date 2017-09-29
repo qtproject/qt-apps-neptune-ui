@@ -80,13 +80,13 @@ MouseArea {
     }
 
     onPressAndHold: {
-        console.log('trace: ' + root.parent)
+        console.log(Logging.sysui, 'trace: ' + root.parent)
 
-        console.log('Hierarchy: ')
+        console.log(Logging.sysui, 'Hierarchy: ')
         var parent = root.parent;
         var indent = '  ';
         while (parent) {
-            console.log(indent + '+ ' + parent)
+            console.log(Logging.sysui, indent + '+ ' + parent)
             indent += '  ';
             parent = parent.parent;
         }

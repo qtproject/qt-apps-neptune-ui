@@ -34,6 +34,9 @@
 
 #include <QtGui/QFont>
 #include <QtQuickControls2/private/qquickproxytheme_p.h>
+#include <QLoggingCategory>
+
+Q_DECLARE_LOGGING_CATEGORY(neptuneTheme)
 
 class NeptuneTheme : public QQuickProxyTheme
 {

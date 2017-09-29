@@ -48,7 +48,7 @@ Control {
     property bool nowPlaying: false
     property SearchAndBrowseModel model: SearchAndBrowseModel {
         contentType: ""
-        onContentTypeChanged: print("CONTENT TYPE CHANGE: ", contentType)
+        onContentTypeChanged: console.log(Logging.apps, "CONTENT TYPE CHANGE: ", contentType)
         serviceObject: MusicModel.player.serviceObject
     }
 

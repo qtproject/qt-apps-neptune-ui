@@ -81,7 +81,7 @@ Control {
         clip: true
 
         Component.onCompleted: {
-            console.log('push initial item for tab view')
+            console.log(Logging.sysui, 'push initial item for tab view')
             push(root.tabs[root.currentIndex].url, root.tabs[root.currentIndex].properties)
         }
 

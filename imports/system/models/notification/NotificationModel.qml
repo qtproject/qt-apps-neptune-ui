@@ -30,7 +30,7 @@
 ****************************************************************************/
 
 pragma Singleton
-import QtQuick 2.0
+import QtQuick 2.8
 
 import utils 1.0
 import QtApplicationManager 1.0
@@ -51,6 +51,11 @@ QtObject {
     property var notificationQueue:[]
     property var buttonModel: []
 
+    property var logggingCategory: LoggingCategory {
+        id: logCategory
+        name: "neptune.notificationmodel"
+    }
+
     property Timer notificationTimer: Timer {
         interval: 2000;
         onTriggered: {
@@ -66,7 +71,7 @@ QtObject {
             var receivedContent = NotificationManager.notification(id);
 
             if (receivedContent.category === "notification") {
-                console.log("::: Notification received :::", id);
+                console.log(logCategory, "::: Notification received :::", id);
 
                 if (!root.notificationVisible && root.notificationQueue.length === 0) {
                     root.addNotification(id);
@@ -86,7 +91,7 @@ QtObject {
             var receivedContent = NotificationManager.notification(id);
 
             if (receivedContent.category === "notification") {
-                console.log("::: Notification changed :::", id);
+                console.log(logCategory, "::: Notification changed :::", id);
                 var notificationExisted = false;
 
                 for (var x = 0; x < root.model.count; ++x) {

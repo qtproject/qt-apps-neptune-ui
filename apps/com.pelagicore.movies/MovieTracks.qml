@@ -141,6 +141,6 @@ UIScreen {
     Component.onCompleted: {
         MovieModel.selectRandom()
         view.model = MovieModel.model
-        console.log("Movie Tracks completed")
+        console.log(Logging.apps, "Movie Tracks completed")
     }
 }

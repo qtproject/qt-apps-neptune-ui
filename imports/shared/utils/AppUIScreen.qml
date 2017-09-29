@@ -178,7 +178,6 @@ ApplicationManagerWindow {
         }
 
         onWindowPropertyChanged: {
-            //print(":::AppUIScreen::: window property changed", name, value, Qt.Key_Up)
             pelagicoreWindow.clusterKeyPressed(value)
         }
     }

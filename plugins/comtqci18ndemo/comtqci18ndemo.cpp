@@ -33,6 +33,8 @@
 #include <QGuiApplication>
 #include <QDebug>
 
+Q_LOGGING_CATEGORY(comTQCi18nDemo, "comtqci18ndemo")
+
 ComTQCi18nDemo::ComTQCi18nDemo(QObject *parent)
     : QObject(parent)
 {
@@ -40,21 +42,21 @@ ComTQCi18nDemo::ComTQCi18nDemo(QObject *parent)
 
 void ComTQCi18nDemo::setPrefix(const QString &languageFilePrefix)
 {
-    qDebug() << "File prefix: " << languageFilePrefix;
+    qCDebug(comTQCi18nDemo) << "File prefix:" << languageFilePrefix;
 
     m_languageFilePrefix = languageFilePrefix;
 }
 
 void ComTQCi18nDemo::setPath(const QUrl &languageFilePath)
 {
-    qDebug() << "File path: " << languageFilePath.toLocalFile();
+    qCDebug(comTQCi18nDemo) << "File path:" << languageFilePath.toLocalFile();
 
     m_languageFilePath = languageFilePath.toLocalFile();
 }
 
 void ComTQCi18nDemo::setLanguageLocale(const QString &languageLocale)
 {
-    qDebug() << "Locale: " << languageLocale;
+    qCDebug(comTQCi18nDemo) << "Locale:" << languageLocale;
 
     if (m_languageLocale != languageLocale) {
         if ( loadTranslationFile(languageLocale) ) {
@@ -81,16 +83,16 @@ bool ComTQCi18nDemo::loadTranslationFile(const QString &langLocale)
     QString fileToLoad(m_languageFilePath + m_languageFilePrefix + QLatin1Char('_'));
     fileToLoad += langLocale + QStringLiteral(".qm");
 
-    qDebug() << "File to load: " << fileToLoad;
+    qCDebug(comTQCi18nDemo) << "File to load:" << fileToLoad;
 
     if ( m_translator.load(fileToLoad) ) {
-        qDebug() << "Translation file loaded";
+        qCDebug(comTQCi18nDemo) << "Translation file loaded";
         qApp->installTranslator(&m_translator);
 
         return true;
     }
 
-    qDebug() << "Failed to load translation file";
+    qCDebug(comTQCi18nDemo) << "Failed to load translation file";
 
     return false;
 }

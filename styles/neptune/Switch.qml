@@ -113,11 +113,4 @@ T.Switch {
             PropertyChanges { target: background; rotation: 0 }
         }
     ]
-
-//    Tracer {}
-
-    //    Component.onCompleted: {
-    //        console.log('Switch.qml loaded')
-    //        Style.debugMode = false
-    //    }
 }

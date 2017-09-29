@@ -104,13 +104,13 @@ UIPage {
                         view.editMode = false
                     } else {
                         if (!model.isUpdating) {
-                            console.log("Starting app " + model.applicationId + ": " + ApplicationManager.startApplication(model.applicationId));
+                            console.log(Logging.sysui, "Starting app " + model.applicationId + ": " + ApplicationManager.startApplication(model.applicationId));
                         }
                     }
                 }
 
                 onRemoveClicked: {
-                    console.log('003: remove app')
+                    console.log(Logging.sysui, '003: remove app')
                     view.editMode = false;
                     ApplicationInstaller.removePackage(model.applicationId, false /*keepDocuments*/, true /*force*/);
                 }

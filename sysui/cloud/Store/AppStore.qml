@@ -33,6 +33,8 @@ import QtQuick 2.0
 import "JSONBackend.js" as JSONBackend
 import QtApplicationManager 1.0
 
+import utils 1.0
+
 // TODO: Move this to a library and convert to QObject
 
 Item {
@@ -51,7 +53,7 @@ Item {
     }
 
     function checkServer() {
-        print("#####################checkserver#####################")
+        console.log(Logging.sysui, "#####################checkserver#####################")
         var url = server + "/hello"
         var data = {"platform" : "AM", "version" : "1"}
         JSONBackend.setErrorFunction(function () {
@@ -68,7 +70,7 @@ Item {
                     serverOnline = false
                     serverReason = "maintenance"
                 } else {
-                    print("HELLO ERROR: " + data.error)
+                    console.log(Logging.sysui, "HELLO ERROR: " + data.error)
                     serverOnline = false
                 }
             } else {
@@ -84,10 +86,10 @@ Item {
         JSONBackend.serverCall(url, data, function(data) {
             if (data !== 0) {
                 if (data.status === "ok") {
-                    print("LOGIN SUCCESSFUL");
+                    console.log(Logging.sysui, "LOGIN SUCCESSFUL");
                     loginSuccessful()
                 } else {
-                    print("LOGIN ERROR: " + data.error)
+                    console.log(Logging.sysui, "LOGIN ERROR: " + data.error)
                 }
             }
         })

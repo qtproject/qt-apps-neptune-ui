@@ -58,10 +58,10 @@ Item {
                 target.anchors.horizontalCenterOffset++
                 break
             }
-            console.log(target.anchors.topMargin, target.anchors.bottomMargin,
-                        target.anchors.leftMargin, target.anchors.rightMargin,
-                        target.anchors.verticalCenterOffset,
-                        target.anchors.horizontalCenterOffset)
+            console.log(Logging.sysui, target.anchors.topMargin, target.anchors.bottomMargin,
+                                       target.anchors.leftMargin, target.anchors.rightMargin,
+                                       target.anchors.verticalCenterOffset,
+                                       target.anchors.horizontalCenterOffset)
         }
     }
 }

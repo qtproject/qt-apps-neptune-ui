@@ -774,7 +774,7 @@ KeyboardStyle {
             anchors.fill: traceInputKeyPanelBackground
             opacity: 0.1
             onPaint: {
-                console.error("PAINT")
+                console.error(Utils.Logging.sysui, "PAINT")
                 var ctx = getContext("2d")
                 ctx.lineWidth = 1
                 ctx.strokeStyle = "#BC6608"

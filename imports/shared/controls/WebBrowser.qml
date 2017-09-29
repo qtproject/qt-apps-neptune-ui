@@ -141,8 +141,8 @@ Control {
 
                 onLoadingChanged: {
                     if (loadRequest.status === WebEngineView.LoadFailedStatus) {
-                        print("WebView.Loadfaild: " + loadRequest.errorString)
-                        print("when loading: " + loadRequest.url)
+                        console.log(Logging.sysui, "WebView.Loadfaild: " + loadRequest.errorString)
+                        console.log(Logging.sysui, "when loading: " + loadRequest.url)
                     }
                 }
             }

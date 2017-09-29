@@ -31,6 +31,7 @@
 
 #include "sqltabledatasource.h"
 #include "sqltablemodel.h"
+#include "logging.h"
 
 #include <QtCore/QtDebug>
 #include <QtCore/QStandardPaths>
@@ -95,7 +96,7 @@ void SqlTableDataSource::classBegin()
 
 void SqlTableDataSource::componentComplete()
 {
-    qDebug() << "componentComplete";
+    qCDebug(dataSource) << "componentComplete";
     m_componentCompleted = true;
     updateModel();
 }
@@ -107,7 +108,7 @@ QString SqlTableDataSource::storageLocation() const
 
 void SqlTableDataSource::setFilter(const QString &filter)
 {
-    qDebug() << "SqlTableDataSource::setFilter(): " << filter;
+    qCDebug(dataSource) << "SqlTableDataSource::setFilter(): " << filter;
     if (m_model && (m_model->filter() != filter)) {
         m_model->setFilter(filter);
         m_model->select();
@@ -138,27 +139,27 @@ void SqlTableDataSource::updateModel()
 {
     if (!m_componentCompleted)
         return;
-    qDebug() << "SqlTableDataSource::updateModel()";
+    qCDebug(dataSource) << "SqlTableDataSource::updateModel()";
     if (m_databaseName.isEmpty() || m_tableName.isEmpty()) {
         setStatus(Null);
-        qDebug() << "  not configure; return";
+        qCDebug(dataSource) << "  not configure; return";
         return;
     }
     if (!m_databaseName.isEmpty()) {
         if (QSqlDatabase::contains(m_databaseName)) {
-            qDebug() << "  found existing db connection";
+            qCDebug(dataSource) << "  found existing db connection";
             m_database = QSqlDatabase::database(m_databaseName);
         } else {
-            qDebug() << "  init new db connection";
+            qCDebug(dataSource) << "  init new db connection";
             m_database = QSqlDatabase::addDatabase("QSQLITE", m_databaseName);
             QString databasePath = QDir(QStandardPaths::writableLocation(QStandardPaths::HomeLocation)).filePath(m_databaseName + ".db");
             m_database.setDatabaseName(databasePath);
-            qDebug() << "database path: " << databasePath;
+            qCDebug(dataSource) << "database path: " << databasePath;
         }
         if (!m_database.isOpen()) {
-            qDebug() << "  open database";
+            qCDebug(dataSource) << "  open database";
             m_database.open();
-            qDebug() << " tables: " << m_database.tables();
+            qCDebug(dataSource) << " tables: " << m_database.tables();
         }
     }
     if (m_database.isValid() && !m_tableName.isEmpty()) {
@@ -171,26 +172,26 @@ void SqlTableDataSource::updateModel()
             m_model = new SqlTableModel(this, m_database);
             emit modelChanged(m_model);
         }
-        qDebug() << "  update table";
+        qCDebug(dataSource) << "  update table";
         setStatus(Loading);
         m_model->setTable(m_tableName);
-        qDebug() << "  update role names";
+        qCDebug(dataSource) << "  update role names";
         m_model->updateRoleNames();
-        qDebug() << "  select data";
+        qCDebug(dataSource) << "  select data";
         if (!m_model->select())
-            qDebug() << " error: select data from model";
+            qCDebug(dataSource) << " error: select data from model";
         while (m_model->canFetchMore())
             m_model->fetchMore(QModelIndex());
-        qDebug() << "  finish select data";
+        qCDebug(dataSource) << "  finish select data";
         if (m_model->lastError().isValid()) {
-            qDebug() << "  error: " << m_model->lastError().text();
+            qCDebug(dataSource) << "  error: " << m_model->lastError().text();
             setStatus(Error);
         } else {
-            qDebug() << "  ready";
+            qCDebug(dataSource) << "  ready";
             setStatus(Ready);
         }
     }
-    qDebug() << "update model: " << count();
+    qCDebug(dataSource) << "update model: " << count();
     emit modelChanged(m_model);
     emit countChanged(count());
 }

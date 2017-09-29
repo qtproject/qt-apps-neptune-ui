@@ -33,8 +33,10 @@
 #define NEPTUNESTYLEPLUGIN_H
 
 #include <QtQuickControls2/private/qquickstyleplugin_p.h>
+#include <QLoggingCategory>
 
 QT_FORWARD_DECLARE_CLASS(QQmlEngine)
+Q_DECLARE_LOGGING_CATEGORY(neptuneStyle)
 
 class NeptuneStylePlugin : public QQuickStylePlugin
 {

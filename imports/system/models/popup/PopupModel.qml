@@ -30,7 +30,7 @@
 ****************************************************************************/
 
 pragma Singleton
-import QtQuick 2.0
+import QtQuick 2.8
 import QtApplicationManager 1.0
 
 QtObject {
@@ -53,6 +53,11 @@ QtObject {
     property var popupContentData
     property var popupButtonData
 
+    property var logggingCategory: LoggingCategory {
+        id: logCategory
+        name: "neptune.popupmodel"
+    }
+
     readonly property Connections notificationManagerConnection: Connections {
         target: NotificationManager
 
@@ -60,7 +65,7 @@ QtObject {
             var receivedContent = NotificationManager.notification(id);
 
             if (receivedContent.category === "popup") {
-                console.log("::: Popup received :::", id);
+                console.log(logCategory, "::: Popup received :::", id);
                 if (!root.popupVisible && root.popupQueue.length === 0) {
                     root.requestPopup(id);
                 }
@@ -80,7 +85,7 @@ QtObject {
             var receivedContent = NotificationManager.notification(id);
 
             if (receivedContent.category === "popup") {
-                console.log("::: Popup changed :::", id);
+                console.log(logCategory, "::: Popup changed :::", id);
                 if (root.currentPopup.id === id) {
                     root.processPopup(receivedContent);
                 } else if (root.currentPopup.priority > receivedContent.priority) {

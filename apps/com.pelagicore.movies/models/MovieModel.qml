@@ -32,6 +32,7 @@
 pragma Singleton
 import QtQuick 2.6
 import com.pelagicore.datasource 1.0
+import utils 1.0
 
 SqlQueryDataSource {
     id: root
@@ -57,12 +58,12 @@ SqlQueryDataSource {
     }
 
     function next() {
-        console.log('$movies.nextTrack()')
+        console.log(Logging.apps, '$movies.nextTrack()')
         root.currentIndex++
     }
 
     function previous() {
-        console.log('$movies.previousTrack()')
+        console.log(Logging.apps, '$movies.previousTrack()')
         root.currentIndex--
     }
 }

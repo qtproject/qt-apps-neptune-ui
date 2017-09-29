@@ -33,6 +33,7 @@
 #include <QtCore/QDebug>
 #include <QtSql/QSqlError>
 
+#include "logging.h"
 #include "sqlquerydatasource.h"
 #include "sqlquerymodel.h"
 
@@ -77,7 +78,7 @@ QString SqlQueryDataSource::query() const
 
 void SqlQueryDataSource::setQuery(const QString &queryString)
 {
-    qDebug() << "SqlQueryDataSource::setQuery() " << queryString;
+    qCDebug(dataSource) << "SqlQueryDataSource::setQuery()" << queryString;
     if (m_queryString != queryString) {
         m_queryString = queryString;
         updateModel();
@@ -107,7 +108,7 @@ void SqlQueryDataSource::updateModel()
             m_database = QSqlDatabase::addDatabase("QSQLITE", m_databaseName);
             QString databasePath = QDir(m_storageLocation).filePath(m_databaseName + ".db");
             m_database.setDatabaseName(databasePath);
-            qDebug() << "database path: " << databasePath;
+            qCDebug(dataSource) << "database path:" << databasePath;
         }
         if (!m_database.isOpen())
             m_database.open();
@@ -118,7 +119,7 @@ void SqlQueryDataSource::updateModel()
         m_model->setQuery(m_query);
         m_model->updateRoleNames();
         if (m_query.lastError().isValid()) {
-            qDebug() << "Error" << m_query.lastError().text();
+            qCDebug(dataSource) << "Error" << m_query.lastError().text();
             setStatus(Error);
         } else {
             setStatus(Ready);
