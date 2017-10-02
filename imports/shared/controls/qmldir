@@ -21,7 +21,6 @@ AppStackView 1.0 AppStackView.qml
 Popup 1.0 Popup.qml
 LetterPicker 1.0 LetterPicker.qml
 AppInfoPanel 1.0 AppInfoPanel.qml
-AppButton 1.0 AppButton.qml
 BackgroundPane 1.0 BackgroundPane.qml
 TemperatureSlider 1.0 TemperatureSlider.qml
 ImageButton 1.0 ImageButton.qml

@@ -31,72 +31,46 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.1
+import QtGraphicalEffects 1.0
 
 import utils 1.0
-import controls 1.0
-import com.pelagicore.styles.neptune 1.0
 
 Button {
     id: root
 
-    property string name
-    text: name
-    property url icon: icon.source
-    property bool editMode: false
-    property bool removable: false
-    property bool isUpdating: false
-    topPadding: root.height * .75
-
-    // Installation progress from 0.0 to 1.0, where 1.0 means
-    // that the application is installed.
-    property real installProgress: 1.0
-
-    signal removeClicked()
-
     width: Style.hspan(4)
     height: Style.vspan(7)
+    topPadding: root.height * .75
 
-    scale: editMode ? 0.8 : 1
+    property url icon: icon.source
 
-    Behavior on scale {
-        ScaleAnimator {
-            easing.type: Easing.OutBounce
+    RectangularGlow {
+        anchors.fill: highlightBar
+        glowRadius: 6
+        spread: 0.1
+        color: Style.colorWhite
+        cornerRadius: highlightBar.radius + glowRadius
+        opacity: root.highlighted ? 1.0 : 0.0
+
+        Behavior on opacity {
+            NumberAnimation {
+                duration: 200
+            }
         }
     }
 
+    Rectangle {
+        id: highlightBar
+        anchors.left: root.left
+        width: Style.hspan(0.1)
+        height: parent.height
+        border.color: Style.colorGrey
+        radius: 8
+        color: root.highlighted ? Style.colorOrange : Style.colorBlack
+    }
 
     indicator: Image {
         anchors.centerIn: parent
         source: root.icon
-    }
-
-    ProgressBar {
-        anchors.left: parent.left
-        anchors.right: parent.right
-        anchors.bottom: parent.bottom
-        padding: 6
-        enabled: root.icon && (root.installProgress > 0.0 && root.installProgress < 1.0)
-        visible: enabled
-        value: root.installProgress
-    }
-
-    RoundButton {
-        text: "\u2715"
-        font.pixelSize: root.NeptuneStyle.fontSizeL
-        anchors.right: parent.right
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: -padding
-        anchors.rightMargin: -padding
-        height: width
-        radius: width/2
-        visible: root.editMode && root.removable
-        enabled: root.editMode
-        onClicked: root.removeClicked()
-        scale: root.editMode ? 2.0 : 1.0
-        Behavior on scale {
-            ScaleAnimator {
-                easing.type: Easing.OutBounce
-            }
-        }
     }
 }

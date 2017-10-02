@@ -31,14 +31,11 @@
 
 import QtQuick 2.6
 import QtQuick.Layouts 1.0
-import QtQuick.Controls 2.0
 
-import controls 1.0
 import utils 1.0
+import controls 1.0
 import models.settings 1.0
-import service.notification 1.0
 import service.popup 1.0
-import com.pelagicore.styles.neptune 1.0
 
 UIPage {
     id: root
@@ -69,29 +66,17 @@ UIPage {
         cellWidth: width/3
         cellHeight: height/3
 
-        delegate: Row {
+        delegate: FunctionButton {
             width: GridView.view.cellWidth
             height: GridView.view.cellHeight
-            spacing: 0
+            text: qsTrId(model.description)
+            icon: Style.symbolM(model.icon, model.active)
+            highlighted: model.active
 
-            Rectangle {
-                id: highlightBar
-                width: 5
-                height: parent.height
-                color: model.active ? NeptuneStyle.accentColor : NeptuneStyle.darkColor
-            }
-            Button {
-                width: parent.width - highlightBar.width
-                height: parent.height
-                text: qsTrId(model.description)
-                checked: model.active
-                checkable: true
-
-                onClicked: {
-                    model.active = !model.active
-                    popupInterface.summary = model.description + (model.active ? " activated" : " deactivated");
-                    popupInterface.show();
-                }
+            onClicked: {
+                model.active = !model.active
+                popupInterface.summary = model.description + (model.active ? " activated" : " deactivated");
+                popupInterface.show();
             }
         }
     }
