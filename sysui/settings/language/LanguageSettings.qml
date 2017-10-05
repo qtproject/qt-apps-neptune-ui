@@ -56,7 +56,7 @@ Item {
         width: Style.hspan(20)
         height: parent.height
         anchors.horizontalCenter: parent.horizontalCenter
-        anchors.top: title.bottom
+        anchors.top: settingsTitle.bottom
         anchors.topMargin: Style.vspan(0.8)
         model: SettingsModel.languages
         delegate: ListItemRadioButton {
