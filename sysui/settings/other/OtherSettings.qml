@@ -43,7 +43,7 @@ Item {
     width: Style.hspan(24)
     height: Style.vspan(20)
 
-    property string title: "Others Settings"
+    property string title: "Other Settings"
 
     Label {
         id: unitTitle
