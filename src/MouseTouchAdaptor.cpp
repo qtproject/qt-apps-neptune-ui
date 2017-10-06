@@ -122,7 +122,7 @@ void MouseTouchAdaptor::queryForXInput2()
 bool MouseTouchAdaptor::nativeEventFilter(const QByteArray &eventType, void *message, long * /*result*/)
 {
     if (eventType != "xcb_generic_event_t") {
-        qCWarning(mouseTouchAdaptor) << "Non XCB native event received. Ignoring.";
+        qCDebug(mouseTouchAdaptor) << "Non XCB native event received. Ignoring.";
         return false;
     }
 
@@ -158,7 +158,6 @@ bool MouseTouchAdaptor::nativeEventFilter(const QByteArray &eventType, void *mes
 bool MouseTouchAdaptor::handleButtonPress(WId windowId, uint32_t detail, uint32_t /*modifiers*/, int x, int y)
 {
     Qt::MouseButton button = xcbButtonToQtMouseButton(detail);
-    qCDebug(mouseTouchAdaptor) << "***** press";
 
     // Filter out the other mouse buttons
     if (button != Qt::LeftButton)
@@ -179,7 +178,6 @@ bool MouseTouchAdaptor::handleButtonPress(WId windowId, uint32_t detail, uint32_
 bool MouseTouchAdaptor::handleButtonRelease(WId windowId, uint32_t detail, uint32_t, int x, int y)
 {
     Qt::MouseButton button = xcbButtonToQtMouseButton(detail);
-    qCDebug(mouseTouchAdaptor) << "***** release";
 
     // Don't eat the event if it wasn't a left mouse press
     if (button != Qt::LeftButton)
