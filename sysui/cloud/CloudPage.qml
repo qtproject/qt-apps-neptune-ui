@@ -46,7 +46,7 @@ UIPage {
         symbolName: 'my_cloud'
     }
 
-    StoreScreen {
-        anchors.fill: parent
+    AppStoreController {
+        anchors.fill: parent; anchors.topMargin: Style.vspan(1)
     }
 }
