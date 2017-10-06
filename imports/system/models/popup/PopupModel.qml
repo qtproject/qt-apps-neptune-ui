@@ -53,7 +53,7 @@ QtObject {
     property var popupContentData
     property var popupButtonData
 
-    property var logggingCategory: LoggingCategory {
+    property var loggingCategory: LoggingCategory {
         id: logCategory
         name: "neptune.popupmodel"
     }
@@ -139,7 +139,7 @@ QtObject {
     }
 
     function buttonPressed(buttonIndex) {
-        NotificationManager.triggerNotificationAction(root.popupIndex, root.buttonModel[buttonIndex]);
+        NotificationManager.triggerNotificationAction(root.popupIndex, buttonIndex);
         NotificationManager.dismissNotification(root.popupIndex);
         root.hideCurrentPopup();
         if (root.popupQueue.length > 0) {

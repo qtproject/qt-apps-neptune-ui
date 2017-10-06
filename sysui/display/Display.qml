@@ -147,7 +147,7 @@ Item {
 
     StageLoader {
         id: notificationCenterLoader
-        width: Style.isPotrait ? Style.hspan(Style.notificationCenterSpan + 5) : Style.hspan(Style.notificationCenterSpan)
+        width: Style.isPotrait ? Style.hspan(Style.notificationCenterSpan + 5) : Style.hspan(12)
         height: Style.screenHeight - Style.statusBarHeight
         anchors.top: statusBar.bottom
         active: StagedStartupModel.loadBackgroundElements

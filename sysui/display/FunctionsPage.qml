@@ -36,14 +36,42 @@ import utils 1.0
 import controls 1.0
 import models.settings 1.0
 import service.popup 1.0
+import service.notification 1.0
 
 UIPage {
     id: root
 
     PopupInterface {
         id: popupInterface
-        actions: [ { text: "OK" } ]
+        actions: [ { text: "OK" }, { text: "Cancel" } ]
         title: "Car Settings"
+
+        property bool currentState: false
+        property url functionIcon
+        property string functionName
+        property int functionIndex: -1
+
+        onActionTriggered: {
+            if (actionId === "0" && !currentState) {
+                SettingsModel.functions.setProperty(functionIndex, "active", true)
+                notificationInterface.icon = functionIcon
+                notificationInterface.body = functionName + " activated"
+                notificationInterface.show()
+            } else if (actionId === "0" && currentState) {
+                SettingsModel.functions.setProperty(functionIndex, "active", false)
+                notificationInterface.icon = functionIcon
+                notificationInterface.body = functionName + " deactivated"
+                notificationInterface.show()
+            }
+            currentState = false
+            functionName = ""
+            functionIndex = -1
+        }
+    }
+
+    NotificationInterface {
+        id: notificationInterface
+        summary: "Vehicle Functions"
     }
 
     header: AppInfoPanel {
@@ -74,9 +102,12 @@ UIPage {
             highlighted: model.active
 
             onClicked: {
-                model.active = !model.active
-                popupInterface.summary = model.description + (model.active ? " activated" : " deactivated");
-                popupInterface.show();
+                popupInterface.functionIcon = icon
+                popupInterface.currentState = model.active
+                popupInterface.functionIndex = index
+                popupInterface.functionName = qsTrId(model.description)
+                popupInterface.summary = !model.active ? "Activate " + popupInterface.functionName + " ?" : "Deactivate " + popupInterface.functionName + " ?"
+                popupInterface.show()
             }
         }
     }

@@ -51,7 +51,7 @@ QtObject {
     property var notificationQueue:[]
     property var buttonModel: []
 
-    property var logggingCategory: LoggingCategory {
+    property var loggingCategory: LoggingCategory {
         id: logCategory
         name: "neptune.notificationmodel"
     }

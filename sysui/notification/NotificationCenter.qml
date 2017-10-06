@@ -82,6 +82,7 @@ Control {
 
         Column {
             anchors.top: notificationCenterTitle.bottom
+            anchors.topMargin: Style.hspan(0.3)
             Repeater {
                 id: notificationRepeater
                 model: NotificationModel.model
