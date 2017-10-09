@@ -11,7 +11,7 @@ QT = appman_main-private testlib
 
 SOURCES = main.cpp
 
-unix: {
+unix:!macos: {
     CONFIG += link_pkgconfig
     PKGCONFIG += xcb x11 xi
     SOURCES += MouseTouchAdaptor.cpp
