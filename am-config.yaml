@@ -6,9 +6,9 @@ formatType: am-configuration
 
 applications:
   builtinAppsManifestDir: "${CONFIG_PWD}/apps"
-  installedAppsManifestDir: "/tmp/am/manifests"
-  appImageMountDir: "/tmp/am/image-mounts"
-  database: "/tmp/am/apps.db"
+  installedAppsManifestDir: "/tmp/neptune-ui/manifests"
+  appImageMountDir: "/tmp/neptune-ui/image-mounts"
+  database: "/tmp/neptune-ui/apps.db"
 
 # QML apps will be able to import from modules...
 
@@ -41,7 +41,7 @@ flags:
 
 installationLocations:
 - id: "internal-0"
-  installationPath: "/tmp/am/apps"
-  documentPath: "/tmp/am/docs"
+  installationPath: "/tmp/neptune-ui/apps"
+  documentPath: "/tmp/neptune-ui/docs"
   mountPoint: "/tmp"
   isDefault: true
