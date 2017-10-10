@@ -113,7 +113,20 @@ QtObject {
             name: "com.pelagicore.music.control"
         }
 
-        Binding { target: musicRemoteControl.object; property: "currentTrack"; value: player.currentTrack }
+        // A binding for the currentTrack doesn't work as it is a custom type which cannot be
+        // serialized easily.
+        Connections {
+            target: player
+            onCurrentTrackChanged: {
+                var trackInfo = {
+                    artist: currentTrack.artist,
+                    album: currentTrack.album,
+                    title: currentTrack.title
+                }
+                musicRemoteControl.object.currentTrack = trackInfo
+            }
+        }
+
         Binding { target: musicRemoteControl.object; property: "currentTime"; value: root.currentTime }
         Binding { target: musicRemoteControl.object; property: "durationTime"; value: root.durationTime }
         Binding { target: musicRemoteControl.object; property: "playing"; value: root.playing }
