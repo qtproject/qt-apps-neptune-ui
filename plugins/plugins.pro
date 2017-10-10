@@ -4,4 +4,5 @@ SUBDIRS = datasource \
           screenmanager \
           comtqci18ndemo \
           styles \
-          translation
+          translation \
+          systeminfo

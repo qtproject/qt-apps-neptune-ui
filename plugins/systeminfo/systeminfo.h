@@ -29,58 +29,28 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.0
-import utils 1.0
-import controls 1.0
-import QtApplicationManager 1.0
-import models.application 1.0
+#ifndef SYSTEMINFO_H
+#define SYSTEMINFO_H
 
-Item {
-    id: root
+#include <QtCore/QObject>
 
-    property string title: "System Monitor"
-    property int timeInterval: 200
+class SystemInfo : public QObject
+{
+    Q_OBJECT
 
-    Component.onCompleted: checkReporting()
+    Q_PROPERTY(QStringList addressList READ addressList NOTIFY addressListChanged)
 
-    function checkReporting() {
-        SystemMonitor.reportingInterval = root.timeInterval
-        SystemMonitor.count = 50
-    }
+public:
+    explicit SystemInfo(QObject *parent = nullptr);
 
-    TabView {
-        id: tabView
-        width: root.width
-        height: root.height - Style.vspan(3)
-        anchors.centerIn: parent
-        horizontalAlignment: true
-        tabs: [
-            { title : "Info", url : infoPanel, properties : {} },
-            { title : "CPU/FPS", url : systemPanel, properties : {} },
-            { title : "RAM", url : appPanel, properties : {} },
-            { title : "Addresses", url : addressList, properties : {} },
-        ]
-    }
+    void getAddress();
+    QStringList addressList() const;
 
+signals:
+    void addressListChanged();
 
-    Component {
-        id: addressList
-        AddressList {
-        }
-    }
+protected:
+    QStringList m_addressList;
+};
 
-    InfoPanel {
-        id: infoPanel
-        visible: false
-    }
-
-    SystemPanel {
-        id: systemPanel
-        visible: false
-    }
-
-    AppPanel {
-        id: appPanel
-        visible: false
-    }
-}
+#endif // SYSTEMINFO_H

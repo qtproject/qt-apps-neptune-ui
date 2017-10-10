@@ -29,58 +29,44 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.0
+import QtQuick 2.6
+import QtQuick.Layouts 1.0
+import QtQuick.Controls 2.0
 import utils 1.0
 import controls 1.0
-import QtApplicationManager 1.0
-import models.application 1.0
+import com.pelagicore.systeminfo 1.0
 
-Item {
+UIPage {
     id: root
 
-    property string title: "System Monitor"
-    property int timeInterval: 200
-
-    Component.onCompleted: checkReporting()
-
-    function checkReporting() {
-        SystemMonitor.reportingInterval = root.timeInterval
-        SystemMonitor.count = 50
-    }
-
-    TabView {
-        id: tabView
-        width: root.width
-        height: root.height - Style.vspan(3)
+    ListViewManager {
+        id: listView
+        width: Style.hspan(11.5)
+        height: Style.vspan(11)
+        model: SystemInfo.addressList
         anchors.centerIn: parent
-        horizontalAlignment: true
-        tabs: [
-            { title : "Info", url : infoPanel, properties : {} },
-            { title : "CPU/FPS", url : systemPanel, properties : {} },
-            { title : "RAM", url : appPanel, properties : {} },
-            { title : "Addresses", url : addressList, properties : {} },
-        ]
-    }
+        anchors.verticalCenterOffset: -80
 
+        delegate: ItemDelegate {
+            id: delegatedItem
+            implicitWidth: listView.width
+            implicitHeight: Style.vspan(2)
 
-    Component {
-        id: addressList
-        AddressList {
+            contentItem: Control {
+                anchors.fill: parent
+                Label {
+                    id: titleLabel
+                    anchors.verticalCenter: parent.verticalCenter
+                    Layout.preferredWidth: parent.width
+                    Layout.fillHeight: true
+                    elide: Text.ElideRight
+                    text: modelData
+                }
+                HDiv {
+                    anchors.verticalCenter: parent.bottom
+                    anchors.horizontalCenter: parent.horizontalCenter
+                }
+            }
         }
-    }
-
-    InfoPanel {
-        id: infoPanel
-        visible: false
-    }
-
-    SystemPanel {
-        id: systemPanel
-        visible: false
-    }
-
-    AppPanel {
-        id: appPanel
-        visible: false
     }
 }

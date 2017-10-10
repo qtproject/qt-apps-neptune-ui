@@ -29,58 +29,30 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.0
-import utils 1.0
-import controls 1.0
-import QtApplicationManager 1.0
-import models.application 1.0
+#include <QtQml/qqmlextensionplugin.h>
+#include <qqml.h>
+#include "systeminfo.h"
 
-Item {
-    id: root
+static QObject *systemInfoSingletonFactory(QQmlEngine *engine, QJSEngine *scriptEngine)
+{
+    Q_UNUSED(scriptEngine)
+    Q_UNUSED(engine)
 
-    property string title: "System Monitor"
-    property int timeInterval: 200
-
-    Component.onCompleted: checkReporting()
-
-    function checkReporting() {
-        SystemMonitor.reportingInterval = root.timeInterval
-        SystemMonitor.count = 50
-    }
-
-    TabView {
-        id: tabView
-        width: root.width
-        height: root.height - Style.vspan(3)
-        anchors.centerIn: parent
-        horizontalAlignment: true
-        tabs: [
-            { title : "Info", url : infoPanel, properties : {} },
-            { title : "CPU/FPS", url : systemPanel, properties : {} },
-            { title : "RAM", url : appPanel, properties : {} },
-            { title : "Addresses", url : addressList, properties : {} },
-        ]
-    }
-
-
-    Component {
-        id: addressList
-        AddressList {
-        }
-    }
-
-    InfoPanel {
-        id: infoPanel
-        visible: false
-    }
-
-    SystemPanel {
-        id: systemPanel
-        visible: false
-    }
-
-    AppPanel {
-        id: appPanel
-        visible: false
-    }
+    return new SystemInfo();
 }
+
+class SystemInfoPlugin : public QQmlExtensionPlugin
+{
+    Q_OBJECT
+    Q_PLUGIN_METADATA(IID "org.qt-project.Qt.QQmlExtensionInterface/1.0")
+public:
+    virtual void registerTypes(const char *uri)
+    {
+        Q_ASSERT(QLatin1String(uri) == QLatin1String("com.pelagicore.systeminfo"));
+        Q_UNUSED(uri);
+
+        qmlRegisterSingletonType<SystemInfo>(uri, 1, 0, "SystemInfo", systemInfoSingletonFactory);
+    }
+};
+
+#include "plugin.moc"

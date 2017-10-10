@@ -29,58 +29,35 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.0
-import utils 1.0
-import controls 1.0
-import QtApplicationManager 1.0
-import models.application 1.0
+#include <QNetworkInterface>
+#include "systeminfo.h"
 
-Item {
-    id: root
+SystemInfo::SystemInfo(QObject *parent)
+    : QObject(parent)
+{
+    getAddress();
+}
 
-    property string title: "System Monitor"
-    property int timeInterval: 200
-
-    Component.onCompleted: checkReporting()
-
-    function checkReporting() {
-        SystemMonitor.reportingInterval = root.timeInterval
-        SystemMonitor.count = 50
-    }
-
-    TabView {
-        id: tabView
-        width: root.width
-        height: root.height - Style.vspan(3)
-        anchors.centerIn: parent
-        horizontalAlignment: true
-        tabs: [
-            { title : "Info", url : infoPanel, properties : {} },
-            { title : "CPU/FPS", url : systemPanel, properties : {} },
-            { title : "RAM", url : appPanel, properties : {} },
-            { title : "Addresses", url : addressList, properties : {} },
-        ]
-    }
-
-
-    Component {
-        id: addressList
-        AddressList {
+/*
+ * This function will return all available Addresses of your device in list.
+*/
+void SystemInfo::getAddress()
+{
+    for (const QNetworkInterface &interface : QNetworkInterface::allInterfaces())
+    {
+        if (interface.flags().testFlag(QNetworkInterface::IsUp) && !interface.flags().testFlag(QNetworkInterface::IsLoopBack)) {
+            for (const QNetworkAddressEntry &entry : interface.addressEntries())
+            {
+                if (interface.hardwareAddress() != QLatin1String("00:00:00:00:00:00")) {
+                    m_addressList.append(interface.name() + QLatin1String(" ") + entry.ip().toString() + QLatin1String(" ") + interface.hardwareAddress());
+                    emit addressListChanged();
+                }
+            }
         }
     }
+}
 
-    InfoPanel {
-        id: infoPanel
-        visible: false
-    }
-
-    SystemPanel {
-        id: systemPanel
-        visible: false
-    }
-
-    AppPanel {
-        id: appPanel
-        visible: false
-    }
+QStringList SystemInfo::addressList() const
+{
+    return m_addressList;
 }
