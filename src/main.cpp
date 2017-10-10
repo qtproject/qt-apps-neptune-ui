@@ -71,7 +71,10 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
         fileList.append(QStringLiteral("am-config.yaml"));
 
 #ifdef NEPTUNE_ENABLE_TOUCH_EMULATION
-        auto *mouseTouchAdaptor = MouseTouchAdaptor::instance();
+        MouseTouchAdaptor *mouseTouchAdaptor = nullptr;
+        if (QTouchDevice::devices().isEmpty()) {
+            mouseTouchAdaptor = MouseTouchAdaptor::instance();
+        }
 #endif
 
         DefaultConfiguration cfg(fileList, "");
