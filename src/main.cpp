@@ -38,15 +38,23 @@
 #include <QGuiApplication>
 
 #ifdef NEPTUNE_ENABLE_TOUCH_EMULATION
-#include "MouseTouchAdaptor.h"
+#  include "MouseTouchAdaptor.h"
 #endif
+
 
 QT_USE_NAMESPACE_AM
 
 Q_DECL_EXPORT int main(int argc, char *argv[])
 {
-    QGuiApplication::setApplicationDisplayName(qSL("Neptune UI"));
-    QGuiApplication::setApplicationVersion("0.1");
+#if defined(Q_OS_UNIX) && defined(AM_MULTI_PROCESS)
+    // set a reasonable default for OSes/distros that do not set this by default
+    setenv("XDG_RUNTIME_DIR", "/tmp", 0);
+#endif
+
+    QCoreApplication::setApplicationName(qSL("Neptune UI"));
+    QCoreApplication::setOrganizationName(qSL("Pelagicore AG"));
+    QCoreApplication::setOrganizationDomain(qSL("pelagicore.com"));
+    QCoreApplication::setApplicationVersion(NEPTUNE_VERSION);
 
     Logging::initialize();
 
@@ -67,29 +75,20 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
 #endif
 
         Main a(argc, argv);
-        QStringList fileList;
-        fileList.append(QStringLiteral("am-config.yaml"));
 
 #ifdef NEPTUNE_ENABLE_TOUCH_EMULATION
-        MouseTouchAdaptor *mouseTouchAdaptor = nullptr;
-        if (QTouchDevice::devices().isEmpty()) {
-            mouseTouchAdaptor = MouseTouchAdaptor::instance();
-        }
+        QScopedPointer<MouseTouchAdaptor> mouseTouchAdaptor;
+        if (QTouchDevice::devices().isEmpty())
+            mouseTouchAdaptor.reset(MouseTouchAdaptor::instance());
 #endif
 
-        DefaultConfiguration cfg(fileList, "");
+        DefaultConfiguration cfg(QStringList(qSL("am-config.yaml")), QString());
         cfg.parse();
         a.setup(&cfg);
         a.loadQml(cfg.loadDummyData());
         a.showWindow(cfg.fullscreen() && !cfg.noFullscreen());
 
-        int result = MainBase::exec();
-
-#ifdef NEPTUNE_ENABLE_TOUCH_EMULATION
-        delete mouseTouchAdaptor;
-#endif
-
-        return result;
+        return MainBase::exec();
     } catch (const std::exception &e) {
         qCCritical(LogSystem) << "ERROR:" << e.what();
         return 2;
