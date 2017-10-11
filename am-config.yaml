@@ -5,7 +5,7 @@ formatType: am-configuration
 # installations will go into the standard /tmp/am hierarchy
 
 applications:
-  builtinAppsManifestDir: "${CONFIG_PWD}/apps"
+  builtinAppsManifestDir: [ "${CONFIG_PWD}/apps" ]
   installedAppsManifestDir: "/tmp/neptune-ui/manifests"
   appImageMountDir: "/tmp/neptune-ui/image-mounts"
   database: "/tmp/neptune-ui/apps.db"
