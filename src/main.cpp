@@ -67,7 +67,7 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     }
 
     try {
-        setenv("QT_IM_MODULE", "qtvirtualkeyboard", 1);
+        qputenv("QT_IM_MODULE", "qtvirtualkeyboard");
         // this is needed for both WebEngine and Wayland Multi-screen rendering
         QCoreApplication::setAttribute(Qt::AA_ShareOpenGLContexts);
 #if !defined(QT_NO_SESSIONMANAGER)
