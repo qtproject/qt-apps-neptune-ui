@@ -41,6 +41,12 @@
 #include <X11/extensions/XInput2.h>
 #include <X11/extensions/XI2proto.h>
 
+// this event type was added in libxcb 1.10,
+// but we support also older version
+#ifndef XCB_GE_GENERIC
+#define XCB_GE_GENERIC 35
+#endif
+
 Q_LOGGING_CATEGORY(mouseTouchAdaptor, "mousetouchadaptor")
 
 using QTest::QTouchEventSequence;
