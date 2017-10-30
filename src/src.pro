@@ -22,5 +22,9 @@ unix:!macos:system($$pkgConfigExecutable() --libs x11 xi xcb) {
 
 DESTDIR = $$OUT_PWD/../
 
-target.path = $$INSTALL_PREFIX/neptune
-INSTALLS += target
+win32: wrapper.files = neptune-ui_wrapper.bat
+else: wrapper.files = neptune-ui_wrapper.sh
+wrapper.path = $$INSTALL_PREFIX/neptune-ui
+
+target.path = $$INSTALL_PREFIX/neptune-ui
+INSTALLS += target wrapper

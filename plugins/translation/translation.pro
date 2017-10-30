@@ -51,7 +51,7 @@ qm.CONFIG += no_link
 QMAKE_EXTRA_COMPILERS += qm
 
 qmfiles.files = $$prependAll(supportedLocales, $$shadowed($$assetsPath/translations)/, .qm)
-qmfiles.path = $$INSTALL_PREFIX/neptune/imports/assets/translations
+qmfiles.path = $$INSTALL_PREFIX/neptune-ui/imports/assets/translations
 qmfiles.CONFIG += no_check_exist
 
 INSTALLS += qmfiles

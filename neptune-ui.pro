@@ -28,7 +28,7 @@ SUBDIRS += copydata
 
 # Install all required files
 qml.files = apps imports sysui examples styles am-config.yaml Main.qml
-qml.path = $$INSTALL_PREFIX/neptune
+qml.path = $$INSTALL_PREFIX/neptune-ui
 INSTALLS += qml
 
 OTHER_FILES += $$files($$PWD/*.qml, true)

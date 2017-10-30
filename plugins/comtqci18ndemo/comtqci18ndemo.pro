@@ -56,7 +56,7 @@ qm.CONFIG += no_link
 QMAKE_EXTRA_COMPILERS += qm
 
 qmfiles.files = $$prependAll(supportedLocales, $$shadowed($$qmlAppPath/translations)/i18napp_, .qm)
-qmfiles.path = $$INSTALL_PREFIX/neptune/apps/com.theqtcompany.i18ndemo/translations
+qmfiles.path = $$INSTALL_PREFIX/neptune-ui/apps/com.theqtcompany.i18ndemo/translations
 qmfiles.CONFIG += no_check_exist
 
 INSTALLS += qmfiles
