@@ -97,7 +97,7 @@ UIPage {
         delegate: FunctionButton {
             width: GridView.view.cellWidth
             height: GridView.view.cellHeight
-            text: qsTrId(model.description)
+            text: qsTrId(model.description) + Style.translation.emptyString
             icon: Style.symbolM(model.icon, model.active)
             highlighted: model.active
 
@@ -105,7 +105,7 @@ UIPage {
                 popupInterface.functionIcon = icon
                 popupInterface.currentState = model.active
                 popupInterface.functionIndex = index
-                popupInterface.functionName = qsTrId(model.description)
+                popupInterface.functionName = qsTrId(model.description) + Style.translation.emptyString
                 popupInterface.summary = !model.active ? "Activate " + popupInterface.functionName + " ?" : "Deactivate " + popupInterface.functionName + " ?"
                 popupInterface.show()
             }

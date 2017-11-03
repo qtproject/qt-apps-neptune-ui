@@ -62,6 +62,11 @@ QString Translation::languageLocale() const
     return m_languageLocale;
 }
 
+QString Translation::emptyString() const
+{
+    return "";
+}
+
 bool Translation::loadTranslationFile(const QString &langLocale)
 {
     QString fileToLoad(m_languageFilePath);
@@ -70,8 +75,9 @@ bool Translation::loadTranslationFile(const QString &langLocale)
     if ( m_translator.load(fileToLoad) ) {
         qApp->installTranslator(&m_translator);
 
-        QEvent ev(QEvent::LanguageChange);
-        qApp->sendEvent(QQmlEngine::contextForObject(this)->engine(), &ev);
+// NOTE: This only works with 5.10
+//        QEvent ev(QEvent::LanguageChange);
+//        qApp->sendEvent(QQmlEngine::contextForObject(this)->engine(), &ev);
 
         return true;
     }

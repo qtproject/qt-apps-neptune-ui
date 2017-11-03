@@ -41,6 +41,7 @@ class Translation : public QObject
     Q_OBJECT
 
     Q_PROPERTY(QString languageLocale READ languageLocale WRITE setLanguageLocale NOTIFY languageLocaleChanged)
+    Q_PROPERTY(QString emptyString READ emptyString NOTIFY languageChanged)
 
 public:
     explicit Translation(QObject *parent = nullptr);
@@ -49,6 +50,9 @@ public:
 
     void setLanguageLocale(const QString &languageLocale);
     QString languageLocale() const;
+
+    // Helper method to notify string change
+    QString emptyString() const;
 
 signals:
     void languageLocaleChanged();
