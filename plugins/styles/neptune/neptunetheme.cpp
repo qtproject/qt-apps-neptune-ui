@@ -35,12 +35,9 @@
 #include <QtGui/QFont>
 #include <QtGui/QFontInfo>
 
-Q_LOGGING_CATEGORY(neptuneTheme, "neptune.theme")
-
 NeptuneTheme::NeptuneTheme(QPlatformTheme *theme)
 {
     Q_UNUSED(theme)
-    qCDebug(neptuneTheme) << "constructor";
     const QFont font(QLatin1String("Source Sans Pro"));
     if (QFontInfo(font).family() == QLatin1String("Source Sans Pro")) {
         const QString family = font.family();

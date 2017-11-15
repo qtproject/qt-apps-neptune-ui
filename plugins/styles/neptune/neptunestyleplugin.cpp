@@ -40,33 +40,25 @@ Q_LOGGING_CATEGORY(neptuneStyle, "neptune.style")
 
 NeptuneStylePlugin::NeptuneStylePlugin(QObject *parent)
     : QQuickStylePlugin(parent)
-{
-    qCDebug(neptuneStyle) << "constructor";
-}
+{ }
 
 void NeptuneStylePlugin::registerTypes(const char *uri)
 {
-    qCDebug(neptuneStyle) << "registerTypes():" << uri;
-    // @uri com.pelagicore.styles.neptune
     qmlRegisterUncreatableType<NeptuneStyle>(uri, 1, 0, "NeptuneStyle", "NeptuneStyle is an attached property");
 }
 
 void NeptuneStylePlugin::initializeEngine(QQmlEngine *engine, const char *uri)
 {
-    qCDebug(neptuneStyle) << "initializeEngine()";
     QQuickStylePlugin::initializeEngine(engine, uri);
 }
 
 QString NeptuneStylePlugin::name() const
 {
-    qCDebug(neptuneStyle) << "name()";
     return QStringLiteral("neptune");
 }
 
 QQuickProxyTheme *NeptuneStylePlugin::createTheme() const
 {
-    qCDebug(neptuneStyle) << "createTheme()";
+    qCDebug(neptuneStyle) << "Created a NeptuneTheme instance";
     return new NeptuneTheme;
 }
-
-
