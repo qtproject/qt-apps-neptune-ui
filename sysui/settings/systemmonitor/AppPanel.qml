@@ -29,7 +29,7 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.0
+import QtQuick 2.6
 import QtQuick.Controls 2.2
 import utils 1.0
 import controls 1.0
@@ -67,25 +67,15 @@ UIPage {
                 height: processContainer.height/4 - 10
                 width: processContainer.width
 
-                model: processMonitor.memoryMonitor
-                orientation: ListView.Horizontal
-                interactive: false
-                //spacing: 1
-
-                property QtObject processMonitor: SystemMonitor.getProcessMonitor(applicationId)
-
+                property string appId: applicationId
                 property bool reportingActive: ApplicationManager.get(index).isRunning
-
-                onReportingActiveChanged: {
-                    processMonitor.memoryReportingEnabled = reportingActive
-                }
-
                 property real pssMemoryUsed: 0
                 property real memoryUsed: 0
                 property real memoryUsagePercentage: 0
 
-                Component.onCompleted: processMonitor.memoryReportingEnabled = reportingActive
-
+                model: processMon
+                orientation: ListView.Horizontal
+                interactive: false
                 delegate: Item {
                     width: processGraph.width / processGraph.model.count
                     height: processGraph.height - 10
@@ -100,30 +90,36 @@ UIPage {
 
                     Rectangle {
                         width: parent.width
-                        height: (model.rss/model.vmSize)*parent.height
+                        height: (memoryRss.total/memoryVirtual.total)*parent.height
                         anchors.bottom: parent.bottom
                         color: "green"
                     }
 
                     Rectangle {
                         width: parent.width
-                        height: (model.pss/model.vmSize)*parent.height
+                        height: (memoryPss.total/memoryVirtual.total)*parent.height
                         anchors.bottom: parent.bottom
                         color: Style.colorOrange
                     }
 
                     Rectangle {
                         width: parent.width
-                        height: (model.heapV/model.vmSize)*parent.height
+                        height: (memoryVirtual.heap/memoryVirtual.total)*parent.height
                         anchors.bottom: parent.bottom
                         color: "yellow"
                     }
+                }
 
-                    Rectangle {
-                        width: parent.width
-                        height: (model.stackV/model.vmSize)*parent.height
-                        anchors.bottom: parent.bottom
-                        color: "white"
+                ProcessMonitor {
+                    id: processMon
+                    applicationId: processGraph.appId
+                    reportingInterval: 1000
+                    memoryReportingEnabled: processGraph.reportingActive
+
+                    onMemoryReportingChanged: {
+                        processGraph.memoryUsagePercentage = (memoryVirtual.total/SystemMonitor.totalMemory * 100).toFixed(1)
+                        processGraph.memoryUsed = (memoryVirtual.total/1e6).toFixed(1)
+                        processGraph.pssMemoryUsed = (memoryPss.total/1e6).toFixed(1)
                     }
                 }
 
@@ -141,17 +137,6 @@ UIPage {
                     anchors.right: processGraph.right
                     text: applicationId + " VSize: " + processGraph.memoryUsed + "MB, " + processGraph.memoryUsagePercentage + "%\nPSS: " + processGraph.pssMemoryUsed + "MB"
                     font.pixelSize: Style.fontSizeXXS
-                }
-
-                Connections {
-                    target: processMonitor.memoryMonitor
-                    onMemoryReportingChanged: {
-                        var vmSizeBytes = processMonitor.memoryMonitor.get(modelIndex).vmSize
-                        var pssSizeBytes = processMonitor.memoryMonitor.get(modelIndex).pss
-                        processGraph.memoryUsagePercentage = (vmSizeBytes/SystemMonitor.totalMemory * 100).toFixed(1)
-                        processGraph.memoryUsed = (vmSizeBytes/1024/1024).toFixed(1)
-                        processGraph.pssMemoryUsed = (pssSizeBytes/1024/1024).toFixed(1)
-                    }
                 }
             }
         }
@@ -194,13 +179,6 @@ UIPage {
             color: "yellow"
             font.pixelSize: Style.fontSizeXXS
         }
-
-        Label {
-            id: stackText
-
-            text: "Stack"
-            color: "white"
-            font.pixelSize: Style.fontSizeXXS
-        }
     }
+
 }
