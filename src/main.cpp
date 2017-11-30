@@ -37,10 +37,6 @@
 #include <QtAppManInstaller/sudo.h>
 #include <QGuiApplication>
 
-#ifdef NEPTUNE_ENABLE_TOUCH_EMULATION
-#  include "MouseTouchAdaptor.h"
-#endif
-
 
 QT_USE_NAMESPACE_AM
 
@@ -75,12 +71,6 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
 #endif
 
         Main a(argc, argv);
-
-#ifdef NEPTUNE_ENABLE_TOUCH_EMULATION
-        QScopedPointer<MouseTouchAdaptor> mouseTouchAdaptor;
-        if (QTouchDevice::devices().isEmpty())
-            mouseTouchAdaptor.reset(MouseTouchAdaptor::instance());
-#endif
 
         DefaultConfiguration cfg(QStringList(qSL("am-config.yaml")), QString());
         cfg.parse();

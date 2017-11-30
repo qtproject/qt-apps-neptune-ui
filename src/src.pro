@@ -12,14 +12,6 @@ DEFINES *= NEPTUNE_VERSION=\\\"$$VERSION\\\"
 
 SOURCES = main.cpp
 
-unix:!macos:system($$pkgConfigExecutable() --libs x11 xi xcb) {
-    PKGCONFIG *= xcb x11 xi
-    QT += gui-private
-    SOURCES += MouseTouchAdaptor.cpp
-    HEADERS += MouseTouchAdaptor.h
-    DEFINES += NEPTUNE_ENABLE_TOUCH_EMULATION
-}
-
 DESTDIR = $$OUT_PWD/../
 
 win32: wrapper.files = neptune-ui_wrapper.bat
