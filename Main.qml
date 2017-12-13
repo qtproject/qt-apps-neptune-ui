@@ -35,11 +35,12 @@ import QtQuick.Controls 2.0
 import controls 1.0
 import utils 1.0
 import models.startup 1.0
+import com.pelagicore.ScreenManager 1.0
 
 BackgroundPane {
     id: root
 
-    property bool showClusterIfPossible: ApplicationManager.systemProperties.showCluster && Style.withCluster
+    property bool showClusterIfPossible: ApplicationManager.systemProperties.showCluster && Style.withCluster && ScreenManager.screenCount() > 1
     property var cluster
 
     width: Style.screenWidth
