@@ -44,6 +44,7 @@ Control {
     property alias rotate: image.rotation
     Image {
         id: image
+        objectName: root.objectName ? root.objectName : root.parent.objectName + root.name + root.size
         anchors.centerIn: parent
         source: root.name ? Style.symbol(root.name, root.size, root.active) : ""
         asynchronous: true

@@ -81,6 +81,7 @@ UIPage {
                     height: processGraph.height - 10
 
                     Rectangle {
+                        objectName: "AppPanel::RectangleGray"
                         width: parent.width
                         height: parent.height // vmSize referent point
                         anchors.bottom: parent.bottom
@@ -89,6 +90,7 @@ UIPage {
                     }
 
                     Rectangle {
+                        objectName: "AppPanel::RectangleGreen"
                         width: parent.width
                         height: (memoryRss.total/memoryVirtual.total)*parent.height
                         anchors.bottom: parent.bottom
@@ -96,6 +98,7 @@ UIPage {
                     }
 
                     Rectangle {
+                        objectName: "AppPanel::RectangleOrange"
                         width: parent.width
                         height: (memoryPss.total/memoryVirtual.total)*parent.height
                         anchors.bottom: parent.bottom
@@ -103,6 +106,7 @@ UIPage {
                     }
 
                     Rectangle {
+                        objectName: "AppPanel::RectangleYellow"
                         width: parent.width
                         height: (memoryVirtual.heap/memoryVirtual.total)*parent.height
                         anchors.bottom: parent.bottom
@@ -150,7 +154,7 @@ UIPage {
 
         Label {
             id: vmText
-
+            objectName: "AppPanel::VMText"
             text: "VMemory-ref point"
             font.pixelSize: Style.fontSizeXXS
             color: Style.colorGrey
@@ -158,7 +162,7 @@ UIPage {
 
         Label {
             id: rssText
-
+            objectName: "AppPanel::RSSText"
             text: "RSS"
             color: "green"
             font.pixelSize: Style.fontSizeXXS
@@ -166,7 +170,7 @@ UIPage {
 
         Label {
             id: pssText
-
+            objectName: "AppPanel::PSSText"
             text: "PSS"
             color: Style.colorOrange
             font.pixelSize: Style.fontSizeXXS
@@ -174,7 +178,7 @@ UIPage {
 
         Label {
             id: heapText
-
+            objectName: "AppPanel::HeapText"
             text: "Heap"
             color: "yellow"
             font.pixelSize: Style.fontSizeXXS

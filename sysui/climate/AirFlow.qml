@@ -68,8 +68,8 @@ Control {
         delegate: Control {
             width: Style.hspan(2)
             height: Style.vspan(3)
-
             Image {
+                objectName: "AirFlow::FlowArrow" + index
                 anchors.top: seatPerson.top
                 anchors.horizontalCenter: seatPerson.horizontalCenter
                 anchors.horizontalCenterOffset: -Style.padding
@@ -80,12 +80,14 @@ Control {
 
             Image {
                 id: seatPerson
+                objectName: "AirFlow::SeatPerson" + index
                 anchors.centerIn: parent
                 anchors.horizontalCenterOffset: Style.padding
                 source: Style.symbolM("seat_person")
             }
 
             Image {
+                objectName: "AirFlow::SeatPersonLeftWArrow" + index
                 anchors.right: seatPerson.left
                 anchors.rightMargin: -Style.padding
                 anchors.verticalCenter: seatPerson.verticalCenter

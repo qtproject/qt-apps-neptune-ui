@@ -37,6 +37,7 @@ import utils 1.0
 
 Button {
     id: root
+    objectName: "FunctionButton::"+root.text
 
     width: Style.hspan(4)
     height: Style.vspan(7)
@@ -61,6 +62,7 @@ Button {
 
     Rectangle {
         id: highlightBar
+        objectName: "FunctionButton::AreaButton_"+root.text
         anchors.left: root.left
         width: Style.hspan(0.1)
         height: parent.height
@@ -70,6 +72,7 @@ Button {
     }
 
     indicator: Image {
+        objectName: "FunctionButton::Image_"+root.text
         anchors.centerIn: parent
         source: root.icon
     }

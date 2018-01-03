@@ -41,6 +41,7 @@ Control {
     property alias delegate: repeater.delegate
 
     Grid {
+        objectName: "ClimateOptionsGrid::Grid"
         anchors.centerIn: parent
         columns: 3
 

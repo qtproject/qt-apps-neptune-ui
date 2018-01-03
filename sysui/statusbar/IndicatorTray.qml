@@ -51,6 +51,7 @@ Control {
              id: repeater
 
              delegate: Image {
+                 objectName: "IndicatorTray::" + modelData.name
                  source: Style.symbolXS(modelData.name)
                  opacity: modelData.active ? 1 : 0.4
              }

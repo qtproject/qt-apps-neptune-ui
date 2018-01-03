@@ -43,6 +43,7 @@ UIPage {
         anchors.verticalCenterOffset: -80
 
         SettingsItemDelegate {
+            objectName: "InfoPanel::NumCores"
             width: Style.hspan(10)
             height: Style.vspan(2)
             checkable: false
@@ -52,6 +53,7 @@ UIPage {
         }
 
         SettingsItemDelegate {
+            objectName: "InfoPanel::TotalRAM"
             width: Style.hspan(10)
             height: Style.vspan(2)
             checkable: false
@@ -61,6 +63,7 @@ UIPage {
         }
 
         SettingsItemDelegate {
+            objectName: "InfoPanel::IdleStatus"
             width: Style.hspan(10)
             height: Style.vspan(2)
             checkable: false
@@ -69,6 +72,7 @@ UIPage {
             hasChildren: false
         }
         SettingsItemDelegate {
+            objectName: "InfoPanel::IdleLoadThreshold"
             width: Style.hspan(10)
             height: Style.vspan(2)
             checkable: false

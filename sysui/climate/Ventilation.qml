@@ -68,6 +68,7 @@ Control {
 
     ListView {
         id: view
+        objectName: "Ventilation::FanPowerChart"
 
         anchors.centerIn: parent
 
@@ -103,6 +104,7 @@ Control {
         }
 
         delegate: Rectangle {
+            objectName: "Ventilation::PowerSliderRectangle" + index
             width: index === 0 ? 0 : Style.hspan(1)
             height: Style.vspan(2)
             border.color: Qt.darker(color, 1.5)

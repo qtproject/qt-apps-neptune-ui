@@ -57,12 +57,14 @@ Page {
     }
 
     background: Rectangle {
+        objectName: "Settings::Background"
         anchors.fill: parent
         color: Style.colorGrey
     }
 
     Label {
         id: settingsTitle
+        objectName: "Settings::Title" + settingsTitle.text.replace(" ", "")
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: parent.top
         anchors.topMargin: Style.hspan(0.5)
@@ -113,6 +115,7 @@ Page {
         visible: root.opacity === 1.0
 
         initialItem: Item {
+            objectName: "Settings::ListPlaceHolder"
             width: stackView.width
             height: stackView.height
             ListViewManager {
@@ -120,6 +123,7 @@ Page {
                 model: pageModel
                 anchors.fill: parent
                 delegate: ListItem {
+                    objectName: parent.objectName + text.replace(" ", "")
                     width: Style.hspan(20)
                     height: Style.vspan(2)
                     text: title
@@ -138,6 +142,7 @@ Page {
 
     Tool {
         id: backButton
+        objectName: "Settings::BackSymbol"
         anchors.left: parent.left
         anchors.top: parent.top
         width: Style.hspan(2)

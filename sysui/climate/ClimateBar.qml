@@ -39,6 +39,7 @@ import models.startup 1.0
 
 Control {
     id: root
+    objectName: "ClimateBar"
 
     width: Style.screenWidth
     height: Style.vspan(24) - Style.statusBarHeight
@@ -50,6 +51,7 @@ Control {
 
     Pane {
         id: climatePanelBackground
+        objectName: "ClimateBar::ClimatePane"
         height: Style.climateCollapsedVspan
         anchors.left: parent.left
         anchors.right: parent.right
@@ -60,12 +62,14 @@ Control {
 
     Item {
         id: climateBarContent
+        objectName: "ClimateBar::Content"
         height: Style.climateCollapsedVspan
         width: Style.hspan(23)
         anchors.horizontalCenter: parent.horizontalCenter
 
         TemperatureLevel {
             id: tempLevelLeft
+            objectName: "ClimateBar::TempLevelLeft"
             value: ClimateModel.calculateUnitValue(ClimateModel.leftSeat.value)
             anchors.left: parent.left
             anchors.verticalCenter: parent.verticalCenter
@@ -74,6 +78,7 @@ Control {
 
         Tool {
             id: leftSeatHeat
+            objectName: "ClimateBar::SeatLeft"
             width: Style.hspan(2)
             height: Style.climateCollapsedVspan
             symbol: "seat_left"
@@ -93,6 +98,7 @@ Control {
         }
 
         AirFlow {
+            objectName: "ClimateBar::Airflow"
             width: Style.hspan(6)
             height: Style.climateCollapsedVspan
             anchors.left: leftSeatHeat.right
@@ -103,6 +109,7 @@ Control {
 
         Tool {
             id: rightSeatHeat
+            objectName: "ClimateBar::SeatRight"
             width: Style.hspan(2)
             height: Style.climateCollapsedVspan
             symbol: "seat_right"
@@ -122,6 +129,7 @@ Control {
 
         TemperatureLevel {
             id: tempLevelRight
+            objectName: "ClimateBar::TempLevelRight"
             horizontalAlignment: Qt.AlignRight
             value: ClimateModel.calculateUnitValue(ClimateModel.rightSeat.value)
             anchors.right: parent.right
@@ -132,6 +140,7 @@ Control {
 
     StageLoader {
         id: climatePaneLoader
+        objectName: "ClimateBar::ClimatePaneLoader"
         width: Style.screenWidth
         height: Style.vspan(24) - Style.statusBarHeight
         active: StagedStartupModel.loadBackgroundElements

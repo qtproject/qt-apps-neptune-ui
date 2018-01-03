@@ -38,6 +38,7 @@ import models.settings 1.0
 
 Item {
     id: root
+    objectName: "ProfileSettings"
     width: Style.hspan(24)
     height: Style.vspan(20)
 
@@ -45,6 +46,7 @@ Item {
 
     Label {
         id: settingsTitle
+        objectName: "ProfileSettings::DriverProfileLabel"
         anchors.top: parent.top
         anchors.topMargin: Style.vspan(1)
         anchors.left: settingsListView.left

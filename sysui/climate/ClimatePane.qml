@@ -39,6 +39,7 @@ import models.system 1.0
 
 Item {
     id: root
+    objectName: "ClimatePane"
 
     width: Style.screenWidth
     height: Style.vspan(24) - Style.statusBarHeight
@@ -47,6 +48,7 @@ Item {
     property bool backgroundPaneVisible: false
 
     BackgroundPane {
+        objectName: "ClimatePane::BackgroundPane"
         anchors.fill: parent
         visible: root.backgroundPaneVisible
     }
@@ -66,6 +68,7 @@ Item {
         // ClimateBar container
         Item {
             id: climateBarContainer
+            objectName: "ClimatePane::BarContainer"
             height: Style.climateCollapsedVspan
             Layout.preferredWidth: mainLayout.width
         }
@@ -77,6 +80,7 @@ Item {
 
             TemperatureSlider {
                 id: leftTempSlider
+                objectName: "TemperatureSlider::LeftSlider"
                 width: Style.hspan(3)
                 Layout.fillHeight: true
                 from: ClimateModel.leftSeat.minValue
@@ -103,6 +107,7 @@ Item {
 
                 Ventilation {
                     id: ventilation
+                    objectName: "ClimatePane::Ventilation"
 
                     Layout.alignment: Qt.AlignHCenter
                     Layout.preferredWidth: Style.hspan(10)
@@ -123,6 +128,7 @@ Item {
                     Layout.preferredHeight: Style.vspan(10)
                     model: ClimateModel.climateOptions
                     delegate: Button {
+                        objectName: "ClimateOptionsGrid::" + modelData.symbol + "_Symbol"
                         width: Style.isPotrait ? Style.hspan(4) : Style.hspan(3)
                         height: Style.isPotrait ? Style.vspan(3) : Style.vspan(5)
                         indicator: Image {
@@ -142,6 +148,7 @@ Item {
 
             TemperatureSlider {
                 id: rightTempSlider
+                objectName: "TemperatureSlider::RightSlider"
                 Layout.fillHeight: true
                 width: Style.hspan(3)
                 mirrorSlider: true

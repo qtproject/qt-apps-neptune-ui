@@ -46,12 +46,14 @@ ItemDelegate {
     property alias hasChildren: childIndicator.visible
 
     contentItem: Item {
+        objectName: root.objectName + "ContentItem"
         anchors.fill: root
         RowLayout {
             height: parent.height
 
             Symbol {
                 id: icon
+                objectName: root.objectName + "Symbol"
                 Layout.preferredWidth: Style.hspan(1)
                 Layout.fillHeight: true
                 opacity: 0.4
@@ -67,6 +69,7 @@ ItemDelegate {
 
             Label {
                 id: titleLabel
+                objectName: root.objectName.replace(" ","") + "Label"
                 Layout.preferredWidth: Style.hspan(18)
                 Layout.fillHeight: true
                 elide: Text.ElideRight
@@ -76,6 +79,7 @@ ItemDelegate {
 
         Icon {
             id: childIndicator
+            objectName: root.objectName + "Arrow"
             anchors.right: parent.right
             width: Style.hspan(1)
             Layout.fillHeight: true
@@ -83,6 +87,7 @@ ItemDelegate {
         }
 
         Item {
+            objectName: root.objectName + "Widgets"
             width: root.width
             anchors.verticalCenter: parent.bottom
             anchors.horizontalCenter: parent.horizontalCenter

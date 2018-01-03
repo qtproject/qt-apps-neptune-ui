@@ -53,12 +53,14 @@ Item {
 
         Rectangle {
             id: cpuScale
+            objectName: "CPUGraph::AxisBar1"
             width: 2
             height: parent.height
             color: Style.colorOrange
         }
 
         Label {
+            objectName: "CPUGraph::Label0"
             width: 70
             anchors.bottom: cpuScale.bottom
             anchors.right: cpuScale.right
@@ -67,6 +69,7 @@ Item {
         }
 
         Label {
+            objectName: "CPUGraph::Label50"
             width: 70
             anchors.top: cpuScale.top
             anchors.topMargin: 0.5*cpuScale.height - height/2
@@ -76,6 +79,7 @@ Item {
         }
 
         Label {
+            objectName: "CPUGraph::Label100"
             width: 70
             anchors.top: cpuScale.top
             anchors.topMargin: - height/2
@@ -103,19 +107,20 @@ Item {
             Item {
                 id: cpuDelegate
                 anchors.fill: parent
-
+                property int indexOfThisDelegate: index
                 Rectangle {
+                    objectName: "CPUGraph::Rectangle" + index
                     width: parent.width
                     height: model.cpuLoad * parent.height
                     anchors.bottom: parent.bottom
                     color: cpuContainer.barColor
-
                 }
             }
         }
     }
 
     Rectangle {
+        objectName: "CPUGraph::AxisBar2"
         width: cpuGraph.width + 5
         height: 2
 

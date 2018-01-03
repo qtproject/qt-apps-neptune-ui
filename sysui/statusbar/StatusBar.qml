@@ -41,12 +41,13 @@ import models.system 1.0
 
 Pane {
     id: root
-
+    objectName: "StatusBar"
     anchors.top: parent.top
     width: Style.hspan(24)
     height: Style.statusBarHeight
 
     MouseArea {
+        objectName: "StatusBar::MouseArea"
         anchors.fill: parent
         onClicked: {
             if (!SettingsModel.settingsPageVisible) {
@@ -70,6 +71,7 @@ Pane {
     }
 
     PageIndicator {
+        objectName: "StatusBar::PageIndicator"
         anchors.centerIn: parent
 
         currentIndex: SystemModel.currentPageIndex
@@ -96,6 +98,7 @@ Pane {
         }
 
         Tool {
+            objectName: "StatusBar::FullScreenLabel"
             width: Style.hspan(0.85)
             height: Style.vspan(1.05)
             symbol: "fullscreen"
@@ -103,6 +106,7 @@ Pane {
         }
 
         Tool {
+            objectName: "StatusBar::SliderLabel"
             width: Style.hspan(0.85)
             height: Style.vspan(1.05)
             symbol: "slider_marker" // TODO: Replace with notification icon when available

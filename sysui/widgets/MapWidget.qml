@@ -39,13 +39,16 @@ import models.application 1.0
 
 UIPanel {
     id: root
+    objectName: "MapWidget"
 
     Item {
         id: loader
+        objectName: "MapWidget::MapLoader"
         anchors.fill: parent
 
         Image {
             id: dummyBase
+            objectName: "MapWidget::HereMapImage"
             anchors.fill: parent
             source: "heremap.png"
         }

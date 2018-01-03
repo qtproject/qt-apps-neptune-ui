@@ -37,6 +37,7 @@ import controls 1.0
 
 Control {
     id: root
+    objectName: "ClimateGridButton"
 
     property alias symbolName: symbol.name
     property alias active: symbol.active
@@ -44,6 +45,7 @@ Control {
     signal clicked
 
     BorderImage {
+        objectName: "ClimateGridButton::Borders"
         anchors.fill: parent
         anchors.margins: 1
         source: Style.gfx("appstore_grid_cell_panel")
@@ -57,6 +59,7 @@ Control {
 
     Symbol {
         id: symbol
+        objectName: "ClimateGridButton::" + symbol.name
         size: Style.symbolSizeM
         anchors.fill: parent
     }

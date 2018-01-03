@@ -42,7 +42,7 @@ import models.settings 1.0
 
 UIScreen {
     id: root
-
+    objectName: "MenuScreen"
     height: Style.vspan(20)
 
     hideBack: true
@@ -66,6 +66,7 @@ UIScreen {
 
         Item {
             id: homePageContainer
+            objectName: "MenuScreen::HomePageContainer"
             implicitWidth: Style.hspan(24)
             implicitHeight: Style.vspan(24)
         }

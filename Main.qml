@@ -35,23 +35,25 @@ import QtQuick.Controls 2.0
 import controls 1.0
 import utils 1.0
 import models.startup 1.0
-import com.pelagicore.ScreenManager 1.0
 
 BackgroundPane {
     id: root
+    objectName: "MainContent"
 
-    property bool showClusterIfPossible: ApplicationManager.systemProperties.showCluster && Style.withCluster && ScreenManager.screenCount() > 1
+    property bool showClusterIfPossible: ApplicationManager.systemProperties.showCluster && Style.withCluster
     property var cluster
 
     width: Style.screenWidth
     height: Style.screenHeight
     padding: 0
 
+
     //Forwards the keys to the custer to handle it without being the active window
     Keys.forwardTo: clusterLoader.item ? clusterLoader.item.cluster : (displayLoader.item ? displayLoader.item : null)
 
     StageLoader {
         id: displayLoader
+        objectName: "Main::DisplayLoader"
         anchors.fill: parent
         source: "sysui/display/Display.qml"
         active: StagedStartupModel.loadDisplay
@@ -59,6 +61,7 @@ BackgroundPane {
 
     StageLoader {
         id: clusterLoader
+        objectName: "Main::ClusterLoader"
         height: Style.clusterHeight
         width: Style.clusterWidth
         source: "sysui/cluster/ClusterMain.qml"

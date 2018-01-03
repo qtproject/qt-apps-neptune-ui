@@ -67,6 +67,7 @@ Control {
 
         Text {
             id: integerPart
+            objectName: root.objectName + "_IntegerPart"
 
             anchors.verticalCenter: parent.verticalCenter
             verticalAlignment: Text.AlignVCenter
@@ -78,11 +79,11 @@ Control {
             font.pixelSize: Style.fontSizeXXL
             font.family: Style.fontFamily
             font.weight: Style.fontWeight
-
         }
 
         Text {
             id: decimalPart
+            objectName: root.objectName + "_DecimalPart"
 
             anchors.left: integerPart.right
             anchors.baseline: integerPart.baseline
@@ -99,6 +100,7 @@ Control {
 
         Text {
             id: unit
+            objectName: root.objectName + "_Units"
             anchors.left: integerPart.right
             anchors.leftMargin: Style.padding
             anchors.baseline: integerPart.baseline

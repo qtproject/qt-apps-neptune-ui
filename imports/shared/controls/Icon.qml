@@ -44,6 +44,7 @@ Control {
 
     Image {
         id: defaultIcon
+        objectName: parent.objectName + "_IconImage"
         width: root.fit ? root.width : undefined
         height: root.fit ? root.height : undefined
         anchors.centerIn: parent

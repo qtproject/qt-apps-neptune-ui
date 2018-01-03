@@ -36,6 +36,7 @@ import controls 1.0
 
 Control {
     id: root
+    objectName: root.notificationDescription.split(" ", 2).join("")
 
     width: Style.isPotrait ? Style.hspan(Style.notificationCenterSpan + 5) : Style.hspan(12)
     height: Style.vspan(2)
@@ -47,6 +48,7 @@ Control {
     signal removeNotification()
 
     Rectangle {
+        objectName: "NotificationCenterItem::NotificationItemContentArea"
         anchors.fill: parent
         color: '#000'
         opacity: 0.85
@@ -63,6 +65,7 @@ Control {
 
         Image {
             id: icon
+            objectName: "NotificationCenterItem::NotificationItemIcon"
             source: root.iconSource
         }
 
@@ -71,11 +74,13 @@ Control {
             spacing: 5
             Label {
                 id: title
+                objectName: "NotificationCenterItem::NotificationItemTitle"
                 text: root.notificationTitle
             }
 
             Label {
                 id: body
+                objectName: "NotificationCenterItem::NotificationItemBody"
                 width: parent.width
                 font.pixelSize: Style.fontSizeM
                 text: root.notificationDescription
@@ -84,6 +89,7 @@ Control {
     }
 
     Tool {
+        objectName: "NotificationCenterItem::NotificationItemCloseSymbol"
         anchors.right: parent.right
         anchors.top: parent.top
         width: Style.symbolSizeS
@@ -93,6 +99,7 @@ Control {
     }
 
     Rectangle {
+        objectName: "NotificationCenterItem::NotificationItemBottom"
         width: parent.width
         height: 1
         color: "grey"

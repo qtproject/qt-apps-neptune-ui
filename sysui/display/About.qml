@@ -58,6 +58,7 @@ Control {
 
         Image {
             id: logo
+            objectName: "About::Logo"
             width: Style.hspan(7)
             height: Style.vspan(4)
             anchors.horizontalCenter: parent.horizontalCenter
@@ -71,6 +72,7 @@ Control {
 
         Label {
             id: description
+            objectName: "About::DescriptionText"
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.top: logo.bottom
             width: Style.hspan(12)
@@ -85,6 +87,7 @@ Control {
         }
 
         Image {
+            objectName: "About::PopUpAreaImages"
             width: Style.hspan(20)
             height: Style.vspan(16)
             anchors.bottom: parent.bottom
@@ -98,6 +101,7 @@ Control {
     }
 
     MouseArea {
+        objectName: "About::MouseArea"
         anchors.fill: parent
         onClicked: {
             if (SystemModel.climateExpanded) {

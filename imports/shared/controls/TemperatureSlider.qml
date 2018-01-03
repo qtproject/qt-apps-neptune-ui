@@ -37,6 +37,7 @@ import controls 1.0
 
 Control {
     id: root
+    objectName: objectName ? objectName : "TemperatureSlider::"
 
     implicitWidth: Style.hspan(2)
     implicitHeight: Style.vspan(8)
@@ -71,6 +72,7 @@ Control {
         height: parent.height
 
         Label {
+            objectName: root.objectName + "PlusSymbol"
             Layout.fillWidth: true
             Layout.preferredHeight: Style.vspan(2)
 
@@ -90,9 +92,9 @@ Control {
 
         Item {
             id: slider
+            objectName: root.objectName + "TempChart"
             Layout.fillHeight: true
             Layout.fillWidth: true
-
             property real handlerPosition: (root.value >= root.from && root.value <= root.to) ?
                                                (root.value - root.from) / (root.to - root.from) : 0
 
@@ -113,6 +115,7 @@ Control {
                     id: view
 
                     model: modelCount
+
                     property int modelCount: (slider.height - Style.vspan(1))/itemHeight
                     property int itemHeight: 7
                     property real deltaRed: (0xa6 - 0xf0) / modelCount
@@ -131,6 +134,7 @@ Control {
 
                         Rectangle {
                             id: stripe
+                            objectName: root.objectName + "TemperatureStripe" + index
 
                             property bool bottomPart: index >= (view.modelCount - view.currentIndex)
 
@@ -168,6 +172,7 @@ Control {
                 }
 
                 Symbol {
+                    objectName: root.objectName + "Symbol"
                     anchors.right: parent.right
                     anchors.verticalCenter: parent.verticalCenter
                     opacity: 0.4
@@ -210,6 +215,7 @@ Control {
         }
 
         Label {
+            objectName: root.objectName + "MinusSymbol"
             Layout.fillWidth: true
             Layout.preferredHeight: Style.vspan(2)
 

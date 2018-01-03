@@ -40,10 +40,11 @@ import models.phone 1.0
 
 UIPanel {
     id: root
-
+    objectName: "PhoneWidget"
     height: Style.vspan(4)
 
     Rectangle {
+        objectName: "PhoneWidget::ContentArea"
         anchors.fill: parent
         color: Style.colorBlack
         opacity: 0.8
@@ -51,6 +52,7 @@ UIPanel {
 
     C.Icon {
         id: phoneIcon
+        objectName: "PhoneWidget::Phone"
         width: Style.hspan(2)
         height: Style.vspan(3)
         anchors.bottom: parent.bottom
@@ -68,6 +70,7 @@ UIPanel {
         anchors.right: parent.right
 
         Label {
+            objectName: "PhoneWidget::JohnDoeLabel"
             Layout.fillWidth: true
             text: qsTr("%1   | %2").arg("John Doe").arg("02:55")
             font.pixelSize: Style.fontSizeXL
@@ -75,12 +78,14 @@ UIPanel {
         }
 
         Label {
+            objectName: "PhoneWidget::NumberLabel"
             text: "555-55 55 55"
             font.pixelSize: Style.fontSizeXL
         }
     }
 
     MouseArea {
+        objectName: "PhoneWidget::MouseClickableArea"
         anchors.fill: parent
         onClicked: PhoneModel.startPhoneApp()
     }

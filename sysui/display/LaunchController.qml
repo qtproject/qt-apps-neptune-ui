@@ -45,6 +45,7 @@ import models.system 1.0
 */
 Item {
     id: root
+    objectName: root.parent.objectName + "LC"
     width: Style.screenWidth
     height: Style.vspan(20)
 
@@ -60,6 +61,7 @@ Item {
 
     StackView {
         id: stackView
+        objectName: root.parent.objectName + "LCStackView"
         width: Style.hspan(24)
         height: parent.height
         focus: true
@@ -138,6 +140,7 @@ Item {
 
     FastBlur {
         id: fastBlur
+        objectName: root.parent.objectName + "LCFastBlur"
         anchors.fill: stackView
         source: stackView
         radius: SystemModel.statusBarExpanded ? 100 : 0

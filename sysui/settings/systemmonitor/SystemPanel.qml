@@ -111,6 +111,7 @@ UIPage {
 
         Item {
             id: fpsScaleContainer
+            objectName: "SystemPanel::GraphContainer::FPSScaleContainer"
             anchors.bottom: parent.bottom
             width: 5
             height: parent.height
@@ -123,6 +124,7 @@ UIPage {
             }
 
             Label {
+                objectName: "SystemPanel::GraphContainer::FPSScaleLabel0"
                 width: 60
                 anchors.bottom: fpsScale.bottom
                 anchors.right: fpsScale.right
@@ -131,6 +133,7 @@ UIPage {
             }
 
             Label {
+                objectName: "SystemPanel::GraphContainer::FPSScaleLabel60"
                 width: 60
                 anchors.top: fpsScale.top
                 anchors.topMargin: 0.25*fpsScale.height - height/2
@@ -140,6 +143,7 @@ UIPage {
             }
 
             Label {
+                objectName: "SystemPanel::GraphContainer::FPSScaleLabel80"
                 width: 60
                 anchors.top: fpsScale.top
                 anchors.topMargin: - height/2
@@ -152,6 +156,7 @@ UIPage {
 
         ListView {
             id: graph
+            objectName: "SystemPanel::Graphs"
             anchors.top: fpsScaleContainer.top
             anchors.right: graphContainer.right
             anchors.bottom: fpsScaleContainer.bottom
@@ -163,6 +168,7 @@ UIPage {
             delegate: Item {
                 width: graph.width / graph.model.count
                 height: graph.height
+                property int indexOfThisDelegate: index
 
                 Item {
                     id: fpsDelegate
@@ -171,6 +177,7 @@ UIPage {
                     opacity: 0.8
 
                     Rectangle {
+                        objectName: "SystemPanel::FPSOrangeRectangle" + index
                         width: parent.width
                         height: (model.averageFps/80)*parent.height
                         anchors.bottom: parent.bottom
@@ -178,6 +185,7 @@ UIPage {
                     }
 
                     Rectangle {
+                        objectName: "SystemPanel::FPSRedRectangle" + index
                         width: parent.width
                         y: parent.height - (model.minimumFps/80)*parent.height
                         height: 3
@@ -187,6 +195,7 @@ UIPage {
 
                     Rectangle {
                         id: valueContainer
+                        objectName: "SystemPanel::FPSGreenRectangle" + index
                         width: parent.width
                         y: parent.height - (model.maximumFps/80)*parent.height
                         height: 3
@@ -203,6 +212,7 @@ UIPage {
                     opacity: 0.8
 
                     Rectangle {
+                        objectName: "SystemPanel::FPSOrangeRectangle" + index
                         width: parent.width
                         height: model.cpuLoad * parent.height
                         anchors.bottom: parent.bottom
@@ -217,6 +227,7 @@ UIPage {
                     opacity: 0.6
 
                     Rectangle {
+                        objectName: "SystemPanel::FPSGrayRectangle" + index
                         width: parent.width
                         height: (model.memoryUsed/model.memoryTotal)*parent.height
                         anchors.bottom: parent.bottom
@@ -238,6 +249,7 @@ UIPage {
 
         Label {
             id: redLegend
+            objectName: "SystemPanel::MinFPSText"
             width: graph.width/5
             anchors.top: graph.bottom
             anchors.left: graph.left
@@ -249,6 +261,7 @@ UIPage {
 
         Label {
             id: greenLegend
+            objectName: "SystemPanel::MaxFPSText"
             width: graph.width/5
             anchors.top: graph.bottom
             anchors.left: redLegend.right
@@ -260,6 +273,7 @@ UIPage {
 
         Label {
             id: yellowLegend
+            objectName: "SystemPanel::AverageFPSText"
             width: graph.width/5
             anchors.top: graph.bottom
             anchors.left: greenLegend.right
@@ -271,6 +285,7 @@ UIPage {
 
         Label {
             id: whiteLegend
+            objectName: "SystemPanel::CPUloadText"
             width: graph.width/5
             anchors.top: graph.bottom
             anchors.left: yellowLegend.right
@@ -282,6 +297,7 @@ UIPage {
 
         Label {
             id: greyLegend
+            objectName: "SystemPanel::RAMloadText"
             width: graph.width/5
             anchors.top: graph.bottom
             anchors.left: whiteLegend.right
@@ -320,6 +336,7 @@ UIPage {
 //    }
 
     Button {
+        objectName: "SystemPanel::MergeReportButton"
         width: Style.hspan(3)
         anchors.left: parent.left
         anchors.leftMargin: 100

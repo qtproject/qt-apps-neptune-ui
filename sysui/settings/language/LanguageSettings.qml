@@ -45,6 +45,7 @@ Item {
 
     Label {
         id: settingsTitle
+        objectName: "LanguageSettings::SystemLanguage"
         anchors.top: parent.top
         anchors.topMargin: Style.vspan(1)
         anchors.left: settingsListView.left

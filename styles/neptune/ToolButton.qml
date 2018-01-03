@@ -48,6 +48,7 @@ T.ToolButton {
     font.family: control.NeptuneStyle.fontFamily
 
     contentItem: Text {
+        objectName: contentItem.parent.objectName + "_Text"
         text: control.text
         font: control.font
         elide: Text.ElideRight
@@ -59,6 +60,7 @@ T.ToolButton {
     }
 
     background: Rectangle {
+        objectName: background.parent.objectName + "_BackgroundEnabledStyle"
         implicitWidth: 68
         implicitHeight: 48
 
@@ -67,6 +69,7 @@ T.ToolButton {
                  : "transparent"
 
         Rectangle {
+            objectName: background.parent.objectName + "_BackgroundDownStyle"
             width: parent.width
             height: parent.height
             visible: control.down || control.hovered

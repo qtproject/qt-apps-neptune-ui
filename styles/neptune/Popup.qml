@@ -49,6 +49,7 @@ T.Popup {
     padding: 12
 
     background: Rectangle {
+        objectName: control.objectName  + "_Background"
         border.color: control.NeptuneStyle.darkColor
     }
 }

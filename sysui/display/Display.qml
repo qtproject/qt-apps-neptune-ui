@@ -44,17 +44,19 @@ import models.startup 1.0
 
 Item {
     id: root
-
+    objectName: "DisplayContent"
     width: 1280
     height: 800
 
     // Content Elements
     StatusBar {
         id: statusBar
+        objectName: "Display::StatusBar"
     }
 
     StageLoader {
         id: launcherControllerLoader
+        objectName: "Display::LauncherControllerLoader"
         width: Style.screenWidth
         height: Style.vspan(20)
         anchors.top: statusBar.bottom
@@ -65,6 +67,7 @@ Item {
 
     StageLoader {
         id: menuScreenLoader
+        objectName: "Display::MenuScreenLoader"
         anchors.top: statusBar.bottom
         width: Style.hspan(24)
         height: Style.vspan(19)
@@ -80,6 +83,7 @@ Item {
 
     HomePage {
         id: homePage
+        objectName: "Display::HomePage"
         anchors.top: parent.top
         anchors.topMargin: statusBar.height
         opacity: 0
@@ -96,6 +100,7 @@ Item {
     // Background Elements
     StageLoader {
         id: aboutLoader
+        objectName: "Display::AboutLoader"
         width: Style.screenWidth
         height: Style.vspan(20)
         active: StagedStartupModel.loadBackgroundElements
@@ -104,16 +109,19 @@ Item {
 
     StageLoader {
         id: settingsLoader
+        objectName: "Display::SettingsLoader"
         anchors.top: statusBar.bottom
         active: StagedStartupModel.loadBackgroundElements
         source: "../settings/Settings.qml"
     }
 
     ClimateBar {
+        objectName: "Display::ClimateBar"
     }
 
     StageLoader {
         id: toolBarMonitorLoader
+        objectName: "Display::ToolBarMonitorLoader"
         width: parent.width
         height: 200
         anchors.bottom: parent.bottom
@@ -123,13 +131,16 @@ Item {
 
     StageLoader {
         id: windowOverviewLoader
+        objectName: "Display::WindowOverviewLoader"
         anchors.fill: parent
         active: StagedStartupModel.loadBackgroundElements
         source: "../windowoverview/WindowOverview.qml"
+
     }
 
     StageLoader {
         id: popupContainerLoader
+        objectName: "Display::PopUpContainerLoader"
         width: Style.popupWidth
         height: Style.popupHeight
         anchors.centerIn: parent
@@ -139,6 +150,7 @@ Item {
 
     StageLoader {
         id: notificationContainerLoader
+        objectName: "Display::NotificationContainerLoader"
         width: Style.screenWidth
         height: Style.vspan(2)
         active: StagedStartupModel.loadBackgroundElements
@@ -147,6 +159,7 @@ Item {
 
     StageLoader {
         id: notificationCenterLoader
+        objectName: "Display::NotificationCenterLoader"
         width: Style.isPotrait ? Style.hspan(Style.notificationCenterSpan + 5) : Style.hspan(12)
         height: Style.screenHeight - Style.statusBarHeight
         anchors.top: statusBar.bottom
@@ -156,6 +169,7 @@ Item {
 
     StageLoader {
         id: keyboardLoader
+        objectName: "Display::KeyboardLoader"
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: parent.bottom

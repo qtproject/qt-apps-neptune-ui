@@ -40,6 +40,7 @@ import models.application 1.0
 
 Item {
     id: root
+    objectName: "OtherSettings"
     width: Style.hspan(24)
     height: Style.vspan(20)
 
@@ -47,6 +48,7 @@ Item {
 
     Label {
         id: unitTitle
+        objectName: "OtherSettings::UnitsTitle"
         anchors.top: parent.top
         anchors.topMargin: Style.vspan(1)
         anchors.left: units.left
@@ -80,6 +82,7 @@ Item {
 
             SettingsRadioButton {
                 id: imperial
+                objectName: "OtherSettings::ImperialRadioBtn"
                 buttonText: "Imperial"
                 checked: SettingsModel.unitSystem === "imp_us"
                 onClicked: SettingsModel.unitSystem = "imp_us"
@@ -87,6 +90,7 @@ Item {
 
             SettingsRadioButton {
                 id: metric
+                objectName: "OtherSettings::MetricRadioBtn"
                 buttonText: "Metric"
                 checked: SettingsModel.unitSystem === "metric"
                 onClicked: SettingsModel.unitSystem = "metric"
@@ -96,6 +100,7 @@ Item {
 
     Label {
         id: appUpdatesTitle
+        objectName: "OtherSettings::AppUpdatesTitle"
         anchors.top: units.bottom
         anchors.topMargin: Style.vspan(1)
         anchors.left: units.left
@@ -104,6 +109,7 @@ Item {
 
     ListItemSwitch {
         id: appUpdates
+        objectName: "OtherSettings::AppUpdates"
         width: Style.hspan(20)
         height: Style.vspan(2)
         anchors.horizontalCenter: parent.horizontalCenter
@@ -119,6 +125,7 @@ Item {
 
     Label {
         id: trafficTitle
+        objectName: "OtherSettings::LifeTrafficInfoTitle"
         anchors.top: appUpdates.bottom
         anchors.topMargin: Style.vspan(1)
         anchors.left: appUpdates.left
@@ -127,6 +134,7 @@ Item {
 
     ListItemSwitch {
         id: liveTraffic
+        objectName: "OtherSettings::LifeTrafficInfo"
         width: Style.hspan(20)
         height: Style.vspan(2)
         anchors.horizontalCenter: parent.horizontalCenter
@@ -142,6 +150,7 @@ Item {
 
     ListItemSwitch {
         id: satelliteView
+        objectName: "OtherSettings::SatelliteView"
         width: Style.hspan(20)
         height: Style.vspan(2)
         anchors.horizontalCenter: parent.horizontalCenter

@@ -35,6 +35,7 @@ import com.pelagicore.styles.neptune 1.0
 
 T.ItemDelegate {
     id: control
+    objectName: control.text
 
     implicitWidth: Math.max(background ? background.implicitWidth : 0,
                             contentItem.implicitWidth + leftPadding + rightPadding)

@@ -40,10 +40,12 @@ RadioButton {
     property alias buttonText: buttonLabel.text
     contentItem: Label {
         id: buttonLabel
+        objectName: buttonText
         width: Style.hspan(10)
     }
 
     indicator: Rectangle {
+        objectName: buttonText + "BtnSwitchedOff"
         implicitWidth: Style.hspan(0.4)
         implicitHeight: implicitWidth
         anchors.verticalCenter: parent.verticalCenter
@@ -54,6 +56,7 @@ RadioButton {
         color: "transparent"
 
         Rectangle {
+            objectName: buttonText + "BtnSwitchedOn"
             implicitWidth: Style.hspan(0.3)
             implicitHeight: implicitWidth
             radius: implicitWidth

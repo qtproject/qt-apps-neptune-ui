@@ -54,12 +54,14 @@ Item {
 
         Rectangle {
             id: ramScale
+            objectName: "MemoryGraph::GraphVerticalBar"
             width: 2
             height: parent.height
             color: Style.colorOrange
         }
 
         Label {
+            objectName: "MemoryGraph::GraphBar0"
             width: 70
             anchors.bottom: ramScale.bottom
             anchors.right: ramScale.right
@@ -68,6 +70,7 @@ Item {
         }
 
         Label {
+            objectName: "MemoryGraph::GraphBar50"
             width: 70
             anchors.top: ramScale.top
             anchors.topMargin: 0.5*ramScale.height - height/2
@@ -77,6 +80,7 @@ Item {
         }
 
         Label {
+            objectName: "MemoryGraph::GraphBar100"
             width: 70
             anchors.top: ramScale.top
             anchors.topMargin: - height/2
@@ -100,8 +104,10 @@ Item {
         delegate: Item {
             width: graph.width / graph.model.count
             height: graph.height
+            property int indexOfThisDelegate: index
 
             Rectangle {
+                objectName: "MemoryGraph::Rectangle" + index
                 width: parent.width
                 height: (model.memoryUsed/SystemMonitor.totalMemory)*parent.height
                 anchors.bottom: parent.bottom

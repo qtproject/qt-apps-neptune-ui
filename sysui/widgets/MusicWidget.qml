@@ -39,6 +39,8 @@ import utils 1.0
 
 UIPanel {
     id: root
+    objectName: "MusicWidget"
+
     width: Style.hspan(10)
     height: Style.vspan(8)
 
@@ -47,6 +49,7 @@ UIPanel {
     scale: area.pressed ? 0.85 : 1.0
 
     Rectangle {
+        objectName: "MusicWidget::ContentArea"
         anchors.fill: parent
         color: Style.colorBlack
         opacity: 0.8
@@ -58,6 +61,7 @@ UIPanel {
 
     MouseArea {
         id: area
+        objectName: "MusicWidget::MouseArea"
         anchors.fill: parent
         onClicked: {
             MediaModel.startMusicApp()
@@ -86,6 +90,7 @@ UIPanel {
                 spacing: Style.paddingXS
 
                 Label {
+                    objectName: "MusicWidget::CurrentTrackAlbum"
                     height: Style.vspan(1)
                     Layout.fillWidth: true
                     text: MediaModel.currentTrack ? qsTr('%1 / %2').arg(MediaModel.currentTrack.artist).arg(MediaModel.currentTrack.album) : ""
@@ -96,6 +101,7 @@ UIPanel {
                 }
 
                 Label {
+                    objectName: "MusicWidget::CurrentTrackTitle"
                     Layout.fillWidth: true
                     height: Style.vspan(1)
                     text: MediaModel.currentTrack ? MediaModel.currentTrack.title : ""
@@ -106,6 +112,7 @@ UIPanel {
                 }
 
                 Label {
+                    objectName: "MusicWidget::CurrentTrackTime"
                     Layout.fillWidth: true
                     height: Style.vspan(1)
                     text: qsTr('%1 / %2').arg(MediaModel.currentTime).arg(MediaModel.durationTime)
@@ -126,12 +133,14 @@ UIPanel {
             Layout.preferredHeight: Style.vspan(3)
 
             Tool {
+                objectName: "MusicWidget::PrevButton"
                 symbol: "prev"
                 Layout.preferredHeight: Style.vspan(2)
                 Layout.fillWidth: true
                 onClicked: MediaModel.previousTrack()
             }
             Tool {
+                objectName: "MusicWidget::PlayButton"
                 Layout.preferredHeight: Style.vspan(2)
                 Layout.fillWidth: true
                 symbol: "play"
@@ -139,6 +148,7 @@ UIPanel {
                 checked: MediaModel.playing
             }
             Tool {
+                objectName: "MusicWidget::PauseButton"
                 Layout.preferredHeight: Style.vspan(2)
                 Layout.fillWidth: true
                 symbol: "pause"
@@ -146,6 +156,7 @@ UIPanel {
                 checked: !MediaModel.playing
             }
             Tool {
+                objectName: "MusicWidget::NextButton"
                 Layout.preferredHeight: Style.vspan(2)
                 Layout.fillWidth: true
                 symbol: "next"

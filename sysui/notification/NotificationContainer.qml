@@ -46,6 +46,7 @@ Control {
     Behavior on y { NumberAnimation { duration: 200 } }
 
     Rectangle {
+        objectName: "NotificationContainer::NotificationPopUp" + NotificationModel.currentNotification.description + "Area"
         anchors.fill: parent
         color: '#000'
         opacity: 0.85
@@ -60,6 +61,7 @@ Control {
 
         Image {
             id: icon
+            objectName: "NotificationContainer::NotificationPopUp" + NotificationModel.currentNotification.description + "Icon"
             source: NotificationModel.currentNotification.icon
         }
 
@@ -67,11 +69,13 @@ Control {
             spacing: 5
             Label {
                 id: title
+                objectName: "NotificationContainer::NotificationPopUp" + NotificationModel.currentNotification.description + "Title"
                 text: NotificationModel.currentNotification.title
             }
 
             Label {
                 id: body
+                objectName: "NotificationContainer::NotificationPopUp" + NotificationModel.currentNotification.description + "Description"
                 width: parent.width
                 font.pixelSize: Style.fontSizeM
                 text: NotificationModel.currentNotification.description

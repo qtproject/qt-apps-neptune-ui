@@ -32,6 +32,7 @@
 import QtQuick 2.6
 
 Image {
+    objectName: "CarVisualization::CarImage"
     property int overviewItem: 0
     source: "white.png"
 }

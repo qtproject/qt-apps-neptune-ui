@@ -45,6 +45,7 @@ Control {
 
     Label {
         id: clock
+        objectName: "DateAndTime::ClockLabel"
 
         anchors.left: parent.left
         anchors.right: parent.right

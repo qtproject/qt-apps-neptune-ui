@@ -45,6 +45,7 @@ T.Pane {
     padding: 12
 
     background: Rectangle {
+        objectName: control.objectName + "DarkRect"
         color: control.NeptuneStyle.darkColor
     }
 }

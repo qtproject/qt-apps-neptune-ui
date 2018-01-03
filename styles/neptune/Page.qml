@@ -49,6 +49,7 @@ T.Page {
     contentHeight: contentItem.implicitHeight || (contentChildren.length === 1 ? contentChildren[0].implicitHeight : 0)
 
     background: Rectangle {
+        objectName: control.objectName + "_Background"
         color: control.NeptuneStyle.darkColor
     }
 }

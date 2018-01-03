@@ -46,6 +46,7 @@ Control {
         anchors.centerIn: parent
 
         Image {
+            objectName: "Weather::Icon"
             source: Style.icon(ClimateModel.weatherIcon)
             asynchronous: true
         }

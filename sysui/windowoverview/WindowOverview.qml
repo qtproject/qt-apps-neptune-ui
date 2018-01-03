@@ -41,6 +41,7 @@ import models.system 1.0
 
 Item {
     id: root
+    objectName: "WindowOverview"
 
     opacity: SystemModel.windowOverviewVisible ? 1 : 0
     visible: opacity != 0
@@ -50,6 +51,7 @@ Item {
     }
 
     Rectangle {
+        objectName: "WindowOverview::ContentArea"
         anchors.fill: parent
         color: "black"
         opacity: 0.7
@@ -62,6 +64,7 @@ Item {
     }
 
     Tool {
+        objectName: "WindowOverview::BackSymbol"
         anchors.left: parent.left
         anchors.top: parent.top
         anchors.margins: Style.padding
@@ -72,6 +75,7 @@ Item {
     }
 
     Label {
+        objectName: "WindowOverview::NoAppsLabel"
         anchors.centerIn: parent
         text: "No Apps currently running!"
         visible: gridView.count == 0
@@ -79,6 +83,7 @@ Item {
 
     GridView {
         id: gridView
+        objectName: "WindowOverview::GridView"
         anchors.top: parent.top
         anchors.bottom: parent.bottom
         anchors.horizontalCenter: parent.horizontalCenter
@@ -96,6 +101,7 @@ Item {
 
         delegate: Item {
             id: delegate
+            objectName: "WindowOverview::" + model.item
             width: gridView.cellWidth
             height: gridView.cellHeight
             property int padding: gridView.padding
@@ -121,6 +127,7 @@ Item {
             }
 
             Tool {
+                objectName: "WindowOverview::AppManClose"
                 anchors.top: parent.top
                 anchors.right: parent.right
 

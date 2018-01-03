@@ -97,6 +97,7 @@ Page {
 
     Tool {
         id: backButton
+        objectName: "UIScreen::BackButton"
         anchors.left: parent.left
         anchors.top: parent.top
         width: Style.hspan(2)

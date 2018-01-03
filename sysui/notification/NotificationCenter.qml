@@ -39,6 +39,7 @@ import models.settings 1.0
 
 Control {
     id: root
+    objectName: "NotificationCenter"
 
     x: SystemModel.notificationCenterVisible ? Style.screenWidth - width : Style.screenWidth
     Behavior on x { NumberAnimation { duration: 200 } }
@@ -49,6 +50,7 @@ Control {
 
         Rectangle {
             id: screenFadingBG
+            objectName: "NotificationCenter::NotificationCenterBG"
             anchors.fill: parent
             color: "black"
             opacity: 0.8
@@ -57,6 +59,7 @@ Control {
 
         Label {
             id: notificationCenterTitle
+            objectName: "NotificationCenter::NotificationTitle"
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.top: parent.top
             anchors.topMargin: Style.hspan(0.5)
@@ -65,6 +68,7 @@ Control {
         }
 
         Symbol {
+            objectName: "NotificationCenter::SettingsSymbol"
             anchors.top: parent.top
             anchors.right: parent.right
             anchors.topMargin: Style.hspan(0.1)
@@ -72,6 +76,7 @@ Control {
             size: Style.symbolSizeS
             name: "settings"
             MouseArea {
+                objectName: "NotificationCenter::SettingsSymbolMouseArea"
                 anchors.fill: parent
                 onClicked: {
                     SystemModel.notificationCenterVisible = false
@@ -81,12 +86,13 @@ Control {
         }
 
         Column {
+            objectName: "NotificationCenter::Column"
             anchors.top: notificationCenterTitle.bottom
             anchors.topMargin: Style.hspan(0.3)
             Repeater {
                 id: notificationRepeater
+                objectName: "NotificationCenter::NotificationRepeater"
                 model: NotificationModel.model
-
                 delegate: NotificationCenterItem {
                     iconSource: icon
                     notificationTitle: title
@@ -98,6 +104,7 @@ Control {
 
         Label {
             id: noNotificationLabel
+            objectName: "NotificationCenter::NoNotificationLabel"
             anchors.fill: parent
             anchors.centerIn: parent
             horizontalAlignment: Text.AlignHCenter
