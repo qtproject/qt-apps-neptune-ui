@@ -31,7 +31,7 @@
 #############################################################################
 
 WRAPPER_PWD=`dirname $0`
-export DYLD_FRAMEWORK_PATH=$WRAPER_PWD/../lib
-export DYLD_LIBRARY_PATH=$WRAPER_PWD/../lib
-export LD_LIBRARY_PATH=$WRAPER_PWD/../lib
+export DYLD_FRAMEWORK_PATH=$WRAPPER_PWD/../lib
+export DYLD_LIBRARY_PATH=$WRAPPER_PWD/../lib
+export LD_LIBRARY_PATH=$WRAPPER_PWD/../lib
 $WRAPPER_PWD/neptune-ui "$@"
