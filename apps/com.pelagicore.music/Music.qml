@@ -49,7 +49,7 @@ AppUIScreen {
         }
     }
 
-    cluster: ClusterWidget {}
+    cluster: ClusterWidget { visible: Style.withCluster }
 
 
     AppStackView {

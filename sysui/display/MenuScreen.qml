@@ -54,15 +54,16 @@ UIScreen {
         anchors.fill: parent
         interactive: !SettingsModel.settingsPageVisible
         currentIndex: SystemModel.currentPageIndex
-        onCurrentIndexChanged: SystemModel.currentPageIndex = currentIndex
+        onCurrentIndexChanged: {
+            launcher.editMode = false;
+            SystemModel.currentPageIndex = currentIndex;
+        }
 
         onCountChanged: SystemModel.pageCount = view.count
 
-        MyCarPage {
-        }
+        MyCarPage { }
 
-        FunctionsPage {
-        }
+        FunctionsPage { }
 
         Item {
             id: homePageContainer
@@ -78,7 +79,6 @@ UIScreen {
             }
         }
 
-        CloudPage {
-        }
+        CloudPage { }
     }
 }

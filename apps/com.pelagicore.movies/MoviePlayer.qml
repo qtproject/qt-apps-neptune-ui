@@ -82,6 +82,7 @@ UIScreen {
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottom: parent.bottom
         anchors.bottomMargin: Style.vspan(4)
+        height: Style.vspan(8)
         spacing: 0
         opacity: root.hideControls?0.0:1.0
         Behavior on opacity {
@@ -91,14 +92,20 @@ UIScreen {
             anchors.horizontalCenter: parent.horizontalCenter
             spacing: Style.hspan(2)
             Tool {
+                Layout.preferredHeight: Style.vspan(1.5)
+                Layout.preferredWidth: Style.hspan(2)
                 symbol: 'prev'
                 onClicked: MovieModel.previous()
             }
             Tool {
+                Layout.preferredHeight: Style.vspan(1.5)
+                Layout.preferredWidth: Style.hspan(2)
                 symbol: video.running?'pause':'play'
                 onClicked: video.togglePlay()
             }
             Tool {
+                Layout.preferredHeight: Style.vspan(1.5)
+                Layout.preferredWidth: Style.hspan(2)
                 symbol: 'next'
                 onClicked: MovieModel.next()
             }
@@ -108,7 +115,8 @@ UIScreen {
             value: video.position
             from: 0.00
             to: video.duration
-            height: Style.vspan(1)
+            Layout.preferredWidth: Style.hspan(8)
+            Layout.preferredHeight: Style.vspan(1.5)
             function valueToString() {
                 return Math.floor(value/60000) + ':' + Math.floor((value/1000)%60)
             }
@@ -126,8 +134,8 @@ UIScreen {
                 name: 'speaker'
             }
             VolumeSlider {
-                width: Style.hspan(8)
-                height: Style.vspan(2)
+                Layout.preferredWidth: Style.hspan(8)
+                Layout.preferredHeight: Style.vspan(2)
                 anchors.horizontalCenter: parent.horizontalCenter
                 value: video.volume
                 onValueChanged: {

@@ -134,8 +134,9 @@ Control {
                 padding: Style.padding
                 spacing: 0
                 Icon {
+                    anchors.verticalCenter: parent.verticalCenter
                     width: height
-                    height: Style.vspan(3)
+                    height: Style.vspan(2.8)
                     fit: true
                     source: model.item.coverArtUrl ? model.item.coverArtUrl : model.item.data.coverArtUrl
                 }
@@ -162,6 +163,7 @@ Control {
                 Tool {
                     width: Style.hspan(1)
                     height: Style.vspan(3)
+                    anchors.verticalCenter: parent.verticalCenter
                     size: Style.symbolSizeS
                     symbol: "close"
                     visible: root.nowPlaying

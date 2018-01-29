@@ -49,19 +49,6 @@ Control {
         color: "black"
     }
 
-    Tool {
-        id: closeButton
-        height: Style.vspan(1)
-        width: Style.hspan(1)
-
-        anchors.right: parent.right
-        anchors.top: parent.top
-        anchors.topMargin: Style.vspan(2)
-        symbol: 'close'
-        size: Style.symbolSizeS
-        onClicked: root.close()
-    }
-
     TabView {
         id: tabView
         width: root.width
@@ -92,6 +79,18 @@ Control {
         id: nowPlaying
         visible: false
         nowPlaying: true
+    }
+
+    // Close Button: used to close music library popup
+    Tool {
+        height: Style.vspan(1.5)
+        width: Style.hspan(1)
+        anchors.right: parent.right
+        anchors.top: parent.top
+        anchors.topMargin: Style.vspan(1.75)
+        symbol: 'close'
+        size: Style.symbolSizeS
+        onClicked: root.close()
     }
 
     Component {

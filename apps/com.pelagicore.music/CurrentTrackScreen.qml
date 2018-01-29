@@ -52,13 +52,17 @@ UIScreen {
     ColumnLayout {
         id: musicControl
         width: Style.hspan(12)
-        height: Style.vspan(16)
-        anchors.centerIn: parent
-        spacing: Style.isPotrait ? Style.vspan(1) : 0
+        height: Style.vspan(17)
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.top: parent.top
+        anchors.topMargin: Style.vspan(1.4)
+        spacing: Style.isPotrait ? Style.vspan(1) : Style.vspan(0.6)
+
         RowLayout {
             anchors.horizontalCenter: parent.horizontalCenter
             spacing: 0
             Tool {
+                Layout.preferredHeight: Style.vspan(1.5)
                 Layout.preferredWidth: Style.hspan(2)
                 symbol: 'prev'
                 onClicked: { MusicModel.previous() }
@@ -68,7 +72,7 @@ UIScreen {
                 contentWidth: Style.hspan(6)
 
                 Layout.preferredWidth: Style.hspan(6)
-                Layout.preferredHeight: Style.isPotrait ? Style.vspan(5) : Style.vspan(10)
+                Layout.preferredHeight: Style.isPotrait ? Style.vspan(5) : Style.vspan(11)
                 model: MusicModel.nowPlaying
 
                 currentIndex: MusicModel.currentIndex
@@ -86,6 +90,7 @@ UIScreen {
             }
 
             Tool {
+                Layout.preferredHeight: Style.vspan(1.5)
                 Layout.preferredWidth: Style.hspan(2)
                 symbol: 'next'
                 onClicked: { MusicModel.next() }
@@ -104,10 +109,11 @@ UIScreen {
             Slider {
                 id: slider
                 Layout.preferredWidth: Style.hspan(9)
+                Layout.preferredHeight: Style.vspan(1)
                 value: MusicModel.position
                 from: 0.00
                 to: MusicModel.duration
-                Layout.preferredHeight: Style.vspan(1)
+
                 function valueToString() {
                     return Math.floor(value/60000) + ':' + Math.floor((value/1000)%60)
                 }
@@ -127,7 +133,7 @@ UIScreen {
             anchors.horizontalCenter: parent.horizontalCenter
             spacing: 0
             Tool {
-                Layout.preferredWidth: Style.hspan(2)
+                Layout.preferredWidth: Style.hspan(1.5)
                 symbol: 'shuffle'
                 checked: MusicModel.shuffleOn
                 onClicked: MusicModel.toggleShuffle()
@@ -136,12 +142,13 @@ UIScreen {
             Spacer { Layout.preferredWidth: Style.hspan(2) }
             Tool {
                 Layout.preferredWidth: Style.hspan(2)
+                Layout.preferredHeight: Style.vspan(1.8)
                 symbol: MusicModel.playing?'pause':'play'
                 onClicked: MusicModel.togglePlay()
             }
             Spacer { Layout.preferredWidth: Style.hspan(2) }
             Tool {
-                Layout.preferredWidth: Style.hspan(2)
+                Layout.preferredWidth: Style.hspan(1.5)
                 symbol: 'loop'
                 checked: MusicModel.repeatOn
                 onClicked: MusicModel.toggleRepeat()

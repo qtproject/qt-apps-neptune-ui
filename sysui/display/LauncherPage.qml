@@ -41,6 +41,7 @@ import QtApplicationManager 1.0
 UIPage {
     id: root
 
+    property alias editMode: view.editMode
     signal updateApp(int index)
 
     header: AppInfoPanel {
@@ -116,6 +117,12 @@ UIPage {
                 }
                 onPressAndHold: view.editMode = true
             }
+        }
+
+        MouseArea {
+            anchors.fill: parent
+            enabled: view.editMode
+            onClicked: view.editMode = false;
         }
     }
 }

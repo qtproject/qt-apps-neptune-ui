@@ -42,14 +42,16 @@ BackgroundPane {
     objectName: "MainContent"
 
     property bool showClusterIfPossible: ApplicationManager.systemProperties.showCluster
-                                         && Style.withCluster
                                          && ScreenManager.screenCount() > 1
+    Component.onCompleted: {
+        Style.withCluster = root.showClusterIfPossible;
+    }
+
     property var cluster
 
     width: Style.screenWidth
     height: Style.screenHeight
     padding: 0
-
 
     //Forwards the keys to the custer to handle it without being the active window
     Keys.forwardTo: clusterLoader.item ? clusterLoader.item.cluster : (displayLoader.item ? displayLoader.item : null)

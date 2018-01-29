@@ -104,28 +104,31 @@ Item {
 
         ListView {
             id: categoryView
-            clip: true
             Layout.fillHeight: true
             Layout.preferredWidth: Style.hspan(4)
 
             model: categoryModel
 
             header: Label {
+                height: Style.vspan(1.5)
                 text: "CATEGORY"
                 font.pixelSize: Style.fontSizeM
             }
 
             delegate: Button {
-                width: ListView.view.width
+                id: delegatedButton
+                width: categoryView.width
+                height: Style.vspan(1)
                 text: model.name
-                highlighted: ListView.isCurrentItem
+                highlighted: categoryView.currentIndex === index
                 onClicked: {
-                    ListView.view.currentIndex = index;
+                    categoryView.currentIndex = index;
                     root.selectCategory(index);
                 }
             }
             ScrollBar.vertical: ScrollBar { }
         }
+
         AppGridView {
             id: appGrid
             // The graphics for the category list is not align to the grid, have to specify hardcoded values.
@@ -135,9 +138,7 @@ Item {
             serverUrl: appstore.server
             cellWidth: Style.hspan(3)
             cellHeight: Style.vspan(5)
-
             model: appModel
-
             onRequestDownload: {
                 root.download(appId);
             }

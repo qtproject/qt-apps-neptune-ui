@@ -40,7 +40,7 @@ import utils 1.0
 Control {
     id: root
 
-    property string icon
+    property alias icon: iconImage.source
     property alias titleText: titleLabel.text
     property alias subtitleText: subtitleLabel.text
 
@@ -56,18 +56,12 @@ Control {
     Column {
         anchors.fill: parent
         anchors.bottomMargin: Style.padding
-
         spacing: Style.paddingXL
 
         Image {
             id: iconImage
-
             anchors.horizontalCenter: parent.horizontalCenter
-
             width: Style.hspan(2)
-
-            source: root.icon //Style.icon(root.icon)
-
             fillMode: Image.PreserveAspectFit
             asynchronous: true
         }
@@ -78,11 +72,9 @@ Control {
 
             Label {
                 id: titleLabel
-
                 anchors.left: parent.left; anchors.right: parent.right
                 anchors.margins: Style.padding
                 font.capitalization: Font.AllUppercase
-
                 horizontalAlignment: Text.AlignHCenter
                 font.pixelSize: Style.fontSizeS
                 color: Style.colorWhite
@@ -91,11 +83,9 @@ Control {
 
             Label {
                 id: subtitleLabel
-
                 anchors.left: parent.left; anchors.right: parent.right
                 anchors.margins: Style.padding
                 font.capitalization: Font.AllUppercase
-
                 horizontalAlignment: Text.AlignHCenter
                 font.pixelSize: Style.fontSizeXXS
                 color: Style.colorGrey

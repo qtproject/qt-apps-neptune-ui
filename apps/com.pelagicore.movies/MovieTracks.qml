@@ -63,7 +63,7 @@ UIScreen {
                 spacing: 0
                 Spacer {
                     Layout.preferredWidth: Style.hspan(8)
-                    Layout.preferredHeight: Style.vspan(8)
+                    Layout.preferredHeight: Style.vspan(6)
                 }
                 Item {
                     Layout.preferredWidth: Style.hspan(4)
@@ -125,7 +125,7 @@ UIScreen {
             anchors.horizontalCenter: parent.horizontalCenter
             orientation: Qt.Horizontal
             width: Style.hspan(22)
-            height: Style.vspan(8)
+            height: Style.vspan(9)
             currentIndex: MovieModel.currentIndex
             highlightMoveDuration: 150
             delegate: MovieCoverDelegate {

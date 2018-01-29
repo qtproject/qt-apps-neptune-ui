@@ -7,6 +7,7 @@ include(config.pri)
 
 SUBDIRS += plugins
 SUBDIRS += doc
+QML_IMPORT_PATH += imports/shared imports/system sysui
 
 copydata.file = copydata.pro
 copydata.depends = plugins
