@@ -36,6 +36,7 @@ import utils 1.0
 
 AppUIScreen {
     id: root
+    objectName: "Virtual_Keyboard_Demo"
     title: "KDAB Virtual Keyboard Demo"
 
     UIScreen {

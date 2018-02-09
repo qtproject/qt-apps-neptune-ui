@@ -54,6 +54,7 @@ Control {
         Repeater {
             id: repeater
             TabButton {
+                objectName: root.parent.objectName + "_" + modelData.title
                 property real maxTabWidth: repeater.count ? root.width / repeater.count : root.width
                 width: Math.min(maxTabWidth, root.tabWidth)
                 height: root.tabHeight

@@ -40,12 +40,14 @@ UIScreen {
     id: root
 
     Frame {
+        objectName: "DeviceList::ContentArea"
         width: Style.hspan(10)
         height: Style.vspan(17)
         anchors.centerIn: parent
 
         ListView {
             id: deviceListView
+            objectName: "DeviceList::AvailableDevices"
             anchors.fill: parent
             model: PhoneModel.availableDevices
             delegate: SwitchDelegate {

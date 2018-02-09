@@ -39,6 +39,7 @@ import "."
 import QtIvi.Media 1.0
 
 Rectangle {
+    objectName: "IndexerStatus::ContentArea"
     width: Style.vspan(10)
     height: Style.hspan(1)
 
@@ -49,6 +50,7 @@ Rectangle {
     }
 
     MediaIndexerControl {
+        objectName: "IndexerStatus::MediaIndexerControl"
         id: indexerControl
     }
 
@@ -57,6 +59,7 @@ Rectangle {
         spacing: 2
 
         Label {
+            objectName: "IndexerStatus::IndexingLabel"
             anchors.horizontalCenter: parent.horizontalCenter
             text: "Indexing..."
         }

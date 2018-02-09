@@ -51,6 +51,7 @@ UIScreen {
 
     ColumnLayout {
         id: musicControl
+        objectName: "CurrentTrackScreen::MusicControl"
         width: Style.hspan(12)
         height: Style.vspan(17)
         anchors.horizontalCenter: parent.horizontalCenter
@@ -63,12 +64,14 @@ UIScreen {
             spacing: 0
             Tool {
                 Layout.preferredHeight: Style.vspan(1.5)
+                objectName: "CurrentTrackScreen::MusicControl_PrevTrackButton"
                 Layout.preferredWidth: Style.hspan(2)
                 symbol: 'prev'
                 onClicked: { MusicModel.previous() }
             }
 
             TrackSwipeView {
+                objectName: "CurrentTrackScreen::TrackSwipeView"
                 contentWidth: Style.hspan(6)
 
                 Layout.preferredWidth: Style.hspan(6)
@@ -78,6 +81,7 @@ UIScreen {
                 currentIndex: MusicModel.currentIndex
 
                 delegate: CoverItem {
+                    objectName: "CurrentTrackScreen::TrackSwipeViewCurrentCoverItem"
                     z: PathView.z
                     scale: PathView.scale
                     source: model.item.coverArtUrl
@@ -90,8 +94,9 @@ UIScreen {
             }
 
             Tool {
-                Layout.preferredHeight: Style.vspan(1.5)
+                objectName: "CurrentTrackScreen::MusicControl_NextTrackButton"
                 Layout.preferredWidth: Style.hspan(2)
+                Layout.preferredHeight: Style.vspan(1.5)
                 symbol: 'next'
                 onClicked: { MusicModel.next() }
             }
@@ -102,12 +107,14 @@ UIScreen {
             spacing: Style.hspan(0.5)
 
             Label {
+                objectName: "CurrentTrackScreen::CurrentTime"
                 Layout.preferredWidth: Style.hspan(1)
                 text: MusicModel.currentTime
             }
 
             Slider {
                 id: slider
+                objectName: "CurrentTrackScreen::Slider"
                 Layout.preferredWidth: Style.hspan(9)
                 Layout.preferredHeight: Style.vspan(1)
                 value: MusicModel.position
@@ -123,6 +130,7 @@ UIScreen {
             }
 
             Label {
+                objectName: "CurrentTrackScreen::DurationTime"
                 Layout.preferredWidth: Style.hspan(1)
                 text: MusicModel.durationTime
                 font.pixelSize: Style.fontSizeS
@@ -133,6 +141,7 @@ UIScreen {
             anchors.horizontalCenter: parent.horizontalCenter
             spacing: 0
             Tool {
+                objectName: "CurrentTrackScreen::ShuffleButton"
                 Layout.preferredWidth: Style.hspan(1.5)
                 symbol: 'shuffle'
                 checked: MusicModel.shuffleOn
@@ -141,6 +150,7 @@ UIScreen {
             }
             Spacer { Layout.preferredWidth: Style.hspan(2) }
             Tool {
+                objectName: "CurrentTrackScreen::PausePlayButton"
                 Layout.preferredWidth: Style.hspan(2)
                 Layout.preferredHeight: Style.vspan(1.8)
                 symbol: MusicModel.playing?'pause':'play'
@@ -148,6 +158,7 @@ UIScreen {
             }
             Spacer { Layout.preferredWidth: Style.hspan(2) }
             Tool {
+                objectName: "CurrentTrackScreen::LoopButton"
                 Layout.preferredWidth: Style.hspan(1.5)
                 symbol: 'loop'
                 checked: MusicModel.repeatOn
@@ -159,12 +170,14 @@ UIScreen {
             anchors.horizontalCenter: parent.horizontalCenter
             spacing: 0
             Symbol {
+                objectName: "CurrentTrackScreen::SpeakerButton"
                 Layout.preferredWidth: Style.hspan(1)
                 size: Style.symbolSizeXS
                 name: 'speaker'
             }
             VolumeSlider {
                 id: volumeSlider
+                objectName: "CurrentTrackScreen::VolumeSlider"
                 Layout.preferredWidth: Style.hspan(8)
                 Layout.preferredHeight: Style.vspan(2)
                 anchors.horizontalCenter: parent.horizontalCenter
@@ -192,6 +205,7 @@ UIScreen {
 
     Library {
         id: library
+        objectName: "CurrentTrackScreen::Library"
         x: parent.width
         anchors.top: parent.top
         anchors.bottom: parent.bottom
@@ -212,12 +226,14 @@ UIScreen {
         ColumnLayout {
             anchors.fill: parent
             ToolButton {
+                objectName: "CurrentTrackScreen::Bluetooth"
                 Layout.fillWidth: true
                 Layout.fillHeight: true
                 text: "BLUETOOTH"
                 font.pixelSize: Style.fontSizeL
             }
             ToolButton {
+                objectName: "CurrentTrackScreen::USB"
                 Layout.fillWidth: true
                 Layout.fillHeight: true
                 text: "USB"
@@ -225,6 +241,7 @@ UIScreen {
                 font.pixelSize: Style.fontSizeL
             }
             ToolButton {
+                objectName: "CurrentTrackScreen::Spotify"
                 Layout.fillWidth: true
                 Layout.fillHeight: true
                 text: "SPOTIFY"
@@ -236,6 +253,7 @@ UIScreen {
 
     Tool {
         id: libraryButton
+        objectName: "CurrentTrackScreen::LibraryButton"
         width: Style.hspan(3)
         height: Style.vspan(5)
         anchors.left: musicControl.right

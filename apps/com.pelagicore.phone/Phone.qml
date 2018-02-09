@@ -56,6 +56,7 @@ import "models"
 
 AppUIScreen {
     id: root
+    objectName: "Neptune_Phone_App"
     title: "Neptune Phone App"
 
     /*! Internal */
@@ -85,17 +86,21 @@ AppUIScreen {
 
 
     Page {
+        objectName: "Phone::ContentArea"
         width: parent.width
         header: TabBar {
             id: bar
             TabButton {
+                objectName: "Phone::DialerTab"
                 enabled: PhoneModel.isAnyDevicePaired
                 text: qsTr("Dialer")
             }
             TabButton {
+                objectName: "Phone::DevicesTab"
                 text: qsTr("Devices")
             }
             TabButton {
+                objectName: "Phone::ContactListTab"
                 enabled: PhoneModel.isAnyDevicePaired
                 text: qsTr("Contacts List")
             }

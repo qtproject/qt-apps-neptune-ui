@@ -37,6 +37,7 @@ import "."
 
 AppUIScreen {
     id: root
+    objectName: "Neptune_Radio_Player"
     title: "Neptune Radio Player"
 
     onClusterKeyPressed: {

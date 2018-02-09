@@ -39,6 +39,7 @@ import controls 1.0
 
 Control {
     id: root
+    objectName: "MovieCover::" + title.text
     width: Style.hspan(4)
     height: Style.vspan(7)
     signal clicked()
@@ -68,6 +69,7 @@ Control {
             }
             Image {
                 id: image
+                objectName: "MovieCover::" + title.text + "Image"
                 anchors.fill: parent
                 anchors.margins: Style.paddingS
                 fillMode: Image.PreserveAspectCrop

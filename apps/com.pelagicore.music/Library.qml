@@ -45,6 +45,7 @@ Control {
     signal close()
 
     Rectangle {
+        objectName: "Library::ContentArea"
         anchors.fill: parent
         color: "black"
     }
@@ -68,6 +69,7 @@ Control {
 
     LetterPicker {
         id: letterPicker
+        objectName: "Library::LetterPicker"
         height: root.height - tabView.tabHeight
         anchors.left: parent.left
         anchors.leftMargin: 5
@@ -77,12 +79,14 @@ Control {
 
     LibraryList {
         id: nowPlaying
+        objectName: "Library::NowPlaying"
         visible: false
         nowPlaying: true
     }
 
     // Close Button: used to close music library popup
     Tool {
+        objectName: "Library::CloseButton"
         height: Style.vspan(1.5)
         width: Style.hspan(1)
         anchors.right: parent.right
@@ -96,6 +100,7 @@ Control {
     Component {
         id: library
         LibraryList {
+            objectName: "Library::LibraryList"
             visible: false
         }
     }

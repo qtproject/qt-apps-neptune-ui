@@ -76,12 +76,14 @@ UIScreen {
     }
 
     Image {
+        objectName: "AlbumScreen::ShadowLeft"
         anchors.left: parent.left
         anchors.verticalCenter: parent.verticalCenter
         source: Style.gfx('shadow_left')
     }
 
     Image {
+        objectName: "AlbumScreen::ShadowRight"
         anchors.right: parent.right
         anchors.verticalCenter: parent.verticalCenter
         source: Style.gfx('shadow_right')

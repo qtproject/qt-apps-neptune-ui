@@ -61,6 +61,7 @@ RowLayout {
     }
 
     Tool {
+        objectName: "PlaylistContainer::MusicSymbol"
         symbol: 'music'
         Layout.alignment: Qt.AlignTop
         onClicked: {
@@ -69,12 +70,14 @@ RowLayout {
     }
     Timer {
         id: closer
+        objectName: "PlaylistContainer::Closer"
         interval: 3000
         onTriggered: {
             playListContainer.expanded = false
         }
     }
     Rectangle {
+        objectName: "PlaylistContainer::ContentArea"
         Layout.fillWidth: true
         Layout.fillHeight: true
         color: '#000'
@@ -103,6 +106,7 @@ RowLayout {
                             anchors.fill: parent
                             anchors.margins: Style.padding
                             Rectangle {
+                                objectName: "PlaylistContainer::ItemContentArea"
                                 anchors.fill: parent
                                 anchors.leftMargin: -6
                                 anchors.rightMargin: -6
@@ -112,6 +116,7 @@ RowLayout {
                             }
 
                             Image {
+                                objectName: "PlaylistContainer::Cover"
                                 anchors.centerIn: parent
                                 height: parent.height
                                 width: parent.height
@@ -124,6 +129,7 @@ RowLayout {
                     ColumnLayout {
                         spacing: 0
                         Label {
+                            objectName: "PlaylistContainer::" + model.title + "_TitleName"
                             text: model.title
                             font.pixelSize: Style.fontSizeXS
                             opacity: 0.5
@@ -131,6 +137,7 @@ RowLayout {
                             Layout.fillWidth: true
                         }
                         Label {
+                            objectName: "PlaylistContainer::" + model.title + "_ArtistName"
                             text: model.artist
                             font.pixelSize: Style.fontSizeS
                             Layout.fillWidth: true

@@ -38,6 +38,7 @@ import "."
 
 AppUIScreen {
     id: root
+    objectName: "Neptune_Music_Player"
     title: "Neptune Music Player"
 
     onClusterKeyPressed: {

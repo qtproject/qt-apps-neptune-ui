@@ -39,12 +39,14 @@ import utils 1.0
 
 AppUIScreen {
     id: mainWindow
+    objectName: "Nested_Compositor"
 
     UIScreen {
         id: ui
 
         Label {
             id: compositorLabel
+            objectName: "NestedCompositor::InfoText"
             anchors.fill: parent
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter

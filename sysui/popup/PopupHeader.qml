@@ -36,6 +36,7 @@ import utils 1.0
 
 Item {
     id: root
+    objectName: "PopupHeader::" + title.text
 
     property alias title: title.text
     property alias subtitle: subtitle.text

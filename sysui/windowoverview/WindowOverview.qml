@@ -101,7 +101,7 @@ Item {
 
         delegate: Item {
             id: delegate
-            objectName: "WindowOverview::" + model.item
+            objectName: "WindowOverview::" + ApplicationManagerModel.appIdFromWindow(model.item)
             width: gridView.cellWidth
             height: gridView.cellHeight
             property int padding: gridView.padding
@@ -113,6 +113,7 @@ Item {
             }
 
             MouseArea {
+                objectName: delegate.objectName + "Content"
                 anchors.fill: parent
                 onClicked: {
                     ApplicationManager.startApplication(ApplicationManagerModel.appIdFromWindow(model.item))
@@ -127,7 +128,7 @@ Item {
             }
 
             Tool {
-                objectName: "WindowOverview::AppManClose"
+                objectName: delegate.objectName + "CloseButton"
                 anchors.top: parent.top
                 anchors.right: parent.right
 

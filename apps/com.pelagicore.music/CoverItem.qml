@@ -49,16 +49,19 @@ Control {
         anchors.horizontalCenter: parent.horizontalCenter
         spacing: 0
         Item {
+            objectName: "CoverItem::" + root.title.split(" ").join("")
             anchors.horizontalCenter: parent.horizontalCenter
             width: Style.hspan(5)
             height: width
             Rectangle {
+                objectName: "CoverItem::" + root.title.split(" ").join("") + "ContentArea"
                 anchors.fill: parent
                 color: Style.colorWhite
                 border.color: Qt.darker(color, 1.2)
             }
             Image {
                 id: image
+                objectName: "CoverItem::" + root.title.split(" ").join("") + "Image"
                 anchors.fill: parent
                 anchors.margins: Style.paddingXS
                 fillMode: Image.PreserveAspectCrop
@@ -67,6 +70,7 @@ Control {
         }
         Label {
             id: title
+            objectName: "CoverItem::" + root.title.split(" ").join("") + "Title"
             Layout.fillWidth: true
             horizontalAlignment: Text.AlignHCenter
             font.weight: Font.Light
@@ -74,6 +78,7 @@ Control {
         }
         Label {
             id: subTitle
+            objectName: "CoverItem::" + root.subTitle.split(" ").join("") + "SubTitle"
             Layout.fillWidth: true
             horizontalAlignment: Text.AlignHCenter
             font.pixelSize: Style.fontSizeS

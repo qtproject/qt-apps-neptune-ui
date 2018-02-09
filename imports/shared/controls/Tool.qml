@@ -44,6 +44,7 @@ ToolButton {
     Behavior on scale { NumberAnimation { duration: 25 } }
 
     indicator: Image {
+        objectName: root.objectName ? root.objectName + "Image" : root.parent.objectName + "ToolButtonImage"
         anchors.centerIn: parent
         source: root.symbol ? Style.symbol(root.symbol, root.size, root.checked) : ""
     }

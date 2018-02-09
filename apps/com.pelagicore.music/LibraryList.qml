@@ -68,6 +68,7 @@ Control {
 
     ListView {
         id: listView
+        objectName: root.parent.objectName + "TrackList"
         anchors.fill: parent
         model: root.nowPlaying ? MusicModel.nowPlaying : root.model
         clip: true
@@ -77,6 +78,7 @@ Control {
         currentIndex: nowPlaying ? MusicModel.currentIndex : -1
 
         header: UIElement {
+            objectName: root.parent.objectName + "UIElement"
             width: root.width
             height: Style.vspan(root.model.canGoBack ? 3 : 0)
             visible: root.model.canGoBack
@@ -89,6 +91,7 @@ Control {
             }
 
             Tool {
+                objectName: root.parent.objectName + "BackButton"
                 anchors.fill: parent
                 symbol: 'back'
                 onClicked: root.model.goBack()
@@ -100,6 +103,7 @@ Control {
             height: Style.vspan(3)
 
             Rectangle {
+                objectName: root.parent.objectName + model.name.split(" ").join("") + "_ControlArea"
                 anchors.fill: parent
                 opacity: 0.2
                 visible: listView.currentIndex === index
@@ -134,6 +138,7 @@ Control {
                 padding: Style.padding
                 spacing: 0
                 Icon {
+                    objectName: root.parent.objectName +  model.name.split(" ").join("")
                     anchors.verticalCenter: parent.verticalCenter
                     width: height
                     height: Style.vspan(2.8)
@@ -145,6 +150,8 @@ Control {
                     spacing: 0
                     padding: Style.padding
                     Label {
+                        objectName: model.type === "audiotrack" ? root.parent.objectName + model.name.split(" ").join("")  + "_Track" :
+                                                                  root.parent.objectName + model.name.split(" ").join("")
                         width: Style.hspan(7)
                         height: Style.vspan(2)
                         text: model.name.toUpperCase()
@@ -152,6 +159,7 @@ Control {
                     }
 
                     Label {
+                        objectName: model.item.data.artist ? root.parent.objectName + model.item.data.artist.split(" ").join("") : ""
                         width: Style.hspan(7)
                         height: Style.vspan(1)
                         text: model.type === "audiotrack" ? model.item.artist.toUpperCase() : (model.type === "album" ? model.item.data.artist.toUpperCase() : "")
@@ -161,6 +169,7 @@ Control {
                 }
 
                 Tool {
+                    objectName: root.parent.objectName + model.name.split(" ").join("") + "_CloseSymbol"
                     width: Style.hspan(1)
                     height: Style.vspan(3)
                     anchors.verticalCenter: parent.verticalCenter

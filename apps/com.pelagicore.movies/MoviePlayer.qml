@@ -42,6 +42,7 @@ import "."
 
 UIScreen {
     id: root
+    objectName: "MoviesScreen"
     width: Style.hspan(24)
     height: Style.vspan(24)
 
@@ -55,6 +56,7 @@ UIScreen {
 
     Video {
         id: video
+        objectName: "MoviePlayer::" + root.track.name + "Movie"
         anchors.fill: parent
         source: MovieModel.sourcePath(root.track.source)
         autoPlay: true
@@ -92,18 +94,21 @@ UIScreen {
             anchors.horizontalCenter: parent.horizontalCenter
             spacing: Style.hspan(2)
             Tool {
+                objectName: "MoviePlayer::PrevMovieButton"
                 Layout.preferredHeight: Style.vspan(1.5)
                 Layout.preferredWidth: Style.hspan(2)
                 symbol: 'prev'
                 onClicked: MovieModel.previous()
             }
             Tool {
+                objectName: "MoviePlayer::PausePlayMovieButton"
                 Layout.preferredHeight: Style.vspan(1.5)
                 Layout.preferredWidth: Style.hspan(2)
                 symbol: video.running?'pause':'play'
                 onClicked: video.togglePlay()
             }
             Tool {
+                objectName: "MoviePlayer::NextMovieButton"
                 Layout.preferredHeight: Style.vspan(1.5)
                 Layout.preferredWidth: Style.hspan(2)
                 symbol: 'next'

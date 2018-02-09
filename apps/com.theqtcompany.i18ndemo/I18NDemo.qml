@@ -38,6 +38,7 @@ import com.theqtcompany.comtqci18ndemo 1.0
 
 AppUIScreen {
     id: root
+    objectName : "i18NDemo"
 
     UIScreen {
 

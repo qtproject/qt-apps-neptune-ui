@@ -36,6 +36,7 @@ import controls 1.0
 
 AppUIScreen {
     id: root
+    objectName: "Neptune_Movie_Player"
     title: "Neptune Movie Player"
 
     StackView {

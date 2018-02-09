@@ -62,6 +62,7 @@ UIScreen {
 
         GridLayout {
             id: dialGrid
+            objectName: "Dialer::DialGrid"
             columns: 3
             width: Style.hspan(8.5)
             height: Style.vspan(10)
@@ -74,6 +75,7 @@ UIScreen {
                 model: ['1','2','3','4','5','6','7','8','9','*','0','#']
                 Button {
                     id: button1
+                    objectName: "Dialer::" + modelData.toString()
                     text: modelData
                     //15, 20 spacings divided by columns & rows accordingly
                     Layout.preferredWidth: (parent.width - 15) / 3
@@ -87,6 +89,7 @@ UIScreen {
 
         GridLayout {
             id: dialButtons
+            objectName: "Dialer::DialButtons"
             width: Style.hspan(8.5)
             //20 the spacing and 4 rows
             height: (Style.vspan(10) - 20) / 4
@@ -97,6 +100,7 @@ UIScreen {
             columnSpacing: 5
             Button {
                 id: dialButton
+                objectName: "Dialer::Dial"
                 text: "Dial"
                 Layout.preferredWidth: (parent.width / 2) - 4
                 Layout.preferredHeight: parent.height
@@ -105,6 +109,7 @@ UIScreen {
                 }
             }
             Button {
+                objectName: "Dialer::DeleteButton"
                 Layout.preferredWidth: dialButton.width
                 Layout.preferredHeight: dialButton.height
                 text: "\u232b " + "Delete"

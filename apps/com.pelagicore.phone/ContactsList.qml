@@ -42,14 +42,17 @@ UIScreen {
     signal dial(string name, string number)
 
     Frame {
+        objectName: "ContactList:ContentArea"
         anchors.fill: parent
 
         ListView {
             id: contactList
+            objectName: "ContactList::AvailableContacts"
             anchors.fill: parent
             model: PhoneModel.contactsModel
 
             delegate: ItemDelegate {
+                objectName: "ContactList::" + model.name + " " + model.number
                 width: ListView.view.width
                 height: Style.vspan(2)
                 text: model.name + " " + model.number

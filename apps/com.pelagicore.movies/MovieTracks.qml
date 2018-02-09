@@ -42,6 +42,7 @@ import "."
 
 UIScreen {
     id: root
+    objectName: "MovieTracksScreen"
     width: Style.hspan(24)
     height: Style.vspan(24)
 
@@ -75,6 +76,7 @@ UIScreen {
                     }
                     Image {
                         id: image
+                        objectName: "MovieTracks::" + root.track.title
                         anchors.fill: parent
                         source: MovieModel.coverPath(root.track.cover)
                         fillMode: Image.PreserveAspectCrop
@@ -107,6 +109,7 @@ UIScreen {
                         verticalAlignment: Text.AlignTop
                     }
                     Button {
+                        objectName: "MovieTracks::PlayNow"
                         text: 'PLAY NOW'
                         Layout.preferredWidth: Style.hspan(4)
                         Layout.alignment: Qt.AlignLeft
@@ -122,6 +125,7 @@ UIScreen {
 
         ListView {
             id: view
+            objectName: "MovieTracks::MovieList"
             anchors.horizontalCenter: parent.horizontalCenter
             orientation: Qt.Horizontal
             width: Style.hspan(22)
