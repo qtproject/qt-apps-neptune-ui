@@ -45,6 +45,10 @@ T.Pane {
     padding: 12
 
     background: Rectangle {
+        // work around bug AUTOSUITE-189 (missing patch for QTBUG-65880 in qtcontrols2)
+        // there would be no need to set the geometry explicitly otherwise
+        anchors.fill: control
+
         objectName: control.objectName + "DarkRect"
         color: control.NeptuneStyle.darkColor
     }
