@@ -105,6 +105,7 @@ Page {
         visible: !root.hideBack
         symbol: 'back'
         onClicked: root.backScreen()
+        z: 100 // keep it above all other items added to the Page
     }
 
 }
