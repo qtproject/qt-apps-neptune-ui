@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2017 Pelagicore AG
+** Copyright (C) 2018 Pelagicore AG
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Neptune IVI UI.
@@ -47,7 +47,7 @@ MonitorPanel {
         Rectangle {
             width: parent.width
             height: 3
-            y: parent.height - height - (model.memoryPss.total/SystemMonitor.totalMemory)*parent.height
+            y: parent.height - height - (model.memoryUsed/SystemMonitor.totalMemory)*parent.height
         }
     }
 }

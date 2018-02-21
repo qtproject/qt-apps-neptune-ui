@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2017 Pelagicore AG
+** Copyright (C) 2018 Pelagicore AG
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Neptune IVI UI.
@@ -45,8 +45,6 @@ Rectangle {
     opacity: 0.95
 
     property int currentFps: 0
-    property int ram: 0
-    property real ramUsed: 0
     property int cpu: 0
     property var rootWindow
     property var applicationWindows: []
@@ -61,6 +59,7 @@ Rectangle {
         SystemMonitor.reportingInterval = root.reportingInterval
         SystemMonitor.count = root.modelCount
         SystemMonitor.cpuLoadReportingEnabled = root.visible
+        SystemMonitor.memoryReportingEnabled = root.visible
         root.rootWindow = Window.window
     }
 
@@ -88,10 +87,6 @@ Rectangle {
         memoryReportingEnabled: root.visible
         frameRateReportingEnabled: root.visible
         monitoredWindows: (applicationId === "" || ApplicationManager.singleProcess) ? [root.rootWindow] : root.applicationWindows
-        onMemoryReportingChanged: {
-            root.ram = (memoryPss.total/SystemMonitor.totalMemory * 100).toFixed(0)
-            root.ramUsed = (memoryPss.total / 1e6).toFixed(0);
-        }
         onFrameRateReportingChanged: {
             fpsMonitor.valueText = ""
             for (var i in frameRate) {
@@ -126,8 +121,11 @@ Rectangle {
         }
 
         RamMonitor {
-            model: processMon
-            valueText: root.ram + "% " + root.ramUsed + "MB"
+            model: SystemMonitor
+            readonly property int ramUsedPercentage: (ramUsedBytes / ramTotalBytes ) * 100
+            readonly property real ramTotalBytes: (SystemMonitor.totalMemory / 1e6).toFixed(0)
+            readonly property real ramUsedBytes: (SystemMonitor.memoryUsed / 1e6).toFixed(0)
+            valueText: ramUsedPercentage + "% " + ramUsedBytes + "MB"
         }
     }
 }
